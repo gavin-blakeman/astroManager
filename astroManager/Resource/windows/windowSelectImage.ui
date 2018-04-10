@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>972</width>
+    <height>583</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="3">
+    <widget class="QPushButton" name="pushButtonRefreshData">
+     <property name="text">
+      <string>Refresh Data</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../VSOP.qrc">
+       <normaloff>:/icons/database/database_refresh.png</normaloff>:/icons/database/database_refresh.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
+    <widget class="QTableView" name="tableViewImages">
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::DotLine</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="pushButtonOpenImage">
+     <property name="text">
+      <string>Open Image</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../VSOP.qrc">
+       <normaloff>:/icons/database/database_go.png</normaloff>:/icons/database/database_go.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="pushButtonEditData">
+     <property name="text">
+      <string>Edit Data</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../VSOP.qrc">
+       <normaloff>:/icons/database/database_edit.png</normaloff>:/icons/database/database_edit.png</iconset>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../VSOP.qrc"/>
+ </resources>
+ <connections/>
+</ui>

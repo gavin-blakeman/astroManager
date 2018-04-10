@@ -1,0 +1,17 @@
+Makefile.*
+Makefile
+*.user
+*.html
+/documentation/html/
+/documentation/latex/
+*.filters
+*.~1~
+BuildIncrementer
+*.sql
+*.sqlite
+*.cpp.*
+*.h.*
+ProgramInformation.ods
+SIMBADReturn.txt
+*.bak
+*.user.*

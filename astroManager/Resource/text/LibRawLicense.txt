@@ -1,0 +1,4 @@
+LibRaw library, Copyright (C) 2008-2010 LibRaw LLC (info@libraw.org)
+
+The library includes source code from dcraw.c, Dave Coffin's raw photo decoder
+Copyright 1997-2009 by Dave Coffin, dcoffin@cybercom.net

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>489</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Original Images</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButtonSelectOriginal">
+        <property name="text">
+         <string>Select All</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../VSOP.qrc">
+          <normaloff>:/images/Add.png</normaloff>:/images/Add.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButtonUnselectOriginal">
+        <property name="text">
+         <string>Unselect All</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../VSOP.qrc">
+          <normaloff>:/images/Denided.png</normaloff>:/images/Denided.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QListWidget" name="listWidgetOriginal"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Aligned Images</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pushButtonSelectAligned">
+        <property name="text">
+         <string>Select All</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../VSOP.qrc">
+          <normaloff>:/images/Add.png</normaloff>:/images/Add.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="pushButtonUnselectAligned">
+        <property name="text">
+         <string>Unselect All</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../VSOP.qrc">
+          <normaloff>:/images/Denided.png</normaloff>:/images/Denided.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QListWidget" name="listWidgetAligned"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Abort|QDialogButtonBox::SaveAll</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../VSOP.qrc"/>
+ </resources>
+ <connections/>
+</ui>

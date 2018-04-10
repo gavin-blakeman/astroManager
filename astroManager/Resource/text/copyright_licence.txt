@@ -1,0 +1,15 @@
+AstroManager Copyright ©2012-2018 Gavin Blakeman. All rights reserved.
+
+AstroManager makes use of the Boost libraries. [1.62.0] (Boost Software License)
+AstroManager makes use of the Cfitsio library.
+AstroManager makes use of the Dlib library. [19.4] (Boost Software License)
+AstroManager makes use of the libRaw library.
+AstroManager makes use of the libWCS library.
+AstroManager makes use of the NOVAS library.
+AstroManager makes use of the Qwt library. [6.3.1] (lGPLv2.1 with exceptions)
+AstroManager makes use of the Qxt library. [0.6.0] (lGPLv2.1)
+AstroManager makes use of the SBIG API.
+AstroManager makes use of the SOFA library.
+Icons (gear.png, add.png, File_PNG_Image.png, File_JPG_Image.png, Denided.png, Error.png, Zoom-in.png, Zoom-out.png): Koloria Icons Pack - freeware Author:     Andy Gongea    http://graphicrating.com
+Icons (x_ray.png, zoom_actual.png, zoom_fit.png, zoom_in.png, zoom_out.png): - (Creative Commons Attribution 3.0) http://www.fatcow.com/free-icons
+Icon (File_TIFF_Image.png, File_DNG_Image.png, image_information.png): GPLv2 ©Gavin Blakeman 2013-2018

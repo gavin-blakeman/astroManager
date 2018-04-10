@@ -1,0 +1,22 @@
+2018-02
+------------------------------------------------------------------------------------------------------------------------------------
+ADDED:    Functionality to edit resources
+CHANGED:  Project name to "AstroManager"
+
+2017-06 (2017-06-30)
+------------------------------------------------------------------------------------------------------------------------------------
+FIX:      Bug# 67 -
+UPDATE:   Changed a number of function calls to support move to Qt5
+
+2016.04 (2016-04-30)
+------------------------------------------------------------------------------------------------------------------------------------
+ADDED:    SIMBAD.h to the ACL include file.
+CREATED:  The SIMBAD.h and SIMBAD.cpp files.
+FIX:      Bug# 1574420 - RA/Dec not displaying correctly.
+FIX:      Bug# 1574157 - View Astrometry and photometry indicators.
+FIX:      Bug# 1571327 - Image Compare crash when deleting single image.
+FIX:      Image Comparison - Added code to enable the buttons when images added.
+FIX:      Bug# 1571309 - Image Compare crash when deleting all images.
+ADDED:    defaultLogger.shutDown()
+ADDED:    Check for CFitsException in the catch() statements of the main program.
+REMOVE:   Code for configuring the database connection. This is old unrequired code. (CFrameWindow)

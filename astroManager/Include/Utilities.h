@@ -1,0 +1,80 @@
+//*********************************************************************************************************************************
+//
+// PROJECT:							AstroManager (Astronomy Observation Manager)
+// FILE:								Utilities
+// SUBSYSTEM:						Various Utility Classes
+// TARGET OS:						WINDOWS/UNIX/LINUX/MAC
+// LANGUAGE:						C++
+// LIBRARY DEPENDANCE:	Qt
+// NAMESPACE:						AstroManager::mdiframe
+// AUTHOR:							Gavin Blakeman.
+// LICENSE:             GPLv2
+//
+//                      Copyright 2011-2016 Gavin Blakeman.
+//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//
+//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
+//                      any later version.
+//
+//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+//                      more details.
+//
+//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      see <http://www.gnu.org/licenses/>.
+//
+// OVERVIEW:            Implements functions required for the utility menu for openAIP
+//
+//
+// CLASSES INCLUDED:
+//
+//
+// CLASS HIERARCHY:     QMdiSubWindow
+//                        -CARPAASubWindow
+//
+//
+// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+//                      2011-06-11 GGB - Development of classes for AIRDAS
+//
+//*********************************************************************************************************************************
+
+#ifndef AIRDAS_UTILITIES_H
+#define AIRDAS_UTILITIES_H
+
+  // AIRDAS files
+
+#include "database/database.h"
+#include "dialogs/dialogs.h"
+#include "Error.h"
+#include "qtExtensions/qt.h"
+
+namespace AstroManager
+{
+  namespace utilities
+  {
+    class CEnterDATDialog : public dialogs::CDialog
+    {
+    Q_OBJECT
+
+    private:
+      QTableWidget *tableWidget;
+      QDateEdit *dateEditMJD;
+      QSpinBox *spinBoxValue;
+
+      void setupUI();
+
+    protected:
+    public:
+      CEnterDATDialog();
+
+    private slots:
+      void btnCancel(bool) { dlg->reject(); }
+      void pushButtonInsert(bool);
+    };
+
+  }  // namespace utilities
+
+}  // namespace AstroManager
+
+#endif  // UTILITIES_H
