@@ -27,20 +27,21 @@ RCC_DIR = "objects/rcc"
 
 
 INCLUDEPATH += \
+  "../../Library/astrometry++" \
   "../../Library/WeatherLink" \
-  "../boost 1.62" \
+  "../../Library/Boost/boost 1.62" \
   "../../Library" \
-  "../cfitsio" \
-  "../ACL" \
-  "../GCL" \
+  "../../Library/cfitsio" \
+  "../../Library/ACL" \
+  "../../Library/GCL" \
   #"../../Library/LibRaw" \
-  "../MCL" \
-  "../PCL" \
-  "../qwt-6.1.3/src" \
-  "../Qxt/include" \
-  "../SCL" \
-  "../SOFA/src" \
-  "../GeographicLib-1.48/include"
+  "../../Library/MCL" \
+  "../../Library/PCL" \
+  "../../Library/qwt/qwt-6.1.3/src" \
+  "../../Library/Qxt/include" \
+  "../../Library/SCL" \
+  "../../Library/SOFA/src" \
+  "../../Library/GeographicLib/GeographicLib-1.48/include"
 
 SOURCES += \
     Source/VSOP.cpp \

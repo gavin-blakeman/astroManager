@@ -87,10 +87,6 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
-  // Astrometry++ library
-
-#include "Include/simplexy.h"
-
   // Miscellaneous libraries
 
 #include <GCL>
