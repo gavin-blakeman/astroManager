@@ -13,3 +13,6 @@
 [submodule "ACL"]
 	path = ACL
 	url = git@github.com:gavin-blakeman/ACL.git
+[submodule "GCL"]
+	path = GCL
+	url = git@github.com:gavin-blakeman/GCL.git
