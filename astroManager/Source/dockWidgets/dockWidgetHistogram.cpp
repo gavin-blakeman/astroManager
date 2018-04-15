@@ -399,7 +399,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_CODE_ERROR;
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -580,7 +580,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_CODE_ERROR;
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 

@@ -51,29 +51,39 @@ namespace AstroManager
     /// @throws
     /// @version 2018-02-03/GGB - Function created.
 
-    CQueryModelPlanning::CQueryModelPlanning()
+    CQueryModelPlanning::CQueryModelPlanning(planID_t planID) : planID(planID)
     {
       sqlWriter_.resetQuery();
-      sqlWriter_.select({"TBL_TARGETS.TARGET_ID", "TBL_TARGETS.RANK", "TBL_TARGETS.SHORTTEXT"})
+      sqlWriter_.select({"TBL_TARGETS.TARGET_ID", "TBL_TARGETS.RANK", "ATID.TBL_NAMES.NAME"})
           .from({"TBL_TARGETS"})
-          .join({std::make_tuple("TBL_TARGETS", "FILTER_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_FILTERS", "FILTER_ID"),
-                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
-                 std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")})
-           .where({GCL::sqlwriter::parameterTriple(std::string("PLAN_ID"), std::string("="), databasePlanID)});
+          .join({std::make_tuple("TBL_TARGETS", "NAME_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "ATID.TBL_NAMES", "NAME_ID")})
+//                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
+//                std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")})
+           .where({GCL::sqlwriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
+
+      DEBUGMESSAGE(sqlWriter_.string());
 
       setQuery(QString::fromStdString(sqlWriter_.string()), database::databaseARID->database());
 
+        /// @todo Change this code to check for an error before printing the error.
+
+      QSqlError error = lastError();
+      ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
+      ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
+      ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+
       setHeaderData(id_c, Qt::Horizontal, QObject::tr("ID"));
+      setHeaderData(rank_c, Qt::Horizontal, QObject::tr("Rank"));
       setHeaderData(name_c, Qt::Horizontal, QObject::tr("Name"));
       setHeaderData(type_c, Qt::Horizontal, QObject::tr("Type"));
-      setHeaderData(ra_c, Qt::Horizontal, QObject::tr("RA"));
-      setHeaderData(dec_c, Qt::Horizontal, QObject::tr("DEC"));
-      setHeaderData(altitude_c, Qt::Horizontal, QObject::tr("Altitude"));
-      setHeaderData(azimuth_c, Qt::Horizontal, QObject::tr("Azimuth"));
-      setHeaderData(airmass_c, Qt::Horizontal, QObject::tr("Airmass"));
-      setHeaderData(appMag_c, Qt::Horizontal, QObject::tr("Apparent Magnitude"));
-      setHeaderData(constellation_c, Qt::Horizontal, QObject::tr("Constallation"));
-      setHeaderData(extinction_c, Qt::Horizontal, QObject::tr("Magnitude"));
+      //setHeaderData(ra_c, Qt::Horizontal, QObject::tr("RA"));
+      //setHeaderData(dec_c, Qt::Horizontal, QObject::tr("DEC"));
+      //setHeaderData(altitude_c, Qt::Horizontal, QObject::tr("Altitude"));
+      //setHeaderData(azimuth_c, Qt::Horizontal, QObject::tr("Azimuth"));
+      //setHeaderData(airmass_c, Qt::Horizontal, QObject::tr("Airmass"));
+      //setHeaderData(appMag_c, Qt::Horizontal, QObject::tr("Apparent Magnitude"));
+      //setHeaderData(constellation_c, Qt::Horizontal, QObject::tr("Constallation"));
+      //setHeaderData(extinction_c, Qt::Horizontal, QObject::tr("Magnitude"));
     }
 
     /// @brief Function to ensure that the data is formatted correctly before being displayed in the tableModel.
@@ -96,6 +106,7 @@ namespace AstroManager
           switch (item.column())
           {
             case id_c:            // Target Identifier
+            case rank_c:
             case name_c:          // Target Name
             case type_c:          // Target Type
             case altitude_c:
@@ -114,7 +125,7 @@ namespace AstroManager
             };
             default:
             {
-              astroManager_CODE_ERROR;
+              ASTROMANAGER_CODE_ERROR;
               break;
             };
           };
@@ -142,7 +153,7 @@ namespace AstroManager
           break;
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         }
       };

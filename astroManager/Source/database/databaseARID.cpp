@@ -264,7 +264,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_CODE_ERROR;
+        ASTROMANAGER_CODE_ERROR;
       };
 
       return returnValue;
@@ -1893,7 +1893,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_ERROR(0x4002);
+        ASTROMANAGER_ERROR(0x4002);
       }
 
       sqlWriter.resetQuery();
@@ -2005,7 +2005,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_CODE_ERROR;
+        ASTROMANAGER_CODE_ERROR;
       };
       return returnValue;
     }
@@ -2059,7 +2059,7 @@ namespace AstroManager
       }
       else
       {
-        astroManager_CODE_ERROR;
+        ASTROMANAGER_CODE_ERROR;
       };
       return returnValue;
     }

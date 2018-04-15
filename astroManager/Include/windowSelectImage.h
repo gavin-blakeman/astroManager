@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt, boost
-// NAMESPACE:						AstroManager::dockwidgets
+// NAMESPACE:						AstroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //

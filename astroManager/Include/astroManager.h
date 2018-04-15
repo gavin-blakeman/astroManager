@@ -80,6 +80,7 @@ namespace AstroManager
   typedef ACL::AXIS_t AXIS_t;
   typedef std::uint32_t imageID_t;                                      ///< The imageID type. 32 bit == 4 billion images.
   typedef std::uint16_t imageVersion_t;                                 ///< The type to use with image versions = 65536 versions.
+  typedef std::uint32_t planID_t;                                       ///< The planID. Base type for observing plans.
 
   QString const EXTENSION_CSV                 ("Comma Delimited (*.csv)");
 

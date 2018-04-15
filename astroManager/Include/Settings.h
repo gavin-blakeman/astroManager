@@ -140,6 +140,7 @@ namespace AstroManager
 
     QString const WINDOWPLANNING_TIMESCALE                          ("WindowPlanning/TimeScale");
     QString const WINDOWPLANNING_REALTIME                           ("WindowPlanning/RealTime");
+    QString const WINDOWPLANNING_LASTPLAN                           ("WindowPlanning/LastPlan");
 
       // Definitions for the ATID Database section
 

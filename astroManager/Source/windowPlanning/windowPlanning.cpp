@@ -53,7 +53,8 @@ namespace AstroManager
     /// @param[in] parent - The window that owns this instance.
     /// @version 2017-06-20/GGB - Function created.
 
-    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent), planTargets()
+    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent),
+      queryModel(settings::astroManagerSettings->value(settings::WINDOWPLANNING_LASTPLAN, 0).toUInt()), planTargets()
     {
       setAttribute(Qt::WA_DeleteOnClose);
 
@@ -87,6 +88,10 @@ namespace AstroManager
 
     void CWindowPlanning::currentIndexChangedPlans(int currentIndex)
     {
+        // Save the new index as the default.
+
+      settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_LASTPLAN, comboBoxPlans->currentData());
+
         // Clear the current list of objects.
 
       planTargets.clear();
@@ -221,33 +226,23 @@ namespace AstroManager
       ASSOCIATE_CONTROL(comboBoxPlans, formWidget, "comboBoxPlans", QComboBox);
       ASSOCIATE_CONTROL(comboBoxSites, formWidget, "comboBoxSites", QComboBox);
 
-      ASSOCIATE_CONTROL(tableViewPlanning, formWidget, "tableViewPlanning", QTableView);
+      ASSOCIATE_TABLEVIEW(tableViewPlanning, formWidget, "tableViewPlanning");
       ASSOCIATE_CONTROL(dateEditSelectedDate, formWidget, "dateEditSelectedDate", QDateEdit);
       ASSOCIATE_CONTROL(timeEditSelectedTime, formWidget, "timeEditSelectedTime", QTimeEdit);
-      ASSOCIATE_CONTROL(radioButtonUT, formWidget, "radioButtonUT", QRadioButton);
-      ASSOCIATE_CONTROL(radioButtonLT, formWidget, "radioButtonLT", QRadioButton);
-      ASSOCIATE_CONTROL(radioButtonST, formWidget, "radioButtonST", QRadioButton);
-      ASSOCIATE_CONTROL(pushButtonTimeMinutePlus, formWidget, "pushButtonTimeMinutePlus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonTimeMinuteMinus, formWidget, "pushButtonTimeMinuteMinus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonTimeHourPlus, formWidget, "pushButtonTimeHourPlus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonTimeHourMinus, formWidget, "pushButtonTimeHourMinus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonTimeDayPlus, formWidget, "pushButtonTimeDayPlus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus", QPushButton);
-      ASSOCIATE_CONTROL(pushButtonRealTime, formWidget, "pushButtonRealTime", QPushButton);
+      ASSOCIATE_RADIOBUTTON(radioButtonUT, formWidget, "radioButtonUT");
+      ASSOCIATE_RADIOBUTTON(radioButtonLT, formWidget, "radioButtonLT");
+      ASSOCIATE_RADIOBUTTON(radioButtonST, formWidget, "radioButtonST");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeMinutePlus, formWidget, "pushButtonTimeMinutePlus");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeMinuteMinus, formWidget, "pushButtonTimeMinuteMinus");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeHourPlus, formWidget, "pushButtonTimeHourPlus");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeHourMinus, formWidget, "pushButtonTimeHourMinus");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeDayPlus, formWidget, "pushButtonTimeDayPlus");
+      ASSOCIATE_PUSHBUTTON(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus");
+      ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
 
-
-      //      if (!gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout()))
-      //      {
-      //        CODE_ERROR(astroManager);
-      //      };
-
-      //        // Set the end time to the time now.
-
-      //      dateTimeEditEnd->setDateTime(QDateTime::currentDateTime());
-
-      //        // Populate the list of weather stations.
-
-      //      database::databaseWeather->populateComboBoxWeatherStations(comboBoxWeatherStation);
+      tableViewPlanning->setModel(&queryModel);
+      tableViewPlanning->setSortingEnabled(true);
+      tableViewPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
         // Populate combo boxes and select the last values selected.
 

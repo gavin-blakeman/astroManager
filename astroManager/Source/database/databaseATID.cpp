@@ -213,7 +213,7 @@ namespace AstroManager
 
       if (!query.value(0).isValid())
       {
-        astroManager_ERROR(0x0100);
+        ASTROMANAGER_ERROR(0x0100);
       }
       else
       {

@@ -68,6 +68,8 @@ namespace AstroManager
 
       setQuery(QString::fromStdString(sqlWriter_.string()), database::databaseARID->database());
 
+      DEBUGMESSAGE(sqlWriter_.string());
+
       int columnIndex = 0;
       setHeaderData(columnIndex++, Qt::Horizontal, QObject::tr("Target"));
       setHeaderData(columnIndex++, Qt::Horizontal, QObject::tr("Filter"));
@@ -173,7 +175,7 @@ namespace AstroManager
             };
             default:
             {
-              astroManager_CODE_ERROR;
+              ASTROMANAGER_CODE_ERROR;
               break;
             };
           };
@@ -240,7 +242,7 @@ namespace AstroManager
           break;
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         }
       };

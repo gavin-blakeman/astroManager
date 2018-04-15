@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt, boost
-// NAMESPACE:						AstroManager::dockwidgets
+// NAMESPACE:						AstroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
@@ -65,7 +65,8 @@ namespace AstroManager
 
   void CWindowSelectImage::eventEditImageData(bool)
   {
-    QModelIndex indexCopy = tableViewImages->currentIndex().sibling(tableViewImages->currentIndex().row(), QTE::CSelectImageQueryModel::imageID_c);
+    QModelIndex indexCopy = tableViewImages->currentIndex().sibling(tableViewImages->currentIndex().row(),
+                                                                    QTE::CSelectImageQueryModel::imageID_c);
 
     imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
 

@@ -2667,24 +2667,30 @@ namespace AstroManager
    }
 
     /// @brief Brings up the help dialog for help on the ATID database.
-    /// @throws None.
+    /// @throws GCL::CCodeError(astroManager)
+    /// @version 2018-04-15/GGB - 1. Changed raw pointer to std::unique_ptr
+    /// @version 2018-04-15/GGB - 2. Added error checking that the resource exists and added CODE_ERROR. (Bug #124)
     /// @version 2010-05-11/GGB - Function created.
 
     void CFrameWindow::HelpATID(void)
     {
-
-      help::CHelpATID *dialog = new help::CHelpATID();
+      std::unique_ptr<help::CHelpATID> dialog = std::make_unique<help::CHelpATID>();
       QUiLoader loader;
 
       QFile file(":/forms/dialogAboutATID.ui");
-      file.open(QFile::ReadOnly);
 
-      QDialog *formWidget = (QDialog *) loader.load(&file, (QWidget *) this);
-      dialog->setParent(formWidget);
-      file.close();
+      if (!file.open(QIODevice::ReadOnly))
+      {
+        CODE_ERROR(astroManager);
+      }
+      else
+      {
+        QDialog *formWidget = (QDialog *) loader.load(&file, (QWidget *) this);
+        dialog->setParent(formWidget);
+        file.close();
 
-      formWidget->exec();
-      delete dialog;
+        formWidget->exec();
+      };
     }
 
     /// @brief Opens or switches to the View | Object Information window.

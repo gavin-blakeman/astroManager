@@ -38,6 +38,7 @@
 #ifndef QUERYMODELPLANNING
 #define QUERYMODELPLANNING
 
+#include "../astroManager.h"
 #include "sqlQueryModel.h"
 
 #include <GCL>
@@ -54,7 +55,7 @@ namespace AstroManager
       enum
       {
         id_c = 0,
-        images_c,
+        rank_c,
         name_c,
         type_c,
         ra_c,
@@ -77,7 +78,7 @@ namespace AstroManager
         catalogue_c,
       };
 
-      std::uint32_t databasePlanID = 0;
+      planID_t planID = 0;
 
     private:
       CQueryModelPlanning(CQueryModelPlanning const &) = delete;
@@ -85,7 +86,7 @@ namespace AstroManager
 
     protected:
     public:
-      CQueryModelPlanning();
+      CQueryModelPlanning(planID_t);
       virtual ~CQueryModelPlanning() {}
 
       virtual QVariant data(QModelIndex const &item, int role = Qt::DisplayRole) const;

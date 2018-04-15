@@ -511,7 +511,7 @@ namespace AstroManager
             }
             else
             {
-              astroManager_CODE_ERROR;
+              ASTROMANAGER_CODE_ERROR;
             }
           }
           else if (noWCSAction == NOWCS_IGNORE)
@@ -1031,7 +1031,7 @@ namespace AstroManager
         }
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         }
       };
@@ -1078,7 +1078,7 @@ namespace AstroManager
           };
           default:
           {
-            astroManager_CODE_ERROR;
+            ASTROMANAGER_CODE_ERROR;
             break;
           };
         };
@@ -1182,7 +1182,7 @@ namespace AstroManager
         }
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         }
       };
@@ -1742,7 +1742,7 @@ namespace AstroManager
         };
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -1770,7 +1770,7 @@ namespace AstroManager
         }
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -1798,7 +1798,7 @@ namespace AstroManager
         };
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -1826,7 +1826,7 @@ namespace AstroManager
         }
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -1854,7 +1854,7 @@ namespace AstroManager
         };
         default:
         {
-          astroManager_CODE_ERROR;
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };

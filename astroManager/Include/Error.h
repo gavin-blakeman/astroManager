@@ -52,8 +52,8 @@ namespace AstroManager
 
   void loadErrorMessages();
 
-#define astroManager_ERROR(ERR) (ERROR(astroManager, ERR))
-#define astroManager_CODE_ERROR CODE_ERROR(astroManager)
+#define ASTROMANAGER_ERROR(ERR) (ERROR(astroManager, ERR))
+#define ASTROMANAGER_CODE_ERROR CODE_ERROR(astroManager)
 
 } // namespace AstroManager
 

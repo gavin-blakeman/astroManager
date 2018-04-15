@@ -40,6 +40,7 @@
 
 #include "../qtExtensions/MdiSubWindow.h"
 #include "../qtExtensions/qt.h"
+#include "../qtExtensions/queryModelPlanning.h"
 
 #include <ACL>
 
@@ -68,6 +69,8 @@ namespace AstroManager
       QPushButton *pushButtonRealTime = nullptr;
 
       QTableView *tableViewPlanning = nullptr;
+
+      QTE::CQueryModelPlanning queryModel;
 
       QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
 
