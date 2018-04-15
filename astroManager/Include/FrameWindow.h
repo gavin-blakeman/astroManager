@@ -34,13 +34,13 @@
 //
 // HISTORY:             2018-02-03 GGB - Rename Project to AstroManager
 //                      2018-02-01 GGB - Added support for resources (sites, observers, telescopes)
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+//                      2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-05-27 GGB - Moved all dialogs into seperate files.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-03 GGB - Moved CMdiSubWindow to own file and renamed.
-//                      2012-01-20 GGB - AIRDAS 0000.00 release.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2012-01-20 GGB - astroManager 0000.00 release.
+//                      2011-06-04 GGB - Development of classes for astroManager
 //                      2005-07-06 GGB - File Created
 //
 //*********************************************************************************************************************************
@@ -48,7 +48,7 @@
 #ifndef FRAMEWINDOW_H
 #define FRAMEWINDOW_H
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "ACL/astroFile.h"
 #include "dockWidgets/dockWidget.h"
@@ -171,7 +171,7 @@ namespace AstroManager
 
       IDA_HELP_CONTENTS,
       IDA_HELP_ABOUTATID,
-      IDA_HELP_ABOUT_AIRDAS,
+      IDA_HELP_ABOUT_astroManager,
       IDA_HELP_ABOUTQT,
     };
 
@@ -233,9 +233,9 @@ namespace AstroManager
     private:
       CMdiSubWindow::EWindowClass currentWindowClass;
 
-      QTimer *timer1s;
-      QMdiArea *mdiArea;
-      QSignalMapper *windowMapper;
+      QTimer *timer1s = nullptr;
+      QMdiArea *mdiArea = nullptr;
+      QSignalMapper *windowMapper = nullptr;
 
       typedef std::unique_ptr<dockwidgets::CDockWidget> PDockWidget;
       std::map<EDockWidgets, PDockWidget> dockWidgets;

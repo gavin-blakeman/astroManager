@@ -40,7 +40,7 @@
 
 #include "../../Include/windowCalculation/JD2Gregorian.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/Settings.h"
 
@@ -89,7 +89,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
       labelGregorianDate->setText(QString::fromStdString(JD.gregorianDate()));
@@ -123,8 +123,8 @@ namespace AstroManager
     }
 
     /// @brief Sets up the UI
-    /// @throws GCL::CRuntimeError(AIRDAS)
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CRuntimeError(astroManager)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-09/GGB - Converted to use Qt.
     /// @version 2010-01-02/GGB - Function created.
 
@@ -137,7 +137,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource file "":/windows/JD2Gregorian.ui"" ");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

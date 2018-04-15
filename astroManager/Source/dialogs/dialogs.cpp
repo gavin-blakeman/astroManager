@@ -39,18 +39,18 @@
 //                        - CImageResampleDialog
 //                        - CDialogEditResources
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //                      2012-01-28 GGB - Move CImageCalibrationDialog to it's own file.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dialogs/dialogs.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/database/database.h"
 #include "../../Include/database/databaseARID.h"
@@ -98,7 +98,7 @@ namespace AstroManager
     /// @brief Constructor for the CDialog class.
     /// @param[in] szDialog - String value representing the dialog resource name.
     /// @param[in] parent - The parent object
-    /// @throws CError(AIRDAS, 0x0001)
+    /// @throws CError(astroManager, 0x0001)
     /// @throws CRuntimeAssert
     /// @version 2014-02-10/GGB - Added check and exception after opening the file and loading the dialog.
     /// @version 2010-06-21/GGB - Function created.
@@ -112,18 +112,18 @@ namespace AstroManager
       if (!QFile::exists(szDialog))
       {
         ERRORMESSAGE("Resource does not exist: " + szDialog.toStdString());
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Could not open the resource: " + szDialog.toStdString());
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       };
 
       dlg = static_cast<QDialog *>(loader.load(&file));
 
-      RUNTIME_ASSERT(AIRDAS, dlg != nullptr, "The dialog template could not be loaded.")
+      RUNTIME_ASSERT(astroManager, dlg != nullptr, "The dialog template could not be loaded.")
 
       file.close();
     }

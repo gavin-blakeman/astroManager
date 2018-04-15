@@ -36,18 +36,18 @@
 // CLASS HIERARCHY:     CDialog
 //                        - CSelectObjectDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-03-17 GGB - Removed CSelectObjectDialog into file DialogSelectObject.
-//                      2013-01-20 GGB - AIRDAS 0000.00.000 release.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2013-01-20 GGB - astroManager 0000.00.000 release.
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dialogs/dialogSelectObject.h"
 
-  // AIRDAS includes
+  // astroManager includes
 
 #include "../../Include/database/database.h"
 #include "../../Include/database/databaseATID.h"
@@ -127,7 +127,7 @@ namespace AstroManager
         selectRecent();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -528,7 +528,7 @@ namespace AstroManager
       buttonBox = dlg->findChild<QDialogButtonBox *>("buttonBox");
       if (!buttonBox)
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
       connect(buttonBox, SIGNAL(accepted()), this, SLOT(eventButtonSelectClicked()));

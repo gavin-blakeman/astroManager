@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	ACL, Qt
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //

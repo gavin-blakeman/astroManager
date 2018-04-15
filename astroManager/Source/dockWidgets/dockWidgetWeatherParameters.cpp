@@ -40,7 +40,7 @@
 
 #include "../../Include/dockWidgets/dockWidgetWeatherParameters.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/Settings.h"
 #include "../../Include/astroManager.h"
@@ -63,8 +63,8 @@ namespace AstroManager
     }
 
     /// @brief Function to setup the window
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CRuntimeAssert(astroManager)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2017-07-06/GGB - Function created.
 
@@ -77,7 +77,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/dockWidgets/dockWidgetWeatherParameters.ui");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

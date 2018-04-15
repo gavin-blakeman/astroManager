@@ -34,13 +34,13 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-07 GGB - Moved CCBinPixelsDialog into it's own file.
 //                      2013-01-27 GGB - Moved CImageResampleDialog into it's own file.
-//                      2013-01-20 GGB - Release of AIRDAS 0000.00
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2013-01-20 GGB - Release of astroManager 0000.00
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 

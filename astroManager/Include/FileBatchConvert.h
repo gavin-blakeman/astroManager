@@ -37,15 +37,15 @@
 //                        -CARPAASubWindow
 //
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2012-01-23 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2012-01-23 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #ifndef FILEBATCHCONVERT_H
 #define FILEBATCHCONVERT_H
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "dialogs/dialogs.h"
 

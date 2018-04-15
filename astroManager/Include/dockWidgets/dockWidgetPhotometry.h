@@ -35,21 +35,21 @@
 //                        - CInstrumentDockwidget
 //                        - CMessageWidget
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-01-28 GGB - Split PhotometryDockWidgets from DockWidgets.
 //                      2013-01-20 GGB - Removed CMessageWidget to a seperate file.
-//                      2013-01-20 GGB - AIRDAS 0000.00.000 release.
+//                      2013-01-20 GGB - astroManager 0000.00.000 release.
 //                      2012-11-18 GGB - CInstrumentDockwidget split into a new file and renamed.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #ifndef PHOTOMETRYDOCKWIDGET_H
 #define PHOTOMETRYDOCKWIDGET_H
 
-  // AIRDAS files
+  // astroManager files
 
 #include "dockWidgetImage.h"
 #include "../photometry/photometryObservation.h"

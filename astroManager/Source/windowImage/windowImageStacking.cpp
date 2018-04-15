@@ -34,18 +34,18 @@
 //                          - CAstroImageWindow
 //                            - CStackImagesWindow
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2011-06-11 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2011-06-11 GGB - Development of classes for astroManager
 //                      2011-02-13 GGB - File created.
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/windowImage/windowImageStacking.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../../Include/ACL/astroFile.h"
 #include "../../Include/AstroGraphicsView.h"
@@ -511,7 +511,7 @@ namespace AstroManager
             }
             else
             {
-              AIRDAS_CODE_ERROR;
+              astroManager_CODE_ERROR;
             }
           }
           else if (noWCSAction == NOWCS_IGNORE)
@@ -922,7 +922,7 @@ namespace AstroManager
 
     /// @brief  Takes the current output file, and passes it to the parent object to open a new window containing just the
     ///         new window.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2017-07-03/GGB - Updated for new style dockWidgets storage.
     /// @version 2013-05-20/GGB - Fixed code for outputControlImage.
     /// @version 2013-03-10/GGB - Function created.
@@ -951,7 +951,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -959,7 +959,7 @@ namespace AstroManager
     /// @details Need to update the current image to the relevant image depending on what tab is active.
     ///           @li Tab0 = Input files and images
     ///           @li Tab1 = Output image.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2017-07-03/GGB - Updated to use new style imageChage() functions.
     /// @version 2013-03-10/GGB - Function created.
 
@@ -992,7 +992,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
     }
@@ -1031,7 +1031,7 @@ namespace AstroManager
         }
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         }
       };
@@ -1044,7 +1044,7 @@ namespace AstroManager
     ///          handles the details of the loading.
     /// @param[in] selectedItem - Pointer to the listWidgetitem with the data to load or select.
     /// @returns Pointer to the controlImage structure.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @throws From called functions.
     /// @version 2017-08-27/GGB - Function created.
 
@@ -1078,7 +1078,7 @@ namespace AstroManager
           };
           default:
           {
-            AIRDAS_CODE_ERROR;
+            astroManager_CODE_ERROR;
             break;
           };
         };
@@ -1140,13 +1140,13 @@ namespace AstroManager
     }
 
     /// @brief Repaints the image when any changes occur.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-08-29/GGB - Function created.
 
     void CStackImagesWindow::repaintImage()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw, "Parent Widget should not == nullptr");
+      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not == nullptr");
 
       switch (tabWidget->currentIndex())
       {
@@ -1182,7 +1182,7 @@ namespace AstroManager
         }
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         }
       };
@@ -1276,7 +1276,7 @@ namespace AstroManager
     }
 
     /// @brief Loads the template for the UI. Populates all required fields
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2017-06-14/GGB - Updated to Qt5
     /// @version 2013-06-29/GGB - Added support for remove all button.
@@ -1296,7 +1296,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/windows/windowStackImages.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       };
 
       QWidget *formWidget = loader.load(&file, this);
@@ -1406,7 +1406,7 @@ namespace AstroManager
     /// @param[in] selectedItem - Pointer to the selected item.
     /// @details The selected item contains the path of the item in the Qt::UserRole data. This allows quick selection of the
     ///          filename and path of the item.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-07-14/GGB - Added code to disable the zoom actions. (Bug #1195976)
     /// @version 2011-03-03/GGB - Function Created
 
@@ -1456,7 +1456,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       catch (...)
@@ -1510,7 +1510,7 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           };
         };
       };
@@ -1621,8 +1621,8 @@ namespace AstroManager
         std::unique_ptr<ACL::CAstroFile> &outputImage = imageStack.stackImages(stackMode);
         outputControlImage.astroFile.reset(dynamic_cast<CAstroFile *>(outputImage.release()));
 
-        outputControlImage.astroFile->keywordWrite(0, ACL::AIRDAS_UUID, QUuid::createUuid().toString().toUpper().toStdString(),
-                                                   ACL::AIRDAS_COMMENT_UUID);
+        outputControlImage.astroFile->keywordWrite(0, ACL::astroManager_UUID, QUuid::createUuid().toString().toUpper().toStdString(),
+                                                   ACL::astroManager_COMMENT_UUID);
         outputControlImage.astroFile->fileNameValid(false);
         outputControlImage.astroFile->imageIDValid(false);
         outputControlImage.astroFile->syntheticImage(true);
@@ -1716,7 +1716,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -1742,7 +1742,7 @@ namespace AstroManager
         };
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         };
       };
@@ -1770,7 +1770,7 @@ namespace AstroManager
         }
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         };
       };
@@ -1798,7 +1798,7 @@ namespace AstroManager
         };
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         };
       };
@@ -1826,7 +1826,7 @@ namespace AstroManager
         }
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         };
       };
@@ -1854,7 +1854,7 @@ namespace AstroManager
         };
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         };
       };

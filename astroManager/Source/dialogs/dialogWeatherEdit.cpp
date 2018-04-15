@@ -42,7 +42,7 @@
 
 #include "../../Include/dialogs/dialogWeatherEdit.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../../Include/Error.h"
 #include "../../Include/Settings.h"

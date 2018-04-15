@@ -57,9 +57,27 @@ namespace AstroManager
     {
       setAttribute(Qt::WA_DeleteOnClose);
 
+        // Create the timer.
+
+      timer1s = new QTimer(this);
+      connect(timer1s, SIGNAL(timeout()), this, SLOT(eventTimer1s()));
+
       setupUI();
 
       setWindowTitle(tr("Observation Planning"));
+    }
+
+    /// @brief Responds when the observing site is changed.
+    /// @param[in] index - The new current index.
+    /// @throws None.
+    /// @version 2018-04-15/GGB - Function created.
+
+    void CWindowPlanning::comboBoxSiteCurrentIndexChanged(int)
+    {
+        // Update the time zone offset.
+
+      database::databaseARID->getTimeZoneOffset(comboBoxSites->currentData().toInt(), &timeZoneOffset);
+      timeZoneOffset *= 60 * 60;  // Convert to seconds.
     }
 
     /// @brief Function called when a different Observing Plan is selected.
@@ -72,6 +90,69 @@ namespace AstroManager
         // Clear the current list of objects.
 
       planTargets.clear();
+    }
+
+    /// @brief Responds to the 1s timer when triggered to update the time in the window and any other information required.
+    /// @throws GCL::CCodeError(astroManager)
+    /// @version 2018-04-15/GGB - Function created.
+
+    void CWindowPlanning::eventTimer1s()
+    {
+      if (radioButtonLT->isChecked())
+      {
+        QDateTime localTime = QDateTime::currentDateTime().toOffsetFromUtc(timeZoneOffset);
+        dateEditSelectedDate->setDate(localTime.date());
+        timeEditSelectedTime->setTime(localTime.time());
+      }
+      else if (radioButtonUT->isChecked())
+      {
+        QDateTime universalTime= QDateTime::currentDateTimeUtc();
+        dateEditSelectedDate->setDate(universalTime.date());
+        timeEditSelectedTime->setTime(universalTime.time());
+      }
+      else if (radioButtonST->isChecked())
+      {
+
+      }
+      else
+      {
+        CODE_ERROR(astroManager);
+      };
+    }
+
+    /// @brief Responds to the Real Time push button being clicked.
+    /// @param[in] checked - Checked state of the button.
+    /// @throws None.
+    /// @version 2018-04-15/GGB - Function created.
+
+    void CWindowPlanning::pushButtonRealTimeClicked(bool checked)
+    {
+      if (checked)
+      {
+        pushButtonTimeDayMinus->setEnabled(false);
+        pushButtonTimeDayPlus->setEnabled(false);
+        pushButtonTimeHourMinus->setEnabled(false);
+        pushButtonTimeHourPlus->setEnabled(false);
+        pushButtonTimeMinuteMinus->setEnabled(false);
+        pushButtonTimeMinutePlus->setEnabled(false);
+
+        timer1s->start(1000);
+
+        settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_REALTIME, true);
+      }
+      else
+      {
+        timer1s->stop();
+
+        pushButtonTimeDayMinus->setEnabled(true);
+        pushButtonTimeDayPlus->setEnabled(true);
+        pushButtonTimeHourMinus->setEnabled(true);
+        pushButtonTimeHourPlus->setEnabled(true);
+        pushButtonTimeMinuteMinus->setEnabled(true);
+        pushButtonTimeMinutePlus->setEnabled(true);
+
+        settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_REALTIME, false);
+      }
     }
 
     /// @brief Respond to the LT Radio button being pressed.
@@ -157,7 +238,7 @@ namespace AstroManager
 
       //      if (!gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout()))
       //      {
-      //        CODE_ERROR(AIRDAS);
+      //        CODE_ERROR(astroManager);
       //      };
 
       //        // Set the end time to the time now.
@@ -168,10 +249,15 @@ namespace AstroManager
 
       //      database::databaseWeather->populateComboBoxWeatherStations(comboBoxWeatherStation);
 
-        // Populate combo boxes
+        // Populate combo boxes and select the last values selected.
 
       database::databaseARID->populateComboSite(comboBoxSites, true);
       database::databaseARID->populateComboObservingPlans(comboBoxPlans, true);
+
+        // Get the time zone offset.
+
+      database::databaseARID->getTimeZoneOffset(comboBoxSites->currentData().toInt(), &timeZoneOffset);
+      timeZoneOffset *= 60 * 60;  // Convert to seconds.
 
         // Setup initial values.
 
@@ -200,14 +286,43 @@ namespace AstroManager
         };
       }
 
+      if (settings::astroManagerSettings->value(settings::WINDOWPLANNING_REALTIME, false).toBool())
+      {
+        pushButtonTimeDayMinus->setEnabled(false);
+        pushButtonTimeDayPlus->setEnabled(false);
+        pushButtonTimeHourMinus->setEnabled(false);
+        pushButtonTimeHourPlus->setEnabled(false);
+        pushButtonTimeMinuteMinus->setEnabled(false);
+        pushButtonTimeMinutePlus->setEnabled(false);
 
+        pushButtonRealTime->setChecked(true);
+
+        timer1s->start(1000);
+      }
+      else
+      {
+        timer1s->stop();
+
+        pushButtonTimeDayMinus->setEnabled(true);
+        pushButtonTimeDayPlus->setEnabled(true);
+        pushButtonTimeHourMinus->setEnabled(true);
+        pushButtonTimeHourPlus->setEnabled(true);
+        pushButtonTimeMinuteMinus->setEnabled(true);
+        pushButtonTimeMinutePlus->setEnabled(true);
+
+        pushButtonRealTime->setChecked(false);
+      };
 
         // Create signal/slot connections
 
       connect(comboBoxPlans, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChangedPlans(int)));
+
+      connect(comboBoxSites, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxSiteCurrentIndexChanged(int)));
+
       connect(radioButtonLT, SIGNAL(clicked(bool)), this, SLOT(radioButtonLTClicked(bool)));
       connect(radioButtonUT, SIGNAL(clicked(bool)), this, SLOT(radioButtonUTClicked(bool)));
       connect(radioButtonST, SIGNAL(clicked(bool)), this, SLOT(radioButtonLSTClicked(bool)));
+      connect(pushButtonRealTime, SIGNAL(clicked(bool)), this, SLOT(pushButtonRealTimeClicked(bool)));
     }
   }
 }

@@ -37,8 +37,8 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-02-07 GGB - Moved CDialogImageCrop, CBinPixelsDialog, CImageFloatDialog into it's own file.
 //
 //*********************************************************************************************************************************

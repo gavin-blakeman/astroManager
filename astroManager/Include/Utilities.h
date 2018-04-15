@@ -34,15 +34,15 @@
 //                        -CARPAASubWindow
 //
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2011-06-11 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2011-06-11 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_UTILITIES_H
-#define AIRDAS_UTILITIES_H
+#ifndef astroManager_UTILITIES_H
+#define astroManager_UTILITIES_H
 
-  // AIRDAS files
+  // astroManager files
 
 #include "database/database.h"
 #include "dialogs/dialogs.h"

@@ -26,7 +26,7 @@
 //
 // OVERVIEW:						Implements a dialog to allow the user to set paramters for the findstars algorithm.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2014-02-16 GGB - File created.
 //
 //*********************************************************************************************************************************

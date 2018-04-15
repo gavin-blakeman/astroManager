@@ -1,8 +1,25 @@
-Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+AstroManager (Astronomy Manager)
 ================================================================
 
-Website: www.airdas.net
-Source code can be found on Launchpad.
+Website: www.astromanager.org
+Source code can be found on github.
+
+astroManager  GPLv2 Copyright 2013-2018 Gavin Blakeman.
+Boost 1.62    Boost License
+CfitsIO       Public Domain
+ACL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+GCL           GPLV2 Copyright 2013-2018 Gavin Blakeman.
+MCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+PCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+SCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+
+LibRaw
+NOVAS 3.1
+QT Framework
+qwt 6.0.1
+SBIG
+SOFA
+WeatherImport GPLv2 Copyright 2013-2018 Gavin Blakeman.
 
 
 

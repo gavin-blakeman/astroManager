@@ -69,7 +69,10 @@ namespace AstroManager
 
       QTableView *tableViewPlanning = nullptr;
 
+      QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
+
       ACL::DTargetAstronomy planTargets;
+      std::int_least32_t timeZoneOffset = 0;
 
       void setupUI();
 
@@ -84,12 +87,18 @@ namespace AstroManager
       virtual bool saveAs() {}
 
     public slots:
+      void eventTimer1s();
+
       virtual void windowActivating() {}
       virtual void currentIndexChangedPlans(int);
 
       virtual void radioButtonLTClicked(bool);
       virtual void radioButtonUTClicked(bool);
       virtual void radioButtonLSTClicked(bool);
+
+      virtual void pushButtonRealTimeClicked(bool);
+
+      virtual void comboBoxSiteCurrentIndexChanged(int);
     };
   }
 }

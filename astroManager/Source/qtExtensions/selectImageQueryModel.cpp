@@ -173,7 +173,7 @@ namespace AstroManager
             };
             default:
             {
-              AIRDAS_CODE_ERROR;
+              astroManager_CODE_ERROR;
               break;
             };
           };
@@ -240,7 +240,7 @@ namespace AstroManager
           break;
         default:
         {
-          AIRDAS_CODE_ERROR;
+          astroManager_CODE_ERROR;
           break;
         }
       };

@@ -32,7 +32,7 @@
 //
 // CLASS HIERARCHY:     QDebugStream
 //
-// HISTORY:             0000.00.000 2012-07-28 GGB - Development of classes for AIRDAS
+// HISTORY:             0000.00.000 2012-07-28 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 

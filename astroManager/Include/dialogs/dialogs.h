@@ -38,11 +38,11 @@
 //                        - CImageFloatDialog
 //                        - CImageResampleDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //                      2012-01-28 GGB - Move CImageCalibrationDialog to it's own file.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
@@ -73,7 +73,7 @@ namespace AstroManager
     T findChild(const QString &childName)
     {
       T returnValue = dlg->findChild<T>(childName);
-      RUNTIME_ASSERT(AIRDAS, returnValue != nullptr, "Control " + childName.toStdString() + " not found." );
+      RUNTIME_ASSERT(astroManager, returnValue != nullptr, "Control " + childName.toStdString() + " not found." );
 
       return returnValue;
     }

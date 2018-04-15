@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
@@ -39,7 +39,7 @@
 
 #include "../../Include/ACL/astroFile.h"
 
-  // AIRDAS Files
+  // astroManager Files
 
 #include "../../Include/database/databaseARID.h"
 #include "../../Include/ACL/FITSMemoryFileArray.h"
@@ -71,7 +71,7 @@ namespace AstroManager
     parent_(parent), fileNameValid_(true), fileName_(filename), imageIDValid_(false), imageID_(0), imageVersion_(0)
   {
       // First change the object stored by the astroFile into a AstroManager::CObservatory type.
-      // and the telescope into an AIRDASCTelescope() type.
+      // and the telescope into an astroManagerCTelescope() type.
 
     observationLocation.reset(new CObservatory());
     observationTelescope.reset(new CTelescope());
@@ -89,7 +89,7 @@ namespace AstroManager
     fileNameValid_(false), fileName_(), imageIDValid_(true), imageID_(imageID), imageVersion_(imageVersion)
   {
       // First change the object stored by the astroFile into a AstroManager::CObservatory type.
-      // and the telescope into an AIRDASCTelescope() type.
+      // and the telescope into an astroManagerCTelescope() type.
 
     observationLocation.reset(new CObservatory());
     observationTelescope.reset(new CTelescope());
@@ -107,7 +107,7 @@ namespace AstroManager
     fileNameValid_(false), fileName_(), imageIDValid_(false), imageID_(0), imageVersion_(0)
   {
       // First change the object stored by the astroFile into a AstroManager::CObservatory type.
-      // and the telescope into an AIRDASCTelescope() type.
+      // and the telescope into an astroManagerCTelescope() type.
 
     observationLocation.reset(new CObservatory());
     observationTelescope.reset(new CTelescope());
@@ -133,7 +133,7 @@ namespace AstroManager
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->latitude(), ACL::AIRDAS_COMMENT_LATITUDE);
+      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->latitude(), ACL::astroManager_COMMENT_LATITUDE);
 
         // Delete the keywords that are not required.
 
@@ -153,7 +153,7 @@ namespace AstroManager
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->longitude(), ACL::AIRDAS_COMMENT_LONGITUDE);
+      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->longitude(), ACL::astroManager_COMMENT_LONGITUDE);
 
         // Delete the keywords that are not required.
 
@@ -165,17 +165,17 @@ namespace AstroManager
     {
         // The MAXIM one is the one we want.
 
-      keywordDelete(0, ACL::AIRDAS_ALTITUDE);
+      keywordDelete(0, ACL::astroManager_ALTITUDE);
     }
-    else if (keywordExists(0, ACL::AIRDAS_ALTITUDE))
+    else if (keywordExists(0, ACL::astroManager_ALTITUDE))
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_ALTITUDE, getObservationLocation()->altitude(), ACL::AIRDAS_COMMENT_ALTITUDE);
+      keywordWrite(0, ACL::MAXIM_ALTITUDE, getObservationLocation()->altitude(), ACL::astroManager_COMMENT_ALTITUDE);
 
         // Delete the keywords that are not required.
 
-      keywordDelete(0, ACL::AIRDAS_ALTITUDE);
+      keywordDelete(0, ACL::astroManager_ALTITUDE);
     };
   }
 
@@ -192,7 +192,7 @@ namespace AstroManager
 
   /// @brief Returns the file name and path.
   /// @returns The file name and path.
-  /// @throws GCL::CCodeError(AIRDAS)
+  /// @throws GCL::CCodeError(astroManager)
   /// @version 2017-08-12/GGB - Function created.
 
   boost::filesystem::path CAstroFile::getFileName() const
@@ -203,7 +203,7 @@ namespace AstroManager
     }
     else
     {
-      AIRDAS_CODE_ERROR;
+      astroManager_CODE_ERROR;
     }
   }
 
@@ -221,7 +221,7 @@ namespace AstroManager
 
   /// @brief Overloaded load() function to load the file contents.
   /// @details Calls preLoadActions() and postLoadAction() to allow additional actions to take place automatically.
-  /// @throws GCL::CCodeError(AIRDAS)
+  /// @throws GCL::CCodeError(astroManager)
   /// @version 2017-07-26/GGB - Function created.
 
   void CAstroFile::load()
@@ -243,7 +243,7 @@ namespace AstroManager
   }
 
   /// @brief Loads an image from the database.
-  /// @throws GCL::CCodeError(AIRDAS)
+  /// @throws GCL::CCodeError(astroManager)
   /// @version 2017-08-12/GGB - Function created.
 
   void CAstroFile::loadFromDatabase()
@@ -266,7 +266,7 @@ namespace AstroManager
     }
     else
     {
-      AIRDAS_CODE_ERROR;
+      astroManager_CODE_ERROR;
     };
   }
 
@@ -306,11 +306,11 @@ namespace AstroManager
 
       // Check if the keyword exists for the UUID
 
-    if (keywordExists(0, ACL::AIRDAS_UUID) )
+    if (keywordExists(0, ACL::astroManager_UUID) )
     {
         // If so, load the UUID value
 
-      std::string suuid = static_cast<std::string>(keywordData(0, ACL::AIRDAS_UUID));
+      std::string suuid = static_cast<std::string>(keywordData(0, ACL::astroManager_UUID));
 
       _uuid = QUuid(QString::fromStdString(suuid));
       imageRegistered = true;
@@ -350,7 +350,7 @@ namespace AstroManager
 
         // Try to associate the latiitude/longitude with an observing site.
 
-      keywordWrite(0, ACL::AIRDAS_UUID, _uuid.toString().toUpper().toStdString(), ACL::AIRDAS_COMMENT_UUID);
+      keywordWrite(0, ACL::astroManager_UUID, _uuid.toString().toUpper().toStdString(), ACL::astroManager_COMMENT_UUID);
     };
 
       // Search for the observatory that is closest.
@@ -377,7 +377,7 @@ namespace AstroManager
   }
 
   /// @brief Saves the image. The lastSaveAs_ variable is used to determine how to save the file.
-  /// @throws GCL::CCodeError(AIRDAS)
+  /// @throws GCL::CCodeError(astroManager)
   /// @version 2017-08-13/GGB - Function created.
 
   bool CAstroFile::save()
@@ -403,7 +403,7 @@ namespace AstroManager
       };
       default:
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
         break;
       };
     };
@@ -413,7 +413,7 @@ namespace AstroManager
 
   /// @brief Performs the saveAs function.
   /// @details If the ARID database is enabled, then the
-  /// @throws GCL::CCodeError(AIRDAS)
+  /// @throws GCL::CCodeError(astroManager)
   /// @version 2017-09-01/GGB - Function created.
 
   bool CAstroFile::saveAs()
@@ -445,7 +445,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       };
     }
     else
@@ -555,9 +555,9 @@ namespace AstroManager
         // Need to register the image.
         // Check if the UUID exists.
 
-      if (keywordExists(0, ACL::AIRDAS_UUID))
+      if (keywordExists(0, ACL::astroManager_UUID))
       {
-        std::string szUUID = static_cast<std::string>(keywordData(0, ACL::AIRDAS_UUID));
+        std::string szUUID = static_cast<std::string>(keywordData(0, ACL::astroManager_UUID));
         QUuid UUID(QString::fromStdString(szUUID));
 
         if (UUID.isNull())
@@ -570,7 +570,7 @@ namespace AstroManager
           }
           while (database::databaseARID->isImageUUIDRegistered(UUID, imageID_));
 
-          keywordWrite(0, ACL::AIRDAS_UUID, UUID.toString().toStdString(), ACL::AIRDAS_COMMENT_UUID);
+          keywordWrite(0, ACL::astroManager_UUID, UUID.toString().toStdString(), ACL::astroManager_COMMENT_UUID);
         }
         else if (database::databaseARID->isImageUUIDRegistered(UUID, imageID_))
         {

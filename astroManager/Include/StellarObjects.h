@@ -24,7 +24,7 @@
 // OVERVIEW:            The stellar objects information system implements the interface between the application an the method of
 //                      obtaining stellar object information. There are two ways of obtaining stellar object information, the first
 //                      is from the ATID database; the second is from the SIMBAD web service.
-//                      The class in this sub-system implements the interface between the AIRDAS GUI and the two information
+//                      The class in this sub-system implements the interface between the astroManager GUI and the two information
 //                      systems.
 //
 // CLASSES INCLUDED:    CSIMBAD
@@ -35,8 +35,8 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_STELLAROBJECTS_H
-#define AIRDAS_STELLAROBJECTS_H
+#ifndef astroManager_STELLAROBJECTS_H
+#define astroManager_STELLAROBJECTS_H
 
   // Standard libraries
 
@@ -89,4 +89,4 @@ namespace AstroManager
 
 }   // namespace AstroManager4
 
-#endif // AIRDAS_STELLAROBJECTS_H
+#endif // astroManager_STELLAROBJECTS_H

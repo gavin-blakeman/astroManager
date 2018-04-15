@@ -36,12 +36,12 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-02-07 GGB - Moved dialog CDailogImageCrop into seperate file.
 //                      2013-01-27 GGB - Moved CImageResampleDialog into it's own file
-//                      2013-01-20 GGB - Release of AIRDAS 0000.00
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2013-01-20 GGB - Release of astroManager 0000.00
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
@@ -130,7 +130,7 @@ namespace AstroManager
     }
 
     /// @brief Links and sets all the UI elements.
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version 2015-09-21/GGB - Updated to use ASSOCIATE_CONTROL() macro and check for null.
     /// @version 2013-09-16/GGB - Changed logic flow to correct bug. (Bug #1219189)
     /// @version 2011-08-15/GGB - Function created.

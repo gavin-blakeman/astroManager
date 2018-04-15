@@ -27,7 +27,7 @@
 // OVERVIEW:						Implements a dialog class to allow the user to select some JPEG parameters when an image is being exported
 //                      as JPEG.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2013-07-25 GGB - File created.
 //
 //*********************************************************************************************************************************

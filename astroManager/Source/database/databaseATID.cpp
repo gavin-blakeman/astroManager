@@ -33,18 +33,18 @@
 //                        - CARID
 //                       - CdatabaseWeather
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-24 GGB - Split CATID into it's own file.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2012-01-04 GGB - Classes developed for AIRDAS
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2012-01-04 GGB - Classes developed for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/database/databaseATID.h"
 
-  // AIRDAS files
+  // astroManager files
 
 #include "../../Include/Settings.h"
 #include "../../Include/qtExtensions/qt.h"
@@ -213,7 +213,7 @@ namespace AstroManager
 
       if (!query.value(0).isValid())
       {
-        AIRDAS_ERROR(0x0100);
+        astroManager_ERROR(0x0100);
       }
       else
       {
@@ -966,7 +966,7 @@ namespace AstroManager
     /// @param[in] forceQuery - Force the query to use a specific source if required.
     /// @returns true - stellarObject updated with data from query
     /// @returns false - Unable to update stellarObject
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2016-05-07/GGB - Function created.
 
     bool CATID::queryStellarObjectByName(std::string const &objectName, ACL::CTargetStellar *stellarObject, EForce forceQuery)
@@ -999,7 +999,7 @@ namespace AstroManager
         }
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         }
       }

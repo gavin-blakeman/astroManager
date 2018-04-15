@@ -34,11 +34,11 @@
 //                        - CInstrumentDockwidget
 //                        - CMessageWidget
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2014-12-25/GGB - Changed logging to using the GCL::loggert functionality.
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-08-11 GGB - Changed filename to DockWidgetMessage
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-01-20 GGB - Removed from file DockWidgets.h
 //
 //*********************************************************************************************************************************

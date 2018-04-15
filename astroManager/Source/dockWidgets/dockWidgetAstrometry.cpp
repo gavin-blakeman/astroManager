@@ -34,16 +34,16 @@
 //                        - CInstrumentDockwidget
 //                        - CMessageWidget
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-01 GGB - Removed CAstrometryDockWidget into this file
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dockWidgets/dockWidgetAstrometry.h"
 
-  // AIRDAS Include files
+  // astroManager Include files
 
 #include "../../Include/database/database.h"
 #include "../../Include/database/databaseATID.h"
@@ -188,7 +188,7 @@ namespace AstroManager
             imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
             if (!iw)
             {
-              CODE_ERROR(AIRDAS);
+              CODE_ERROR(astroManager);
             }
 
             iw->repaintImage();
@@ -200,13 +200,13 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+            CODE_ERROR(astroManager);   // Dock widget should be grayed.
           }
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -252,20 +252,20 @@ namespace AstroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
 
           iw->updateWindowTitle();
         };
       }
       else
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
     }
 
     /// @briefFunction called when the user wishes to reference an object on an image.
     /// @details Sends a message to the active child window (if it is the correct type of window) to allow the image to be
     ///          referenced.
     /// @param[in] toReference - Indicates if the button has been pressed.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-08-04/GGB - Added support for the comparison image window.
     /// @version 2011-06-14/GGB - Function created.
 
@@ -291,7 +291,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+          CODE_ERROR(astroManager);   // Dock widget should be grayed.
         }
       }
       else
@@ -306,7 +306,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+          CODE_ERROR(astroManager);   // Dock widget should be grayed.
         };
       };
     }
@@ -554,7 +554,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Failed to open resource :/forms/dwAstrometry.ui");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -577,7 +577,7 @@ namespace AstroManager
       if (!tableWidgetAstrometry || !pushButtonReferenceSelect || !pushButtonReferenceEdit || !pushButtonReferenceDelete ||
           !pushButtonObjectInformation || !pushButtonPlateConstants || !labelObjectName || !labelCCDCoordinates || !labelObjectRA ||
           !labelObjectDec || !labelObjectType)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       connect(pushButtonReferenceSelect, SIGNAL(clicked(bool)), this, SLOT(eventButtonReferenceSelect(bool)));
       connect(pushButtonReferenceDelete, SIGNAL(clicked(bool)), this, SLOT(eventButtonReferenceDelete(bool)));

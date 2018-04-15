@@ -32,15 +32,15 @@
 //                        - CDialog
 //                          - CDialogOptions
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-03-29 GGB - File Created
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dialogs/dialogOptions.h"
 
-  // AIRDAS headers
+  // astroManager headers
 
 #include "../../Include/database/database.h"
 #include "../../Include/Error.h"
@@ -319,7 +319,7 @@ namespace AstroManager
         }
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         }
       };
@@ -438,7 +438,7 @@ namespace AstroManager
         }
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         }
       };
@@ -590,7 +590,7 @@ namespace AstroManager
           }
           default:
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
             break;
           }
         };
@@ -733,7 +733,7 @@ namespace AstroManager
           }
           default:
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
             break;
           }
         };
@@ -845,7 +845,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
@@ -1201,7 +1201,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
 
         if (!driverValid)

@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
@@ -25,17 +25,17 @@
 //                      see <http://www.gnu.org/licenses/>.
 //
 //
-// OVERVIEW:            Implements classes for the View Menu in the AIRDAS application
+// OVERVIEW:            Implements classes for the View Menu in the astroManager application
 //
 // CLASSES INCLUDED:    CObjectInfoWindow
 //
 // CLASS HIERARCHY:     QMdiSubWindow
 //                        - CObjectInfoWindow
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-20 GGB - AIRDAS 2013.03 release.
-//                      2013-01-22 GGB - AIRDAS 0000.00 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-20 GGB - astroManager 2013.03 release.
+//                      2013-01-22 GGB - astroManager 0000.00 release.
 //                      2009-10-25 GGB - File created
 //
 //*********************************************************************************************************************************
@@ -46,7 +46,7 @@
 
 #include <QUiLoader>
 
-  // AIRDAS files
+  // astroManager files
 
 #include "../Include/database/database.h"
 #include "../Include/database/databaseATID.h"

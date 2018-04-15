@@ -1,12 +1,12 @@
 //*********************************************************************************************************************************
 //
-// PROJECT:							AIRDAS
+// PROJECT:							astroManager
 // FILE:								FITSMemoryFileArray
 // SUBSYSTEM:						Class for in-memory FITS files using QByteArray
 // LANGUAGE:						C++
 // TARGET OS:						None.
 // LIBRARY DEPENDANCE:	Qt.
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
@@ -38,7 +38,7 @@
 #ifndef FITSMEMORYFILEARRAY
 #define FITSMEMORYFILEARRAY
 
-  // AIRDAS includes
+  // astroManager includes
 
 #include "../qtExtensions/qt.h"
 

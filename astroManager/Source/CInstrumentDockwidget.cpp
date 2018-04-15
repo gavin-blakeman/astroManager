@@ -33,16 +33,16 @@
 //                        - CAstrometryDockWidget
 //                        - CInstrumentDockwidget
 //
-// HISTORY:             2013-06-16/GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 Release
+// HISTORY:             2013-06-16/GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 Release
 //                      2012-11-18 GGB - CInstrumentDockwidget split into a new file and renamed.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../Include/CInstrumentDockwidget.h"
 
-  // Include files for AIRDAS
+  // Include files for astroManager
 
 #include "../Include/database/databaseARID.h"
 

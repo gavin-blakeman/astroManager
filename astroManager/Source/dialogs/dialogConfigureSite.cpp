@@ -51,14 +51,14 @@ namespace AstroManager
     /// @brief Constructor for the class.
     /// @param[in] observatory - Pointer to the observatory class containing the information.
     /// @throws std::bad_alloc
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version 2017-08-04/GGB - Updated to work with ARID and registerObservingSite()
     /// @version 2011-06-20/GGB - Function created.
 
     CDialogConfigureSite::CDialogConfigureSite(CObservatory *observatory) : CDialog(":/forms/dialogConfigureSite.ui"),
       observatory_(observatory)
     {
-      RUNTIME_ASSERT("AIRDAS", observatory != nullptr, "parameter observatory cannot be nullptr.");
+      RUNTIME_ASSERT("astroManager", observatory != nullptr, "parameter observatory cannot be nullptr.");
       setupUI();
     }
 

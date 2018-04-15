@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt.
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
@@ -34,8 +34,8 @@
 // CLASS HIERARCHY:     QApplication
 //                        - CApplication
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-07-27 GGB - File created.
 //
 //*********************************************************************************************************************************
@@ -56,7 +56,7 @@ namespace AstroManager
 
   //*******************************************************************************************************************************
   //
-  // AIRDASApplication
+  // astroManagerApplication
   //
   //*******************************************************************************************************************************
 

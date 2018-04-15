@@ -36,15 +36,15 @@
 //                        - CMessageWidget
 //                        - CDockWidgetMagnify
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-05-19 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-05-19 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dockWidgets/dockWidgetMagnify.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../../Include/Settings.h"
 
@@ -222,7 +222,7 @@ namespace AstroManager
     /// @brief Handles the mouse press event.
     /// @param[in] mouseEvent - The mouse event details
     /// @details The right button is responded to by a pop-up menu to set the magnification.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-05-31/GGB - Function created.
 
     void CDockWidgetMagnify::mousePressEvent(QMouseEvent *mouseEvent)
@@ -241,14 +241,14 @@ namespace AstroManager
           break;
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
     }
 
     /// @brief Sets up the user interface for the class.
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Fixed Bug #90.
     /// @version 2013-05-20/GGB - Function created.
 
@@ -261,7 +261,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/dwMagnify.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

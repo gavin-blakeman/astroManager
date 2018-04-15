@@ -32,17 +32,17 @@
 //                       - CdatabaseWeather
 //
 // HISTORY:             2018-02-03 GGB - Changed application name to AstroManager.
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
+//                      2015-09-22 GGB - astroManager 2015.09 release
 //                      2013-03-01 GGB - Split CARID into it's own file.
 //                      2013-02-24 GGB - Split CATID into it's own file
-//                      2013-01-20 GGB - Release of AIRDAS 0000.00
-//                      2012-01-04 GGB - Classes developed for AIRDAS
+//                      2013-01-20 GGB - Release of astroManager 0000.00
+//                      2012-01-04 GGB - Classes developed for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/database/databaseARID.h"
 
-  // AIRDAS files
+  // astroManager files
 
 #include "../../Include/dialogs/dialogConfigureSite.h"
 #include "../../Include/dialogs/dialogConfigureTelescope.h"
@@ -264,7 +264,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       };
 
       return returnValue;
@@ -421,7 +421,7 @@ namespace AstroManager
 
     bool CARID::findTelescope(CTelescope *telescope)
     {
-      RUNTIME_ASSERT(AIRDAS, !telescope->telescopeName().empty(), "Telscope Name cannot be empty string." );
+      RUNTIME_ASSERT(astroManager, !telescope->telescopeName().empty(), "Telscope Name cannot be empty string." );
 
       bool returnValue = false;
 
@@ -572,6 +572,55 @@ namespace AstroManager
       return returnValue;
     }
 
+    /// @brief Gets the timezone offset from the database.
+    /// @param[in] siteID - The site ID to use.
+    /// @param[out] offset - The offset value from the site ID.
+    /// @returns true - Success
+    /// @returns false - Unable to find site.
+    /// @throws None.
+    /// @version 2018-04-15/GGB - Function created.
+
+    bool CARID::getTimeZoneOffset(std::uint32_t siteID, std::int_least32_t *offset)
+    {
+      RUNTIME_ASSERT("astroManager", offset != nullptr, "parameter offset cannot be nullptr.");
+
+      bool returnValue = false;
+
+      if (!ARIDdisabled_)
+      {
+        sqlWriter.resetQuery();
+
+        sqlWriter.select({"TimeZone"}).
+            from({"TBL_SITES"}).
+            where({ GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
+
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        {
+          sqlQuery->first();
+          if (sqlQuery->isValid())
+          {
+              // Site found.
+
+            *offset = sqlQuery->value(0).toString().toInt();
+
+            returnValue = true;
+          }
+          else
+          {
+            processErrorInformation();
+          };
+        }
+        else
+        {
+          processErrorInformation();
+        };
+
+        sqlQuery->finish();
+      };
+
+      return returnValue;
+    }
+
     /// @brief Checks if an image is registered.
     /// @param[in] fileName - The filename to check
     /// @returns true - The image is registered
@@ -612,7 +661,7 @@ namespace AstroManager
           ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
           ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
 
-          ERROR(AIRDAS, 0x4000);
+          ERROR(astroManager, 0x4000);
         }
       }
       else
@@ -665,7 +714,7 @@ namespace AstroManager
           ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
           ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
 
-          ERROR(AIRDAS, 0x4000);
+          ERROR(astroManager, 0x4000);
         }
       }
       else
@@ -681,7 +730,7 @@ namespace AstroManager
     /// @param[out] imageId - The ID f the image if the image has been registered. Undefined if the image has not been registered.
     /// @returns true - The file name is already registered.
     /// @returns false - The file name is not registered
-    /// @throws GCL::CError(AIRDAS, 0x4000)
+    /// @throws GCL::CError(astroManager, 0x4000)
     /// @version 2017-07-26/GGB - Function created
 
     bool CARID::isImageNameRegistered(std::string const &imageName, uint32_t &imageId)
@@ -720,7 +769,7 @@ namespace AstroManager
             ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
             ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
 
-            ERROR(AIRDAS, 0x4000);
+            ERROR(astroManager, 0x4000);
           };
         }
       }
@@ -925,7 +974,7 @@ namespace AstroManager
     /// @note 2. While the astroFile contains the information to be saved, the actual information that will be written is on the
     ///          disk and pointed to by the filename in the astroFile.
     /// @note 3. This function can be called before the astroFile has been loaded.
-    /// @throws GCL::CError(AIRDAS, 0x4001)
+    /// @throws GCL::CError(astroManager, 0x4001)
     /// @version 2017-07-25/GGB - Function created.
 
     void CARID::saveOriginalImage(CAstroFile *astroFile)
@@ -1159,7 +1208,7 @@ namespace AstroManager
 
     void CARID::populateListSiteNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT("AIRDAS", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT("astroManager", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1198,7 +1247,7 @@ namespace AstroManager
 
     void CARID::populateListTelescopeNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT("AIRDAS", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT("astroManager", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1238,7 +1287,7 @@ namespace AstroManager
 
     void CARID::populateComboObservingPlans(QComboBox *comboBox, bool selectDefault)
     {
-      RUNTIME_ASSERT("AIRDAS", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
+      RUNTIME_ASSERT("astroManager", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1291,7 +1340,7 @@ namespace AstroManager
 
     void CARID::populateComboSite(QComboBox *comboBox, bool bSelect)
     {
-      RUNTIME_ASSERT("AIRDAS", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
+      RUNTIME_ASSERT("astroManager", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1495,9 +1544,9 @@ namespace AstroManager
 
             // UUID
 
-          if (astroFile->keywordExists(0, ACL::AIRDAS_UUID))
+          if (astroFile->keywordExists(0, ACL::astroManager_UUID))
           {
-            uuid = static_cast<std::string>(astroFile->keywordData(0, ACL::AIRDAS_UUID));
+            uuid = static_cast<std::string>(astroFile->keywordData(0, ACL::astroManager_UUID));
           }
           else
           {
@@ -1826,9 +1875,9 @@ namespace AstroManager
 
     void CARID::uploadImage(QString const &fileName, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(AIRDAS, fileName.size() != 0, "Parameter filename must have length > 0");
-      RUNTIME_ASSERT(AIRDAS, imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(AIRDAS, comment.size() != 0, "Parameter comment cannot have zero length.");
+      RUNTIME_ASSERT(astroManager, fileName.size() != 0, "Parameter filename must have length > 0");
+      RUNTIME_ASSERT(astroManager, imageID != 0, "Parameter imageID cannot be zero.");
+      RUNTIME_ASSERT(astroManager, comment.size() != 0, "Parameter comment cannot have zero length.");
 
       ACL::TJD JD;
 
@@ -1844,7 +1893,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_ERROR(0x4002);
+        astroManager_ERROR(0x4002);
       }
 
       sqlWriter.resetQuery();
@@ -1878,8 +1927,8 @@ namespace AstroManager
 
     void CARID::uploadImage(QByteArray const &imageArray, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(AIRDAS, imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(AIRDAS, imageVersion != 0, "Parameter imageVersion cannot be zero.");
+      RUNTIME_ASSERT(astroManager, imageID != 0, "Parameter imageID cannot be zero.");
+      RUNTIME_ASSERT(astroManager, imageVersion != 0, "Parameter imageVersion cannot be zero.");
 
       ACL::TJD JD;
 
@@ -1912,7 +1961,7 @@ namespace AstroManager
     /// @brief Counts the number of versions associated with the image.
     /// @param[in] imageID - The ID of the image to count.
     /// @returns The number of versions.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-08-12/GGB - Function created.
 
     imageVersion_t CARID::versionCount(imageID_t imageID)
@@ -1956,7 +2005,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       };
       return returnValue;
     }
@@ -2010,7 +2059,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       };
       return returnValue;
     }

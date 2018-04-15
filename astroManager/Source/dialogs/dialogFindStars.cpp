@@ -27,7 +27,7 @@
 //
 // OVERVIEW:						Implements a dialog to allow the user to set paramters for the findstars algorithm.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2014-02-02 GGB - File created.
 //
 //*********************************************************************************************************************************
@@ -127,7 +127,7 @@ namespace AstroManager
       if (!spinBoxBorder || !spinBoxRNOISE || !doubleSpinBoxMinimumPeak || !doubleSpinBoxStarSigma || !spinBoxISTATPIX ||
           !spinBoxNSTATPIX || !spinBoxMaxWalk || !doubleSpinBoxBurnedOut || !spinBoxMinSep || !spinBoxMaxRad || !spinBoxMinRad)
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       spinBoxBorder->setMinimum(sourceParameters.minBorder);

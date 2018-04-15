@@ -27,10 +27,10 @@
 // OVERVIEW:	          Main() function and Qt API entry point implemented in this file.
 //
 // HISTORY:		          2018-02-03 GGB - Rename Project to astroManager
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+//                      2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //						          2010-05-05 GGB - Change application to ARPAA and use Qt API.
 //                      2009-08-22 GGB - File created.
 //
@@ -272,7 +272,7 @@ int main(int argc, char *argv[])
 
       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       QTextStream data(&file);
@@ -370,7 +370,7 @@ namespace AstroManager
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-      CODE_ERROR(AIRDAS);
+      CODE_ERROR(astroManager);
     }
     else
     {
@@ -392,7 +392,7 @@ namespace AstroManager
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-      CODE_ERROR(AIRDAS);
+      CODE_ERROR(astroManager);
     }
     else
     {

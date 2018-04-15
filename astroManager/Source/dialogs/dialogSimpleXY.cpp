@@ -27,7 +27,7 @@
 //
 // OVERVIEW:						Implements a dialog to allow the user to set paramters for the findstars algorithm.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2014-02-16 GGB - File created.
 //
 //*********************************************************************************************************************************
@@ -87,7 +87,7 @@ namespace AstroManager
       if (!doubleSpinBoxDPSF || !doubleSpinBoxPLIM || !doubleSpinBoxDLIM || !doubleSpinBoxSaddle || !spinBoxMaxper ||
           !horizontalSliderMaxPeaks || !spinBoxMaxSize || !spinBoxHalfBox || !doubleSpinBoxSigma)
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       doubleSpinBoxDPSF->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DPSF,

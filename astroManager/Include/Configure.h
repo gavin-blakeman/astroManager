@@ -53,11 +53,11 @@
 //                          - CConfigureDatabaseDriverDialog
 //
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2011-06-19 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2011-06-19 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
@@ -83,8 +83,8 @@ namespace AstroManager
       QPushButton *pushButtonMoveUp;
       QPushButton *pushButtonMoveDown;
 
-      inline virtual bool save() {CODE_ERROR(AIRDAS); }
-      inline virtual bool saveAs() {CODE_ERROR(AIRDAS); }
+      inline virtual bool save() {CODE_ERROR(astroManager); }
+      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
 
       void setupUI();
 
@@ -108,8 +108,8 @@ namespace AstroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(AIRDAS);}
-      inline virtual bool saveAs() {CODE_ERROR(AIRDAS);}
+      inline virtual bool save() {CODE_ERROR(astroManager);}
+      inline virtual bool saveAs() {CODE_ERROR(astroManager);}
 
       virtual void closeEvent(QCloseEvent *);
 
@@ -138,8 +138,8 @@ namespace AstroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(AIRDAS); }
-      inline virtual bool saveAs() {CODE_ERROR(AIRDAS); }
+      inline virtual bool save() {CODE_ERROR(astroManager); }
+      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
 
       virtual void closeEvent(QCloseEvent *);
 
@@ -170,8 +170,8 @@ namespace AstroManager
 
       void setupUI();
 
-      inline virtual bool save() {CODE_ERROR(AIRDAS); }
-      inline virtual bool saveAs() {CODE_ERROR(AIRDAS); }
+      inline virtual bool save() {CODE_ERROR(astroManager); }
+      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
 
       void insertRow(int, QSqlQuery &);
 
@@ -199,8 +199,8 @@ namespace AstroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(AIRDAS); }
-      inline virtual bool saveAs() {CODE_ERROR(AIRDAS); }
+      inline virtual bool save() {CODE_ERROR(astroManager); }
+      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
 
       virtual void closeEvent(QCloseEvent *);
 

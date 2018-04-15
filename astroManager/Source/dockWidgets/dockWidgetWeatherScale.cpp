@@ -64,7 +64,7 @@ namespace AstroManager
 
     /// @brief Sets up the UI
     /// @throws GCL::CRuntimeAssert(...)
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2017-07-01/GGB - Function Created.
 
@@ -77,7 +77,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/dockWidgets/dockWidgetWeatherScale.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

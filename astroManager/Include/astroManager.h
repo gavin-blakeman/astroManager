@@ -27,10 +27,10 @@
 // CLASSES INCLUDED:    None.
 //
 // HISTORY:             2018-02-03 GGB - Rename Project to AstroManager
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+//                      2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //
 //*********************************************************************************************************************************
 
@@ -51,7 +51,7 @@ namespace AstroManager
 
   int const ROLE_SITEID                     (Qt::UserRole + 0);
 
-  std::string const AIRDAS_EDITEDBY         ("Edited by: Astronomy Manager. (astroManager)");
+  std::string const astroManager_EDITEDBY         ("Edited by: Astronomy Manager. (astroManager)");
 
     // Functions below are found in astroManager.cpp
 

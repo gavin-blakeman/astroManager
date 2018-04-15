@@ -33,14 +33,14 @@
 //                        -CARPAASubWindow
 //                          - CAstroImageWindow
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-03-01 GGB - Moved CAstroImageWindow into seperate file.
 //                      2013-02-07 GGB - Moved CDialogImageCrop, CBinPixelsDialog, CImageFloatDialog into it's own file.
 //                      2013-01-27 GGB - Moved CImageResampleDialog into it's own file
 //                      2013-01-27 GGB - Moved CImageResampleDialog into it's own file.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //                      2010-10-17 GGB - File Created.
 //
 //*********************************************************************************************************************************
@@ -55,7 +55,7 @@
 
 #include <QtUiTools/QtUiTools>
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/database/databaseARID.h"
 #include "../../Include/database/databaseATID.h"
@@ -386,9 +386,9 @@ namespace AstroManager
 
         // Need to add the astrometry HDU to the list of available HDU's?
 
-      if ( cbHDU->findText(QString::fromStdString(ACL::AIRDAS_HDB_ASTROMETRY)) == -1)
+      if ( cbHDU->findText(QString::fromStdString(ACL::astroManager_HDB_ASTROMETRY)) == -1)
       {
-        cbHDU->addItem(QString::fromStdString(ACL::AIRDAS_HDB_ASTROMETRY));
+        cbHDU->addItem(QString::fromStdString(ACL::astroManager_HDB_ASTROMETRY));
       }
 
         // Add the items into the table for references
@@ -424,7 +424,7 @@ namespace AstroManager
     void CImageWindow::astrometryTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -483,7 +483,7 @@ namespace AstroManager
     void CImageWindow::atableTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -579,7 +579,7 @@ namespace AstroManager
     void CImageWindow::btableTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -682,7 +682,7 @@ namespace AstroManager
         };
       }
       else
-        CODE_ERROR(AIRDAS);  // Should not be able to get here. The windows should be disabling the item to prevent gettign here.
+        CODE_ERROR(astroManager);  // Should not be able to get here. The windows should be disabling the item to prevent gettign here.
     }
 
     /// @brief Called when a new Astrometry object is being selected.
@@ -1133,7 +1133,7 @@ namespace AstroManager
     /// @brief Called to display the data for the selected HDU.
     /// @pre This function must be called after the HDUType has been set by a call to DisplayKeywords
     /// @details This function hides unused tabs and calls the relevant routines for getting the correct data into the correct tab.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-07-28/GGB - Added default and BT_NONE to switch statement.
     /// @version 2012-01-09/GGB - Added functionallity for astrometry and photometry tabs.
     /// @version 2011-03-19/GGB - Converted to handle changes to ACL::CastroFile caused by changes to ACL::CAstroFile
@@ -1169,7 +1169,7 @@ namespace AstroManager
         case ACL::BT_NONE:
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
@@ -1494,7 +1494,7 @@ namespace AstroManager
               case CImageWindow::M_NONE:
                 break;
               default:
-                CODE_ERROR(AIRDAS);
+                CODE_ERROR(astroManager);
                 break;
             };
             break;
@@ -1509,14 +1509,14 @@ namespace AstroManager
             break;
           default:
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
             break;
           };
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -1535,7 +1535,7 @@ namespace AstroManager
         case ACL::BT_ATABLE:
         case ACL::BT_BTABLE:
         case ACL::BT_IMAGE:
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         case ACL::HDB_ASTROMETRY:
           exportAstrometryAsCSV();
           break;
@@ -1543,7 +1543,7 @@ namespace AstroManager
           exportPhotometryAsCSV();
           break;
         default:
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
       };
     }
 
@@ -1704,9 +1704,9 @@ namespace AstroManager
 
       if (currentHDB->HDBType() == ACL::BT_IMAGE)
       {
-        if (currentHDB->keywordExists(ACL::AIRDAS_ZMAG))
+        if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
         {
-          zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::AIRDAS_ZMAG));
+          zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
         }
         else
         {
@@ -1891,7 +1891,7 @@ namespace AstroManager
     }
 
     /// @brief Handles the flip event from the menu.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2014-12-28/GGB - Changed logging to use GCL::logger.
     /// @version 2013-06-29/GGB - Bug #1195952 fixed.
     /// @version 2013-06-28/GGB - Added historyUpdate().
@@ -1920,7 +1920,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -1987,7 +1987,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -2022,7 +2022,7 @@ namespace AstroManager
           photometryTabActivating();
           break;
         default:
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       }
@@ -2065,7 +2065,7 @@ namespace AstroManager
     void CImageWindow::imageTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -2141,7 +2141,7 @@ namespace AstroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(AIRDAS, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -2197,7 +2197,7 @@ namespace AstroManager
         // important when querying the SIMBAD database as the type of the surrounding box to access all the objects
         // needs to take this into account.
 
-        // Due to the seperation of image from database and internet access, the AIRDAS application needs to perform the database
+        // Due to the seperation of image from database and internet access, the astroManager application needs to perform the database
         // or internet access to obtain a list of objects that fall within the image.
         // The ACL routines for SIMBAD access will be used if the data is going to be fetched from the SIMBAD database.
 
@@ -2319,7 +2319,7 @@ namespace AstroManager
     }
 
     /// @brief Function to extract all the objects in the image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2015-09-20/GGB - (Bug 81) Added try...catch block around pointPhotometry() call as this can throw.
     /// @version 2014-02-09/GGB - Added support for algorithm choice.
     /// @version 2012-07-28/GGB - Function created.
@@ -2337,7 +2337,7 @@ namespace AstroManager
       auto &pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
 
-      RUNTIME_ASSERT(AIRDAS, astroImage != nullptr, "The astro image should not be a nullptr.");
+      RUNTIME_ASSERT(astroManager, astroImage != nullptr, "The astro image should not be a nullptr.");
 
       LOGMESSAGE(info, "Starting function Source Extraction.");
 
@@ -2359,7 +2359,7 @@ namespace AstroManager
         };
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       };    // End of switch(algorithm) statement
 
@@ -2548,7 +2548,7 @@ namespace AstroManager
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
       if (!astroImage)
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
       switch (mouseEvent->button())
@@ -2632,13 +2632,13 @@ namespace AstroManager
       case Qt::NoButton:
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Handles the mouse press event when the window is in the photometry mode.
     /// @param[in] mouseEvent - The mouse event data
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version 2013-07-27/GGB - Added code to catch the error when the photometry overlaps the edge. (Bug #1205629)
     /// @version 2011-12-20/GGB - Function created.
 
@@ -2782,13 +2782,13 @@ namespace AstroManager
         };
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       };
     }
 
     /// @brief Called when the photometry tab is activating. Allows the program to disable/enable menu items as required.
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version  2016-04-25/GGB - Added action for IDA_ANALYSIS_LOADOBJECTS
     /// @version 2016-04-24/GGB - Bug# 1574157 - Ensure the view photometry and astrometry are in the correct state.
     /// @version 2013-05-12/GGB - Added the export CSV option.
@@ -2798,7 +2798,7 @@ namespace AstroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(AIRDAS, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -3077,9 +3077,9 @@ namespace AstroManager
 
         // Need to add the photometry HDU to the list of available HDU's?
 
-      if ( cbHDU->findText(QString::fromStdString(ACL::AIRDAS_HDB_PHOTOMETRY)) == -1 )
+      if ( cbHDU->findText(QString::fromStdString(ACL::astroManager_HDB_PHOTOMETRY)) == -1 )
       {
-        cbHDU->addItem(QString::fromStdString(ACL::AIRDAS_HDB_PHOTOMETRY));
+        cbHDU->addItem(QString::fromStdString(ACL::astroManager_HDB_PHOTOMETRY));
       };
 
         // Add the items into the table for references
@@ -3140,7 +3140,7 @@ namespace AstroManager
 
         // draw labels in corners of page
 
-      painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "AIRDAS" );
+      painter.drawText( page, Qt::AlignTop    | Qt::AlignLeft, "astroManager" );
       painter.drawText( page, Qt::AlignBottom | Qt::AlignLeft, QString(getenv("USER")) );
       painter.drawText( page, Qt::AlignBottom | Qt::AlignRight, QDateTime::currentDateTime().toString( Qt::DefaultLocaleShortDate));
 
@@ -3214,7 +3214,7 @@ namespace AstroManager
     void CImageWindow::repaintImage()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw, "Parent Widget should not == nullptr");
+      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not == nullptr");
 
         // This is the code that updates the screen when the image needs updating.
 
@@ -3320,7 +3320,7 @@ namespace AstroManager
               if (controlImage.astroFile->keywordData(controlImage.currentHDB, ACL::FITS_BITPIX, szValue, szComment) )
                 twHDU->item(row, 1)->setText(QString::fromStdString(szValue));
               else
-                CODE_ERROR(AIRDAS);
+                CODE_ERROR(astroManager);
             };
           };
         };
@@ -3397,7 +3397,7 @@ namespace AstroManager
     }
 
     /// @brief Pops up the dialog box to ask if the window should be saved before it is closed.
-    /// @throws GCL::CodeError(AIRDAS)
+    /// @throws GCL::CodeError(astroManager)
     /// @version 2013-03-15/GGB - Updated function to operate correctly.
     /// @version 2013-02-02/GGB - Function created.
 
@@ -3429,7 +3429,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
@@ -3452,7 +3452,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else if (mode == M_PHOTOMETRY)
@@ -3463,7 +3463,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else if (mode == M_NONE)
@@ -3474,14 +3474,14 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       };
     }
 
     /// @brief Sets up the user interface. Called from the constructor.
     /// @throws CRuntimeAssert
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2015-07-30/GGB - Replaced some control checks with runtime asserts.
     /// @version 2012-01-09/GGB - Added functionality for the astrometry tab and functions.
@@ -3498,7 +3498,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/windowFITSFile.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -3544,13 +3544,13 @@ namespace AstroManager
         photometryTab = tabWidget->widget(5);
           tableWidgetPhotometry = formWidget->findChild<QTableWidget *>("tableWidgetPhotometry");
 
-      RUNTIME_ASSERT(AIRDAS, imageTab != nullptr, "Control imageTab not found.");
-      RUNTIME_ASSERT(AIRDAS, atableTab != nullptr, "Control atableTab not found.");
-      RUNTIME_ASSERT(AIRDAS, btableTab, "Control btableTab not found.");
-      RUNTIME_ASSERT(AIRDAS, astrometryTab, "Control astrometryTab not found.");
-      RUNTIME_ASSERT(AIRDAS, photometryTab, "Control photometryTab not found.");
-      RUNTIME_ASSERT(AIRDAS, tableWidgetAstrometry, "Control tableWidgetAstrometry not found");
-      RUNTIME_ASSERT(AIRDAS, tableWidgetPhotometry, "Control tableWidgetPhotometry not found");
+      RUNTIME_ASSERT(astroManager, imageTab != nullptr, "Control imageTab not found.");
+      RUNTIME_ASSERT(astroManager, atableTab != nullptr, "Control atableTab not found.");
+      RUNTIME_ASSERT(astroManager, btableTab, "Control btableTab not found.");
+      RUNTIME_ASSERT(astroManager, astrometryTab, "Control astrometryTab not found.");
+      RUNTIME_ASSERT(astroManager, photometryTab, "Control photometryTab not found.");
+      RUNTIME_ASSERT(astroManager, tableWidgetAstrometry, "Control tableWidgetAstrometry not found");
+      RUNTIME_ASSERT(astroManager, tableWidgetPhotometry, "Control tableWidgetPhotometry not found");
 
         // Remove unused tabs from the tab view.
 
@@ -3593,8 +3593,8 @@ namespace AstroManager
     }
 
     /// @brief Updates the window title to show the correct title.
-    /// @throws GCL::CodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2013-03-03/GGB - Changed method of operation to use windowModified flag.
     /// @version 2012-01-29/GGB - Repaired bug #101, plus only display filename and not complete path.
     /// @version 2011-06-04/GGB - Function Created
@@ -3603,7 +3603,7 @@ namespace AstroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(AIRDAS, pw != nullptr, "The parent widget must exist.");
+      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget must exist.");
 
         // View Menu
 
@@ -3622,7 +3622,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -3640,7 +3640,7 @@ namespace AstroManager
     void CImageWindow::windowActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(AIRDAS, pw != nullptr,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(astroManager, pw != nullptr,  "Parent widget cannot be nullptr.");
 
       std::string hdbName = cbHDU->currentText().toStdString();
 
@@ -3672,7 +3672,7 @@ namespace AstroManager
         case ACL::BT_NONE:
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
@@ -3701,7 +3701,7 @@ namespace AstroManager
 
     void CImageWindow::zoom11()
     {
-      RUNTIME_ASSERT(AIRDAS, gvImage, "gvImage == nullptr.");
+      RUNTIME_ASSERT(astroManager, gvImage, "gvImage == nullptr.");
 
       gvImage->zoom11();
     }
@@ -3712,7 +3712,7 @@ namespace AstroManager
 
     void CImageWindow::zoomAll()
     {
-      RUNTIME_ASSERT(AIRDAS, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomAll();
     }
@@ -3723,7 +3723,7 @@ namespace AstroManager
 
     void CImageWindow::zoomIn()
     {
-      RUNTIME_ASSERT(AIRDAS, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomIn();
     }
@@ -3734,7 +3734,7 @@ namespace AstroManager
 
     void CImageWindow::zoomOut()
     {
-      RUNTIME_ASSERT(AIRDAS, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomOut();
     }
@@ -3745,7 +3745,7 @@ namespace AstroManager
 
     void CImageWindow::zoomSelection()
     {
-      RUNTIME_ASSERT(AIRDAS, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomSelection();
     }

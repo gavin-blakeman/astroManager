@@ -35,17 +35,17 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-07-21/GGB - Renamed from CImageResampleDialog to DialogImageResample
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-01-27 GGB - Moved code from ImageDisplay
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dialogs/dialogImageResample.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../../Include/Error.h"
 #include "../../Include/Settings.h"
@@ -127,7 +127,7 @@ namespace AstroManager
         lHeight = findChild<QSpinBox *>("spinBoxHeight")->value();
         break;
       default:
-        CODE_ERROR(AIRDAS);   // Should not be able to get here.
+        CODE_ERROR(astroManager);   // Should not be able to get here.
         break;
       };
 

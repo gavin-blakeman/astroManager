@@ -37,15 +37,15 @@
 //                        - CMessageWidget
 //                        - CDockwidgetHistogram
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-02-02 GGB - Created class and file for the AIRDAS application
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-02-02 GGB - Created class and file for the astroManager application
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dockWidgets/dockWidgetHistogram.h"
 
-  // AIRDAS includes
+  // astroManager includes
 
 #include "../../Include/windowImage/windowImage.h"
 #include "../../Include/dockWidgets/dockWidgetMagnify.h"
@@ -176,7 +176,7 @@ namespace AstroManager
     }
 
     /// @brief Thread function for doing the histogram calculation.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2015-09-05/GGB - Changed second parameter to std::tuple, from boost::tuple.
     /// @version 2015-07-31/GGB - Updated code for new astro image interface.
     /// @version 2013-04-13/GGB - Function created.
@@ -195,7 +195,7 @@ namespace AstroManager
         nBinNo = static_cast<size_t>(std::floor((astroImage->getValue(lIndex) - std::get<2>(values)) / std::get<3>(values)));
         if ( (nBinNo < 0) || (nBinNo >= HISTOGRAMBINS) )
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         else
         {
@@ -368,12 +368,12 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           }
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       };
 
@@ -386,7 +386,7 @@ namespace AstroManager
     }
 
     /// @brief Processes the button press to reset the black point.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-08-28/GGB - Function created.
 
     void CHistogram::eventBlackReset(bool)
@@ -399,14 +399,14 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       }
     }
 
     /// @brief Routine to handle the slider movement.
     /// @details The spinbox must also be updated.  As the black value is changed the spin box must also be updated. Also the
     ///          limiting values must be changed.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-05-29/GGB - Added spanSlider.
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2010-10-30/GGB - Function created.
@@ -430,12 +430,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -461,7 +461,7 @@ namespace AstroManager
 
     /// @brief Sets the transferFunction value to the correct value when a new transfer function is selected.
     /// @param[in] tempTransferFunction - String representing the name of the transfer function.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-05-26/GGB - Function created.
 
     void CHistogram::eventTranferFunctionChanged(QString const &tempTransferFunction)
@@ -508,7 +508,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       redrawImage();
@@ -549,12 +549,12 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           }
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       };
 
@@ -567,7 +567,7 @@ namespace AstroManager
     }
 
     /// @brief Processes the button press to reset the white point.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-08-28/GGB - Function created.
 
     void CHistogram::eventWhiteReset(bool)
@@ -580,7 +580,7 @@ namespace AstroManager
       }
       else
       {
-        AIRDAS_CODE_ERROR;
+        astroManager_CODE_ERROR;
       }
     }
 
@@ -588,14 +588,14 @@ namespace AstroManager
     /// @param[in] newVal - The new white value
     /// @details The spinbox must also be updated. As the white value is changed the spin box must also be updated. Also the
     ///          limiting values must be changed.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-05-29/GGB - Added the spanSlider.
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2010-10-30/GGB - Function created
 
     void CHistogram::eventWhiteSliderChanged(int newVal)
     {
-      RUNTIME_ASSERT(AIRDAS, currentImage, "CurrentImage should not be null.");
+      RUNTIME_ASSERT(astroManager, currentImage, "CurrentImage should not be null.");
 
       ACL::CAstroImage *astroImage = nullptr;
 
@@ -612,7 +612,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -689,7 +689,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
 
         currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -773,7 +773,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
 
         //currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -826,7 +826,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Cannot open resource :/forms/dwHistogram.ui");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       };
 
       QWidget *formWidget = loader.load(&file, this);
@@ -845,7 +845,7 @@ namespace AstroManager
 
       if (!(gridLayout = dynamic_cast<QGridLayout *>(groupBox->layout())))
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
         // Create and add the double slider to the layout.
@@ -887,7 +887,7 @@ namespace AstroManager
 
       if (!(gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout())))
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
         // Create the Histogram Widget

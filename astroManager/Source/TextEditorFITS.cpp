@@ -35,7 +35,7 @@
 //                          - CTextEditor
 //                            - CTextEditorFITS
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2015-08-03/GGB - File Created.
 //
 //*********************************************************************************************************************************
@@ -120,8 +120,8 @@ namespace AstroManager
 
 
     /// @brief Function to setup the window.
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CRuntimeAssert(astroManager)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2015-08-07/GGB - Function created.
 
@@ -136,7 +136,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/frameFITSInspect.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

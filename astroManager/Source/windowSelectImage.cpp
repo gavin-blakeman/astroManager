@@ -120,7 +120,7 @@ namespace AstroManager
   }
 
   /// @brief Setup up the user interface elements.
-  /// @throws GCL::CRuntimeError(AIRDAS, ...)
+  /// @throws GCL::CRuntimeError(astroManager, ...)
   /// @version 2017-07-28/GGB -Function created.
 
   void CWindowSelectImage::setupUI()
@@ -134,7 +134,7 @@ namespace AstroManager
     if (!file.open(QFile::ReadOnly))
     {
       ERRORMESSAGE("Unable to open resource :/windows/windowSelectImage.ui");
-      ERROR(AIRDAS, 0x0001);
+      ERROR(astroManager, 0x0001);
     }
 
     QWidget *formWidget = loader.load(&file, this);

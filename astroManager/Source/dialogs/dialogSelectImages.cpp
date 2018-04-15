@@ -262,7 +262,7 @@ namespace AstroManager
     }
 
     /// @brief Sets up the user interface elements.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-08-19/GGB - Function created.
 
     void CDialogSelectImages::setupUI()

@@ -34,17 +34,17 @@
 //                        - CMessageWidget
 //                        - CDockwidgetHistogram
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-02-02 GGB - Created class and file for the AIRDAS application
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-02-02 GGB - Created class and file for the astroManager application
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_DOCKWIDGETHISTOGRAM_H
-#define AIRDAS_DOCKWIDGETHISTOGRAM_H
+#ifndef astroManager_DOCKWIDGETHISTOGRAM_H
+#define astroManager_DOCKWIDGETHISTOGRAM_H
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "dockWidgetImage.h"
 #include "../FrameWindow.h"

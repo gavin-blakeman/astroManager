@@ -40,8 +40,8 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-02-07 GGB - Moved CDialogImageCrop, CBinPixelsDialog, CImageFloatDialog into it's own file.
 //
 //*********************************************************************************************************************************
@@ -109,7 +109,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
       saveUI();
@@ -156,7 +156,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
       settings::astroManagerSettings->setValue(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(bgnd));
@@ -194,7 +194,7 @@ namespace AstroManager
           QVariant(0)).toInt());
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
 

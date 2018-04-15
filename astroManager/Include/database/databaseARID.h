@@ -31,16 +31,16 @@
 //                       - CdatabaseWeather
 //
 // HISTORY:             2018-02-03 GGB - Changed application name to AstroManager.
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
+//                      2015-09-22 GGB - astroManager 2015.09 release
 //                      2013-03-01 GGB - Split CARID into it's own file.
 //                      2013-02-24 GGB - Split CATID into it's own file
-//                      2013-01-20 GGB - Release of AIRDAS 0000.00
-//                      2012-01-04 GGB - Classes developed for AIRDAS
+//                      2013-01-20 GGB - Release of astroManager 0000.00
+//                      2012-01-04 GGB - Classes developed for astroManager
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_DATABASEARID_H
-#define AIRDAS_DATABASEARID_H
+#ifndef astroManager_DATABASEARID_H
+#define astroManager_DATABASEARID_H
 
 #include "database.h"
 #include "../ACL/astroFile.h"
@@ -91,6 +91,7 @@ namespace AstroManager
       bool getObservingSite(std::uint32_t, CObservatory *);
       bool findObservingSite(CObservatory *);
       bool registerObservingSite(CObservatory *);
+      bool getTimeZoneOffset(std::uint32_t, std::int_least32_t *);
 
         // Telescope functions
 
@@ -144,4 +145,4 @@ namespace AstroManager
   }  // namespace database
 }  // namespace AstroManager
 
-#endif // AIRDAS_DATABASEARID_H
+#endif // astroManager_DATABASEARID_H

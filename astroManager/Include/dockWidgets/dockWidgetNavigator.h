@@ -36,8 +36,8 @@
 //                        - CDockWidgetMagnify
 //                        - CDockwidgetNavigator
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-05-23 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-05-23 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 

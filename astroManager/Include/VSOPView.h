@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
@@ -31,13 +31,13 @@
 // CLASS HIERARCHY:     QMdiSubWindow
 //                        - CObjectInfoWindow
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_VSOPVIEW_H
-#define AIRDAS_VSOPVIEW_H
+#ifndef astroManager_VSOPVIEW_H
+#define astroManager_VSOPVIEW_H
 
   // Includes
 
@@ -116,4 +116,4 @@ namespace AstroManager
 
 }		// namespace
 
-#endif  // AIRDAS_VSOPVIEW_H
+#endif  // astroManager_VSOPVIEW_H

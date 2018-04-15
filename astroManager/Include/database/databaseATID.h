@@ -30,17 +30,17 @@
 //                        - CARID
 //                        - CDatabaseWeather
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-24 GGB - Split CATID into it's own file
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2012-01-04 GGB - Classes developed for AIRDAS
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2012-01-04 GGB - Classes developed for astroManager
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_DATABASEATID_H
-#define AIRDAS_DATABASEATID_H
+#ifndef astroManager_DATABASEATID_H
+#define astroManager_DATABASEATID_H
 
 #include "database.h"
 
@@ -126,4 +126,4 @@ namespace AstroManager
   }   // namespace database
 }    // namespace AstroManager
 
-#endif // AIRDAS_DATABASEATID_H
+#endif // astroManager_DATABASEATID_H

@@ -35,21 +35,21 @@
 //                        - CInstrumentDockwidget
 //                        - CMessageWidget
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-01-28 GGB - Split PhotometryDockWidgets from DockWidgets.
 //                      2013-01-20 GGB - Removed CMessageWidget to a seperate file.
-//                      2013-01-20 GGB - AIRDAS 0000.00.000 release.
+//                      2013-01-20 GGB - astroManager 0000.00.000 release.
 //                      2012-11-18 GGB - CInstrumentDockwidget split into a new file and renamed.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dockWidgets/dockWidgetPhotometry.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/database/database.h"
 #include "../../Include/database/databaseATID.h"
@@ -194,9 +194,9 @@ namespace AstroManager
           labelFilter->setStyleSheet("QLabel { color : gray");
         };
 
-        if (currentImage->astroFile->keywordExists(currentImage->currentHDB, ACL::AIRDAS_ZMAG))
+        if (currentImage->astroFile->keywordExists(currentImage->currentHDB, ACL::astroManager_ZMAG))
         {
-          FP_t zmag = static_cast<FP_t>(currentImage->astroFile->keywordData(currentImage->currentHDB, ACL::AIRDAS_ZMAG));
+          FP_t zmag = static_cast<FP_t>(currentImage->astroFile->keywordData(currentImage->currentHDB, ACL::astroManager_ZMAG));
           labelZMAG->setText(QString("%1").arg(zmag));
         }
         else
@@ -235,7 +235,7 @@ namespace AstroManager
 
     /// @brief Displays all the information for a selected object.
     /// @param[in] po - The photometry observation to display the data for.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2012-11-10/GGB - Function created.
 
     void CPhotometryDockWidget::displayPhotometry(photometry::PPhotometryObservation po)
@@ -259,9 +259,9 @@ namespace AstroManager
         {
           if (currentHDB->HDBType() == ACL::BT_IMAGE)
           {
-            if (currentHDB->keywordExists(ACL::AIRDAS_ZMAG))
+            if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
             {
-              zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::AIRDAS_ZMAG));
+              zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
             }
             else
             {
@@ -270,7 +270,7 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           };
         }
         else
@@ -322,7 +322,7 @@ namespace AstroManager
 
     /// @brief Push button to allow the object name to be selected for the object.
     /// @param[in] - unused.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-08-11/GGB - 1) Added code to initialise the object name. (Bug #1210914)
     /// @version                  2) Added code to allow save and make the image dirty.
     /// @version 2013-08-09/GGB - Added support for the compare image window.
@@ -354,7 +354,7 @@ namespace AstroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
 
           iw->repaintImage();
           iw->updateWindowTitle();
@@ -365,7 +365,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+          CODE_ERROR(astroManager);   // Dock widget should be grayed.
         };
       };
     }
@@ -408,14 +408,14 @@ namespace AstroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
 
           iw->updateWindowTitle();
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -436,10 +436,10 @@ namespace AstroManager
       if (frameWindow)
         subWindow = dynamic_cast<CMdiSubWindow *>(frameWindow->activeMdiChild());
       else
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       if (!subWindow)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) ||
            (subWindow->getWindowType() == SWT_IMAGE_COMPARE) )
@@ -457,7 +457,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+        CODE_ERROR(astroManager);   // Dock widget should be grayed.
       }
     }
 
@@ -544,7 +544,7 @@ namespace AstroManager
     /// @brief Inserts a row into the table.
     /// @param[in] nRow - The row number to insert the new row.
     /// @param[in] toInsert - The observation to insert.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2012-11-12/GGB - Function created.
 
@@ -559,9 +559,9 @@ namespace AstroManager
       {
         if (currentHDB->HDBType() == ACL::BT_IMAGE)
         {
-          if (currentHDB->keywordExists(ACL::AIRDAS_ZMAG))
+          if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
           {
-            zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::AIRDAS_ZMAG));
+            zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
           }
           else
           {
@@ -570,7 +570,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
@@ -694,10 +694,10 @@ namespace AstroManager
          // Let the image know that it has finished referencing.
 
       frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(parentObject);
-      RUNTIME_ASSERT(AIRDAS, frameWindow != nullptr, "frameWindow dynamic_cast to nullptr");
+      RUNTIME_ASSERT(astroManager, frameWindow != nullptr, "frameWindow dynamic_cast to nullptr");
 
       subWindow = dynamic_cast<imaging::CImageWindow *>(frameWindow->activeMdiChild());
-      RUNTIME_ASSERT(AIRDAS, subWindow != nullptr, "subWindow dynamic_cast to nullptr");
+      RUNTIME_ASSERT(astroManager, subWindow != nullptr, "subWindow dynamic_cast to nullptr");
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) || (subWindow->getWindowType() == SWT_IMAGE_COMPARE) )
       {
@@ -705,7 +705,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);   // Dock widget should be grayed.
+        CODE_ERROR(astroManager);   // Dock widget should be grayed.
       }
 
       tableWidgetPhotometry->insertRow(nRow);
@@ -729,7 +729,7 @@ namespace AstroManager
     }
 
     /// Function to setup all the user interface elements
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2013-08-18/GGG - Added ZMAG support
     /// @version 2013-05-18/GGB - Added support for the profileCurve.
@@ -749,7 +749,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to load resource :/forms/dwPhotometry.ui");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       };
 
       QWidget *formWidget = loader.load(&file, this);
@@ -775,7 +775,7 @@ namespace AstroManager
           tlVariable = formWidget->findChild<QLabel *>("tlVariable");
 
       if (!btnObjectName || !tlObjectName || !labelRA || !labelDec || !tlVariable)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
         tabCounts = infoTab->widget(++nIndex);
           tlADUAperture = formWidget->findChild<QLabel *>("tlADUAperture");
@@ -806,7 +806,7 @@ namespace AstroManager
           glayout->addWidget(profilePlot, 0, 0, 1, 2);
 
       if (!tlStar || !tlSky || !tlStarSky || !tlMagnitude || !labelMagnitudeError || !labelFWHM)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       infoTab->setEnabled(false);		// Must not be useable until an object is chosen.
 

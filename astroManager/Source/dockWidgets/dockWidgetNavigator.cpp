@@ -37,15 +37,15 @@
 //                        - CDockWidgetMagnify
 //                        - CDockWidgetNavigator
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-05-23 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-05-23 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dockWidgets/dockWidgetNavigator.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../../Include/Settings.h"
 #include "../../Include/astroManager.h"
@@ -145,7 +145,7 @@ namespace AstroManager
     }
 
     /// @brief Sets up the user interface for the class.
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2013-05-24/GGB - Function created.
 
@@ -158,7 +158,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/dwNavigator.ui");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

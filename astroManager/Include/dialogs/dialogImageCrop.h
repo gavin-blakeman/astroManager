@@ -35,16 +35,16 @@
 //                          - CImageResampleDialog
 //                          - CBinPixelsDialog
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2013-02-07 GGB - Moved dialog CDailogImageCrop into seperate file.
 //                      2013-01-27 GGB - Moved CImageResampleDialog into it's own file
-//                      2013-01-20 GGB - Release of AIRDAS 0000.00
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2013-01-20 GGB - Release of astroManager 0000.00
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_DIALOGIMAGECROP_H
-#define AIRDAS_DIALOGIMAGECROP_H
+#ifndef astroManager_DIALOGIMAGECROP_H
+#define astroManager_DIALOGIMAGECROP_H
 
 #include "dialogs.h"
 
@@ -88,4 +88,4 @@ namespace AstroManager
 
 }   // namespace AstroManager
 
-#endif // AIRDAS_DIALOGIMAGECROP_H
+#endif // astroManager_DIALOGIMAGECROP_H

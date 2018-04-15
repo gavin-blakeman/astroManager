@@ -33,17 +33,17 @@
 //                        - CAstroImageWindow
 //                          - CImageComparisonWindow
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2011-06-04 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
 #include "../Include/ImageComparison.h"
 
-  // AIRDAS header files
+  // astroManager header files
 
 #include "../Include/AstroGraphicsView.h"
 #include "../Include/dialogs/dialogSaveAligned.h"
@@ -958,7 +958,7 @@ namespace AstroManager
     /// @param[in] index - The index of the new tab.
     /// @returns None.
     /// @details The navigator and magnifier windows need to be updated.
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2016-04-22/GGB - Update to reflect the use of a single data role and SCcontrolBlock
     /// @version 2013-08-10/GGB - Function created.
 
@@ -967,7 +967,7 @@ namespace AstroManager
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
 
-      RUNTIME_ASSERT(AIRDAS, index <= 1, "Invalid Tab Index.");
+      RUNTIME_ASSERT(astroManager, index <= 1, "Invalid Tab Index.");
 
       if (index == 0)
       {
@@ -1042,8 +1042,8 @@ namespace AstroManager
 
     /// @brief Function called when an astrometry mouse press is used
     /// @param[in] mouseEvent - The mouse event information.
-    /// @throws CRuntimeAssert(AIRDAS)
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CRuntimeAssert(astroManager)
+    /// @throws CCodeError(astroManager)
     /// @version 2017-07-03/GGB - Updated to reflect new dockwidgets storage method.
     /// @version 2016-04-23/GGB - Update to reflect the use of a single data role and SCcontrolBlock
     /// @version 2013-08-03/GGB - Function created.
@@ -1067,7 +1067,7 @@ namespace AstroManager
           scenePoint = graphicsViewImageInput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->currentItem();
 
-          RUNTIME_ASSERT(AIRDAS, lwi != nullptr, "List widget should have a relevant item.");
+          RUNTIME_ASSERT(astroManager, lwi != nullptr, "List widget should have a relevant item.");
 
             // Astrometry on the input image. Need to also mark up the output image (If there is one)
             // The original image is the currentImage in the dockwidgets.
@@ -1119,7 +1119,7 @@ namespace AstroManager
           scenePoint = graphicsViewImageOutput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->item(imageNumber);
 
-          RUNTIME_ASSERT(AIRDAS, lwi, "There should be a corresponding list widget item.");
+          RUNTIME_ASSERT(astroManager, lwi, "There should be a corresponding list widget item.");
 
             // Astrometry on the output image. Need to also markup the input image.
 
@@ -1164,7 +1164,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         break;
       };
@@ -1180,8 +1180,8 @@ namespace AstroManager
     /// @brief Adds a photometry label at the selected spot.
     /// @param[in] mouseEvent - The mouse event information.
     /// @returns None.
-    /// @throws CRuntimeAssert(AIRDAS)
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CRuntimeAssert(astroManager)
+    /// @throws CCodeError(astroManager)
     /// @version 2016-04-23/GGB - Update to reflect the use of a single data role and SCcontrolBlock
     /// @version 2013-08-05/GGB - Function created.
 
@@ -1203,7 +1203,7 @@ namespace AstroManager
           scenePoint = graphicsViewImageInput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->currentItem();
 
-          RUNTIME_ASSERT(AIRDAS, lwi != nullptr, "There should be a valid list widget item.");
+          RUNTIME_ASSERT(astroManager, lwi != nullptr, "There should be a valid list widget item.");
 
             // Photometry on the input image. Need to also mark up the output image (If there is one)
             // The original image is the currentImage in the dockwidgets.
@@ -1260,7 +1260,7 @@ namespace AstroManager
           scenePoint = graphicsViewImageOutput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->item(imageNumber);
 
-          RUNTIME_ASSERT(AIRDAS, lwi != nullptr, "There should be a valid list widget item.");
+          RUNTIME_ASSERT(astroManager, lwi != nullptr, "There should be a valid list widget item.");
 
             // Photometry on the output image. Need to also markup the input image.
 
@@ -1309,7 +1309,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         break;
       };
@@ -1399,7 +1399,7 @@ namespace AstroManager
       QGraphicsScene *gsImage = nullptr;
       QListWidgetItem *lwi;
 
-      RUNTIME_ASSERT(AIRDAS, pw, "Parent Widget should not be equal to nullptr.");
+      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not be equal to nullptr.");
 
 
       if (tabWidget->currentIndex() == 0)
@@ -1420,7 +1420,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       repaintImage();
@@ -1495,7 +1495,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
 
       gsImage->clear();         // This invalidates the pixmapItem as the scene owns the pixmapItem.
@@ -1552,7 +1552,7 @@ namespace AstroManager
 
     /// @brief Sets up the user interface.
     /// @throws CRuntimeAssert
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2016-04-17/GGB - Added code to update the "Remove Images" and "Remove All Images" buttons.
     /// @version 2013-08-01/GGB - Added object tagging functionality.
@@ -1574,7 +1574,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/windowCompareImages.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -1608,7 +1608,7 @@ namespace AstroManager
            !spinBoxInterval || !pushButtonAdd || !pushButtonRemove || !pushButtonRemoveAll || !pushButtonManual ||
            !pushButtonAutomatic || !pushButtonAlign1 || !pushButtonAlign2 || !pushButtonPrepare || !labelAlign1 || !labelAlign2 ||
            !inputTabWidget || !outputTabWidget || !labelCurrentFile)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       glImage = (QGridLayout *) inputTabWidget->layout();
 
@@ -1642,7 +1642,7 @@ namespace AstroManager
         spinBoxInterval->setEnabled(false);
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
 
@@ -1907,7 +1907,7 @@ namespace AstroManager
         graphicsViewImageOutput->zoom11();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -1928,7 +1928,7 @@ namespace AstroManager
         graphicsViewImageOutput->zoomAll();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -1949,7 +1949,7 @@ namespace AstroManager
         graphicsViewImageOutput->zoomIn();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -1975,7 +1975,7 @@ namespace AstroManager
     }
 
     /// @brief Menu function View | Zoom Selection
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2013-06-02/GGB - Function created.
 
     void CImageComparisonWindow::zoomSelection()
@@ -1990,7 +1990,7 @@ namespace AstroManager
         graphicsViewImageOutput->zoomSelection();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }

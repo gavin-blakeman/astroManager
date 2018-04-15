@@ -33,11 +33,11 @@
 //                        - CHelpAIP
 //
 // HISTORY:		          2018-02-03 GGB - Rename Project to astroManager
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+//                      2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-06-26 GGG - Removed class CHelpAboutLibRaw
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release
 //                      2012-01-01 GGB - Development of classes for openAIP
 //
 //*********************************************************************************************************************************
@@ -48,7 +48,7 @@
 
 #include "../Include/qtExtensions/qt.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../Include/database/database.h"
 #include "../Include/database/databaseATID.h"
@@ -268,7 +268,7 @@ namespace AstroManager
     }
 
     /// @brief Sets up the UI. Displays version information as well as license information.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2017-06-25/GGB - Use new findChild<>() function in CDialog.
     /// @version 2013-06-01/GGB - Added support for a dynamic description.
     /// @version 2013-03-03/GGB - Function created.
@@ -279,7 +279,7 @@ namespace AstroManager
 
       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
       else
       {

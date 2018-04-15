@@ -33,7 +33,7 @@
 //                        - CInstrumentDockwidget
 //
 // HISTORY:             2012-11-18  GGB - CInstrumentDockwidget split into a new file and renamed.
-//                      2011-06-04  GGB - Development of classes for AIRDAS
+//                      2011-06-04  GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 

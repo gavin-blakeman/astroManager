@@ -6,7 +6,7 @@
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS, LINUX, UNIX, MAC
 // LIBRARY DEPENDANCE:	Qt, GCL
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						astroManager
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
@@ -30,9 +30,9 @@
 // CLASSES INCLUDED:    CError - Error class used for critical, recoverable and information messages.
 //					            CCodeError  - Error class for reporting jumps into unreachable code.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
 //                      2011-02-25 GGB - File created.
 //
 //*************************************************************************************************
@@ -52,8 +52,8 @@ namespace AstroManager
 
   void loadErrorMessages();
 
-#define AIRDAS_ERROR(ERR) (ERROR(AIRDAS, ERR))
-#define AIRDAS_CODE_ERROR CODE_ERROR(AIRDAS)
+#define astroManager_ERROR(ERR) (ERROR(astroManager, ERR))
+#define astroManager_CODE_ERROR CODE_ERROR(astroManager)
 
 } // namespace AstroManager
 

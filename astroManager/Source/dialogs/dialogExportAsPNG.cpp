@@ -28,15 +28,15 @@
 // OVERVIEW:						Implements a dialog class to allow the user to select some JPEG parameters when an image is being exported
 //                      as JPEG.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
 //                      2013-07-25 GGB - File created.
 //
 //*********************************************************************************************************************************
 
 #include "../../Include/dialogs/dialogExportAsPNG.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../../Include/Error.h"
 #include "../../Include/Settings.h"
@@ -168,7 +168,7 @@ namespace AstroManager
       buttonBox = dlg->findChild<QDialogButtonBox *>("buttonBox");
 
       if (!checkBoxAspectRatio || !spinBoxImageWidth || !spinBoxImageHeight || !spinBoxImageQuality || !buttonBox)
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
 
       checkBoxAspectRatio->setChecked(true);
 

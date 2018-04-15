@@ -36,10 +36,10 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_WINDOWSWEATHERHISTORY_H
-#define AIRDAS_WINDOWSWEATHERHISTORY_H
+#ifndef astroManager_WINDOWSWEATHERHISTORY_H
+#define astroManager_WINDOWSWEATHERHISTORY_H
 
-  // AIRDAS
+  // astroManager
 
 #include "../qtExtensions/qt.h"
 #include "windowWeather.h"
@@ -90,4 +90,4 @@ namespace AstroManager
 
 }   // namespace AstroManager
 
-#endif // AIRDAS_WINDOWSWEATHERHISTORY_H
+#endif // astroManager_WINDOWSWEATHERHISTORY_H

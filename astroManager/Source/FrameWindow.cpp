@@ -36,18 +36,18 @@
 // HISTORY:             2018-02-03 GGB - Rename Project to AstroManager
 //                      2018-02-01 GGB - Added support for resources (sites, observers, telescopes)
 //                      2015-06-13/GGB - Remove all references to DialogConfigureDatabase (Functionality in Options Dialog)
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
 //                      2013-02-03 GGB - Moved CMdiSubWindow to own file and renamed.
-//                      2012-01-20 GGB - AIRDAS 0000.00 release.
-//                      2011-06-04 GGB - Development of classes for AIRDAS
+//                      2012-01-20 GGB - astroManager 0000.00 release.
+//                      2011-06-04 GGB - Development of classes for astroManager
 //                      2005-07-06 GGB - File Created
 //
 //*********************************************************************************************************************************
 
 #include "../Include/FrameWindow.h"
 
-  // AIRDAS include files
+  // astroManager include files
 
 #include "../Include/ACL/astroFile.h"
 #include "../Include/Configure.h"
@@ -691,10 +691,10 @@ namespace AstroManager
       menuActions[IDA_HELP_ABOUTATID]->setStatusTip(tr("View details about Astronomical Target Information Database."));
       connect(&*menuActions[IDA_HELP_ABOUTATID], SIGNAL(triggered()), this, SLOT(HelpATID()));
 
-      menuActions.emplace(IDA_HELP_ABOUT_AIRDAS, std::make_unique<QAction>(QIcon(":/images/info_rhombus.png"),
+      menuActions.emplace(IDA_HELP_ABOUT_astroManager, std::make_unique<QAction>(QIcon(":/images/info_rhombus.png"),
                                                                            tr("&About AstroManager"), this));
-      menuActions[IDA_HELP_ABOUT_AIRDAS]->setStatusTip(tr("Show the application's About box"));
-      connect(&*menuActions[IDA_HELP_ABOUT_AIRDAS], SIGNAL(triggered()), this, SLOT(HelpAbout()));
+      menuActions[IDA_HELP_ABOUT_astroManager]->setStatusTip(tr("Show the application's About box"));
+      connect(&*menuActions[IDA_HELP_ABOUT_astroManager], SIGNAL(triggered()), this, SLOT(HelpAbout()));
 
       menuActions.emplace(IDA_HELP_ABOUTQT, std::make_unique<QAction>(tr("About &Qt"), this));
       menuActions[IDA_HELP_ABOUTQT]->setStatusTip(tr("Show the Qt library's About box"));
@@ -986,7 +986,7 @@ namespace AstroManager
       subMenus[IDSM_HELP]->addAction(&*menuActions[IDA_HELP_ABOUTQT]);
       subMenus[IDSM_HELP]->addSeparator();
       subMenus[IDSM_HELP]->addAction(&*menuActions[IDA_HELP_ABOUTATID]);
-      subMenus[IDSM_HELP]->addAction(&*menuActions[IDA_HELP_ABOUT_AIRDAS]);
+      subMenus[IDSM_HELP]->addAction(&*menuActions[IDA_HELP_ABOUT_astroManager]);
 
     }
 
@@ -1098,7 +1098,7 @@ namespace AstroManager
     }
 
     /// @brief Function to identify all the objects in an image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-01-28/GGB - Corrected bug with logging. #1107907
     /// @version 2012-07-28/GGB - Function created.
 
@@ -1114,17 +1114,17 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Loads the objects that are reasonable likely to appear in the image.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2016-04-25/GGB - Function created.
 
     void CFrameWindow::eventAnalysisLoadObjects()
@@ -1139,19 +1139,19 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
 
     }
 
     /// @brief Loads a target list from file and applies it to the current image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     //
     // 2015-01-04/GGB - Function created.
 
@@ -1167,18 +1167,18 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Converts a colour image to a grayscale image.
     /// @details The grayscale image is opened in a new window.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2012-01-07/GGB - Function created.
 
     void CFrameWindow::eventConvertGrayscale()
@@ -1215,19 +1215,19 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Convert a colour image into seperate L, R, G, B images.
     /// @details  As the image can have multiple colour layers, the image needs to be reduced to a colour image before the colour layers are
     ///           extracted.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     //
     // 2013-06-09/GGB - Changed to use smart pointers for astroFile.
     // 2012-01-06/GGB - Function created.
@@ -1285,17 +1285,17 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Convert a colour image into seperate R, G, B images.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @details As the image can have multiple colour layers, the image needs to be reduced to a colour image before they colour
     /// layers are extracted.
     /// @version 2013-06-09/GGB - Smart pointers used for astroFile.
@@ -1348,12 +1348,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -1424,12 +1424,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -1456,7 +1456,7 @@ namespace AstroManager
     }
 
     /// @brief Function to export a table as CSV.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-05-11/GGB - Function created.
 
     void CFrameWindow::eventExportAsCSV()
@@ -1471,17 +1471,17 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Function to export the current image as a DNG.
-    /// @throws GCL::CCCodeError(AIRDAS)
+    /// @throws GCL::CCCodeError(astroManager)
     /// @version 2013-04-26/GGB - Function created.
 
     void CFrameWindow::eventExportAsDNG()
@@ -1496,17 +1496,17 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Function to export the current image as a JPEG.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     //
     // 2013-04-26/GGB - Function created.
 
@@ -1523,22 +1523,22 @@ namespace AstroManager
             iw->exportAsJPEG();
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           };
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Function to export the current image as a PNG
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     //
     // 2013-04-26/GGB - Function created.
 
@@ -1555,17 +1555,17 @@ namespace AstroManager
             iw->exportAsPNG();
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           }
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -1585,12 +1585,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -1741,7 +1741,7 @@ namespace AstroManager
 
     /// @brief Action from the transform menu
     /// @details Send onto the open child window, if the child window is of the correct type.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2011-05-29/GGB - Function created.
 
     void CFrameWindow::eventFlipImage()
@@ -1756,17 +1756,17 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Handles the action to float an image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     //
     // 2011-06-04/GGB - Function created.
 
@@ -1782,18 +1782,18 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Action from the transform menu
     /// @details Send onto the open child window, if the child window is of the correct type.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     //
     // 2011-05-29/GGB - Function created.
 
@@ -1809,12 +1809,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -1871,7 +1871,7 @@ namespace AstroManager
     }
 
     /// @brief Loads and applies a list of photometry targets to the current image.
-    /// @throws CCodeError(AIRDAS)
+    /// @throws CCodeError(astroManager)
     /// @version 2013-08-19/GGB - Function created.
 
     void CFrameWindow::eventPhotometryLoadTargets()
@@ -1886,25 +1886,25 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
     /// @brief Menu action File | Print.
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2013-03-29/GGB - Function created.
 
     void CFrameWindow::eventPrint()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1912,13 +1912,13 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Menu action File | Print Preview.
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     //
     // 2013-03-29/GGB - Function created.
 
@@ -1926,7 +1926,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1934,20 +1934,20 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Menu action File | Print Setup.
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2013-03-29/GGB - Function created.
 
     void CFrameWindow::eventPrintSetup()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1955,20 +1955,20 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
     /// @brief Menu action Transform | Resample Image
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2011-06-04/GGB - Function created.
 
     void CFrameWindow::eventResampleImage()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1976,7 +1976,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       };
     }
 
@@ -2013,8 +2013,8 @@ namespace AstroManager
     }
 
     /// @brief Notifies the parent window whether the Astrometry should be displayed or not.
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2013-05-10/GGB - Updates the settings to reflect the latest state.
     /// @version 2013-05-08/GGB - Added code to check if the activeChild is not nullptr.
     /// @version 2013-03-16/GGB - Function Created.
@@ -2023,7 +2023,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       settings::astroManagerSettings->setValue(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_ASTROMETRY]->isChecked()));
 
@@ -2033,7 +2033,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -2141,8 +2141,8 @@ namespace AstroManager
     /// @brief Notifies the parent window whether the Photometry should be displayed or not.
     /// @param None.
     /// @returns None.
-    /// @throws GCL::CCodeError(AIRDAS)
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version 2017-07-02/GGB - Changed the underlying storage to a std::map with std::unique_ptr
     /// @version 2013-05-10/GGB - Updates the settings to reflect the latest state.
     /// @version 2013-03-16/GGB - Function Created.
@@ -2151,7 +2151,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       settings::astroManagerSettings->setValue(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_PHOTOMETRY]->isChecked()));
 
@@ -2161,7 +2161,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -2187,8 +2187,8 @@ namespace AstroManager
     }
 
     /// @brief Menu action to zoom the image to 1:1
-    /// @throws GCL::CCodeError(AIRDAS)
-    /// @throws GCL::CRUntimeAssert(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
+    /// @throws GCL::CRUntimeAssert(astroManager)
     /// @version 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
     /// @version 2012-07-21/GGB - Function created.
 
@@ -2196,7 +2196,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2209,7 +2209,7 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           };
           break;
         }
@@ -2222,21 +2222,21 @@ namespace AstroManager
           }
           else
           {
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
           };
           break;
         }
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
     }
 
     /// @brief Menu Function View | Zoom Out
-    /// @throws CCodeError(AIRDAS)
-    /// @throws CRuntimeAssert(AIRDAS)
+    /// @throws CCodeError(astroManager)
+    /// @throws CRuntimeAssert(astroManager)
     /// @version 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
     /// @version 2011-06-02/GGB - Function created.
 
@@ -2244,7 +2244,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2257,7 +2257,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         break;
       }
@@ -2270,12 +2270,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         break;
       }
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -2306,7 +2306,7 @@ namespace AstroManager
 
     /// brief This function is guaranteed to return a valid value for a dockwidget.
     /// @returns Pointer to the relevant dock widget
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2017-07-02/GGB - Updated to use std::map and std::unique_ptr.
     /// @version 2013-05-28/GGB - Function created.
 
@@ -2318,7 +2318,7 @@ namespace AstroManager
       }
       catch (std::out_of_range const &)
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -2586,7 +2586,7 @@ namespace AstroManager
     }
 
     /// @brief Function to crop an image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @details Entry of the crop parameters is via a dialog box, specifying the origen and dimensions of the final image.
     /// @version 2013-03-16/GGB - Function created.
 
@@ -2594,7 +2594,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2602,7 +2602,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
 
     }
@@ -2734,14 +2734,14 @@ namespace AstroManager
     }
 
     /// @brief Calls the function to bin pixels.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     //// @version 2011-06-10/GGB - Function created
 
     void CFrameWindow::eventBinPixels()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2749,7 +2749,7 @@ namespace AstroManager
       }
       else
       {
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
       }
     }
 
@@ -2920,14 +2920,14 @@ namespace AstroManager
     }
 
     /// @brief Function used for calibrating a single image.
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2011-06-04/GGB - Function Created
 
     void CFrameWindow::eventImagingSingleCalibration()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2938,7 +2938,7 @@ namespace AstroManager
         };
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
@@ -2988,14 +2988,14 @@ namespace AstroManager
     }
 
     /// @brief Menu Function Transform | Rotate.
-    /// @throws GCL::CRuntimeAssert(AIRDAS)
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version 2011-05-30/GGB - Function Created
 
     void CFrameWindow::eventTransformRotate()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3006,14 +3006,14 @@ namespace AstroManager
         };
         default:
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
           break;
         };
       };
     }
 
     /// @brief Menu Function View | Zoom All
-    /// @throws GLC::CCodeError(AIRDAS)
+    /// @throws GLC::CCodeError(astroManager)
     /// @version 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
     /// @version 2011-06-02/GGB - Function created.
 
@@ -3021,7 +3021,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3031,7 +3031,7 @@ namespace AstroManager
         if (iw)
           iw->zoomAll();
         else
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         break;
       }
       case SWT_STACKIMAGESWINDOW:
@@ -3040,17 +3040,17 @@ namespace AstroManager
         if (siw)
           siw->zoomAll();
         else
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         break;
       }
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
 
     /// @brief Menu Function View | Zoom In
-    /// @throws GCL::CCodeError(AIRDAS)
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
     /// @version 2011-06-02/GGB - Function created.
 
@@ -3058,7 +3058,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3071,7 +3071,7 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
         break;
       };
@@ -3084,12 +3084,12 @@ namespace AstroManager
         }
         else
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         };
         break;
       }
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -3102,7 +3102,7 @@ namespace AstroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3110,7 +3110,7 @@ namespace AstroManager
         dynamic_cast<imaging::CImageWindow *>(activeChild)->zoomSelection();
         break;
       default:
-        CODE_ERROR(AIRDAS);
+        CODE_ERROR(astroManager);
         break;
       };
     }
@@ -3540,7 +3540,7 @@ namespace AstroManager
     /// @brief Function to setup the user interface.
     /// @details Called from the constructor of the class.
     /// @throws GCL::CRuntimeAssert
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2015-08-08/GGB - Changed if(...) checks to runtime assertions for forms and children.
     /// @version 2011-05-28/GGB - Function created.
@@ -3556,13 +3556,13 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/windowMDIFrame.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);
       file.close();
 
-      RUNTIME_ASSERT(AIRDAS, formWidget, "Widget not found for the MDU frame.");
+      RUNTIME_ASSERT(astroManager, formWidget, "Widget not found for the MDU frame.");
 
       setCentralWidget(formWidget);
 
@@ -3627,7 +3627,7 @@ namespace AstroManager
               break;
             default:
             {
-              CODE_ERROR(AIRDAS);
+              CODE_ERROR(astroManager);
               break;
             };
           }

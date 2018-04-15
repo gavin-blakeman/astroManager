@@ -26,11 +26,11 @@
 //                      see <http://www.gnu.org/licenses/>.
 //
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 release.
-//                      2010-12-08 GGB - Development of classes for AIRDAS
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 release.
+//                      2013-01-20 GGB - astroManager 0000.00 release.
+//                      2010-12-08 GGB - Development of classes for astroManager
 //
 //*********************************************************************************************************************************
 
@@ -129,7 +129,7 @@ namespace AstroManager
           if ( (useBiasFrames = (widget()->findChild<QGroupBox *>("groupBoxBiasFramesSelection")->isChecked())) )
             saveMasterBiasFrame = widget()->findChild<QGroupBox *>("groupBoxMasterBiasSaveAs")->isChecked();
           else
-            CODE_ERROR(AIRDAS);
+            CODE_ERROR(astroManager);
         };
       };
 
@@ -242,7 +242,7 @@ namespace AstroManager
               msgBox.exec();
               break;
             default:
-              CODE_ERROR(AIRDAS);
+              CODE_ERROR(astroManager);
             };  // switch
           }; // catch
           if (saveMasterBiasFrame)
@@ -314,7 +314,7 @@ namespace AstroManager
               };
               default:
               {
-                CODE_ERROR(AIRDAS);
+                CODE_ERROR(astroManager);
               };
             };  // switch
           };  // if
@@ -939,7 +939,7 @@ namespace AstroManager
                   };
                   default:
                   {
-                    CODE_ERROR(AIRDAS);
+                    CODE_ERROR(astroManager);
                   };
                 };  // switch
               };  // if
@@ -1012,7 +1012,7 @@ namespace AstroManager
               };
               default:
               {
-                CODE_ERROR(AIRDAS);
+                CODE_ERROR(astroManager);
               };
             };  // switch
           };  // if
@@ -1480,7 +1480,7 @@ namespace AstroManager
               };
               default:
               {
-                CODE_ERROR(AIRDAS);
+                CODE_ERROR(astroManager);
               };
             };  // switch
           };  // if
@@ -1941,7 +1941,7 @@ namespace AstroManager
     }
 
     /// Sets up the UI by loading from file and getting all the window addresses.
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
     /// @version 2017-06-14/GGB - Update to Qt5
     /// @version 2011-05-24/GGB - Function created.
@@ -1957,7 +1957,7 @@ namespace AstroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to load resource :/forms/windowCalibrateMultiple.ui.");
-        ERROR(AIRDAS, 0x0001);
+        ERROR(astroManager, 0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);

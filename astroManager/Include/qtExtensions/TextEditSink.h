@@ -1,6 +1,6 @@
 //*********************************************************************************************************************************
 //
-// PROJECT:             AIRDAS
+// PROJECT:             astroManager
 // FILE:                TextEditSink
 // SUBSYSTEM:           Logging Library
 // LANGUAGE:						C++
@@ -29,8 +29,8 @@
 //
 // CLASSES INCLUDED:    CTextEditSink
 //
-// HISTORY:             2016-05-07/GGB - Moved file and class from GCL to AIRDAS.
-//                      2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2016-05-07/GGB - Moved file and class from GCL to astroManager.
+//                      2015-09-22 GGB - astroManager 2015.09 release
 //                      2014-12-25 GGB - Development of class for "Observatory Weather System - Service"
 //
 //*********************************************************************************************************************************

@@ -32,8 +32,8 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef AIRDAS_SIMBAD_H
-#define AIRDAS_SIMBAD_H
+#ifndef astroManager_SIMBAD_H
+#define astroManager_SIMBAD_H
 
 #include <string>
 #include <vector>
@@ -70,4 +70,4 @@ namespace AstroManager
 
 }   // namespace AstroManager
 
-#endif // AIRDAS_SIMBAD_H
+#endif // astroManager_SIMBAD_H

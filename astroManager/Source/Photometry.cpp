@@ -28,10 +28,10 @@
 // CLASSES:		          CProgramDisplayEdit - Class for displaying and editing a Photometry Program
 //						          CWindowLightCurves - Class for displaying and analysing light curves.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
-//                      2013-09-30 GGB - AIRDAS 2013.09 release.
-//                      2013-03-22 GGB - AIRDAS 2013.03 Release.
-//                      2013-01-20 GGB - AIRDAS 0000.00 Release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
+//                      2013-09-30 GGB - astroManager 2013.09 release.
+//                      2013-03-22 GGB - astroManager 2013.03 Release.
+//                      2013-01-20 GGB - astroManager 0000.00 Release
 //
 //*************************************************************************************************
 
@@ -763,7 +763,7 @@ namespace AstroManager
         lwItems = lwFilters->findItems(QString(query->value(1).toString()), Qt::MatchCaseSensitive | Qt::MatchFixedString);
         if (lwItems.size() > 1)
         {
-          CODE_ERROR(AIRDAS);
+          CODE_ERROR(astroManager);
         }
         else
         {

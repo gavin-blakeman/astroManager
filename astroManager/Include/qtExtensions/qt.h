@@ -26,7 +26,7 @@
 //
 // CLASSES:		          None
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //
 //**********************************************************************************************************************************
 
@@ -125,7 +125,7 @@
 
 #define ASSOCIATE_CONTROL(POINTERNAME, WIDGET, CONTROLNAME, TYPE) \
   POINTERNAME = WIDGET->findChild<TYPE *>(CONTROLNAME); \
-  RUNTIME_ASSERT(AIRDAS, POINTERNAME, "Control "#CONTROLNAME" not found." );
+  RUNTIME_ASSERT(astroManager, POINTERNAME, "Control "#CONTROLNAME" not found." );
 
 #define ASSOCIATE_LABEL(POINTERNAME, WIDGET, CONTROLNAME) ASSOCIATE_CONTROL(POINTERNAME, WIDGET, CONTROLNAME, QLabel)
 #define ASSOCIATE_RADIOBUTTON(POINTERNAME, WIDGET, CONTROLNAME) ASSOCIATE_CONTROL(POINTERNAME, WIDGET, CONTROLNAME, QRadioButton)

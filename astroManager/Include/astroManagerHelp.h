@@ -34,7 +34,7 @@
 //                        - CHelpAIP
 //                        - CHelpAboutLibRaw
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2015-09-22 GGB - astroManager 2015.09 release
 //                      2012-01-01 GGB - Development of classes for openAIP
 //
 //*********************************************************************************************************************************
@@ -44,7 +44,7 @@
 
 #include <Qt>
 
-  // AIRDAS Include Files
+  // astroManager Include Files
 
 #include "dialogs/dialogs.h"
 #include "Error.h"

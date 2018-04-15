@@ -68,7 +68,7 @@ namespace AstroManager
     /// @brief Function to setup the user interface.
     /// @details Called from the constructor of the class.
     /// @throws GCL::CRuntimeAssert
-    /// @throws GCL::CError(AIRDAS, 0x0001)
+    /// @throws GCL::CError(astroManager, 0x0001)
     /// @version 2017-06-29/GGB - Function created.
 
     void CWindowWeatherHistory::setupUI()
@@ -83,7 +83,7 @@ namespace AstroManager
 //      if (!file.open(QFile::ReadOnly))
 //      {
 //        ERRORMESSAGE("Unable to open resource :/forms/windowWeatherHistory.ui.");
-//        ERROR(AIRDAS, 0x0001);
+//        ERROR(astroManager, 0x0001);
 //      }
 
 //      QWidget *formWidget = loader.load(&file, this);
@@ -99,7 +99,7 @@ namespace AstroManager
 
 //      if (!gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout()))
 //      {
-//        CODE_ERROR(AIRDAS);
+//        CODE_ERROR(astroManager);
 //      };
 
 //        // Set the end time to the time now.
