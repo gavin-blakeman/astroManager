@@ -1,6 +1,3 @@
-[submodule "GCL"]
-	path = GCL
-	url = /mnt/git/software/GCL
 [submodule "PCL"]
 	path = PCL
 	url = /mnt/git/software/PCL
