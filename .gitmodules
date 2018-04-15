@@ -1,12 +1,3 @@
-[submodule "PCL"]
-	path = PCL
-	url = /mnt/git/software/PCL
-[submodule "MCL"]
-	path = MCL
-	url = /mnt/git/software/MCL
-[submodule "SCL"]
-	path = SCL
-	url = /mnt/git/software/SCL
 [submodule "WCL"]
 	path = WCL
 	url = git@github.com:gavin-blakeman/WCL.git
