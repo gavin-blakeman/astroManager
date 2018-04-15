@@ -1,2 +1,2 @@
-AstroManager provides tools for planning observing sessions, as well as for viewing and editing FITS files.
+astroManager provides tools for planning observing sessions, as well as for viewing and editing FITS files.
 There is also support for photometry and astrometry.

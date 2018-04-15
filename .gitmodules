@@ -10,6 +10,9 @@
 [submodule "SCL"]
 	path = SCL
 	url = /mnt/git/software/SCL
+[submodule "WCL"]
+	path = WCL
+	url = git@github.com:gavin-blakeman/WCL.git
 [submodule "ACL"]
 	path = ACL
-	url = /mnt/git/software/ACL
+	url = git@github.com:gavin-blakeman/ACL.git

@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2016 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2011-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -206,7 +207,7 @@ namespace AstroManager
 
     void CImageResampleDialog::saveUI()
     {
-      settings::VSOPSettings->setValue(settings::DIALOG_IMAGERESAMPLE_ASPECT,
+      settings::astroManagerSettings->setValue(settings::DIALOG_IMAGERESAMPLE_ASPECT,
         QVariant(findChild<QCheckBox *>("checkBoxAspectRatio")->isChecked()));
     }
 
@@ -219,7 +220,7 @@ namespace AstroManager
       QSpinBox *sb;
 
       findChild<QCheckBox *>("checkBoxAspectRatio")->
-          setChecked(settings::VSOPSettings->value(settings::DIALOG_IMAGERESAMPLE_ASPECT,
+          setChecked(settings::astroManagerSettings->value(settings::DIALOG_IMAGERESAMPLE_ASPECT,
                                                    QVariant(true)).toBool());
 
       findChild<QLabel *>("labelWidth")->setText(QString("%1").arg(astroImage->width()));

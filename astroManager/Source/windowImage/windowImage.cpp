@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2010-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -77,7 +78,7 @@ namespace AstroManager
 
     void CAstroImageWindow::drawAstrometryIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
     {
-      int ai = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
+      int ai = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
 
       switch (ai)
       {
@@ -105,8 +106,8 @@ namespace AstroManager
 
     void CAstroImageWindow::drawCrossIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
     {
-      const long space = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_SPACE, QVariant(5)).toInt();
-      const long length = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_LENGTH, QVariant(10)).toInt() + space;
+      const long space = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_SPACE, QVariant(5)).toInt();
+      const long length = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_LENGTH, QVariant(10)).toInt() + space;
 
       QGraphicsLineItem *lineItem = nullptr;
 
@@ -199,7 +200,7 @@ namespace AstroManager
 
     void CAstroImageWindow::drawCircleIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
     {
-      long const radius = settings::VSOPSettings->value(settings::ASTROMETRY_CIRCLE_RADIUS, QVariant(5)).toInt();
+      long const radius = settings::astroManagerSettings->value(settings::ASTROMETRY_CIRCLE_RADIUS, QVariant(5)).toInt();
 
       QGraphicsEllipseItem *newItem = nullptr;
 

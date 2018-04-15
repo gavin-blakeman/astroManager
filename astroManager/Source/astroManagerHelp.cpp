@@ -1,27 +1,28 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager
-// FILE:			          VSOPHelp.cpp
+// PROJECT:							astroManager
+// FILE:			          astroManagerHelp
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Qt
-// NAMESPACE:						AstroManager::imagedisplay
-// AUTHOR:							Gavin Blakeman.
+// NAMESPACE:						AstroManager
+// AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2009-2017 Gavin Blakeman.
-//                      This file is part of the AstroManager software.
+//                      Copyright 2009-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AstroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      AstroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-//                      for more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AstroManager.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:	          Classes for the Help Menu Items. The Qt API is used to create system independent code.
 //
@@ -31,7 +32,8 @@
 // CLASS HIERARCHY:     CDialog
 //                        - CHelpAIP
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:		          2018-02-03 GGB - Rename Project to astroManager
+//                      2015-09-22 GGB - AIRDAS 2015.09 release
 //                      2013-09-30 GGB - AIRDAS 2013.09 release.
 //                      2013-06-26 GGG - Removed class CHelpAboutLibRaw
 //                      2013-03-22 GGB - AIRDAS 2013.03 release.
@@ -40,7 +42,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../Include/VSOPHelp.h"
+#include "../Include/astroManagerHelp.h"
 
   // Qt Framework files
 
@@ -50,7 +52,7 @@
 
 #include "../Include/database/database.h"
 #include "../Include/database/databaseATID.h"
-#include "../Include/VSOP.h"
+#include "../Include/astroManager.h"
 
   // Standard header files
 
@@ -252,7 +254,7 @@ namespace AstroManager
 
     //*****************************************************************************************************************************
     //
-    // CHelpAIRDAS
+    // CHelpAboutAstroManager
     //
     //*****************************************************************************************************************************
 
@@ -260,7 +262,7 @@ namespace AstroManager
     /// @throws None.
     /// @version 2012-01-01/GGB - Function created.
 
-    CHelpAboutAIP::CHelpAboutAIP() : dialogs::CDialog(":/forms/dialogAboutAIP.ui")
+    CHelpAboutAstroManager::CHelpAboutAstroManager() : dialogs::CDialog(":/forms/dialogAboutAIP.ui")
     {
       setupUI();
     }
@@ -271,7 +273,7 @@ namespace AstroManager
     /// @version 2013-06-01/GGB - Added support for a dynamic description.
     /// @version 2013-03-03/GGB - Function created.
 
-    void CHelpAboutAIP::setupUI()
+    void CHelpAboutAstroManager::setupUI()
     {
       QFile file(":/text/GPLv2.htm");
 

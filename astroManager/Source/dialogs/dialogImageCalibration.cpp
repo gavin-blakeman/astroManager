@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2016 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2012-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Dialog for Image Calibration - Allows the user to select dark frame, flat frame etc.
 //
@@ -46,7 +47,7 @@
 
 #include "../../Include/Error.h"
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
 namespace AstroManager
 {
@@ -175,7 +176,7 @@ namespace AstroManager
     void CImageCalibrationDialog::eventButtonSelectBiasFrame(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(dlg, tr("Select Master Bias Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
                                                       EXTENSION_IMAGE);
 
       if ( !fileName.isNull() )
@@ -192,7 +193,7 @@ namespace AstroManager
     void CImageCalibrationDialog::eventButtonSelectDarkFrame(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(dlg, tr("Select Master Dark Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
                                                       EXTENSION_IMAGE);
 
       if ( !fileName.isNull() )
@@ -209,7 +210,7 @@ namespace AstroManager
     void CImageCalibrationDialog::eventButtonSelectFlatFrame(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(dlg, tr("Select Master Flat Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
                                                       EXTENSION_IMAGE);
 
       if ( !fileName.isNull() )
@@ -234,26 +235,26 @@ namespace AstroManager
 
     void CImageCalibrationDialog::saveUI()
     {
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERDARK,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERDARK,
                                        QVariant(calibrateImage->darkFramePath.string().c_str()));
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERBIAS,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERBIAS,
                                        QVariant(calibrateImage->biasFramePath.string().c_str()));
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERFLAT,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERFLAT,
                                        QVariant(calibrateImage->flatFramePath.string().c_str()));
 
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_USEBIAS, QVariant(groupBoxUseBias->isChecked()));
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_USEBIAS, QVariant(groupBoxUseBias->isChecked()));
 
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_USEFLAT,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_USEFLAT,
                                        QVariant(groupBoxUseFlat->isChecked()));
 
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNORETEMPERATURE,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNORETEMPERATURE,
                                        QVariant(checkBoxIgnoreTemperature->isChecked()));
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNOREEXPOSURE,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNOREEXPOSURE,
                                        QVariant(checkBoxIgnoreExposure->isChecked()));
 
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_SAVEORIGINAL,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_SAVEORIGINAL,
                                        QVariant(checkBoxSaveOriginal->isChecked()));
-      settings::VSOPSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_APPENDFRAMES,
+      settings::astroManagerSettings->setValue(settings::DIALOG_SINGLEIMAGECALIBRATION_APPENDFRAMES,
                                        QVariant(checkBoxAppendFrames->isChecked()));
     }
 
@@ -282,21 +283,21 @@ namespace AstroManager
 
         // Set all the default values into the dialog box.
 
-      lineEditMasterDarkFrame->setText(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERDARK,
+      lineEditMasterDarkFrame->setText(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERDARK,
         QVariant("")).toString());
-      lineEditMasterBiasFrame->setText(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERBIAS, QVariant("")).toString());
-      lineEditMasterFlatFrame->setText(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERFLAT, QVariant("")).toString());
-      groupBoxUseBias->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_USEBIAS, QVariant(false)).toBool());
-      groupBoxUseFlat->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_USEFLAT, QVariant(false)).toBool());
+      lineEditMasterBiasFrame->setText(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERBIAS, QVariant("")).toString());
+      lineEditMasterFlatFrame->setText(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_MASTERFLAT, QVariant("")).toString());
+      groupBoxUseBias->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_USEBIAS, QVariant(false)).toBool());
+      groupBoxUseFlat->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_USEFLAT, QVariant(false)).toBool());
 
-      checkBoxIgnoreTemperature->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNORETEMPERATURE,
+      checkBoxIgnoreTemperature->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNORETEMPERATURE,
                                                                           QVariant(false)).toBool());
-      checkBoxIgnoreExposure->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNOREEXPOSURE,
+      checkBoxIgnoreExposure->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_IGNOREEXPOSURE,
                                                                        QVariant(false)).toBool());
 
-      checkBoxSaveOriginal->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_SAVEORIGINAL,
+      checkBoxSaveOriginal->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_SAVEORIGINAL,
                                                                      QVariant(false)).toBool());
-      checkBoxAppendFrames->setChecked(settings::VSOPSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_APPENDFRAMES,
+      checkBoxAppendFrames->setChecked(settings::astroManagerSettings->value(settings::DIALOG_SINGLEIMAGECALIBRATION_APPENDFRAMES,
                                                                      QVariant(false)).toBool());
 
       checkBoxIgnoreExposure->setEnabled(!groupBoxUseBias->isChecked());

@@ -7,19 +7,20 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2012-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Data support functions.
 //
@@ -69,11 +70,11 @@ namespace AstroManager
 
     CDatabaseWeather::CDatabaseWeather() : CDatabase("WEATHER"), WDdisabled_(false)
     {
-      QVariant variant = settings::VSOPSettings->value(settings::WEATHER_DATABASE_DISABLE, QVariant());
+      QVariant variant = settings::astroManagerSettings->value(settings::WEATHER_DATABASE_DISABLE, QVariant());
 
       if (variant.isNull())
       {
-        settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(true));
+        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(true));
         WDdisabled_ = true;
       }
       else
@@ -144,7 +145,7 @@ namespace AstroManager
 
     void CDatabaseWeather::connectToDatabase()
     {
-      QVariant database = settings::VSOPSettings->value(settings::WEATHER_DATABASE_DBMS);
+      QVariant database = settings::astroManagerSettings->value(settings::WEATHER_DATABASE_DBMS);
       QString szDatabase;
 
       if (!WDdisabled_)
@@ -180,12 +181,12 @@ namespace AstroManager
 
     bool CDatabaseWeather::MySQL()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::WEATHER_MYSQL_DRIVERNAME, QVariant(QString("QMYSQL"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_MYSQL_PORT, QVariant(3306)).toInt(),
-                                settings::VSOPSettings->value(settings::WEATHER_MYSQL_DATABASENAME, QVariant(QString("WEATHER"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_MYSQL_USERNAME, QVariant(QString("WEATHER"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_MYSQL_PASSWORD, QVariant(QString("WEATHER"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_DRIVERNAME, QVariant(QString("QMYSQL"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_MYSQL_PORT, QVariant(3306)).toInt(),
+                                settings::astroManagerSettings->value(settings::WEATHER_MYSQL_DATABASENAME, QVariant(QString("WEATHER"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_MYSQL_USERNAME, QVariant(QString("WEATHER"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_MYSQL_PASSWORD, QVariant(QString("WEATHER"))).toString()) );
     }
 
     /// @brief Function for opening an ODBC database.
@@ -198,8 +199,8 @@ namespace AstroManager
 
     bool  CDatabaseWeather::ODBC()
     {
-      return ( createConnectionODBC(settings::VSOPSettings->value(settings::WEATHER_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
-                                    settings::VSOPSettings->value(settings::WEATHER_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
+      return ( createConnectionODBC(settings::astroManagerSettings->value(settings::WEATHER_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
+                                    settings::astroManagerSettings->value(settings::WEATHER_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
 
     }
 
@@ -214,12 +215,12 @@ namespace AstroManager
 
     bool CDatabaseWeather::Oracle()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::WEATHER_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_ORACLE_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_ORACLE_PORT, QVariant(1521)).toInt(),
-                                settings::VSOPSettings->value(settings::WEATHER_ORACLE_SCHEMANAME, QVariant(QString("xe"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_ORACLE_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_ORACLE_PORT, QVariant(1521)).toInt(),
+                                settings::astroManagerSettings->value(settings::WEATHER_ORACLE_SCHEMANAME, QVariant(QString("xe"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
     /// @brief Reads data from the database and then adds it into the passed combo box.
@@ -278,12 +279,12 @@ namespace AstroManager
 
     bool CDatabaseWeather::PostgreSQL()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_PORT, QVariant(1521)).toInt(),
-                                settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_DATABASENAME, QVariant(QString("xe"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_USERNAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_PASSWORD, QVariant(QString("ATID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_PORT, QVariant(1521)).toInt(),
+                                settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_DATABASENAME, QVariant(QString("xe"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_USERNAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
     /// Procedure to open SQLite database.
@@ -296,8 +297,8 @@ namespace AstroManager
 
     bool CDatabaseWeather::SQLite()
     {
-      return ( createConnectionSQLite(settings::VSOPSettings->value(settings::WEATHER_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
-                                      settings::VSOPSettings->value(settings::WEATHER_SQLITE_DATABASENAME, QVariant("Data/WEATHER.sqlite")).toString()) );
+      return ( createConnectionSQLite(settings::astroManagerSettings->value(settings::WEATHER_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
+                                      settings::astroManagerSettings->value(settings::WEATHER_SQLITE_DATABASENAME, QVariant("Data/WEATHER.sqlite")).toString()) );
     }
 
   }  // namespace database

@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Observation Manager)
+// PROJECT:							astroManager (Astronomy Observation Manager)
 // FILE:								DialogOptions
 // SUBSYSTEM:						Options Dialog for Application
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
@@ -10,18 +10,18 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2013-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:            Implements the options dialog for the application.
@@ -46,7 +46,7 @@
 #include "../../Include/Error.h"
 #include "../../Include/qtExtensions/qt.h"
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
   // Standard C++ headers
 
@@ -235,11 +235,11 @@ namespace AstroManager
 
     void CDialogOptions::eventResetWarnings(bool)
     {
-      settings::VSOPSettings->setValue(settings::CM_DISCLAIMER, QVariant(-1));
-      settings::VSOPSettings->setValue(settings::CM_IMAGECOMPARISON_REMOVE, QVariant(-1));
-      settings::VSOPSettings->setValue(settings::CM_IMAGECOMPARISON_REMOVEALL, QVariant(-1));
-      settings::VSOPSettings->setValue(settings::CM_IMAGESTACKING_REMOVE, QVariant(-1));
-      settings::VSOPSettings->setValue(settings::CM_IMAGESTACKING_REMOVEALL, QVariant(-1));
+      settings::astroManagerSettings->setValue(settings::CM_DISCLAIMER, QVariant(-1));
+      settings::astroManagerSettings->setValue(settings::CM_IMAGECOMPARISON_REMOVE, QVariant(-1));
+      settings::astroManagerSettings->setValue(settings::CM_IMAGECOMPARISON_REMOVEALL, QVariant(-1));
+      settings::astroManagerSettings->setValue(settings::CM_IMAGESTACKING_REMOVE, QVariant(-1));
+      settings::astroManagerSettings->setValue(settings::CM_IMAGESTACKING_REMOVEALL, QVariant(-1));
     }
 
     /// @brief Processes the event when a weather database type is chosen.
@@ -528,13 +528,13 @@ namespace AstroManager
 
     void CDialogOptions::saveAstrometry()
     {
-      settings::VSOPSettings->setValue(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS, QVariant(spinBoxCentroidRadius->value()));
-      settings::VSOPSettings->setValue(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+      settings::astroManagerSettings->setValue(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS, QVariant(spinBoxCentroidRadius->value()));
+      settings::astroManagerSettings->setValue(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                        QVariant(spinBoxCentroidSensitivity->value()));
 
-      settings::VSOPSettings->setValue(settings::ASTROMETRY_INDICATOR_COLOUR,
+      settings::astroManagerSettings->setValue(settings::ASTROMETRY_INDICATOR_COLOUR,
                                        comboBoxAstrometryColour->itemData(comboBoxAstrometryColour->currentIndex()));
-      settings::VSOPSettings->setValue(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
+      settings::astroManagerSettings->setValue(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
                                        comboBoxAstrometrySelectedColour->itemData(comboBoxAstrometrySelectedColour->currentIndex()));
     }
 
@@ -545,21 +545,21 @@ namespace AstroManager
 
     void CDialogOptions::saveARIDDatabase()
     {
-      settings::VSOPSettings->setValue(settings::ARID_DATABASE_DISABLE, QVariant(!groupBoxARID->isChecked()));
+      settings::astroManagerSettings->setValue(settings::ARID_DATABASE_DISABLE, QVariant(!groupBoxARID->isChecked()));
       if ( groupBoxARID->isChecked() )
       {
-        settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DBMS, QVariant(comboBoxWeatherDatabaseType->currentText()));
-        settings::VSOPSettings->setValue(settings::ARID_DATABASE_DBMS, QVariant(comboBoxARIDDatabaseType->currentText()));
+        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DBMS, QVariant(comboBoxWeatherDatabaseType->currentText()));
+        settings::astroManagerSettings->setValue(settings::ARID_DATABASE_DBMS, QVariant(comboBoxARIDDatabaseType->currentText()));
 
         switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
         {
           case database::CDatabase::SQLDB_MYSQL:
           {
-            settings::VSOPSettings->setValue(settings::ARID_MYSQL_HOSTADDRESS, lineEditARIDMySQLHost->text());
-            settings::VSOPSettings->setValue(settings::ARID_MYSQL_PORT, spinBoxARIDMySQLPort->value());
-            settings::VSOPSettings->setValue(settings::ARID_MYSQL_DATABASENAME, lineEditARIDMySQLDatabase->text());
-            settings::VSOPSettings->setValue(settings::ARID_MYSQL_USERNAME, lineEditARIDMySQLUser->text());
-            settings::VSOPSettings->setValue(settings::ARID_MYSQL_PASSWORD, lineEditARIDMySQLPassword->text());
+            settings::astroManagerSettings->setValue(settings::ARID_MYSQL_HOSTADDRESS, lineEditARIDMySQLHost->text());
+            settings::astroManagerSettings->setValue(settings::ARID_MYSQL_PORT, spinBoxARIDMySQLPort->value());
+            settings::astroManagerSettings->setValue(settings::ARID_MYSQL_DATABASENAME, lineEditARIDMySQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::ARID_MYSQL_USERNAME, lineEditARIDMySQLUser->text());
+            settings::astroManagerSettings->setValue(settings::ARID_MYSQL_PASSWORD, lineEditARIDMySQLPassword->text());
             break;
           };
           case database::CDatabase::SQLDB_ODBC:
@@ -568,20 +568,20 @@ namespace AstroManager
           };
           case database::CDatabase::SQLDB_PSQL:
           {
-            settings::VSOPSettings->setValue(settings::ARID_POSTGRESQL_HOSTADDRESS, lineEditARIDPostgreSQLHost->text());
-            settings::VSOPSettings->setValue(settings::ARID_POSTGRESQL_PORT, spinBoxARIDMySQLPort->value());
-            settings::VSOPSettings->setValue(settings::ARID_POSTGRESQL_DATABASENAME, lineEditARIDPostgreSQLDatabase->text());
-            settings::VSOPSettings->setValue(settings::ARID_POSTGRESQL_USERNAME, lineEditARIDPostgreSQLUser->text());
-            settings::VSOPSettings->setValue(settings::ARID_POSTGRESQL_PASSWORD, lineEditARIDPostgreSQLPassword->text());
+            settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_HOSTADDRESS, lineEditARIDPostgreSQLHost->text());
+            settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_PORT, spinBoxARIDMySQLPort->value());
+            settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_DATABASENAME, lineEditARIDPostgreSQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_USERNAME, lineEditARIDPostgreSQLUser->text());
+            settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_PASSWORD, lineEditARIDPostgreSQLPassword->text());
             break;
           };
           case database::CDatabase::SQLDB_QOCI:
           {
-            settings::VSOPSettings->setValue(settings::ARID_ORACLE_HOSTADDRESS, lineEditARIDOracleHost->text());
-            settings::VSOPSettings->setValue(settings::ARID_ORACLE_PORT, spinBoxARIDOraclePort->value());
-            settings::VSOPSettings->setValue(settings::ARID_ORACLE_SCHEMANAME, lineEditARIDOracleSchema->text());
-            settings::VSOPSettings->setValue(settings::ARID_ORACLE_USERNAME, lineEditARIDOracleUser->text());
-            settings::VSOPSettings->setValue(settings::ARID_ORACLE_PASSWORD, lineEditARIDOraclePassword->text());
+            settings::astroManagerSettings->setValue(settings::ARID_ORACLE_HOSTADDRESS, lineEditARIDOracleHost->text());
+            settings::astroManagerSettings->setValue(settings::ARID_ORACLE_PORT, spinBoxARIDOraclePort->value());
+            settings::astroManagerSettings->setValue(settings::ARID_ORACLE_SCHEMANAME, lineEditARIDOracleSchema->text());
+            settings::astroManagerSettings->setValue(settings::ARID_ORACLE_USERNAME, lineEditARIDOracleUser->text());
+            settings::astroManagerSettings->setValue(settings::ARID_ORACLE_PASSWORD, lineEditARIDOraclePassword->text());
             break;
           }
           case database::CDatabase::SQLDB_SQLITE:
@@ -606,9 +606,9 @@ namespace AstroManager
 
     void CDialogOptions::saveDatabase()
     {
-      settings::VSOPSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(!groupBoxATID->isChecked()));
+      settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(!groupBoxATID->isChecked()));
       saveARIDDatabase();
-      settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(!groupBoxWeather->isChecked()));
+      settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(!groupBoxWeather->isChecked()));
 
       saveWeatherDatabase();
     }
@@ -620,31 +620,31 @@ namespace AstroManager
 
     void CDialogOptions::saveGeneral()
     {
-      settings::VSOPSettings->setValue(settings::SETTINGS_OBSERVER, QVariant(lineEditUserName->text()));
-      settings::VSOPSettings->setValue(settings::MAX_THREADS, QVariant(spinBoxMaximumThreads->value()));
-      settings::VSOPSettings->setValue(settings::SETTINGS_LT, QVariant(radioButtonLocalTime->isChecked()));
-      settings::VSOPSettings->setValue(settings::FILE_LASTOPENEDDEPTH, QVariant(spinBoxLastOpenedFiles->value()));
-      settings::VSOPSettings->setValue(settings::DW_HISTOGRAM_BINS, QVariant(spinBoxHistogramBins->value()));
-      settings::VSOPSettings->setValue(settings::TOOLBAR_HEIGHT, QVariant(spinBoxToolbarHeight->value()));
+      settings::astroManagerSettings->setValue(settings::SETTINGS_OBSERVER, QVariant(lineEditUserName->text()));
+      settings::astroManagerSettings->setValue(settings::MAX_THREADS, QVariant(spinBoxMaximumThreads->value()));
+      settings::astroManagerSettings->setValue(settings::SETTINGS_LT, QVariant(radioButtonLocalTime->isChecked()));
+      settings::astroManagerSettings->setValue(settings::FILE_LASTOPENEDDEPTH, QVariant(spinBoxLastOpenedFiles->value()));
+      settings::astroManagerSettings->setValue(settings::DW_HISTOGRAM_BINS, QVariant(spinBoxHistogramBins->value()));
+      settings::astroManagerSettings->setValue(settings::TOOLBAR_HEIGHT, QVariant(spinBoxToolbarHeight->value()));
 
-      settings::VSOPSettings->setValue(settings::SETTINGS_LOGDIR, QVariant(lineEditLogfileDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(lineEditDarkDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(lineEditFlatDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(lineEditBiasDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(lineEditMasterDarkDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant(lineEditMasterFlatDirectory->text()));
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(lineEditMasterBiasDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::SETTINGS_LOGDIR, QVariant(lineEditLogfileDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(lineEditDarkDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(lineEditFlatDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(lineEditBiasDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(lineEditMasterDarkDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant(lineEditMasterFlatDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(lineEditMasterBiasDirectory->text()));
 
-      settings::VSOPSettings->setValue(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxDarkDirectory->isChecked()));
-      settings::VSOPSettings->setValue(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxFlatDirectory->isChecked()));
-      settings::VSOPSettings->setValue(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxBiasDirectory->isChecked()));
+      settings::astroManagerSettings->setValue(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxDarkDirectory->isChecked()));
+      settings::astroManagerSettings->setValue(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxFlatDirectory->isChecked()));
+      settings::astroManagerSettings->setValue(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxBiasDirectory->isChecked()));
 
         // Source Extraction Data
 
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_ALGORITHM,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_ALGORITHM,
                                        QVariant(comboBoxSEAlgorithm->itemData(comboBoxSEAlgorithm->currentIndex())));
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(checkBoxSEAstrometry->isChecked()));
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(checkBoxSEPhotometry->isChecked()));
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(checkBoxSEAstrometry->isChecked()));
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(checkBoxSEPhotometry->isChecked()));
 
       setThreads(spinBoxMaximumThreads->value());
     }
@@ -655,11 +655,11 @@ namespace AstroManager
 
     void CDialogOptions::saveImageManager()
     {
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABASE_REGISTERONOPEN, checkBoxRegisterOnOpen->isChecked());
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABSE_SAVE, checkBoxUploadARID->isChecked());
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABASE_SAVEORIGINAL, checkBoxUploadOriginal->isChecked());
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABASE_SAVEVERSIONS, groupBoxStoreVersions->isChecked());
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABASE_MAXVERSIONS, spinBoxMaximumVersions->value());
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_REGISTERONOPEN, checkBoxRegisterOnOpen->isChecked());
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABSE_SAVE, checkBoxUploadARID->isChecked());
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_SAVEORIGINAL, checkBoxUploadOriginal->isChecked());
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_SAVEVERSIONS, groupBoxStoreVersions->isChecked());
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_MAXVERSIONS, spinBoxMaximumVersions->value());
     }
 
 
@@ -671,16 +671,16 @@ namespace AstroManager
 
     void CDialogOptions::savePhotometry()
     {
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_USEZMAG, QVariant(checkBoxZMAG->isChecked()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_RADIUS1, QVariant(spinBoxApertureRadius->value()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_RADIUS2, QVariant(spinBoxInnerSkyRadius->value()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_RADIUS3, QVariant(spinBoxOuterSkyRadius->value()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_INDICATOR_COLOUR,
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_USEZMAG, QVariant(checkBoxZMAG->isChecked()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_RADIUS1, QVariant(spinBoxApertureRadius->value()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_RADIUS2, QVariant(spinBoxInnerSkyRadius->value()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_RADIUS3, QVariant(spinBoxOuterSkyRadius->value()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_INDICATOR_COLOUR,
                                        comboBoxPhotometryColour->itemData(comboBoxPhotometryColour->currentIndex()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
                                        comboBoxPhotometrySelectedColour->itemData(comboBoxPhotometrySelectedColour->currentIndex()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_CSVDIRECTORY, QVariant(lineEditCSVDirectory->text()));
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_CSVDIRECTORY_UPDATE, QVariant(checkBoxCSVDirectory->isChecked()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_CSVDIRECTORY, QVariant(lineEditCSVDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_CSVDIRECTORY_UPDATE, QVariant(checkBoxCSVDirectory->isChecked()));
     }
 
     /// @brief Saves the data in the weather database.
@@ -691,18 +691,18 @@ namespace AstroManager
     {
       if (groupBoxWeather->isChecked())
       {
-        settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(false));
-        settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DBMS, QVariant(comboBoxWeatherDatabaseType->currentText()));
+        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(false));
+        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DBMS, QVariant(comboBoxWeatherDatabaseType->currentText()));
 
         switch (comboBoxWeatherDatabaseType->itemData(comboBoxWeatherDatabaseType->currentIndex(), Qt::UserRole).toInt())
         {
           case database::CDatabase::SQLDB_MYSQL:
           {
-            settings::VSOPSettings->setValue(settings::WEATHER_MYSQL_HOSTADDRESS, lineEditWeatherMySQLHost->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_MYSQL_PORT, spinBoxWeatherMySQLPort->value());
-            settings::VSOPSettings->setValue(settings::WEATHER_MYSQL_DATABASENAME, lineEditWeatherMySQLDatabase->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_MYSQL_USERNAME, lineEditWeatherMySQLUser->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_MYSQL_PASSWORD, lineEditWeatherMySQLPassword->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_HOSTADDRESS, lineEditWeatherMySQLHost->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_PORT, spinBoxWeatherMySQLPort->value());
+            settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_DATABASENAME, lineEditWeatherMySQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_USERNAME, lineEditWeatherMySQLUser->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_PASSWORD, lineEditWeatherMySQLPassword->text());
             break;
           };
           case database::CDatabase::SQLDB_ODBC:
@@ -711,20 +711,20 @@ namespace AstroManager
           };
           case database::CDatabase::SQLDB_PSQL:
           {
-            settings::VSOPSettings->setValue(settings::WEATHER_POSTGRESQL_HOSTADDRESS, lineEditWeatherPostgreSQLHost->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_POSTGRESQL_PORT, spinBoxWeatherPostgreSQLPort->value());
-            settings::VSOPSettings->setValue(settings::WEATHER_POSTGRESQL_DATABASENAME, lineEditWeatherPostgreSQLDatabase->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_POSTGRESQL_USERNAME, lineEditWeatherPostgreSQLUser->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_POSTGRESQL_PASSWORD, lineEditWeatherPostgreSQLPassword->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_HOSTADDRESS, lineEditWeatherPostgreSQLHost->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_PORT, spinBoxWeatherPostgreSQLPort->value());
+            settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_DATABASENAME, lineEditWeatherPostgreSQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_USERNAME, lineEditWeatherPostgreSQLUser->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_PASSWORD, lineEditWeatherPostgreSQLPassword->text());
             break;
           };
           case database::CDatabase::SQLDB_QOCI:
           {
-            settings::VSOPSettings->setValue(settings::WEATHER_ORACLE_HOSTADDRESS, lineEditWeatherOracleHost->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_ORACLE_PORT, spinBoxWeatherOraclePort->value());
-            settings::VSOPSettings->setValue(settings::WEATHER_ORACLE_SCHEMANAME, lineEditWeatherOracleSchema->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_ORACLE_USERNAME, lineEditWeatherOracleUser->text());
-            settings::VSOPSettings->setValue(settings::WEATHER_ORACLE_PASSWORD, lineEditWeatherOraclePassword->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_HOSTADDRESS, lineEditWeatherOracleHost->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_PORT, spinBoxWeatherOraclePort->value());
+            settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_SCHEMANAME, lineEditWeatherOracleSchema->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_USERNAME, lineEditWeatherOracleUser->text());
+            settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_PASSWORD, lineEditWeatherOraclePassword->text());
             break;
           }
           case database::CDatabase::SQLDB_SQLITE:
@@ -740,7 +740,7 @@ namespace AstroManager
       }
       else
       {
-        settings::VSOPSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(true));
+        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(true));
       }
     }
 
@@ -782,7 +782,7 @@ namespace AstroManager
         lineEditARIDOracleUser = findChild<QLineEdit *>("lineEditARIDOracleUser");
         lineEditARIDOraclePassword = findChild<QLineEdit *>("lineEditARIDOraclePassword");
 
-      groupBoxARID->setChecked(!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE, QVariant(true)).toBool());
+      groupBoxARID->setChecked(!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE, QVariant(true)).toBool());
 
         // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
 
@@ -793,27 +793,27 @@ namespace AstroManager
         // Set the current/default values from the settings file.
         // MySQL
 
-      lineEditARIDMySQLHost->setText(settings::VSOPSettings->value(settings::ARID_MYSQL_HOSTADDRESS, "localhost").toString());
-      spinBoxARIDMySQLPort->setValue(settings::VSOPSettings->value(settings::ARID_MYSQL_PORT, QVariant(3306)).toInt());
-      lineEditARIDMySQLDatabase->setText(settings::VSOPSettings->value(settings::ARID_MYSQL_DATABASENAME, "").toString());
-      lineEditARIDMySQLUser->setText(settings::VSOPSettings->value(settings::ARID_MYSQL_USERNAME, "").toString());
-      lineEditARIDMySQLPassword->setText(settings::VSOPSettings->value(settings::ARID_MYSQL_PASSWORD, "").toString());
+      lineEditARIDMySQLHost->setText(settings::astroManagerSettings->value(settings::ARID_MYSQL_HOSTADDRESS, "localhost").toString());
+      spinBoxARIDMySQLPort->setValue(settings::astroManagerSettings->value(settings::ARID_MYSQL_PORT, QVariant(3306)).toInt());
+      lineEditARIDMySQLDatabase->setText(settings::astroManagerSettings->value(settings::ARID_MYSQL_DATABASENAME, "").toString());
+      lineEditARIDMySQLUser->setText(settings::astroManagerSettings->value(settings::ARID_MYSQL_USERNAME, "").toString());
+      lineEditARIDMySQLPassword->setText(settings::astroManagerSettings->value(settings::ARID_MYSQL_PASSWORD, "").toString());
 
         // PostgreSQL
 
-      lineEditARIDPostgreSQLHost->setText(settings::VSOPSettings->value(settings::ARID_POSTGRESQL_HOSTADDRESS, "localhost").toString());
-      spinBoxARIDPostgreSQLPort->setValue(settings::VSOPSettings->value(settings::ARID_POSTGRESQL_PORT, QVariant(5432)).toInt());
-      lineEditARIDPostgreSQLDatabase->setText(settings::VSOPSettings->value(settings::ARID_POSTGRESQL_DATABASENAME, "").toString());
-      lineEditARIDPostgreSQLUser->setText(settings::VSOPSettings->value(settings::ARID_POSTGRESQL_USERNAME, "").toString());
-      lineEditARIDPostgreSQLPassword->setText(settings::VSOPSettings->value(settings::ARID_POSTGRESQL_PASSWORD, "").toString());
+      lineEditARIDPostgreSQLHost->setText(settings::astroManagerSettings->value(settings::ARID_POSTGRESQL_HOSTADDRESS, "localhost").toString());
+      spinBoxARIDPostgreSQLPort->setValue(settings::astroManagerSettings->value(settings::ARID_POSTGRESQL_PORT, QVariant(5432)).toInt());
+      lineEditARIDPostgreSQLDatabase->setText(settings::astroManagerSettings->value(settings::ARID_POSTGRESQL_DATABASENAME, "").toString());
+      lineEditARIDPostgreSQLUser->setText(settings::astroManagerSettings->value(settings::ARID_POSTGRESQL_USERNAME, "").toString());
+      lineEditARIDPostgreSQLPassword->setText(settings::astroManagerSettings->value(settings::ARID_POSTGRESQL_PASSWORD, "").toString());
 
         // Oracle
 
-      lineEditARIDOracleHost->setText(settings::VSOPSettings->value(settings::ARID_ORACLE_HOSTADDRESS, "localhost").toString());
-      spinBoxARIDOraclePort->setValue(settings::VSOPSettings->value(settings::ARID_ORACLE_PORT, QVariant(1521)).toInt());
-      lineEditARIDOracleSchema->setText(settings::VSOPSettings->value(settings::ARID_ORACLE_SCHEMANAME, "").toString());
-      lineEditARIDOracleUser->setText(settings::VSOPSettings->value(settings::ARID_ORACLE_USERNAME, "").toString());
-      lineEditARIDOraclePassword->setText(settings::VSOPSettings->value(settings::ARID_ORACLE_PASSWORD, "").toString());
+      lineEditARIDOracleHost->setText(settings::astroManagerSettings->value(settings::ARID_ORACLE_HOSTADDRESS, "localhost").toString());
+      spinBoxARIDOraclePort->setValue(settings::astroManagerSettings->value(settings::ARID_ORACLE_PORT, QVariant(1521)).toInt());
+      lineEditARIDOracleSchema->setText(settings::astroManagerSettings->value(settings::ARID_ORACLE_SCHEMANAME, "").toString());
+      lineEditARIDOracleUser->setText(settings::astroManagerSettings->value(settings::ARID_ORACLE_USERNAME, "").toString());
+      lineEditARIDOraclePassword->setText(settings::astroManagerSettings->value(settings::ARID_ORACLE_PASSWORD, "").toString());
 
       connect(comboBoxARIDDatabaseType, SIGNAL(currentIndexChanged(int)), this, SLOT(eventARIDDatabaseCombo(int)));
 
@@ -821,7 +821,7 @@ namespace AstroManager
 
       if (groupBoxARID->isChecked())
       {
-        std::string szDatabase = settings::VSOPSettings->value(settings::ARID_DATABASE_DBMS, QVariant("MySQL")).toString().toStdString();
+        std::string szDatabase = settings::astroManagerSettings->value(settings::ARID_DATABASE_DBMS, QVariant("MySQL")).toString().toStdString();
 
         if (szDatabase == "MySQL")
         {
@@ -866,7 +866,7 @@ namespace AstroManager
     {
       setupARIDDatabase();
       groupBoxATID = findChild<QGroupBox *>("groupBoxATID");
-      groupBoxATID->setChecked(!settings::VSOPSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
+      groupBoxATID->setChecked(!settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
 
       setupWeatherDatabase();
     }
@@ -887,17 +887,17 @@ namespace AstroManager
       comboBoxAstrometryColour = findChild<QComboBox *>("comboBoxAstrometryColour");
       comboBoxAstrometrySelectedColour = findChild<QComboBox *>("comboBoxAstrometrySelectedColour");
 
-      spinBoxCentroidRadius->setValue(settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS, QVariant(16)).toInt());
-      spinBoxCentroidSensitivity->setValue(settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+      spinBoxCentroidRadius->setValue(settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS, QVariant(16)).toInt());
+      spinBoxCentroidSensitivity->setValue(settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                          QVariant(3)).toInt());
 
       populateComboBoxColour(comboBoxAstrometryColour);
-      currentColour = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>();
+      currentColour = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>();
       colourIndex = comboBoxAstrometryColour->findData(currentColour);
       comboBoxAstrometryColour->setCurrentIndex(colourIndex);
 
       populateComboBoxColour(comboBoxAstrometrySelectedColour);
-      currentColour = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
+      currentColour = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
                                                     QVariant(QColor(Qt::yellow))).value<QColor>();
       colourIndex = comboBoxAstrometrySelectedColour->findData(currentColour);
       comboBoxAstrometrySelectedColour->setCurrentIndex(colourIndex);
@@ -923,10 +923,10 @@ namespace AstroManager
       spinBoxHistogramBins = findChild<QSpinBox *>("spinBoxHistogramBins");
       spinBoxToolbarHeight = findChild<QSpinBox *>("spinBoxToolbarHeight");
 
-      lineEditUserName->setText(settings::VSOPSettings->value(settings::SETTINGS_OBSERVER, QVariant("")).toString());
-      spinBoxMaximumThreads->setValue(settings::VSOPSettings->value(settings::MAX_THREADS, QVariant(2)).toInt());
+      lineEditUserName->setText(settings::astroManagerSettings->value(settings::SETTINGS_OBSERVER, QVariant("")).toString());
+      spinBoxMaximumThreads->setValue(settings::astroManagerSettings->value(settings::MAX_THREADS, QVariant(2)).toInt());
       spinBoxMaximumThreads->setMaximum(std::thread::hardware_concurrency());   // Set the maximum number of threads.
-      if (settings::VSOPSettings->value(settings::SETTINGS_LT, QVariant(false)).toBool())
+      if (settings::astroManagerSettings->value(settings::SETTINGS_LT, QVariant(false)).toBool())
       {
         radioButtonLocalTime->setChecked(true);
       }
@@ -934,9 +934,9 @@ namespace AstroManager
       {
         radioButtonUTC->setChecked(true);
       }
-      spinBoxLastOpenedFiles->setValue(settings::VSOPSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toInt());
-      spinBoxHistogramBins->setValue(settings::VSOPSettings->value(settings::DW_HISTOGRAM_BINS, QVariant(128)).toInt());
-      spinBoxToolbarHeight->setValue(settings::VSOPSettings->value(settings::TOOLBAR_HEIGHT, QVariant(16)).toInt());
+      spinBoxLastOpenedFiles->setValue(settings::astroManagerSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toInt());
+      spinBoxHistogramBins->setValue(settings::astroManagerSettings->value(settings::DW_HISTOGRAM_BINS, QVariant(128)).toInt());
+      spinBoxToolbarHeight->setValue(settings::astroManagerSettings->value(settings::TOOLBAR_HEIGHT, QVariant(16)).toInt());
 
         // Directories Tab
 
@@ -951,16 +951,16 @@ namespace AstroManager
       checkBoxFlatDirectory = findChild<QCheckBox *>("checkBoxFlatDirectory");
       checkBoxBiasDirectory = findChild<QCheckBox *>("checkBoxBiasDirectory");
 
-      lineEditLogfileDirectory->setText(settings::VSOPSettings->value(settings::SETTINGS_LOGDIR, QVariant("./log")).toString());
-      lineEditDarkDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant("")).toString());
-      lineEditFlatDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant("")).toString());
-      lineEditBiasDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant("")).toString());
-      lineEditMasterDarkDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant("")).toString());
-      lineEditMasterFlatDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant("")).toString());
-      lineEditMasterBiasDirectory->setText(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant("")).toString());
-      checkBoxDarkDirectory->setChecked(settings::VSOPSettings->value(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
-      checkBoxFlatDirectory->setChecked(settings::VSOPSettings->value(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
-      checkBoxBiasDirectory->setChecked(settings::VSOPSettings->value(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
+      lineEditLogfileDirectory->setText(settings::astroManagerSettings->value(settings::SETTINGS_LOGDIR, QVariant("./log")).toString());
+      lineEditDarkDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant("")).toString());
+      lineEditFlatDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant("")).toString());
+      lineEditBiasDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant("")).toString());
+      lineEditMasterDarkDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant("")).toString());
+      lineEditMasterFlatDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant("")).toString());
+      lineEditMasterBiasDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant("")).toString());
+      checkBoxDarkDirectory->setChecked(settings::astroManagerSettings->value(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
+      checkBoxFlatDirectory->setChecked(settings::astroManagerSettings->value(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
+      checkBoxBiasDirectory->setChecked(settings::astroManagerSettings->value(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
 
         // Source Extraction tab
 
@@ -973,7 +973,7 @@ namespace AstroManager
         comboBoxSEAlgorithm->addItem(QString::fromStdString(iter.second), QVariant(iter.first));
       }
 
-      int SEA = settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ALGORITHM, QVariant(1)).toInt();
+      int SEA = settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ALGORITHM, QVariant(1)).toInt();
 
       int index = comboBoxSEAlgorithm->findData(SEA);
       if (index != -1)
@@ -981,8 +981,8 @@ namespace AstroManager
         comboBoxSEAlgorithm->setCurrentIndex(index);
       }
 
-      checkBoxSEAstrometry->setChecked(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(true)).toBool());
-      checkBoxSEPhotometry->setChecked(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(false)).toBool());
+      checkBoxSEAstrometry->setChecked(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(true)).toBool());
+      checkBoxSEPhotometry->setChecked(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(false)).toBool());
     }
 
     /// @brief Sets up the data for the image managementoptions.
@@ -997,11 +997,11 @@ namespace AstroManager
       groupBoxStoreVersions = findChild<QGroupBox *>("groupBoxStoreVersions");
       spinBoxMaximumVersions = findChild<QSpinBox *>("spinBoxMaximumVersions");
 
-      checkBoxRegisterOnOpen->setChecked(settings::VSOPSettings->value(settings::IMAGING_DATABASE_REGISTERONOPEN, QVariant(true)).toBool());
-      checkBoxUploadARID->setChecked(settings::VSOPSettings->value(settings::IMAGING_DATABSE_SAVE, QVariant(true)).toBool());
-      checkBoxUploadOriginal->setChecked(settings::VSOPSettings->value(settings::IMAGING_DATABASE_SAVEORIGINAL, QVariant(true)).toBool());
-      groupBoxStoreVersions->setChecked(settings::VSOPSettings->value(settings::IMAGING_DATABASE_SAVEVERSIONS, QVariant(true)).toBool());
-      spinBoxMaximumVersions->setValue(settings::VSOPSettings->value(settings::IMAGING_DATABASE_MAXVERSIONS, QVariant(0)).toUInt());
+      checkBoxRegisterOnOpen->setChecked(settings::astroManagerSettings->value(settings::IMAGING_DATABASE_REGISTERONOPEN, QVariant(true)).toBool());
+      checkBoxUploadARID->setChecked(settings::astroManagerSettings->value(settings::IMAGING_DATABSE_SAVE, QVariant(true)).toBool());
+      checkBoxUploadOriginal->setChecked(settings::astroManagerSettings->value(settings::IMAGING_DATABASE_SAVEORIGINAL, QVariant(true)).toBool());
+      groupBoxStoreVersions->setChecked(settings::astroManagerSettings->value(settings::IMAGING_DATABASE_SAVEVERSIONS, QVariant(true)).toBool());
+      spinBoxMaximumVersions->setValue(settings::astroManagerSettings->value(settings::IMAGING_DATABASE_MAXVERSIONS, QVariant(0)).toUInt());
     }
 
     /// @brief Sets up the photometry options.
@@ -1025,24 +1025,24 @@ namespace AstroManager
       lineEditCSVDirectory = findChild<QLineEdit *>("lineEditCSVDirectory");
       checkBoxCSVDirectory = findChild<QCheckBox *>("checkBoxCSVDirectory");
 
-      checkBoxZMAG->setChecked(settings::VSOPSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool());
-      spinBoxApertureRadius->setValue(settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS1, QVariant((int) 6)).toInt());
-      spinBoxInnerSkyRadius->setValue(settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS2, QVariant((int) 10)).toInt());
-      spinBoxOuterSkyRadius->setValue(settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS3, QVariant((int) 15)).toInt());
+      checkBoxZMAG->setChecked(settings::astroManagerSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool());
+      spinBoxApertureRadius->setValue(settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS1, QVariant((int) 6)).toInt());
+      spinBoxInnerSkyRadius->setValue(settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS2, QVariant((int) 10)).toInt());
+      spinBoxOuterSkyRadius->setValue(settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS3, QVariant((int) 15)).toInt());
 
       populateComboBoxColour(comboBoxPhotometryColour);
-      currentColour = settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>();
+      currentColour = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>();
       colourIndex = comboBoxPhotometryColour->findData(currentColour);
       comboBoxPhotometryColour->setCurrentIndex(colourIndex);
 
       populateComboBoxColour(comboBoxPhotometrySelectedColour);
-      currentColour = settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
+      currentColour = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
                                                     QVariant(QColor(Qt::yellow))).value<QColor>();
       colourIndex = comboBoxPhotometrySelectedColour->findData(currentColour);
       comboBoxPhotometrySelectedColour->setCurrentIndex(colourIndex);
 
-      lineEditCSVDirectory->setText(settings::VSOPSettings->value(settings::PHOTOMETRY_CSVDIRECTORY, QVariant("")).toString());
-      checkBoxCSVDirectory->setChecked(settings::VSOPSettings->value(settings::PHOTOMETRY_CSVDIRECTORY_UPDATE, QVariant(true)).toBool());
+      lineEditCSVDirectory->setText(settings::astroManagerSettings->value(settings::PHOTOMETRY_CSVDIRECTORY, QVariant("")).toString());
+      checkBoxCSVDirectory->setChecked(settings::astroManagerSettings->value(settings::PHOTOMETRY_CSVDIRECTORY_UPDATE, QVariant(true)).toBool());
     }
 
     /// @brief Sets up the dialog
@@ -1132,7 +1132,7 @@ namespace AstroManager
           lineEditWeatherOracleUser = findChild<QLineEdit *>("lineEditWeatherOracleUser");
           lineEditWeatherOraclePassword = findChild<QLineEdit *>("lineEditWeatherOraclePassword");
 
-      groupBoxWeather->setChecked(!settings::VSOPSettings->value(settings::WEATHER_DATABASE_DISABLE, QVariant(true)).toBool());
+      groupBoxWeather->setChecked(!settings::astroManagerSettings->value(settings::WEATHER_DATABASE_DISABLE, QVariant(true)).toBool());
 
         // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
 
@@ -1142,27 +1142,27 @@ namespace AstroManager
 
         // MySQL
 
-      lineEditWeatherMySQLHost->setText(settings::VSOPSettings->value(settings::WEATHER_MYSQL_HOSTADDRESS, "localhost").toString());
-      lineEditWeatherMySQLDatabase->setText(settings::VSOPSettings->value(settings::WEATHER_MYSQL_DATABASENAME, "").toString());
-      spinBoxWeatherMySQLPort->setValue(settings::VSOPSettings->value(settings::WEATHER_MYSQL_PORT, QVariant(3306)).toInt());
-      lineEditWeatherMySQLUser->setText(settings::VSOPSettings->value(settings::WEATHER_MYSQL_USERNAME, "").toString());
-      lineEditWeatherMySQLPassword->setText(settings::VSOPSettings->value(settings::WEATHER_MYSQL_PASSWORD, "").toString());
+      lineEditWeatherMySQLHost->setText(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_HOSTADDRESS, "localhost").toString());
+      lineEditWeatherMySQLDatabase->setText(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_DATABASENAME, "").toString());
+      spinBoxWeatherMySQLPort->setValue(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_PORT, QVariant(3306)).toInt());
+      lineEditWeatherMySQLUser->setText(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_USERNAME, "").toString());
+      lineEditWeatherMySQLPassword->setText(settings::astroManagerSettings->value(settings::WEATHER_MYSQL_PASSWORD, "").toString());
 
         // PostgreSQL
 
-      lineEditWeatherPostgreSQLHost->setText(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_HOSTADDRESS, "localhost").toString());
-      lineEditWeatherPostgreSQLDatabase->setText(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_DATABASENAME, "").toString());
-      spinBoxWeatherPostgreSQLPort->setValue(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_PORT, QVariant(5432)).toInt());
-      lineEditWeatherPostgreSQLUser->setText(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_USERNAME, "").toString());
-      lineEditWeatherPostgreSQLPassword->setText(settings::VSOPSettings->value(settings::WEATHER_POSTGRESQL_PASSWORD, "").toString());
+      lineEditWeatherPostgreSQLHost->setText(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_HOSTADDRESS, "localhost").toString());
+      lineEditWeatherPostgreSQLDatabase->setText(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_DATABASENAME, "").toString());
+      spinBoxWeatherPostgreSQLPort->setValue(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_PORT, QVariant(5432)).toInt());
+      lineEditWeatherPostgreSQLUser->setText(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_USERNAME, "").toString());
+      lineEditWeatherPostgreSQLPassword->setText(settings::astroManagerSettings->value(settings::WEATHER_POSTGRESQL_PASSWORD, "").toString());
 
         // Oracle
 
-      lineEditWeatherOracleHost->setText(settings::VSOPSettings->value(settings::WEATHER_ORACLE_HOSTADDRESS, "localhost").toString());
-      lineEditWeatherOracleSchema->setText(settings::VSOPSettings->value(settings::WEATHER_ORACLE_SCHEMANAME, "").toString());
-      spinBoxWeatherOraclePort->setValue(settings::VSOPSettings->value(settings::WEATHER_ORACLE_PORT, QVariant(1521)).toInt());
-      lineEditWeatherOracleUser->setText(settings::VSOPSettings->value(settings::WEATHER_ORACLE_USERNAME, "").toString());
-      lineEditWeatherOraclePassword->setText(settings::VSOPSettings->value(settings::WEATHER_ORACLE_PASSWORD, "").toString());
+      lineEditWeatherOracleHost->setText(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_HOSTADDRESS, "localhost").toString());
+      lineEditWeatherOracleSchema->setText(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_SCHEMANAME, "").toString());
+      spinBoxWeatherOraclePort->setValue(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_PORT, QVariant(1521)).toInt());
+      lineEditWeatherOracleUser->setText(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_USERNAME, "").toString());
+      lineEditWeatherOraclePassword->setText(settings::astroManagerSettings->value(settings::WEATHER_ORACLE_PASSWORD, "").toString());
 
       connect(comboBoxWeatherDatabaseType, SIGNAL(currentIndexChanged(int)), this, SLOT(eventWeatherDatabaseCombo(int)));
 
@@ -1172,7 +1172,7 @@ namespace AstroManager
       {
         bool driverValid = false;
 
-        std::string szDatabase = settings::VSOPSettings->value(settings::WEATHER_DATABASE_DBMS).toString().toStdString();
+        std::string szDatabase = settings::astroManagerSettings->value(settings::WEATHER_DATABASE_DBMS).toString().toStdString();
 
         if ( (szDatabase == "MySQL") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_MYSQL)) )
         {

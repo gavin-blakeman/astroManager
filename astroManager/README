@@ -2,9 +2,9 @@ AstroManager (Astronomy Manager)
 ================================================================
 
 Website: www.astromanager.org
-Source code can be found on Launchpad.
+Source code can be found on github.
 
-AIRDAS        GPLv2 Copyright 2013-2018 Gavin Blakeman.
+astroManager  GPLv2 Copyright 2013-2018 Gavin Blakeman.
 Boost 1.62    Boost License
 CfitsIO       Public Domain
 ACL           GPLv2 Copyright 2013-2018 Gavin Blakeman.

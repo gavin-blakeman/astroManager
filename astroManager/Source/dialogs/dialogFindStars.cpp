@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2014 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2014, 2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements a dialog to allow the user to set paramters for the findstars algorithm.
 //
@@ -59,45 +60,45 @@ namespace AstroManager
     void CDialogFindStars::eventButtonExtract(bool)
     {
       sourceParameters.fsborder = spinBoxBorder->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_BORDER,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_BORDER,
                                        QVariant(static_cast<qint64>(sourceParameters.fsborder)));
 
       sourceParameters.rnoise = spinBoxRNOISE->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_RNOISE,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_RNOISE,
                                        QVariant(static_cast<qint64>(sourceParameters.rnoise)));
 
       sourceParameters.bmin = doubleSpinBoxMinimumPeak->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINPEAK, QVariant(sourceParameters.bmin));
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINPEAK, QVariant(sourceParameters.bmin));
 
       sourceParameters.starsig = doubleSpinBoxStarSigma->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_STARSIGMA,QVariant(sourceParameters.starsig));
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_STARSIGMA,QVariant(sourceParameters.starsig));
 
       sourceParameters.ispix = spinBoxISTATPIX->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_ISTATPIX,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_ISTATPIX,
                                        QVariant(static_cast<qint64>(sourceParameters.ispix)));
 
       sourceParameters.nspix = spinBoxNSTATPIX->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_NSTATPIX,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_NSTATPIX,
                                        QVariant(static_cast<qint64>(sourceParameters.nspix)));
 
       sourceParameters.maxw = spinBoxMaxWalk->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MAXWALK,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MAXWALK,
                                        QVariant(static_cast<qint64>(sourceParameters.maxw)));
 
       sourceParameters.burnedout = doubleSpinBoxBurnedOut->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_BURNEDOUT,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_BURNEDOUT,
                                        QVariant(static_cast<qint64>(sourceParameters.burnedout)));
 
       sourceParameters.minsep = spinBoxMinSep->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINSEP,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINSEP,
                                        QVariant(static_cast<qint64>(sourceParameters.minsep)));
 
       sourceParameters.maxrad = spinBoxMaxRad->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MAXRAD,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MAXRAD,
                                        QVariant(static_cast<qint64>(sourceParameters.maxrad)));
 
       sourceParameters.minrad = spinBoxMinRad->value();
-      settings::VSOPSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINRAD,
+      settings::astroManagerSettings->setValue(settings::SOURCE_EXTRACTION_FINDSTARS_MINRAD,
                                        QVariant(static_cast<qint64>(sourceParameters.minrad)));
 
       dlg->done(DialogExtract);
@@ -130,27 +131,27 @@ namespace AstroManager
       };
 
       spinBoxBorder->setMinimum(sourceParameters.minBorder);
-      spinBoxBorder->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_BORDER,
+      spinBoxBorder->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_BORDER,
                                                             QVariant(static_cast<qint64>(sourceParameters.fsborder))).toLongLong());
-      spinBoxRNOISE->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_RNOISE,
+      spinBoxRNOISE->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_RNOISE,
                                                             QVariant(static_cast<qint64>(sourceParameters.rnoise))).toLongLong());
-      doubleSpinBoxMinimumPeak->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINPEAK,
+      doubleSpinBoxMinimumPeak->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINPEAK,
                                                                        QVariant(sourceParameters.bmin)).toDouble());
-      doubleSpinBoxStarSigma->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_STARSIGMA,
+      doubleSpinBoxStarSigma->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_STARSIGMA,
                                                                      QVariant(sourceParameters.starsig)).toDouble());
-      spinBoxISTATPIX->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_ISTATPIX,
+      spinBoxISTATPIX->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_ISTATPIX,
                                                               QVariant(static_cast<qint64>(sourceParameters.ispix))).toLongLong());
-      spinBoxNSTATPIX->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_NSTATPIX,
+      spinBoxNSTATPIX->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_NSTATPIX,
                                                               QVariant(static_cast<qint64>(sourceParameters.nspix))).toLongLong());
-      spinBoxMaxWalk->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MAXWALK,
+      spinBoxMaxWalk->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MAXWALK,
                                                              QVariant(static_cast<qint64>(sourceParameters.maxw))).toLongLong());
-      doubleSpinBoxBurnedOut->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_BURNEDOUT,
+      doubleSpinBoxBurnedOut->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_BURNEDOUT,
                                                                      QVariant(sourceParameters.burnedout)).toDouble());
-      spinBoxMinSep->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINSEP,
+      spinBoxMinSep->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINSEP,
                                                             QVariant(static_cast<qint64>(sourceParameters.minsep))).toLongLong());
-      spinBoxMaxRad->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MAXRAD,
+      spinBoxMaxRad->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MAXRAD,
                                                             QVariant(static_cast<qint64>(sourceParameters.maxrad))).toLongLong());
-      spinBoxMinRad->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINRAD,
+      spinBoxMinRad->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_FINDSTARS_MINRAD,
                                                             QVariant(static_cast<qint64>(sourceParameters.minrad))).toLongLong());
 
       connect(dlg->findChild<QPushButton *>("pushButtonExtract"), SIGNAL(clicked(bool)), this, SLOT(eventButtonExtract(bool)));

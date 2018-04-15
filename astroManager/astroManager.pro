@@ -16,7 +16,7 @@ QTPLUGIN += qsqlmysql \
 #            qsqlpsql
 #           qjpeg \
 
-QMAKE_CXXFLAGS += -std=c++14 -static -static-libgcc #-save-temps=obj
+QMAKE_CXXFLAGS += -std=c++17 -static -static-libgcc #-save-temps=obj
 QMAKE_LFLAGS += -fopenmp
 
 #DESTDIR = ""
@@ -40,14 +40,13 @@ INCLUDEPATH += \
   "../Qxt/include" \
   "../SCL" \
   "../SOFA/src" \
-  "../GeographicLib-1.48/include"
+  "../GeographicLib-1.48/include" \
+  "../astrometry++"
 
 SOURCES += \
-    Source/VSOP.cpp \
     Source/FrameWindow.cpp \
     Source/Error.cpp \
     Source/VSOPView.cpp \
-    Source/VSOPHelp.cpp \
     Source/Utilities.cpp \
     Source/TextEditor.cpp \
     Source/Settings.cpp \
@@ -125,7 +124,9 @@ SOURCES += \
     Source/dialogs/dialogEditResources.cpp \
     Source/widgets/widgetSunInformation.cpp \
     Source/windowPlanning/windowPlanning.cpp \
-    Source/qtExtensions/queryModelPlanning.cpp
+    Source/qtExtensions/queryModelPlanning.cpp \
+    Source/astroManager.cpp \
+    Source/astroManagerHelp.cpp
 
 HEADERS  += \
     Include/FrameWindow.h \
@@ -133,8 +134,6 @@ HEADERS  += \
     Include/ImageComparison.h \
     Include/AstroGraphicsView.h \
     Include/VSOPView.h \
-    Include/VSOPHelp.h \
-    Include/VSOP.h \
     Include/Utilities.h \
     Include/TextEditor.h \
     Include/Settings.h \
@@ -216,7 +215,9 @@ HEADERS  += \
     Include/widgets/widgetMoonInformation.h \
     Include/widgets/widgetShortTermVisibility.h \
     Include/qtExtensions/queryModelPlanning.h \
-    Include/windowPlanning/windowPlanning.h
+    Include/windowPlanning/windowPlanning.h \
+    Include/astroManager.h \
+    Include/astroManagerHelp.h
 
 
 RESOURCES += \
@@ -248,28 +249,28 @@ else:win32:CONFIG(debug, debug|release) {
   LIBS += -L../../Library/Library/win32/debug -lQxt
 }
 else:unix:CONFIG(debug, debug|release) {
-  LIBS += -L../../Library/Library/unix/debug -lACL
+  LIBS += -L../ACL -lACL
   LIBS += -L../../Library/Library -lSBIG
   LIBS += -L../../Library/Library -lcfitsio
-  LIBS += -L../../Library/Library/unix/debug -lGCL
-  LIBS += -L../../Library/Library/unix/debug -lMCL
-  LIBS += -L../../Library/Library -lNOVAS
-  LIBS += -L../../Library/Library/unix/debug -lPCL
-  LIBS += -L../../Library/Library/unix/debug -lqwt
+  LIBS += -L../GCL -lGCL
+  LIBS += -L../MCL -lMCL
+  LIBS += -L../NOVAS -lNOVAS
+  LIBS += -L../PCL -lPCL
+  LIBS += -L../qwt-6.1.3/lib -lqwt
   #LIBS += -L../../Library/Library -lRaw
-  LIBS += -L../../Library/Library/unix/debug -lSCL
+  LIBS += -L../SCL -lSCL
   LIBS += -L../../Library/Library -lWCS
-  LIBS += -L../../Library/Library/unix/debug -lWCL
-  LIBS += -L../../Library/Library/unix/debug -lboost_filesystem
-  LIBS += -L../../Library/Library/unix/debug -lboost_system
+  LIBS += -L../WCL -lWCL
+  LIBS += -L../../../Library/Library -lboost_filesystem
+  LIBS += -L../../../Library/Library/unix/debug -lboost_system
   LIBS += -L../../Library/Library/unix/debug -lboost_thread
   LIBS += -L../../Library/Library/unix/debug -lboost_chrono
-  LIBS += -L../../Library/Library -lSOFA
+  LIBS += -L../SOFA -lSOFA
   LIBS += -L../../Library/Library -lQxt
-  LIBS += -L../../Library/Library/unix/debug -lGeographicLib
+  LIBS += -L../GeographicLib-1.48 -lGeographicLib
 }
 else:unix:CONFIG(release, debug|release) {
-  LIBS += -L../../Library/Library/unix/release -lACL
+  LIBS += -L../ACL -lACL
   LIBS += -L../../Library/Library/unix/release -lSBIG
   LIBS += -L../../Library/Library/unix/release -lcfitsio
   LIBS += -L../../Library/Library/unix/release -lGCL

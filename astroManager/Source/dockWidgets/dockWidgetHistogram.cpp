@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2013-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            The Histogram widget controls the way the image is displayed. It always applies to the currently selected
 //                      image. If Histogram widget allows the black point and white point of an image to be changed. It also allows
@@ -107,8 +108,8 @@ namespace AstroManager
       : CDockWidgetImage(tr("Histogram"), parent, action, settings::DW_IMAGE_HISTOGRAM_VISIBLE), histogramData(),
         histogramPlot(nullptr), transferFunction(ACL::ETF_LINEAR), gammaValue(1)
     {
-      gammaValue = settings::VSOPSettings->value(settings::DW_HOTOGRAM_GAMMA, QVariant(1)).toDouble();
-      QString tempTransferFunction = settings::VSOPSettings->value(settings::DW_HISTOGRAM_TRANSFERFUNCTION,
+      gammaValue = settings::astroManagerSettings->value(settings::DW_HOTOGRAM_GAMMA, QVariant(1)).toDouble();
+      QString tempTransferFunction = settings::astroManagerSettings->value(settings::DW_HISTOGRAM_TRANSFERFUNCTION,
                                                                    QVariant(QS_LINEAR)).toString();
 
       if ( tempTransferFunction == QS_LINEAR )
@@ -231,7 +232,7 @@ namespace AstroManager
       ACL::INDEX_t indexBegin = 0, indexEnd = 0;
       boost::thread_group threadGroup;
       boost::thread *thread;
-      ACL::INDEX_t maxThreads = static_cast<size_t>(settings::VSOPSettings->value(settings::MAX_THREADS, QVariant(2)).toLongLong());
+      ACL::INDEX_t maxThreads = static_cast<size_t>(settings::astroManagerSettings->value(settings::MAX_THREADS, QVariant(2)).toLongLong());
 
       if (currentImage)
       {

@@ -11,18 +11,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2011-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:
 //
@@ -56,7 +57,7 @@
 #include "../../Include/ImageComparison.h"
 #include "../../Include/windowImage/windowImageDisplay.h"
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
   // Boost Library
 
@@ -101,9 +102,9 @@ namespace AstroManager
 
       // Load the radii from the registry
 
-      uiRadius1 = settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS1, QVariant(5)).toUInt();
-      uiRadius2 = settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS2, QVariant(7)).toUInt();
-      uiRadius3 = settings::VSOPSettings->value(settings::PHOTOMETRY_RADIUS3, QVariant(10)).toUInt();
+      uiRadius1 = settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS1, QVariant(5)).toUInt();
+      uiRadius2 = settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS2, QVariant(7)).toUInt();
+      uiRadius3 = settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS3, QVariant(10)).toUInt();
 
       setupUI();
       setObjectName(DW_PHOTOMETRY_NAME);
@@ -254,7 +255,7 @@ namespace AstroManager
 
         currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB).get();
 
-        if (settings::VSOPSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
+        if (settings::astroManagerSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
         {
           if (currentHDB->HDBType() == ACL::BT_IMAGE)
           {
@@ -473,7 +474,7 @@ namespace AstroManager
 
         uiRadius1 = newValue;
 
-        settings::VSOPSettings->setValue(settings::PHOTOMETRY_RADIUS1, QVariant(newValue) );
+        settings::astroManagerSettings->setValue(settings::PHOTOMETRY_RADIUS1, QVariant(newValue) );
       };
     }
 
@@ -491,7 +492,7 @@ namespace AstroManager
 
         uiRadius2 = newValue;
 
-        settings::VSOPSettings->setValue(settings::PHOTOMETRY_RADIUS2, QVariant(newValue) );
+        settings::astroManagerSettings->setValue(settings::PHOTOMETRY_RADIUS2, QVariant(newValue) );
       };
     }
 
@@ -508,7 +509,7 @@ namespace AstroManager
 
         uiRadius3 = newValue;
 
-        settings::VSOPSettings->setValue( settings::PHOTOMETRY_RADIUS3, QVariant(newValue) );
+        settings::astroManagerSettings->setValue( settings::PHOTOMETRY_RADIUS3, QVariant(newValue) );
       };
     }
 
@@ -554,7 +555,7 @@ namespace AstroManager
 
       currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB).get();
 
-      if (settings::VSOPSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
+      if (settings::astroManagerSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
       {
         if (currentHDB->HDBType() == ACL::BT_IMAGE)
         {

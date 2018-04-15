@@ -40,7 +40,7 @@
        <number>0</number>
       </property>
       <item row="0" column="1" colspan="2">
-       <widget class="QDateEdit" name="dateEdit">
+       <widget class="QDateEdit" name="dateEditSelectedDate">
         <property name="displayFormat">
          <string>yyyy-mm-dd</string>
         </property>
@@ -64,12 +64,15 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="radioButtonUT">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Universal Coordinated Time (UTC)</string>
         </property>
         <property name="text">
          <string>UT</string>
@@ -77,19 +80,22 @@
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QTimeEdit" name="timeEdit">
+       <widget class="QTimeEdit" name="timeEditSelectedTime">
         <property name="displayFormat">
          <string>HH:MM:ss</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="radioButtonLT">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Local Time</string>
         </property>
         <property name="text">
          <string>LT</string>
@@ -97,15 +103,18 @@
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QRadioButton" name="radioButton_3">
+       <widget class="QRadioButton" name="radioButtonST">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Local Siderial Time</string>
+        </property>
         <property name="text">
-         <string>ST</string>
+         <string>LST</string>
         </property>
        </widget>
       </item>
@@ -121,49 +130,11 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="pushButton_3">
-           <property name="icon">
-            <iconset resource="../VSOP.qrc">
-             <normaloff>:/images/Button_Rewind.png</normaloff>:/images/Button_Rewind.png</iconset>
+         <item row="0" column="2">
+          <widget class="QPushButton" name="pushButtonTimeDayPlus">
+           <property name="toolTip">
+            <string>1 Day Forward</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QPushButton" name="pushButton_4">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../VSOP.qrc">
-             <normaloff>:/images/Button-Back-icon.png</normaloff>:/images/Button-Back-icon.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="pushButton_6">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../VSOP.qrc">
-             <normaloff>:/images/Button-Next-icon.png</normaloff>:/images/Button-Next-icon.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="pushButton_5">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../VSOP.qrc">
-             <normaloff>:/images/Button_FastForward.png</normaloff>:/images/Button_FastForward.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="pushButton_2">
            <property name="text">
             <string/>
            </property>
@@ -173,14 +144,84 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="pushButton">
+         <item row="0" column="1">
+          <widget class="QPushButton" name="pushButtonTimeDayMinus">
+           <property name="toolTip">
+            <string>1 Day Back</string>
+           </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
             <iconset resource="../VSOP.qrc">
              <normaloff>:/images/Button_First.png</normaloff>:/images/Button_First.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="pushButtonTimeHourMinus">
+           <property name="toolTip">
+            <string>1 Hour Back</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../VSOP.qrc">
+             <normaloff>:/images/Button_Rewind.png</normaloff>:/images/Button_Rewind.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QPushButton" name="pushButtonTimeMinuteMinus">
+           <property name="toolTip">
+            <string>1 Minute Back</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../VSOP.qrc">
+             <normaloff>:/images/Button-Back-icon.png</normaloff>:/images/Button-Back-icon.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="pushButtonTimeMinutePlus">
+           <property name="toolTip">
+            <string>1 Minute Forward</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../VSOP.qrc">
+             <normaloff>:/images/Button-Next-icon.png</normaloff>:/images/Button-Next-icon.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="pushButtonTimeHourPlus">
+           <property name="toolTip">
+            <string>1 Hour Forward</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../VSOP.qrc">
+             <normaloff>:/images/Button_FastForward.png</normaloff>:/images/Button_FastForward.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QPushButton" name="pushButtonRealTime">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../VSOP.qrc">
+             <normaloff>:/icons/clock.png</normaloff>:/icons/clock.png</iconset>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

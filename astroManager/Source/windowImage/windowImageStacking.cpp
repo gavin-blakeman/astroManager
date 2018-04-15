@@ -11,18 +11,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2011-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -293,7 +294,7 @@ namespace AstroManager
     {
       QIcon iconRed(":/images/BMP_IMAGESTACK_RED.bmp");
 
-      settings::VSOPSettings->setValue(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(false));
+      settings::astroManagerSettings->setValue(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(false));
       toolButtonAddImages->setDefaultAction(actionSelectFromDatabase);
 
       dialogs::CDialogSelectImages dialogSelectImages(this, imageIDList);
@@ -339,13 +340,13 @@ namespace AstroManager
       QIcon iconRed(":/images/BMP_IMAGESTACK_RED.bmp");
       boost::filesystem::path filePath;
 
-      settings::VSOPSettings->setValue(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(true));
+      settings::astroManagerSettings->setValue(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(true));
       toolButtonAddImages->setDefaultAction(actionSelectFromFolder);
 
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Open Image"),
-                    settings::VSOPSettings->value(settings::IMAGESTACK_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGESTACK_DIRECTORY, QVariant(0)).toString(),
                     EXTENSION_IMAGE);
 
         // Iterate the list of items and only add items that are not repeats.
@@ -359,11 +360,11 @@ namespace AstroManager
 
           filePath = boost::filesystem::path((*constIterator).toStdString());
 
-          if ( firstPass && (settings::VSOPSettings->value(settings::IMAGESTACK_UPDATEONOPEN, QVariant(true)).toBool()) )
+          if ( firstPass && (settings::astroManagerSettings->value(settings::IMAGESTACK_UPDATEONOPEN, QVariant(true)).toBool()) )
           {
               // Get the directory details from the file name.
 
-            settings::VSOPSettings->setValue(settings::IMAGESTACK_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
+            settings::astroManagerSettings->setValue(settings::IMAGESTACK_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
             firstPass = false;
           };
 
@@ -456,11 +457,11 @@ namespace AstroManager
 
     void CStackImagesWindow::eventButtonAutoStack(bool)
     {
-      FP_t seperationDistance = settings::VSOPSettings->value(settings::IMAGESTACK_AUTO_DISTANCE, QVariant(0.75)).toFloat();
+      FP_t seperationDistance = settings::astroManagerSettings->value(settings::IMAGESTACK_AUTO_DISTANCE, QVariant(0.75)).toFloat();
       int itemCount = listImages->count();
       QListWidgetItem *selectedItem;
       imaging::SControlImage *controlImage;
-      std::uint_least8_t noWCSAction = settings::VSOPSettings->value(settings::IMAGESTACK_AUTO_NOWCSACTION,
+      std::uint_least8_t noWCSAction = settings::astroManagerSettings->value(settings::IMAGESTACK_AUTO_NOWCSACTION,
                                                                      QVariant(NOWCS_IGNORE)).toInt();
       std::vector<QListWidgetItem *> deleteList;
       bool abortProcess = false;
@@ -841,9 +842,9 @@ namespace AstroManager
 
           centroid = controlImage->astroFile->centroid(controlImage->currentHDB,
                                                        MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                                       settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                       settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                      QVariant(20)).toLongLong(),
-                                                       settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                       settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                      QVariant(3)).toInt());
 
           if (!centroid)
@@ -879,9 +880,9 @@ namespace AstroManager
 
           centroid = controlImage->astroFile->centroid(controlImage->currentHDB,
                                                        MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                                       settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                       settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                      QVariant(20)).toLongLong(),
-                                                       settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                       settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                      QVariant(3)).toInt());
           if (!centroid)
             QMessageBox::information(this, tr("Unable to find centroid."),
@@ -1334,7 +1335,7 @@ namespace AstroManager
 
         // Set the default menu to use.
 
-      if (settings::VSOPSettings->value(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(false)).toBool())
+      if (settings::astroManagerSettings->value(settings::IMAGESTACK_OPENFROMFOLDER, QVariant(false)).toBool())
       {
         toolButtonAddImages->setDefaultAction(actionSelectFromFolder);
       }
@@ -1530,7 +1531,7 @@ namespace AstroManager
       QPointF pointF;
       ACL::CImageStack::EStackMode stackMode;
       imaging::SControlImage *controlImage;
-      std::uint_least8_t missingAlignmentAction = settings::VSOPSettings->value(settings::IMAGESTACK_MISSINGALIGNMENTACTION,
+      std::uint_least8_t missingAlignmentAction = settings::astroManagerSettings->value(settings::IMAGESTACK_MISSINGALIGNMENTACTION,
                                                                                 QVariant(NOWCS_IGNORE)).toUInt();
 
       imageStack.clearFiles();             // Remmove any existing images from the image stacker.

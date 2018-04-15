@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager
+// PROJECT:							astroManager
 // FILE:								FrameWindow
 // SUBSYSTEM:						MDI Frame Window Class
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
@@ -11,17 +11,17 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2005-2018 Gavin Blakeman.
-//                      This file is part of the AstroManager software.
+//                      This file is part of the Astronomy Manager software(astroManager)
 //
-//                      AstroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      AstroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-//                      for more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AstroManager.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:            Implements the MDI Frame window for the application. There is a single class implemented:
@@ -55,7 +55,7 @@
 #include "Error.h"
 #include "qtExtensions/MdiSubWindow.h"
 #include "qtExtensions/qt.h"
-#include "VSOP.h"
+#include "astroManager.h"
 
 // Standard include files
 

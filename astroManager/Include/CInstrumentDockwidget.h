@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Observation Manager)
+// PROJECT:							astroManager (Astronomy Observation Manager)
 // FILE:								CInstrumentDockwidget.h
 // SUBSYSTEM:						All the dockable widget classes used by the applicaiton
 // LANGUAGE:						C++
@@ -10,16 +10,19 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-// Copyright 2010-2013, 2018 Gavin Blakeman.
-// This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2010-2013, 2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software(astroManager)
 //
-// AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as 
-// published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-// AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-// You should have received a copy of the GNU General Public License along with AIRDAS.  If not, see <http://www.gnu.org/licenses/>.
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
+//                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:
 //
@@ -29,8 +32,8 @@
 //                        - CAstrometryDockWidget
 //                        - CInstrumentDockwidget
 //
-// HISTORY:             0000.00.01  2012-11-18  GGB - CInstrumentDockwidget split into a new file and renamed.
-//                      0000.00.00  2011-06-04  GGB - Development of classes for AIRDAS
+// HISTORY:             2012-11-18  GGB - CInstrumentDockwidget split into a new file and renamed.
+//                      2011-06-04  GGB - Development of classes for AIRDAS
 //
 //*********************************************************************************************************************************
 

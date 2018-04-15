@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Manager)
+// PROJECT:							astroManager (Astronomy Manager)
 // FILE:								Settings
 // SUBSYSTEM:						Registry Class
 // LANGUAGE:						C++
@@ -11,17 +11,17 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2009-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software(astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:            Implements the class and constants for storing persistant values for the program.
@@ -135,6 +135,10 @@ namespace AstroManager
     QString const IMAGESTACK_AUTO_DISTANCE                          ("ImageStack/Auto/Distance");
     QString const IMAGESTACK_AUTO_NOWCSACTION                       ("ImageStack/Auto/NoWCSAction");
     QString const IMAGESTACK_AUTO_SAVEOUTPUT                        ("ImageStack/Auto/AutoSaveOutput");
+
+      // Definitions for Window Planning
+
+    QString const WINDOWPLANNING_TIMESCALE                          ("WindowPlanning/TimeScale");
 
       // Definitions for the ATID Database section
 
@@ -396,7 +400,7 @@ namespace AstroManager
     int const LL_DEBUG =    32;
     int const LL_TRACE =    64;
 
-    extern QSettings *VSOPSettings;
+    extern QSettings *astroManagerSettings;
 
     void InsertRecentObject(const QString &);
 

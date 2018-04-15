@@ -191,6 +191,7 @@
         <file>images/Button_First.png</file>
         <file>images/Button_Last.png</file>
         <file>images/Button_Rewind.png</file>
+        <file>icons/clock.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>images/weather_cloudy.png</file>
@@ -214,6 +215,7 @@
         <file>icons/tags/three_tags.png</file>
         <file>icons/save_as.png</file>
         <file>icons/image/image_save.png</file>
+        <file>icons/clock.png</file>
     </qresource>
     <qresource prefix="/dialogs">
         <file>dialogs/dialogSelectImageVersion.ui</file>

@@ -8,18 +8,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2012-2018 Gavin Blakeman.
-//                      This file is part of the AstroManager software.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AstroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      AstroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-//                      for more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AstroManager.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Data support functions.
 //
@@ -49,7 +50,7 @@
 #include "../../Include/Error.h"
 #include "../../Include/qtExtensions/qt.h"
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
 // Standard C library
 
@@ -88,11 +89,11 @@ namespace AstroManager
 
     CARID::CARID() : CDatabase("ARID"), ARIDdisabled_(false), sqlQuery()
     {
-      QVariant variant = settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE, QVariant());
+      QVariant variant = settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE, QVariant());
 
       if (variant.isNull())
       {
-        settings::VSOPSettings->setValue(settings::ARID_DATABASE_DISABLE, QVariant(true));
+        settings::astroManagerSettings->setValue(settings::ARID_DATABASE_DISABLE, QVariant(true));
         ARIDdisabled_ = true;
       }
       else
@@ -181,7 +182,7 @@ namespace AstroManager
 
     void CARID::connectToDatabase()
     {
-      QVariant database = settings::VSOPSettings->value(settings::ARID_DATABASE_DBMS);
+      QVariant database = settings::astroManagerSettings->value(settings::ARID_DATABASE_DBMS);
       QString szDatabase;
 
       if (!ARIDdisabled_)
@@ -305,7 +306,7 @@ namespace AstroManager
           geodesic.Inverse(query.value(2).toDouble(), query.value(3).toDouble(),
                            observatory->latitude(), observatory->longitude(), distance);
 
-          if (distance <= settings::VSOPSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
+          if (distance <= settings::astroManagerSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
           {
             INFOMESSAGE("Succesfully found site from coordinates...");
             INFOMESSAGE("Site Identified: " + query.value(1).toString().toStdString());
@@ -355,7 +356,7 @@ namespace AstroManager
             geodesic.Inverse(query.value(2).toDouble(), query.value(3).toDouble(),
                              observatory->latitude(), observatory->longitude(), distance);
 
-            if (distance <= settings::VSOPSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
+            if (distance <= settings::astroManagerSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
             {
                 // Found a possible site. Store it and continue to the next site.
 
@@ -382,7 +383,7 @@ namespace AstroManager
           };
           if (possibleFound)
           {
-            if (closestDistance < settings::VSOPSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
+            if (closestDistance < settings::astroManagerSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
             {
                 // Take the site as found and assign it.
 
@@ -838,12 +839,12 @@ namespace AstroManager
 
     bool CARID::MySQL()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::ARID_MYSQL_DRIVERNAME, QVariant(databaseDrivers[SQLDB_MYSQL].driverName)).toString(),
-                                settings::VSOPSettings->value(settings::ARID_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_MYSQL_PORT, QVariant(3306)).toInt(),
-                                settings::VSOPSettings->value(settings::ARID_MYSQL_DATABASENAME, QVariant(QString("ARID"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_MYSQL_USERNAME, QVariant(QString("ARID"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_MYSQL_PASSWORD, QVariant(QString("ARID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::ARID_MYSQL_DRIVERNAME, QVariant(databaseDrivers[SQLDB_MYSQL].driverName)).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_MYSQL_PORT, QVariant(3306)).toInt(),
+                                settings::astroManagerSettings->value(settings::ARID_MYSQL_DATABASENAME, QVariant(QString("ARID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_MYSQL_USERNAME, QVariant(QString("ARID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_MYSQL_PASSWORD, QVariant(QString("ARID"))).toString()) );
     }
 
     /// @brief Function for opening an ODBC database.
@@ -858,8 +859,8 @@ namespace AstroManager
 
     bool CARID::ODBC()
     {
-      return ( createConnectionODBC(settings::VSOPSettings->value(settings::ARID_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
-                                    settings::VSOPSettings->value(settings::ARID_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
+      return ( createConnectionODBC(settings::astroManagerSettings->value(settings::ARID_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
+                                    settings::astroManagerSettings->value(settings::ARID_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
     }
 
     /// @brief Populates the fields in the imageDetails dialog.
@@ -1004,8 +1005,8 @@ namespace AstroManager
 
     bool CARID::SQLite()
     {
-      return ( createConnectionSQLite(settings::VSOPSettings->value(settings::ARID_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
-                                      settings::VSOPSettings->value(settings::ARID_SQLITE_DATABASENAME, QVariant(QString("Data/ARID.sqlite"))).toString()) );
+      return ( createConnectionSQLite(settings::astroManagerSettings->value(settings::ARID_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
+                                      settings::astroManagerSettings->value(settings::ARID_SQLITE_DATABASENAME, QVariant(QString("Data/ARID.sqlite"))).toString()) );
     }
 
     /// @brief Function for opening an Oracle database.
@@ -1021,12 +1022,12 @@ namespace AstroManager
 
     bool CARID::Oracle()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::ARID_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_ORACLE_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_ORACLE_PORT, QVariant(1521)).toInt(),
-                                settings::VSOPSettings->value(settings::ARID_ORACLE_SCHEMANAME, QVariant(QString("xe"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::ARID_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::ARID_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_ORACLE_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_ORACLE_PORT, QVariant(1521)).toInt(),
+                                settings::astroManagerSettings->value(settings::ARID_ORACLE_SCHEMANAME, QVariant(QString("xe"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ARID_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
     /// @brief Populates a list widget with filter information.
@@ -1095,7 +1096,7 @@ namespace AstroManager
         if (bSelect)
         {
           szSQL = "SELECT i.DESCRIPTION, i.DONTDISPLAY FROM TBL_INSTRUMENTS i WHERE i.INSTRUMENT_ID = " \
-            + settings::VSOPSettings->value("Site", QVariant(0)).toString();
+            + settings::astroManagerSettings->value("Site", QVariant(0)).toString();
           query.exec(*new QString(szSQL));
 
           if (query.first())
@@ -1255,7 +1256,7 @@ namespace AstroManager
 
           if (selectDefault)
           {
-            std::uint_least32_t siteID = settings::VSOPSettings->value(settings::SETTINGS_SITE_DEFAULTID, QVariant(0)).toULongLong();
+            std::uint_least32_t siteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID, QVariant(0)).toULongLong();
 
             std::uint_fast32_t index;
 
@@ -1308,7 +1309,7 @@ namespace AstroManager
 
           if (bSelect)
           {
-            std::uint_least32_t siteID = settings::VSOPSettings->value(settings::SETTINGS_SITE_DEFAULTID, QVariant(0)).toULongLong();
+            std::uint_least32_t siteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID, QVariant(0)).toULongLong();
 
             std::uint_fast32_t index;
 
@@ -1354,7 +1355,7 @@ namespace AstroManager
       if (bSelect)
       {
         szSQL = "SELECT n.SHORTTEXT, n.DONTDISPLAY FROM TBL_OBSERVERS n WHERE n.OBSERVER_ID = " \
-          + settings::VSOPSettings->value("Observer", QVariant(0)).toString();
+          + settings::astroManagerSettings->value("Observer", QVariant(0)).toString();
         query.exec(* new QString(szSQL));
         query.first();
         nRow = combo->findText(query.value(0).toString());
@@ -1409,7 +1410,7 @@ namespace AstroManager
       if (bSelect)
       {
         szSQL = "SELECT t.SHORTTEXT, t.DONTDISPLAY FROM TBL_TELESCOPE t WHERE t.TELESCOPE_ID = " \
-          + settings::VSOPSettings->value("Telescope", QVariant(0)).toString();
+          + settings::astroManagerSettings->value("Telescope", QVariant(0)).toString();
 
         query.exec(*new QString(szSQL));
         if (query.first())

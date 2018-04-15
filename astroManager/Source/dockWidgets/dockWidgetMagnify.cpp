@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2013-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Provides a dock widget showing a magnified view of the current cursor position.
 //
@@ -150,7 +151,7 @@ namespace AstroManager
       graphicsView->scale(1, 1);
       graphicsView->update();
       setWindowTitle(QString("Magnify " % UTF16_MULTIPLYSIGN % "1"));
-      settings::VSOPSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(1));
+      settings::astroManagerSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(1));
     }
 
     /// Sets the magnification to 2:1
@@ -163,7 +164,7 @@ namespace AstroManager
       graphicsView->scale(2, 2);
       graphicsView->update();
       setWindowTitle(QString("Magnify " % UTF16_MULTIPLYSIGN % "2"));
-      settings::VSOPSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(2));
+      settings::astroManagerSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(2));
     }
 
     /// Sets the magnification to 4:1
@@ -176,7 +177,7 @@ namespace AstroManager
       graphicsView->scale(4, 4);
       graphicsView->update();
       setWindowTitle(QString("Magnify " % UTF16_MULTIPLYSIGN % "4"));
-      settings::VSOPSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(4));
+      settings::astroManagerSettings->setValue(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(4));
     }
 
     /// @brief Activates the window when the image is activated.
@@ -282,7 +283,7 @@ namespace AstroManager
 
       graphicsView->setScene(graphicsScene);
 
-      QVariant variant = settings::VSOPSettings->value(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(4));
+      QVariant variant = settings::astroManagerSettings->value(settings::DW_MAGNIFY_MAGNIFICATION, QVariant(4));
 
       switch (variant.toInt())
       {

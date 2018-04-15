@@ -1,40 +1,41 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:             AstroManager (Astronomy Observation Manager)
-// FILE:			          VSOP
-// SUBSYSTEM:           Definitions for the AIRDAS application.
+// PROJECT:             astroManager (Astronomy Observation Manager)
+// FILE:			          astroManager
+// SUBSYSTEM:           Definitions for the astroManager application.
 // TARGET OS:	          WINDOWS, LINUX, UNIX, MAC
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
 //                      Copyright 2009-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software(astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:            Defines macros that are used in conjunction with error reporting as well as
 //                      for user information reporting.
 //
-// CLASSES INCLUDED:    NONE.
+// CLASSES INCLUDED:    None.
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2018-02-03 GGB - Rename Project to AstroManager
+//                      2015-09-22 GGB - AIRDAS 2015.09 release
 //                      2013-09-30 GGB - AIRDAS 2013.09 release.
 //                      2013-03-22 GGB - AIRDAS 2013.03 release.
 //                      2013-01-20 GGB - AIRDAS 0000.00 release.
 //
 //*********************************************************************************************************************************
 
-#ifndef VSOP_H
-#define VSOP_H
+#ifndef ASTROMANAGER_H
+#define ASTROMANAGER_H
 
 #include "qtExtensions/qt.h"
 
@@ -50,9 +51,9 @@ namespace AstroManager
 
   int const ROLE_SITEID                     (Qt::UserRole + 0);
 
-  std::string const AIRDAS_EDITEDBY         ("Edited by: Astronomical Image Reduction and Data Analysis Software. (AIRDAS)");
+  std::string const AIRDAS_EDITEDBY         ("Edited by: Astronomy Manager. (astroManager)");
 
-    // Functions below are found in VSOP.cpp
+    // Functions below are found in astroManager.cpp
 
   std::string getReleaseString();
   QString getCopyrightString();
@@ -106,4 +107,4 @@ namespace AstroManager
 
 } // namespace AstroManager
 
-#endif  // VSOP_H
+#endif  // ASTROMANAGER_H

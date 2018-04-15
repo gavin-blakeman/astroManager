@@ -11,19 +11,20 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2010-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
 //                      2013-09-30 GGB - AIRDAS 2013.09 release.
@@ -74,15 +75,15 @@ namespace AstroManager
     {
       bool b1 = false;
 
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_USEBIAS,
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_USEBIAS,
                                        QVariant(b1 = widget()->findChild<QGroupBox *>("groupBoxIncludeBiasCorrection")->isChecked()));
       if (b1)
       {
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_MASTERBIAS,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_MASTERBIAS,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxMasterBiasFrame")->isChecked()));
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSELECTION,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSELECTION,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxBiasFramesSelection")->isChecked()));
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSAVEAS,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSAVEAS,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxMasterBiasSaveAs")->isChecked()));
       };
 
@@ -446,7 +447,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Save Master Bias Frame as..."),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant("")).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant("")).toString(),
         tr("FITS Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -457,7 +458,7 @@ namespace AstroManager
         myPath = masterBiasSaveAs.toStdString();
         filePath = myPath.c_str();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -471,7 +472,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getOpenFileName(this, tr("Select Master Bias Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -482,7 +483,7 @@ namespace AstroManager
         myPath = biasFileName.toStdString();
         filePath = myPath.c_str();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     };
 
@@ -503,7 +504,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Select Bias Frames"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -519,7 +520,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
 
@@ -552,7 +553,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Open Images"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -568,7 +569,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
 
@@ -594,7 +595,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Save Master Dark Frame as..."),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -605,7 +606,7 @@ namespace AstroManager
         myPath = darkFileName.toStdString();
         filePath = myPath;
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -633,13 +634,13 @@ namespace AstroManager
         // Read the status of the check groups from the Settings
 
       formWidget->findChild<QGroupBox *>("groupBoxIncludeBiasCorrection")->
-        setChecked(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_USEBIAS, QVariant(false)).toBool());
+        setChecked(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_USEBIAS, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxMasterBiasFrame")->
-        setChecked(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_MASTERBIAS, QVariant(false)).toBool());
+        setChecked(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_MASTERBIAS, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxBiasFramesSelection")->
-        setChecked(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSELECTION, QVariant(false)).toBool());
+        setChecked(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSELECTION, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxMasterBiasSaveAs")->
-        setChecked(settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSAVEAS, QVariant(false)).toBool());
+        setChecked(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEDARK_BIASSAVEAS, QVariant(false)).toBool());
 
         // Create the connections
 
@@ -733,15 +734,15 @@ namespace AstroManager
     {
       bool b1 = false;
 
-      settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_USEDARK,
+      settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_USEDARK,
         QVariant(b1 = widget()->findChild<QGroupBox *>("groupBoxFlatDark")->isChecked()));
       if (b1)
       {
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_MASTERDARK,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_MASTERDARK,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxMasterDark")->isChecked()));
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSELECTION,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSELECTION,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxDarkFrames")->isChecked()));
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSAVEAS,
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSAVEAS,
           QVariant(widget()->findChild<QGroupBox *>("groupBoxMasterDarkSaveAs")->isChecked()));
       };
 
@@ -766,7 +767,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Select Dark Images to add"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -782,7 +783,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
 
@@ -1116,7 +1117,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Save Master Flat Dark Frame as..."),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1126,7 +1127,7 @@ namespace AstroManager
 
         filePath = darkSaveAs.toStdString();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -1140,7 +1141,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getOpenFileName(this, tr("Open Flat-Master-Dark Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1150,7 +1151,7 @@ namespace AstroManager
 
         filePath = darkFileName.toStdString();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -1213,7 +1214,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Open Images"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -1230,7 +1231,7 @@ namespace AstroManager
           {
               // Get the directory details from the file name.
 
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
 
@@ -1255,7 +1256,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Save Master Flat Frame as..."),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1265,7 +1266,7 @@ namespace AstroManager
 
         filePath = flatFileName.toStdString();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -1295,13 +1296,13 @@ namespace AstroManager
         // Setup the check box state using the stored settings.
 
       formWidget->findChild<QGroupBox *>("groupBoxFlatDark")->
-        setChecked(b1 = settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_USEDARK, QVariant(false)).toBool());
+        setChecked(b1 = settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_USEDARK, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxMasterDark")->
-        setChecked(b2 = settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_MASTERDARK, QVariant(false)).toBool());
+        setChecked(b2 = settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_MASTERDARK, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxDarkFrames")->
-        setChecked(b3 = settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSELECTION, QVariant(false)).toBool());
+        setChecked(b3 = settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSELECTION, QVariant(false)).toBool());
       formWidget->findChild<QGroupBox *>("groupBoxMasterDarkSaveAs")->
-        setChecked(b4 = settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSAVEAS, QVariant(false)).toBool());
+        setChecked(b4 = settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_CREATEFLAT_DARKSAVEAS, QVariant(false)).toBool());
 
       if ( !b1 && !b2 && !b3 &&! b4)
         formWidget->findChild<QGroupBox *>("groupBoxMasterDark")->setChecked(true);
@@ -1547,7 +1548,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Save Master Bias Frame as..."),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1557,7 +1558,7 @@ namespace AstroManager
 
         filePath = masterBiasFileName.toStdString();
 
-        settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+        settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
       };
     }
 
@@ -1577,7 +1578,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Select Bias Frames"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -1592,7 +1593,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
             firstPass = false;
           };
 
@@ -1705,7 +1706,7 @@ namespace AstroManager
     void CImageCalibrationMultipleWindow::eventBiasFrameName(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(this, tr("Select Master Bias Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERBIAS_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1804,7 +1805,7 @@ namespace AstroManager
     void CImageCalibrationMultipleWindow::eventDarkFrameName(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(this, tr("Select Master Dark Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERDARK_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1821,7 +1822,7 @@ namespace AstroManager
     void CImageCalibrationMultipleWindow::eventFlatFrameName(bool)
     {
       QString fileName = QFileDialog::getOpenFileName(this, tr("Select Master Flat Frame"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant(0)).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_MASTERFLAT_DIRECTORY, QVariant(0)).toString(),
         tr("Image Files (*.fts)"));
 
       if ( !fileName.isNull() )
@@ -1848,7 +1849,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Select Images"),
-                    settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_RAWIMAGESDIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_RAWIMAGESDIRECTORY, QVariant(0)).toString(),
                     tr("Image Files (*.fts)"));
 
         // Iterate the list of items and only add items that are not repeats.
@@ -1863,7 +1864,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_RAWIMAGESDIRECTORY,
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_RAWIMAGESDIRECTORY,
                                              QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
@@ -1929,7 +1930,7 @@ namespace AstroManager
     void CImageCalibrationMultipleWindow::eventSaveDirectory(bool)
     {
       QString fileName = QFileDialog::getExistingDirectory(this, tr("Select Directory to Save to"),
-        settings::VSOPSettings->value(settings::IMAGE_CALIBRATION_PROCESSEDDIRECTORY, QVariant(QString("/"))).toString(),
+        settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_PROCESSEDDIRECTORY, QVariant(QString("/"))).toString(),
         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::DontUseNativeDialog);
 
       if ( !fileName.isNull() )

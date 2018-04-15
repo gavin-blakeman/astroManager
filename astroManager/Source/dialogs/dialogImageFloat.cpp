@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2011-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -151,14 +152,14 @@ namespace AstroManager
       else if (findChild<QRadioButton *>("radioButtonManual")->isChecked())
       {
         bgnd = MANUAL;
-        settings::VSOPSettings->setValue(settings::DIALOG_IMAGEFLOAT_MANUAL, QVariant(findChild<QSpinBox *>("spinBoxManual")->value()));
+        settings::astroManagerSettings->setValue(settings::DIALOG_IMAGEFLOAT_MANUAL, QVariant(findChild<QSpinBox *>("spinBoxManual")->value()));
       }
       else
       {
         CODE_ERROR(AIRDAS);
       }
 
-      settings::VSOPSettings->setValue(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(bgnd));
+      settings::astroManagerSettings->setValue(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(bgnd));
     }
 
     // Sets up the user interface.
@@ -168,7 +169,7 @@ namespace AstroManager
     void CDialogImageFloat::setupUI()
     {
       QSpinBox *sbHeight, *sbWidth;
-      int bgnd = settings::VSOPSettings->value(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(IMAGE_MIN)).toInt();
+      int bgnd = settings::astroManagerSettings->value(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(IMAGE_MIN)).toInt();
 
         // Set the User interface up correctly.
 
@@ -189,7 +190,7 @@ namespace AstroManager
       case MANUAL:
         findChild<QRadioButton *>("radioButtonManual")->setChecked(true);
         findChild<QSpinBox *>("radioButtonManual")->setEnabled(true);
-        findChild<QSpinBox *>("radioButtonManual")->setValue(settings::VSOPSettings->value(settings::DIALOG_IMAGEFLOAT_MANUAL,
+        findChild<QSpinBox *>("radioButtonManual")->setValue(settings::astroManagerSettings->value(settings::DIALOG_IMAGEFLOAT_MANUAL,
           QVariant(0)).toInt());
         break;
       default:

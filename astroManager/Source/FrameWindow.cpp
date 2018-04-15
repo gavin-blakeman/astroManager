@@ -11,18 +11,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2005-2018 Gavin Blakeman.
-//                      This file is part of the AstroManager software.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AstroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
 //                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
 //                      option) any later version.
 //
-//                      AstroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-//                      implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
-//                      for more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AstroManager.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Implements the MDI Frame window for the application. There is a single class implemented:
 //							          - class CFrameWindow
@@ -77,7 +78,7 @@
 #include "../Include/Utilities.h"
 #include "../Include/windowCalculation/gregorian2JD.h"
 #include "../Include/windowCalculation/JD2Gregorian.h"
-#include "../Include/VSOPHelp.h"
+#include "../Include/astroManagerHelp.h"
 #include "../Include/VSOPView.h"
 #include "../Include/windowPlanning/windowPlanning.h"
 #include "../Include/windowWeather/windowWeatherHistory.h"
@@ -140,7 +141,7 @@ namespace AstroManager
 
         // Load the recent file list.
 
-      QStringList files = settings::VSOPSettings->value(settings::FILE_LASTOPENED).toStringList();
+      QStringList files = settings::astroManagerSettings->value(settings::FILE_LASTOPENED).toStringList();
       for (nIndex = 0; nIndex < ((size_t) files.size()); nIndex++)
       {
         path = files[nIndex].toStdString();
@@ -318,7 +319,7 @@ namespace AstroManager
       menuActions[IDA_FILE_INSPECT]->setToolTip(tr("Inspect the keywords in a FITS file."));
       connect(&*menuActions[IDA_FILE_INSPECT], SIGNAL(triggered()), this, SLOT(eventFileInspect()));
 
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         menuActions.emplace(IDA_FILE_SEARCH, std::make_unique<QAction>(QIcon(":/icons/data_chooser.png"), tr("Search Image"), this));
         menuActions[IDA_FILE_SEARCH]->setStatusTip(tr("Search images in the ARID database."));
@@ -336,7 +337,7 @@ namespace AstroManager
       menuActions[IDA_FILE_SAVEAS]->setStatusTip(tr("Save the document under a new name"));
       connect(&*menuActions[IDA_FILE_SAVEAS], SIGNAL(triggered()), this, SLOT(eventFileSaveAs()));
 
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         menuActions.emplace(IDA_FILE_SAVE_DATABASE, std::make_unique<QAction>(QIcon(":/icons/database/database_save.png"), tr("Save to Database"), this));
         menuActions[IDA_FILE_SAVE_DATABASE]->setStatusTip(tr("Save image in the ARID database."));
@@ -368,7 +369,7 @@ namespace AstroManager
       menuActions[IDA_FILE_BATCHCONVERT]->setStatusTip(tr("Convert a group of files to FITS."));
       connect(&*menuActions[IDA_FILE_BATCHCONVERT], SIGNAL(triggered()), this, SLOT(eventFileBatchConvert()));
 
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         menuActions.emplace(IDA_FILE_IMPORTIMAGES, std::make_unique<QAction>(tr("Upload Images"), this));
         menuActions[IDA_FILE_IMPORTIMAGES]->setStatusTip(tr("Upload a group of files to the ARID database."));
@@ -399,7 +400,7 @@ namespace AstroManager
       menuActions[IDA_EDIT_COPY]->setStatusTip(tr("Copy the current selection's contents to the clipboard"));
       connect(&*menuActions[IDA_EDIT_COPY], SIGNAL(triggered()), this, SLOT(eventEditcopy()));
 
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         menuActions.emplace(IDA_EDIT_IMAGEMETADATA, std::make_unique<QAction>(QIcon(":/icons/tags/three_tags.png"), tr("Image MetaData"), this));
         menuActions[IDA_EDIT_IMAGEMETADATA]->setStatusTip(tr("Edit the image metadata."));
@@ -764,7 +765,7 @@ namespace AstroManager
 
     void CFrameWindow::createRecentFileMenu()
     {
-      unsigned int depth = settings::VSOPSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toUInt();
+      unsigned int depth = settings::astroManagerSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toUInt();
       bool valChanged = false;
 
       if (depth < 5)
@@ -780,7 +781,7 @@ namespace AstroManager
 
       if (valChanged)
       {
-        settings::VSOPSettings->setValue(settings::FILE_LASTOPENEDDEPTH, QVariant(depth));
+        settings::astroManagerSettings->setValue(settings::FILE_LASTOPENEDDEPTH, QVariant(depth));
       }
 
       updateRecentFileMenu(depth);
@@ -801,19 +802,19 @@ namespace AstroManager
       subMenus.emplace(IDSM_NULL_FILE, std::make_unique<QMenu>(tr("&File")));
       subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_OPEN]);
       subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_INSPECT]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_SEARCH]);
       };
       subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_SAVE]);
       subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_SAVEAS]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_SAVE_DATABASE]);
       }
       subMenus[IDSM_NULL_FILE]->addSeparator();
       subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_BATCHCONVERT]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_NULL_FILE]->addAction(&*menuActions[IDA_FILE_IMPORTIMAGES]);
       };
@@ -827,13 +828,13 @@ namespace AstroManager
       subMenus.emplace(IDSM_IMAGE_FILE, std::make_unique<QMenu>(tr("&File")));
       subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_OPEN]);
       subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_INSPECT]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_SEARCH]);
       };
       subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_SAVE]);
       subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_SAVEAS]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_SAVE_DATABASE]);
       }
@@ -846,7 +847,7 @@ namespace AstroManager
       menuTempS->addAction(&*menuActions[IDA_FILE_EXPORT_CSV]);
       subMenus[IDSM_IMAGE_FILE]->addSeparator();
       subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_BATCHCONVERT]);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_IMAGE_FILE]->addAction(&*menuActions[IDA_FILE_IMPORTIMAGES]);
       };
@@ -869,7 +870,7 @@ namespace AstroManager
       subMenus.emplace(IDSM_IMAGE_EDIT, std::make_unique<QMenu>(tr("&Edit")));
       subMenus[IDSM_IMAGE_EDIT]->addAction(&*menuActions[IDA_EDIT_COPY]);
       subMenus[IDSM_IMAGE_EDIT]->addSeparator();
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         subMenus[IDSM_IMAGE_EDIT]->addAction(&*menuActions[IDA_EDIT_IMAGEMETADATA]);
       };
@@ -1000,7 +1001,7 @@ namespace AstroManager
 
     void CFrameWindow::createToolBars()
     {   
-      int toolBarHeight = settings::VSOPSettings->value(settings::TOOLBAR_HEIGHT, QVariant(16)).toInt();
+      int toolBarHeight = settings::astroManagerSettings->value(settings::TOOLBAR_HEIGHT, QVariant(16)).toInt();
 
       toolBars.emplace(IDTB_FILE, std::unique_ptr<QToolBar>(addToolBar(tr("File"))));
       toolBars[IDTB_FILE]->setObjectName(TB_FILE);
@@ -1010,13 +1011,13 @@ namespace AstroManager
       toolBars[IDTB_FILE]->setFloatable(false);
       toolBars[IDTB_FILE]->addAction(getAction(IDA_FILE_OPEN));
       toolBars[IDTB_FILE]->addAction(getAction(IDA_FILE_INSPECT));
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         toolBars[IDTB_FILE]->addAction(getAction(IDA_FILE_SEARCH));
       }
       toolBars[IDTB_FILE]->addAction(getAction(IDA_FILE_SAVE));
       toolBars[IDTB_FILE]->addAction(getAction(IDA_FILE_SAVEAS));
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         toolBars[IDTB_FILE]->addAction(&*menuActions[IDA_FILE_SAVE_DATABASE]);
       }
@@ -1616,13 +1617,13 @@ namespace AstroManager
         // Ask the user for the files that need to be uploaded.
 
       QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Upload Image(s)"),
-            settings::VSOPSettings->value(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
+            settings::astroManagerSettings->value(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
 
       QStringList fileList = fileNames;   // This is suggested in the Qt documentation.
 
       filePath = (*fileList.begin()).toStdString();
 
-      settings::VSOPSettings->setValue(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY,
+      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY,
                                        QVariant(QString::fromStdString(filePath.parent_path().string())));
 
       QProgressDialog progressDialog(tr("Uploading Files..."), tr("Abort"), 0, fileList.size(), this);
@@ -1663,13 +1664,13 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString szFileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
-        settings::VSOPSettings->value(settings::IMAGING_INSPECT_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
+        settings::astroManagerSettings->value(settings::IMAGING_INSPECT_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
 
       if ( !szFileName.isNull() )
       {
         filePath = boost::filesystem::path(szFileName.toStdString());
 
-        settings::VSOPSettings->setValue(settings::IMAGING_INSPECT_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
+        settings::astroManagerSettings->setValue(settings::IMAGING_INSPECT_DIRECTORY, QVariant(QString::fromStdString(filePath.parent_path().string())));
 
         GCL::logger::defaultLogger().logMessage(GCL::logger::info, "File: " + filePath.string() + " has been opened");
 
@@ -2008,7 +2009,7 @@ namespace AstroManager
 
     void CFrameWindow::eventViewAnnotations()
     {
-      settings::VSOPSettings->setValue(settings::ANNOTATIONS_DISPLAY, QVariant(menuActions[IDA_VIEW_ANNOTATIONS]->isChecked()));
+      settings::astroManagerSettings->setValue(settings::ANNOTATIONS_DISPLAY, QVariant(menuActions[IDA_VIEW_ANNOTATIONS]->isChecked()));
     }
 
     /// @brief Notifies the parent window whether the Astrometry should be displayed or not.
@@ -2024,7 +2025,7 @@ namespace AstroManager
 
       RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
 
-      settings::VSOPSettings->setValue(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_ASTROMETRY]->isChecked()));
+      settings::astroManagerSettings->setValue(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_ASTROMETRY]->isChecked()));
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2152,7 +2153,7 @@ namespace AstroManager
 
       RUNTIME_ASSERT(AIRDAS, activeChild != nullptr, "No active child window.");
 
-      settings::VSOPSettings->setValue(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_PHOTOMETRY]->isChecked()));
+      settings::astroManagerSettings->setValue(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_PHOTOMETRY]->isChecked()));
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2328,7 +2329,7 @@ namespace AstroManager
     void CFrameWindow::HelpAbout()
     {
 
-      help::CHelpAboutAIP dlg;
+      help::CHelpAboutAstroManager dlg;
 
       dlg.exec();
     }
@@ -2606,9 +2607,10 @@ namespace AstroManager
 
     }
 
-    // Handles the menu item for bringing up the reference image dock widget.
+    /// @brief  Handles the menu item for bringing up the reference image dock widget.
+    /// @throws None.
     /// @version 2017-07-02/GGB - Changed the underlying storage to a std::map with std::unique_ptr
-    // 2011-06-12/GGB - Function created.
+    /// @version 2011-06-12/GGB - Function created.
 
     void CFrameWindow::eventReferenceImage()
     {
@@ -2644,12 +2646,12 @@ namespace AstroManager
 
     void CFrameWindow::writeSettings()
     {
-      settings::VSOPSettings->setValue(settings::FRAME_GEOMETRY, saveGeometry());
-      settings::VSOPSettings->setValue(settings::DW_STATE, saveState());
+      settings::astroManagerSettings->setValue(settings::FRAME_GEOMETRY, saveGeometry());
+      settings::astroManagerSettings->setValue(settings::DW_STATE, saveState());
 
-      settings::VSOPSettings->setValue(settings::FRAME_MAXIMISED, isMaximized());
-      settings::VSOPSettings->setValue(settings::FRAME_POSITION, pos());
-      settings::VSOPSettings->setValue(settings::FRAME_SIZE, size());
+      settings::astroManagerSettings->setValue(settings::FRAME_MAXIMISED, isMaximized());
+      settings::astroManagerSettings->setValue(settings::FRAME_POSITION, pos());
+      settings::astroManagerSettings->setValue(settings::FRAME_SIZE, size());
     }
 
     /// @brief Sets the active sub window.
@@ -2664,9 +2666,9 @@ namespace AstroManager
      };
    }
 
-    // Brings up the help dialog for help on the ATID database.
-    //
-    // 2010-05-11/GGB - Function created.
+    /// @brief Brings up the help dialog for help on the ATID database.
+    /// @throws None.
+    /// @version 2010-05-11/GGB - Function created.
 
     void CFrameWindow::HelpATID(void)
     {
@@ -2716,7 +2718,6 @@ namespace AstroManager
 
     void CFrameWindow::childClosing(QMdiSubWindow *child)
     {
-
         // Remove any unique windows.
 
       auto mdiChild = dynamic_cast<CMdiSubWindow *>(child);
@@ -2793,10 +2794,9 @@ namespace AstroManager
       };
     }
 
-    /// Opens a light curve analysis window. An unlimited number of light curve analysis windows
-    /// are allowed to be open at a time.
-    //
-    // 2010-06-27/GGB - Function created.
+    /// @brief Opens a light curve analysis window. An unlimited number of light curve analysis windows are allowed to be open at a
+    ///        time.
+    /// @version 2010-06-27/GGB - Function created.
 
     void CFrameWindow::eventPhotometryLightCurves()
     {
@@ -2849,7 +2849,7 @@ namespace AstroManager
 
     void CFrameWindow::eventTimer1s()
     {
-      bool LT = settings::VSOPSettings->value(settings::SETTINGS_LT, QVariant(true)).toBool();
+      bool LT = settings::astroManagerSettings->value(settings::SETTINGS_LT, QVariant(true)).toBool();
       time_t CurrentTime;
       struct tm *UTCTime;
       char szUTC[80];
@@ -2906,7 +2906,7 @@ namespace AstroManager
       boost::filesystem::path filePath;
 
       QString szFileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
-        settings::VSOPSettings->value(settings::IMAGING_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
+        settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
 
       if ( !szFileName.isNull() )
       {
@@ -2914,7 +2914,7 @@ namespace AstroManager
 
         loadFromFile(filePath);
 
-        settings::VSOPSettings->setValue(settings::IMAGING_DIRECTORY,
+        settings::astroManagerSettings->setValue(settings::IMAGING_DIRECTORY,
                                          QVariant(QString::fromStdString(filePath.parent_path().string())));
       };
     }
@@ -2975,7 +2975,7 @@ namespace AstroManager
       imaging::CStackImagesWindow *imageWindow = new imaging::CStackImagesWindow(this);
       mdiArea->addSubWindow(imageWindow);
 
-      if (settings::VSOPSettings->value(settings::IMAGESTACK_OPENMAXIMISED, QVariant(true)).toBool())
+      if (settings::astroManagerSettings->value(settings::IMAGESTACK_OPENMAXIMISED, QVariant(true)).toBool())
       {
         imageWindow->showMaximized();
       }
@@ -3010,13 +3010,12 @@ namespace AstroManager
           break;
         };
       };
-
     }
 
-    // Menu Function View | Zoom All
-    //
-    // 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
-    // 2011-06-02/GGB - Function created.
+    /// @brief Menu Function View | Zoom All
+    /// @throws GLC::CCodeError(AIRDAS)
+    /// @version 2013-07-14/GGB - Added code to zoom the stack images window. (Bug #1195976)
+    /// @version 2011-06-02/GGB - Function created.
 
     void CFrameWindow::eventZoomAll()
     {
@@ -3144,7 +3143,7 @@ namespace AstroManager
       imageVersion_t imageVersion;
       bool versionValid = false;
 
-      if (settings::VSOPSettings->value(settings::CM_DATABASE_OPENFILE_LASTVERSION, QVariant(false)).toBool())
+      if (settings::astroManagerSettings->value(settings::CM_DATABASE_OPENFILE_LASTVERSION, QVariant(false)).toBool())
       {
           // Open the latest version of the image.
 
@@ -3293,7 +3292,7 @@ namespace AstroManager
 
         lastOpened.remove(filePath);
         lastOpened.push_front(filePath);
-        while (lastOpened.size() > settings::VSOPSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toUInt() )
+        while (lastOpened.size() > settings::astroManagerSettings->value(settings::FILE_LASTOPENEDDEPTH, QVariant(5)).toUInt() )
         {
           lastOpened.pop_back();
         }
@@ -3303,7 +3302,7 @@ namespace AstroManager
           recentFileList.push_back(QString::fromStdString((*iterator).string()));
         };
 
-        settings::VSOPSettings->setValue(settings::FILE_LASTOPENED, recentFileList);
+        settings::astroManagerSettings->setValue(settings::FILE_LASTOPENED, recentFileList);
 
           // Populate the last opened file list into the menu.
 
@@ -3416,8 +3415,8 @@ namespace AstroManager
     {
       QVariant vGeometry, vState;
 
-      vGeometry = settings::VSOPSettings->value(settings::FRAME_GEOMETRY);
-      vState = settings::VSOPSettings->value(settings::DW_STATE);
+      vGeometry = settings::astroManagerSettings->value(settings::FRAME_GEOMETRY);
+      vState = settings::astroManagerSettings->value(settings::DW_STATE);
 
       if (!vGeometry.isNull())
       {
@@ -3429,9 +3428,9 @@ namespace AstroManager
         restoreState(vState.toByteArray());
       };
 
-      bool maximised = settings::VSOPSettings->value(settings::FRAME_MAXIMISED, QVariant(false)).toBool();
-      QPoint pos = settings::VSOPSettings->value(settings::FRAME_POSITION, QPoint(200, 200)).toPoint();
-      QSize size = settings::VSOPSettings->value(settings::FRAME_SIZE, QSize(400, 400)).toSize();
+      bool maximised = settings::astroManagerSettings->value(settings::FRAME_MAXIMISED, QVariant(false)).toBool();
+      QPoint pos = settings::astroManagerSettings->value(settings::FRAME_POSITION, QPoint(200, 200)).toPoint();
+      QSize size = settings::astroManagerSettings->value(settings::FRAME_SIZE, QSize(400, 400)).toSize();
       move(pos);
       resize(size);
 
@@ -3442,7 +3441,7 @@ namespace AstroManager
 
         // Read menu settings
 
-      if (settings::VSOPSettings->value(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(true)).toBool())
+      if (settings::astroManagerSettings->value(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(true)).toBool())
       {
         menuActions[IDA_VIEW_PHOTOMETRY]->setChecked(true);
       }
@@ -3451,7 +3450,7 @@ namespace AstroManager
         menuActions[IDA_VIEW_PHOTOMETRY]->setChecked(false);
       };
 
-      if (settings::VSOPSettings->value(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(true)).toBool())
+      if (settings::astroManagerSettings->value(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(true)).toBool())
       {
         menuActions[IDA_VIEW_ASTROMETRY]->setChecked(true);
       }
@@ -3481,7 +3480,7 @@ namespace AstroManager
 
       menuActions[IDA_FILE_SAVE]->setEnabled(false);
       menuActions[IDA_FILE_SAVEAS]->setEnabled(false);
-      if (!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+      if (!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
       {
         menuActions[IDA_FILE_SAVE_DATABASE]->setEnabled(false);
       };

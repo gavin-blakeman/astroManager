@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2017-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the class for opening and managing an astronomical file.
 //
@@ -277,7 +278,7 @@ namespace AstroManager
   {
      // If the original image needs to be saved, call the function to perform the saving.
 
-    if (fileNameValid_ && settings::VSOPSettings->value(settings::IMAGING_DATABASE_SAVEORIGINAL, QVariant(true)).toBool())
+    if (fileNameValid_ && settings::astroManagerSettings->value(settings::IMAGING_DATABASE_SAVEORIGINAL, QVariant(true)).toBool())
     {
       database::databaseARID->saveOriginalImage(this);
     };
@@ -342,7 +343,7 @@ namespace AstroManager
          *    Remove unneeded fields.
          */
 
-      if (settings::VSOPSettings->value(settings::IMAGING_KEYWORDS_CLEAN, QVariant(false)).toBool())
+      if (settings::astroManagerSettings->value(settings::IMAGING_KEYWORDS_CLEAN, QVariant(false)).toBool())
       {
         cleanLocationKeywords();
       };
@@ -419,7 +420,7 @@ namespace AstroManager
   {
     bool returnValue = false;
 
-    if(!settings::VSOPSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
+    if(!settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE).toBool())
     {
         // Give the user the option to save to database or file.
 
@@ -471,7 +472,7 @@ namespace AstroManager
           // Request a filename from the user.
 
         QString fileName = QFileDialog::getSaveFileName(parent_, QObject::tr("Save file as..."),
-                                                        settings::VSOPSettings->value(settings::IMAGING_DIRECTORY,
+                                                        settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY,
                                                                                       QVariant("")).toString(),
                                                         QObject::tr("FITS Files (*.fts)"));
         if (!fileName.isNull())

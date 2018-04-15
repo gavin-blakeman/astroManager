@@ -11,18 +11,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2010-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -75,7 +76,7 @@
 #include "../../Include/dockWidgets/dockWidgetNavigator.h"
 #include "../../Include/dockWidgets/dockWidgetPhotometry.h"
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
   // SOFA library
 
@@ -181,7 +182,7 @@ namespace AstroManager
           // There is WCS information present in the current image. Query the user for the filename of the Astrometry file.
 
         QString szFileName = QFileDialog::getOpenFileName(this, tr("Open Astrometry Target File"),
-          settings::VSOPSettings->value(settings::ASTROMETRY_TARGET_DIRECTORY, QVariant(0)).toString(), EXTENSION_CSV);
+          settings::astroManagerSettings->value(settings::ASTROMETRY_TARGET_DIRECTORY, QVariant(0)).toString(), EXTENSION_CSV);
 
         if (!szFileName.isEmpty())
         {
@@ -268,9 +269,9 @@ namespace AstroManager
 
             boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, point,
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                QVariant(3)).toInt());
 
             if (centroid)
@@ -692,9 +693,9 @@ namespace AstroManager
     void CImageWindow::changeAstrometrySelection(astrometry::PAstrometryObservation newSelection)
     {
       QPen pen;
-      QColor const selectedColour = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
+      QColor const selectedColour = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
                                                                   QVariant(QColor(Qt::yellow))).value<QColor>();
-      QColor const normalColour = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR,
+      QColor const normalColour = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR,
                                                                 QVariant(QColor(Qt::red))).value<QColor>();
 
       if ( (controlImage.currentAstrometrySelection) && (newSelection != controlImage.currentAstrometrySelection) )
@@ -746,9 +747,9 @@ namespace AstroManager
       TRACEENTER;
 
       QPen pen;
-      QColor const selectedColour = settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
+      QColor const selectedColour = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_SELECTEDCOLOUR,
                                                                   QVariant(QColor(Qt::yellow))).value<QColor>();
-      QColor const normalColour = settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR,
+      QColor const normalColour = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR,
                                                                 QVariant(QColor(Qt::red))).value<QColor>();
 
       if ( (controlImage.currentPhotometrySelection) && (newSelection != controlImage.currentPhotometrySelection) )
@@ -1558,7 +1559,7 @@ namespace AstroManager
     void CImageWindow::exportAsJPEG()
     {
        QString fileName = QFileDialog::getSaveFileName(this, tr("Export file as JPEG..."),
-        settings::VSOPSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
+        settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
         tr("JPEG Files (*.jpg)"));
 
       if (!fileName.isNull())
@@ -1600,7 +1601,7 @@ namespace AstroManager
     void CImageWindow::exportAsPNG()
     {
       QString fileName = QFileDialog::getSaveFileName(this, tr("Export file as PNG..."),
-       settings::VSOPSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
+       settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
        tr("PNG Files (*.png)"));
 
      if (!fileName.isNull())
@@ -1663,7 +1664,7 @@ namespace AstroManager
         // Get the name of the file to save.
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Export Astrometry as..."),
-                                                      settings::VSOPSettings->value(settings::ASTROMETRY_CSVDIRECTORY,
+                                                      settings::astroManagerSettings->value(settings::ASTROMETRY_CSVDIRECTORY,
                                                                                     QVariant("")).toString(),
                                                       tr("CSV Files (*.csv)"));
 
@@ -1736,7 +1737,7 @@ namespace AstroManager
         // Get the name of the file to save.
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Export Photometry as..."),
-                                                      settings::VSOPSettings->value(settings::PHOTOMETRY_CSVDIRECTORY,
+                                                      settings::astroManagerSettings->value(settings::PHOTOMETRY_CSVDIRECTORY,
                                                                                     QVariant("")).toString(),
                                                       tr("CSV Files (*.csv)"));
 
@@ -2235,9 +2236,9 @@ namespace AstroManager
             // Search for the centroid of the object.
 
           ccdPixel = controlImage.astroFile->centroid(controlImage.currentHDB, *ccdPixel,
-                                                      settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                      settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                     QVariant(20)).toLongLong(),
-                                                      settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                      settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                     QVariant(3)).toInt());;
           if (ccdPixel)
           {
@@ -2256,7 +2257,7 @@ namespace AstroManager
               while ( (existingObject) && !bClose)
               {
                 bClose = existingObject->isClose(*ccdPixel,
-                                                 settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
+                                                 settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
                 existingObject = controlImage.astroFile->astrometryObjectNext();
               };
             };
@@ -2342,7 +2343,7 @@ namespace AstroManager
 
         // Determine the objects automatically
 
-      int algorithm = settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ALGORITHM, QVariant(SEA_FINDSTARS)).toInt();
+      int algorithm = settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ALGORITHM, QVariant(SEA_FINDSTARS)).toInt();
 
       switch(algorithm)
       {
@@ -2365,7 +2366,7 @@ namespace AstroManager
       if (returnValue)    // Need to add the objects to the relevant list(s).
       {
 
-        if (settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(false)).toBool())
+        if (settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(false)).toBool())
         {
           DEBUGMESSAGE("Adding objects to Astrometry list...");
 
@@ -2382,7 +2383,7 @@ namespace AstroManager
               while ( (existingObject) && !bClose)
               {
                 bClose = existingObject->isClose(iter->center,
-                                                 settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
+                                                 settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
                 existingObject = controlImage.astroFile->astrometryObjectNext();
               };
             };
@@ -2434,7 +2435,7 @@ namespace AstroManager
           DEBUGMESSAGE("Completed adding objects to Astrometry list.");
         };
 
-        if (settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(false)).toBool())
+        if (settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(false)).toBool())
         {
           DEBUGMESSAGE("Adding objects to Photometry list...");
 
@@ -2558,9 +2559,9 @@ namespace AstroManager
 
         boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid =
             astroImage->centroid(MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                 settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                 settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                QVariant(20)).toLongLong(),
-                                 settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                 settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                QVariant(3)).toInt());
 
         if (centroid)
@@ -2576,7 +2577,7 @@ namespace AstroManager
             while ( (existingObject) && !bClose)
             {
               bClose = existingObject->isClose(MCL::TPoint2D<FP_t>(point.x(), point.y()),
-                                               settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
+                                               settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS).toInt());
               existingObject = controlImage.astroFile->astrometryObjectNext();
             };
           };
@@ -2659,9 +2660,9 @@ namespace AstroManager
             point = gvImage->mapToScene(mouseEvent->pos());
             boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                QVariant(3)).toInt());
 
             if (centroid)
@@ -2865,7 +2866,7 @@ namespace AstroManager
           // There is WCS information present in the current image. Query the user for the filename of the Photometry file.
 
         QString szFileName = QFileDialog::getOpenFileName(this, tr("Open Photometry Target File"),
-          settings::VSOPSettings->value(settings::PHOTOMETRY_TARGET_DIRECTORY, QVariant(0)).toString(), EXTENSION_CSV);
+          settings::astroManagerSettings->value(settings::PHOTOMETRY_TARGET_DIRECTORY, QVariant(0)).toString(), EXTENSION_CSV);
 
         if (!szFileName.isEmpty())
         {
@@ -2950,9 +2951,9 @@ namespace AstroManager
 
             boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, point,
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
-                                                 settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                 settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                QVariant(3)).toInt());
 
             if (centroid)
@@ -3195,7 +3196,7 @@ namespace AstroManager
       QPen pen;
       astrometry::DAstrometryObservationStore::iterator iterator;
 
-      pen.setColor(settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>());
+      pen.setColor(settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>());
 
       for(iterator = controlImage.astrometryObservations.begin(); iterator != controlImage.astrometryObservations.end(); iterator++)
       {
@@ -3245,7 +3246,7 @@ namespace AstroManager
     void CImageWindow::repaintPhotometry()
     {
       QPen pen;
-      QColor normalColor = settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR,
+      QColor normalColor = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR,
                                                          QVariant(QColor(Qt::red))).value<QColor>();
       photometry::DPhotometryObservationStore::iterator iterator;
 

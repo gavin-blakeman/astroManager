@@ -8,19 +8,20 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2010-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:	          Classes for photometry windows.
 //
@@ -49,7 +50,7 @@
 #include <ACL>
 #include <GCL>
 
-#include "../Include/VSOP.h"
+#include "../Include/astroManager.h"
 #include "../Include/database/databaseARID.h"
 #include "../Include/database/databaseATID.h"
 #include "../Include/FrameWindow.h"
@@ -1313,7 +1314,7 @@ namespace AstroManager
           szSQL = QString("SELECT TBL_NAMES.Name " \
                           "FROM TBL_CATALOGUEORDER INNER JOIN TBL_NAMES ON TBL_CATALOGUEORDER.CATALOGUE_ID = TBL_NAMES.CATALOGUE_ID " \
                           "WHERE ((TBL_NAMES.STELLAROBJECT_ID= %1) AND (TBL_CATALOGUEORDER.OBSERVER_ID=%2)) " \
-                          "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(targetObject->toString()).arg(settings::VSOPSettings->value("Observer", QString("0")).toString());
+                          "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(targetObject->toString()).arg(settings::astroManagerSettings->value("Observer", QString("0")).toString());
         }
         else
         {	// Preferred name

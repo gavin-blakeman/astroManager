@@ -11,19 +11,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2009-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2009-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Implements the class for the Registry Access
 //
@@ -40,7 +41,7 @@
 
   // AIRDAS include files.
 
-#include "../Include/VSOP.h"
+#include "../Include/astroManager.h"
 
   // Miscellaneous Libraries
 
@@ -58,7 +59,7 @@ namespace AstroManager
 {
   namespace settings
   {
-    QSettings *VSOPSettings = new QSettings(ORG_NAME, APPL_NAME);
+    QSettings *astroManagerSettings = new QSettings(ORG_NAME, APPL_NAME);
 
     /// @brief Function to create default settings for ARID if there are no settings defined when the application starts.
     /// @throws None.
@@ -66,9 +67,9 @@ namespace AstroManager
 
     void createDefaultARIDSettings()
     {
-      VSOPSettings->setValue(ARID_DATABASE_DBMS, SQLITE);
-      VSOPSettings->setValue(ARID_SQLITE_DRIVERNAME, "QSQLITE");
-      VSOPSettings->setValue(ARID_SQLITE_DATABASENAME, "Data/ARID.sqlite");
+      astroManagerSettings->setValue(ARID_DATABASE_DBMS, SQLITE);
+      astroManagerSettings->setValue(ARID_SQLITE_DRIVERNAME, "QSQLITE");
+      astroManagerSettings->setValue(ARID_SQLITE_DATABASENAME, "Data/ARID.sqlite");
     }
 
     /// @brief Copys the recent photometry values to one older and adds the new value at position 1.
@@ -88,12 +89,12 @@ namespace AstroManager
         szKey1 = QString(DIALOG_SELECTOBJECT_RECENT).arg(nIndex);
         szKey2 = QString(DIALOG_SELECTOBJECT_RECENT).arg(nIndex-1);
 
-        settings::VSOPSettings->setValue(szKey1, settings::VSOPSettings->value(szKey2, QVariant("")));
+        settings::astroManagerSettings->setValue(szKey1, settings::astroManagerSettings->value(szKey2, QVariant("")));
       };
 
       szKey1 = QString(DIALOG_SELECTOBJECT_RECENT).arg(1);
 
-      settings::VSOPSettings->setValue(szKey1, QVariant(mostRecent));
+      settings::astroManagerSettings->setValue(szKey1, QVariant(mostRecent));
     }
 
     /// @brief Loads any settings that need to be initialised on startup
@@ -108,7 +109,7 @@ namespace AstroManager
 
     void InitialiseStartupSettings()
     {
-      QVariant vMaxThreads = settings::VSOPSettings->value(MAX_THREADS, QVariant(std::thread::hardware_concurrency()));
+      QVariant vMaxThreads = settings::astroManagerSettings->value(MAX_THREADS, QVariant(std::thread::hardware_concurrency()));
 
       setThreads(vMaxThreads.toUInt());
     }

@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2014-2016 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2014-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements a dialog to allow the user to set paramters for the findstars algorithm.
 //
@@ -89,23 +90,23 @@ namespace AstroManager
         CODE_ERROR(AIRDAS);
       };
 
-      doubleSpinBoxDPSF->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DPSF,
+      doubleSpinBoxDPSF->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DPSF,
                                                                 QVariant(sourceParameters.dpsf)).toDouble());
-      doubleSpinBoxPLIM->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_PLIM,
+      doubleSpinBoxPLIM->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_PLIM,
                                                                 QVariant(sourceParameters.plim)).toDouble());
-      doubleSpinBoxDLIM->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DLIM,
+      doubleSpinBoxDLIM->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DLIM,
                                                                 QVariant(sourceParameters.dlim)).toDouble());
-      doubleSpinBoxSaddle->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_SADDLE,
+      doubleSpinBoxSaddle->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_SADDLE,
                                                                   QVariant(sourceParameters.saddle)).toDouble());
-      spinBoxMaxper->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXPER,
+      spinBoxMaxper->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXPER,
                                                             QVariant(sourceParameters.maxper)).toLongLong());
-      horizontalSliderMaxPeaks->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXNPEAKS,
+      horizontalSliderMaxPeaks->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXNPEAKS,
                                                                        QVariant(static_cast<qlonglong>(sourceParameters.maxnpeaks))).toULongLong());
-      spinBoxMaxSize->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXSIZE,
+      spinBoxMaxSize->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_MAXSIZE,
                                                              QVariant(sourceParameters.maxsize)).toLongLong());
-      spinBoxHalfBox->setValue(settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_HALFBOX,
+      spinBoxHalfBox->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_HALFBOX,
                                                              QVariant(sourceParameters.halfbox)).toLongLong());
-      doubleSpinBoxSigma->setValue((settings::VSOPSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_SIGMA,
+      doubleSpinBoxSigma->setValue((settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_SIGMA,
                                                                   QVariant(sourceParameters.sigma))).toDouble());
 
       connect(dlg->findChild<QPushButton *>("pushButtonExtract"), SIGNAL(clicked(bool)), this, SLOT(eventButtonExtract(bool)));

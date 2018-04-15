@@ -1,32 +1,32 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Manager)
-// FILE:								VSOP
+// PROJECT:							astroManager (Astronomy Manager)
+// FILE:								astroManager
 // SUBSYSTEM:						Application and Window Creation.
 // LANGUAGE:						C++
 // TARGET OS:						WINDOWS/UNIX/LINUX/MAC
 // LIBRARY DEPENDANCE:	Boost, GCL, Qt
-// NAMESPACE:						AIRDAS
+// NAMESPACE:						AstroManager
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
 //                      Copyright 2009-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software(astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
 // OVERVIEW:	          Main() function and Qt API entry point implemented in this file.
 //
-// HISTORY:		          2018-02-03 GGB - Rename Project to AstroManager
+// HISTORY:		          2018-02-03 GGB - Rename Project to astroManager
 //                      2015-09-22 GGB - AIRDAS 2015.09 release
 //                      2013-09-30 GGB - AIRDAS 2013.09 release.
 //                      2013-03-22 GGB - AIRDAS 2013.03 release.
@@ -78,10 +78,6 @@
 #undef max
 #endif
 
-  // Xerces
-
-//#include <xercesc/util/PlatformUtils.hpp>
-
 /// @brief Main Windows Procedure
 /// @details Create the application window, displays the application window and manages the message loop.
 /// @version 2016-05-07/GGB
@@ -116,7 +112,7 @@ int main(int argc, char *argv[])
     // Set the log level
 
   GCL::logger::CSeverity logSeverity;
-  int logLevel = AstroManager::settings::VSOPSettings->value(AstroManager::settings::SETTINGS_LOGLEVEL, QVariant(0)).toInt();
+  int logLevel = AstroManager::settings::astroManagerSettings->value(AstroManager::settings::SETTINGS_LOGLEVEL, QVariant(0)).toInt();
   if (logLevel != 0)
   {
     logSeverity.fCritical = logLevel & AstroManager::settings::LL_CRITICAL;
@@ -138,7 +134,8 @@ int main(int argc, char *argv[])
     logSeverity.fTrace = true;
   }
 
-  std::string logFilePath = AstroManager::settings::VSOPSettings->value(AstroManager::settings::SETTINGS_LOGDIR, QVariant(QString(""))).
+  std::string logFilePath = AstroManager::settings::astroManagerSettings->value(AstroManager::settings::SETTINGS_LOGDIR,
+                                                                        QVariant(QString(""))).
       toString().toStdString();
 
     // If the logfile directory does not exist, default to the current directory.
@@ -148,7 +145,7 @@ int main(int argc, char *argv[])
     logFilePath = "";
   };
 
-  GCL::logger::PLoggerSink fileLogger(new GCL::logger::CFileSink(logFilePath, "AstroManager"));
+  GCL::logger::PLoggerSink fileLogger(new GCL::logger::CFileSink(logFilePath, "astroManager"));
   std::dynamic_pointer_cast<GCL::logger::CFileSink>(fileLogger)->setRotationPolicyUse(10);
   fileLogger->setLogLevel(logSeverity);
 
@@ -217,7 +214,7 @@ int main(int argc, char *argv[])
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Connecting to ATID database...");
     AstroManager::database::databaseATID->connectToDatabase();
 
-    if (!AstroManager::settings::VSOPSettings->value(AstroManager::settings::ARID_DATABASE_DISABLE, QVariant(true)).toBool())
+    if (!AstroManager::settings::astroManagerSettings->value(AstroManager::settings::ARID_DATABASE_DISABLE, QVariant(true)).toBool())
     {
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating ARID Database Connection...");
       AstroManager::database::databaseARID = new AstroManager::database::CARID();   // Create the database connection.
@@ -234,7 +231,7 @@ int main(int argc, char *argv[])
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "ARID Database is disabled.");
     }
 
-    if (!AstroManager::settings::VSOPSettings->value(AstroManager::settings::WEATHER_DATABASE_DISABLE, QVariant(true)).toBool())
+    if (!AstroManager::settings::astroManagerSettings->value(AstroManager::settings::WEATHER_DATABASE_DISABLE, QVariant(true)).toBool())
     {
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating Weather Database Connection...");
       AstroManager::database::databaseWeather = new AstroManager::database::CDatabaseWeather();  // Create the database connection.
@@ -252,9 +249,9 @@ int main(int argc, char *argv[])
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading data...");
     splash.showMessage(QString("Loading data..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
-    ifn = AstroManager::settings::VSOPSettings->value(AstroManager::settings::FILE_TAIUTC, QVariant("data/TAI-UTC.csv")).toString().toStdString();
+    ifn = AstroManager::settings::astroManagerSettings->value(AstroManager::settings::FILE_TAIUTC, QVariant("data/TAI-UTC.csv")).toString().toStdString();
     ACL::CAstroTime::load_dAT(ifn);
-    ifn = AstroManager::settings::VSOPSettings->value(AstroManager::settings::FILE_TAIUTC, QVariant("data/finals2000A.data.csv")).toString().toStdString();
+    ifn = AstroManager::settings::astroManagerSettings->value(AstroManager::settings::FILE_TAIUTC, QVariant("data/finals2000A.data.csv")).toString().toStdString();
     ACL::CAstroTime::load_dUT1(ifn);
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating main window...");
@@ -420,9 +417,10 @@ namespace AstroManager
     return std::string(szString);
   }
 
-  /// Function to return the build date.
-  //
-  // 2013-01-20/GGB - Function created.
+  /// @brief Function to return the build date.
+  /// @returns The build date as a string.
+  /// @throws None.
+  /// @version 2013-01-20/GGB - Function created.
 
   std::string getReleaseDate()
   {
@@ -431,15 +429,18 @@ namespace AstroManager
 
   /// @brief Returns the name of the application that created an HDU
   /// @returns String of the application that created the HDU
+  /// @throws None.
+  /// @version 2018-04-13/GGB - Updated project name to astroManager.
   /// @version 2013-04-12/GGB - Function created.
 
   std::string const CREATOR()
   {
-    return std::string("AIRDAS ") + getReleaseString();
+    return std::string("astroManager-") + getReleaseString();
   }
 
   /// @brief Returns the current date in the format YYYY-MM-DD.
   /// @returns current date as a string in YYYY-MM-DD format.
+  /// @throws None.
   /// @version 2013-04-12/GGB - Function created.
 
   std::string const getDate()

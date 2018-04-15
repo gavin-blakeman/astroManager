@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2016 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2011-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
@@ -169,7 +170,7 @@ namespace AstroManager
                                                                              QString const &objectName)
     {
       QPen pen;
-      int ai = settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
+      int ai = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
       astrometry::PAstrometryObservation astrometryObject(new astrometry::CAstrometryObservation());
 
       astrometryObject->objectName(objectName.toStdString());
@@ -198,7 +199,7 @@ namespace AstroManager
 
       controlImage->astroFile->astrometryObjectAdd(astrometryObject);
 
-      pen.setColor(settings::VSOPSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
+      pen.setColor(settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
 
       switch (ai)
       {
@@ -254,9 +255,9 @@ namespace AstroManager
 
     void CImageComparisonWindow::closeEvent(QCloseEvent *event)
     {
-      settings::VSOPSettings->setValue(settings::IMAGE_COMPARISON_BLINKINTERVAL, QVariant(spinBoxInterval->value()));
+      settings::astroManagerSettings->setValue(settings::IMAGE_COMPARISON_BLINKINTERVAL, QVariant(spinBoxInterval->value()));
       //dynamic_cast<dockwidgets::CImageControlWidget *>(dockWidgets[IDDW_IMAGECONTROL])->deactivateImage(&controlImage); (***CHECK WHY***)
-      dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->childClosing(this);  // Let the parent know.
+      //dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->childClosing(this);  // Let the parent know.
 
       QMdiSubWindow::closeEvent(event);		// Close the sub window.
     }
@@ -375,7 +376,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(this, tr("Open Image"),
-                    settings::VSOPSettings->value(settings::IMAGE_COMPARISON_DIRECTORY, QVariant(0)).toString(),
+                    settings::astroManagerSettings->value(settings::IMAGE_COMPARISON_DIRECTORY, QVariant(0)).toString(),
                     EXTENSION_IMAGE);
 
         // Iterate the list of items and only add items that are not repeats.
@@ -390,11 +391,11 @@ namespace AstroManager
           myPath = (*newImageIterator).toStdString();
           filePath = boost::filesystem::path(myPath);
 
-          if ( firstPass && (settings::VSOPSettings->value(settings::IMAGE_COMPARISON_UPDATEONOPEN, QVariant(true)).toBool()) )
+          if ( firstPass && (settings::astroManagerSettings->value(settings::IMAGE_COMPARISON_UPDATEONOPEN, QVariant(true)).toBool()) )
           {
               // Get the directory details from the file name.
 
-            settings::VSOPSettings->setValue(settings::IMAGE_COMPARISON_DIRECTORY,
+            settings::astroManagerSettings->setValue(settings::IMAGE_COMPARISON_DIRECTORY,
                                              QVariant(QString::fromStdString(filePath.parent_path().string())));
             firstPass = false;
           };
@@ -843,9 +844,9 @@ namespace AstroManager
 
         centroid = controlBlock->inputImage.astroFile->centroid(controlBlock->inputImage.currentHDB,
                                                                 MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                                                settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                                settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                    QVariant(20)).toLongLong(),
-                                                                settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                    QVariant(3)).toInt());
 
         if (!centroid)
@@ -889,9 +890,9 @@ namespace AstroManager
 
         centroid = controlBlock->inputImage.astroFile->centroid(controlBlock->inputImage.currentHDB,
                                                                 MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
-                                                                settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                                settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                    QVariant(20)).toLongLong(),
-                                                                settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                    QVariant(3)).toInt());
 
         if (!centroid)
@@ -1077,9 +1078,9 @@ namespace AstroManager
 
           centroid = controlBlock->inputImage.astroFile->centroid(controlBlock->inputImage.currentHDB,
                                                                   MCL::TPoint2D<ACL::AXIS_t>(scenePoint.x(), scenePoint.y()),
-                                                                  settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                                  settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                                 QVariant(20)).toLongLong(),
-                                                                  settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                  settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                                 QVariant(3)).toInt());
           if (centroid)
           {
@@ -1128,9 +1129,9 @@ namespace AstroManager
 
           centroid = controlBlock->outputImage.astroFile->centroid(controlBlock->outputImage.currentHDB,
                                                                    MCL::TPoint2D<ACL::AXIS_t>(scenePoint.x(), scenePoint.y()),
-                                                                   settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
+                                                                   settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                                                  QVariant(20)).toLongLong(),
-                                                                   settings::VSOPSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                   settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                                  QVariant(3)).toInt());
           if (centroid)
           {
@@ -1213,9 +1214,9 @@ namespace AstroManager
 
           centroid = controlBlock->inputImage.astroFile->centroid(controlBlock->inputImage.currentHDB,
                                                                   MCL::TPoint2D<ACL::AXIS_t>(scenePoint.x(), scenePoint.y()),
-                                                                  settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
+                                                                  settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                              QVariant(20)).toLongLong(),
-                                                                  settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                  settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                              QVariant(3)).toInt());
           if (centroid)
           {
@@ -1269,9 +1270,9 @@ namespace AstroManager
 
           centroid = controlBlock->outputImage.astroFile->centroid(controlBlock->outputImage.currentHDB,
                                                                    MCL::TPoint2D<ACL::AXIS_t>(scenePoint.x(), scenePoint.y()),
-                                                                   settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
+                                                                   settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                             QVariant(20)).toLongLong(),
-                                                                   settings::VSOPSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
+                                                                   settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                             QVariant(3)).toInt());
           if (centroid)
           {
@@ -1373,7 +1374,7 @@ namespace AstroManager
 
       controlImage->astroFile->photometryObjectAdd(photometryObject);
 
-      pen.setColor(settings::VSOPSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
+      pen.setColor(settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
 
       drawPhotometryIndicator(photometryObject, pen);
 
@@ -1627,7 +1628,7 @@ namespace AstroManager
       graphicsSceneImageOutput = new QGraphicsScene();
       graphicsViewImageOutput->setScene(graphicsSceneImageOutput);
 
-      switch (settings::VSOPSettings->value(settings::IMAGE_COMPARISON_METHOD, QVariant(BLINK_IMAGES)).toInt())
+      switch (settings::astroManagerSettings->value(settings::IMAGE_COMPARISON_METHOD, QVariant(BLINK_IMAGES)).toInt())
       {
       case BLINK_IMAGES:
         radioButtonBlink->setChecked(true);
@@ -1652,7 +1653,7 @@ namespace AstroManager
       pushButtonRemove->setEnabled(false);
       pushButtonRemoveAll->setEnabled(false);
 
-      spinBoxInterval->setValue(settings::VSOPSettings->value(settings::IMAGE_COMPARISON_BLINKINTERVAL, QVariant(1)).toDouble());
+      spinBoxInterval->setValue(settings::astroManagerSettings->value(settings::IMAGE_COMPARISON_BLINKINTERVAL, QVariant(1)).toDouble());
 
       connect(pushButtonAdd, SIGNAL(clicked(bool)), this, SLOT(eventButtonAddImages(bool)));
       connect(pushButtonRemove, SIGNAL(clicked(bool)), this, SLOT(eventButtonRemoveImages(bool)));

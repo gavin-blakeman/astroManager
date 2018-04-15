@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Observation Manager)
+// PROJECT:							astroManager (Astronomy Observation Manager)
 // FILE:								Database
 // SUBSYSTEM:           Data support functions
 // TARGET OS:	          WINDOWS, LINUX, UNIX, MAC
@@ -10,32 +10,31 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2012-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Data support functions.
 //
 // CLASSES INCLUDED:    CDatabase
-//                      CATID
-//                      CARID
-//                      CdatabaseWeather
 //
 // HIERARCHY:           CDatabase
 //                        - CATID
 //                        - CARID
 //                       - CdatabaseWeather
 //
-// HISTORY:             2015-09-22 GGB - AIRDAS 2015.09 release
+// HISTORY:             2018-04-13 GGB - Project Name changed to astroManager.
+//                      2015-09-22 GGB - AIRDAS 2015.09 release
 //                      2013-09-30 GGB - AIRDAS 2013.09 release.
 //                      2013-05-15 GGB - Split CDatabaseWeather into own file.
 //                      2013-03-22 GGB - AIRDAS 2013.03 release.
@@ -47,10 +46,10 @@
 
 #include "../../Include/database/database.h"
 
-  // AIRDAS files
+  // astroManager files
 
 #include "../../Include/Settings.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
   // Qt Library
 
@@ -564,4 +563,4 @@ namespace AstroManager
     }
 
   }	// namespace database
-}	// namespace AstroManager
+}	// namespace astroManager

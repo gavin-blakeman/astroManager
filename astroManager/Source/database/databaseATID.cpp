@@ -10,18 +10,19 @@
 // LICENSE:             GPLv2
 //
 //                      Copyright 2012-2018 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Data support functions.
 //
@@ -47,7 +48,7 @@
 
 #include "../../Include/Settings.h"
 #include "../../Include/qtExtensions/qt.h"
-#include "../../Include/VSOP.h"
+#include "../../Include/astroManager.h"
 
 // Qt Library
 
@@ -92,11 +93,11 @@ namespace AstroManager
 
     CATID::CATID(): CDatabase("ATID"), useSIMBAD(true), ATIDdisabled_(false)
     {
-      QVariant variant = settings::VSOPSettings->value(settings::ATID_DATABASE_DISABLE, QVariant());
+      QVariant variant = settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant());
 
       if (variant.isNull())
       {
-        settings::VSOPSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(true));
+        settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(true));
         ATIDdisabled_ = true;
       }
       else
@@ -106,7 +107,7 @@ namespace AstroManager
 
       if (!ATIDdisabled_)
       {
-        useSIMBAD = settings::VSOPSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant(true)).toBool();
+        useSIMBAD = settings::astroManagerSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant(true)).toBool();
 
         sqlWriter.createTable("TBL_CATALOG");
           sqlWriter.createColumn("TBL_CATALOG", "CATALOG_ID");
@@ -167,7 +168,7 @@ namespace AstroManager
 
     void CATID::connectToDatabase()
     {
-      QVariant database = settings::VSOPSettings->value(settings::ATID_DATABASE_DBMS);
+      QVariant database = settings::astroManagerSettings->value(settings::ATID_DATABASE_DBMS);
       QString szDatabase;
       
       if ( !ATIDdisabled_ && !useSIMBAD )
@@ -232,12 +233,12 @@ namespace AstroManager
 
     bool CATID::MySQL()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::ATID_MYSQL_DRIVERNAME, QVariant(databaseDrivers[SQLDB_MYSQL].driverName)).toString(),
-                                settings::VSOPSettings->value(settings::ATID_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_MYSQL_PORT, QVariant(3306)).toInt(),
-                                settings::VSOPSettings->value(settings::ATID_MYSQL_DATABASENAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_MYSQL_USERNAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_MYSQL_PASSWORD, QVariant(QString("ATID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::ATID_MYSQL_DRIVERNAME, QVariant(databaseDrivers[SQLDB_MYSQL].driverName)).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_MYSQL_HOSTADDRESS, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_MYSQL_PORT, QVariant(3306)).toInt(),
+                                settings::astroManagerSettings->value(settings::ATID_MYSQL_DATABASENAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_MYSQL_USERNAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_MYSQL_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
     /// @brief Function for opening an ODBC database.
@@ -251,8 +252,8 @@ namespace AstroManager
 
     bool CATID::ODBC()
     {
-      return ( createConnectionODBC(settings::VSOPSettings->value(settings::ATID_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
-                                    settings::VSOPSettings->value(settings::ATID_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
+      return ( createConnectionODBC(settings::astroManagerSettings->value(settings::ATID_ODBC_DRIVERNAME, QVariant(QString("QODBC"))).toString(),
+                                    settings::astroManagerSettings->value(settings::ATID_ODBC_DATASOURCENAME, QVariant(QString("MSA ATID"))).toString()) );
     }
 
     /// @brief Function for opening an Oracle database.
@@ -269,12 +270,12 @@ namespace AstroManager
 
     bool CATID::Oracle()
     {
-      return ( createConnection(settings::VSOPSettings->value(settings::ATID_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_ORACLE_HOSTNAME, QVariant(QString("localhost"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_ORACLE_PORT, QVariant(1521)).toInt(),
-                                settings::VSOPSettings->value(settings::ATID_ORACLE_DATABASENAME, QVariant(QString("xe"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
-                                settings::VSOPSettings->value(settings::ATID_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
+      return ( createConnection(settings::astroManagerSettings->value(settings::ATID_ORACLE_DRIVERNAME, QVariant(QString("QOCI"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_ORACLE_HOSTNAME, QVariant(QString("localhost"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_ORACLE_PORT, QVariant(1521)).toInt(),
+                                settings::astroManagerSettings->value(settings::ATID_ORACLE_DATABASENAME, QVariant(QString("xe"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_ORACLE_USERNAME, QVariant(QString("ATID"))).toString(),
+                                settings::astroManagerSettings->value(settings::ATID_ORACLE_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
     bool CATID::parseSIMBADObjectQuery(std::string const &, ACL::CTargetStellar &)
@@ -624,7 +625,7 @@ namespace AstroManager
       QVariant vSiteID;
       ACL::CGeographicLocation *returnValue = new ACL::CGeographicLocation();
 
-      vSiteID = settings::VSOPSettings->value(settings::SETTINGS_SITE_DEFAULTID);
+      vSiteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID);
 
       getLocation(vSiteID, *returnValue);
       return ( returnValue);
@@ -653,7 +654,7 @@ namespace AstroManager
         szSQL = QString("SELECT TBL_NAMES.Name " \
                         "FROM TBL_NAMES INNER JOIN TBL_CATALOGUEORDER ON TBL_NAMES.CATALOGUE_ID = TBL_CATALOGUEORDER.CATALOGUE_ID " \
                         "WHERE (((TBL_NAMES.STELLAROBJECT_ID)=%1) AND ((TBL_CATALOGUEORDER.OBSERVER_ID)=%2)) " \
-                        "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(vObject->toString()).arg(settings::VSOPSettings->value("Observer", QVariant(0)).toString());
+                        "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(vObject->toString()).arg(settings::astroManagerSettings->value("Observer", QVariant(0)).toString());
         nameQuery.exec(*new QString(szSQL));
       }
       else
@@ -1089,8 +1090,8 @@ namespace AstroManager
 
     bool CATID::SQLite()
     {
-      return ( createConnectionSQLite(settings::VSOPSettings->value(settings::ATID_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
-                                      settings::VSOPSettings->value(settings::ATID_SQLITE_DATABASENAME, QVariant(QString("Data/ATID.sqlite"))).toString()) );
+      return ( createConnectionSQLite(settings::astroManagerSettings->value(settings::ATID_SQLITE_DRIVERNAME, QVariant(QString("QSQLITE"))).toString(),
+                                      settings::astroManagerSettings->value(settings::ATID_SQLITE_DATABASENAME, QVariant(QString("Data/ATID.sqlite"))).toString()) );
     }
 
     bool ValidateObjectName(QString *toValidate)

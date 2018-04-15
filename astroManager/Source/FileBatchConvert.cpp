@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2017 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2010-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            Implements the File | Batch convert menu option. Allows a number of files to be opened and converted to
 //                      FITS, with attributes being applied and the file being registered.
@@ -129,13 +130,13 @@ namespace AstroManager
     void CFileBatchConvertDialog::eventSelectDirectory(bool)
     {
       QString dir = QFileDialog::getExistingDirectory(dlg, tr("Output Directory"),
-                                                 settings::VSOPSettings->value(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY).toString(),
+                                                 settings::astroManagerSettings->value(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY).toString(),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
       if (dir != "")
       {
         labelOutputDirectory->setText(dir);
-        settings::VSOPSettings->setValue(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY, dir);
+        settings::astroManagerSettings->setValue(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY, dir);
       };
     }
 
@@ -154,7 +155,7 @@ namespace AstroManager
         // Bring up the dialog box to allow the user to select files.
 
       newImages = QFileDialog::getOpenFileNames(dlg, tr("Select Files"),
-        settings::VSOPSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
+        settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY, QVariant("")).toString(),
                     tr("Image Files (*.ST7 *.DNG)"));
 
          // Iterate the list of items and only add items that are not repeats.
@@ -169,7 +170,7 @@ namespace AstroManager
 
           if ( firstPass )
           {	// Get the directory details from the file name.
-            settings::VSOPSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
+            settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(filePath.parent_path().string().c_str()));
             firstPass = false;
           };
 
@@ -267,9 +268,9 @@ namespace AstroManager
 
         // Load defaults from the registry and populate as required.
 
-      labelOutputDirectory->setText(settings::VSOPSettings->value(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY, QString("")).toString());
+      labelOutputDirectory->setText(settings::astroManagerSettings->value(settings::DIALOG_BATCHCONVERT_OUTPUTDIRECTORY, QString("")).toString());
 
-      flagValue = settings::VSOPSettings->value(settings::DIALOG_BATCHCONVERT_SITE).toInt();
+      flagValue = settings::astroManagerSettings->value(settings::DIALOG_BATCHCONVERT_SITE).toInt();
       if (flagValue & SITE_DEFAULT)
       {
         radioButtonSiteDefault->setChecked(true);
@@ -287,7 +288,7 @@ namespace AstroManager
       };
       groupBoxObservationSite->setChecked(flagValue & SITE_ENABLED);
 
-      flagValue = settings::VSOPSettings->value(settings::DIALOG_BATCHCONVERT_WEATHER).toInt();
+      flagValue = settings::astroManagerSettings->value(settings::DIALOG_BATCHCONVERT_WEATHER).toInt();
       if (flagValue & WEATHER_USEDATABASE)
       {
         radioButtonWeatherDatabase->setChecked(true);
@@ -305,7 +306,7 @@ namespace AstroManager
       };
       groupBoxWeather->setChecked(flagValue & WEATHER_ENABLED);
 
-      flagValue = settings::VSOPSettings->value(settings::DIALOG_BATCHCONVERT_OBSERVER).toInt();
+      flagValue = settings::astroManagerSettings->value(settings::DIALOG_BATCHCONVERT_OBSERVER).toInt();
       if (flagValue & OBSERVER_DEFAULT)
       {
         radioButtonObserverDefault->setChecked(true);

@@ -10,19 +10,20 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2016 Gavin Blakeman.
-//                      This file is part of the Astronomical Image Reduction and Data Analysis Software (AIRDAS)
+//                      Copyright 2011-2018 Gavin Blakeman.
+//                      This file is part of the Astronomy Manager software (astroManager)
 //
-//                      AIRDAS is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//                      License as published by the Free Software Foundation, either version 2 of the License, or (at your option)
-//                      any later version.
+//                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
+//                      Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+//                      option) any later version.
 //
-//                      AIRDAS is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
-//                      warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-//                      more details.
+//                      astroManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+//                      the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+//                      License for more details.
 //
-//                      You should have received a copy of the GNU General Public License along with AIRDAS.  If not,
+//                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
+//
 //
 // OVERVIEW:            This dialog provides a means for the user to select an object name. There are three methods of entering data
 //                      for the object name.
@@ -81,7 +82,7 @@ namespace AstroManager
 
     void CSelectObjectDialog::eventBtnSearchClicked(bool)
     {
-      if (settings::VSOPSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant(true)).toBool())
+      if (settings::astroManagerSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant(true)).toBool())
       {
         searchSIMBAD();
       }
@@ -194,7 +195,7 @@ namespace AstroManager
           tableRecentObjects->insertRow(nRow);
           tableRecentObjects->setRowHeight(nRow, 20);
 
-          tableRecentObjects->setItem(nRow, nColumn, new QTableWidgetItem(settings::VSOPSettings->value(szKey, QVariant("")).toString()));
+          tableRecentObjects->setItem(nRow, nColumn, new QTableWidgetItem(settings::astroManagerSettings->value(szKey, QVariant("")).toString()));
         };
       }
       else
@@ -210,7 +211,7 @@ namespace AstroManager
 
           szSQL = QString("SELECT TBL_NAMES.Name, TBL_OBJECTTYPES.ShortText, TBL_CONSTELLATIONS.LONGTEXT, TBL_STELLAROBJECTS.[V-Magnitude], TBL_SPECTRALCLASS.ShortText, TBL_CATALOGUE.CATALOGUENAME, TBL_NAMES.NAME_ID " \
                           "FROM (TBL_OBJECTTYPES INNER JOIN (TBL_CONSTELLATIONS INNER JOIN (TBL_SPECTRALCLASS INNER JOIN TBL_STELLAROBJECTS ON TBL_SPECTRALCLASS.SPECTRALCLASS_ID = TBL_STELLAROBJECTS.SPECTRALCLASS_ID) ON TBL_CONSTELLATIONS.CONSTELLATION_ID = TBL_STELLAROBJECTS.Constellation_ID) ON TBL_OBJECTTYPES.OBJECTTYPE_ID = TBL_STELLAROBJECTS.ObjectType_id) INNER JOIN (TBL_CATALOGUE INNER JOIN TBL_NAMES ON TBL_CATALOGUE.CATALOGUE_ID = TBL_NAMES.CATALOGUE_ID) ON TBL_STELLAROBJECTS.OBJECT_ID = TBL_NAMES.STELLAROBJECT_ID " \
-                          "WHERE (((TBL_NAMES.Name)='%1'))").arg(settings::VSOPSettings->value(szKey, "").toString());
+                          "WHERE (((TBL_NAMES.Name)='%1'))").arg(settings::astroManagerSettings->value(szKey, "").toString());
           query.exec(szSQL);
           query.first();
 
@@ -393,7 +394,7 @@ namespace AstroManager
             szName = QString("SELECT TBL_NAMES.Name, TBL_CATALOGUE.CATALOGUENAME, TBL_NAMES.NAME_ID " \
                              "FROM (TBL_CATALOGUE INNER JOIN TBL_NAMES ON TBL_CATALOGUE.CATALOGUE_ID = TBL_NAMES.CATALOGUE_ID) INNER JOIN TBL_CATALOGUEORDER ON TBL_CATALOGUE.CATALOGUE_ID = TBL_CATALOGUEORDER.CATALOGUE_ID " \
                              "WHERE (((TBL_CATALOGUEORDER.OBSERVER_ID)=%1) AND ((TBL_NAMES.STELLAROBJECT_ID)=%2)) " \
-                             "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(settings::VSOPSettings->value(settings::SETTINGS_OBSERVER, QString("1")).toString()).arg(query.value(5).toLongLong());
+                             "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(settings::astroManagerSettings->value(settings::SETTINGS_OBSERVER, QString("1")).toString()).arg(query.value(5).toLongLong());
           }
           else
           {		// Preferred name.
