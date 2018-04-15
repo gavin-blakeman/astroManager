@@ -7,3 +7,12 @@
 [submodule "GCL"]
 	path = GCL
 	url = git@github.com:gavin-blakeman/GCL.git
+[submodule "PCL"]
+	path = PCL
+	url = git@github.com:gavin-blakeman/PCL.git
+[submodule "MCL"]
+	path = MCL
+	url = git@github.com:gavin-blakeman/MCL
+[submodule "SCL"]
+	path = SCL
+	url = git@github.com:gavin-blakeman/SCL
