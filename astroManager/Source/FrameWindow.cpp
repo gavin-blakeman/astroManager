@@ -1607,7 +1607,8 @@ namespace AstroManager
 
     /// @brief Upload a group of FITS files into the ARID database.
     /// @throws None.
-    /// @version 2017-09-02/GGB - Removed vall to registerAndUpload() Bug #115
+    /// @version 2018-05-12/GGB - Check for files to upload before beginning upload. (Bug #131)
+    /// @version 2017-09-02/GGB - Removed call to registerAndUpload() Bug #115
     /// @version 2017-08-05/GGB - Function created.
 
     void CFrameWindow::eventFileUploadImages()
@@ -1621,35 +1622,38 @@ namespace AstroManager
 
       QStringList fileList = fileNames;   // This is suggested in the Qt documentation.
 
-      filePath = (*fileList.begin()).toStdString();
-
-      settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY,
-                                       QVariant(QString::fromStdString(filePath.parent_path().string())));
-
-      QProgressDialog progressDialog(tr("Uploading Files..."), tr("Abort"), 0, fileList.size(), this);
-      progressDialog.setWindowModality(Qt::WindowModal);
-      progressDialog.setMinimumDuration(1000);
-      progressDialog.setWindowTitle("Upload files to Database");
-
-      int fileCount = 0;
-
-      for (auto iter = fileList.begin(); iter != fileList.end(); ++iter)
+      if (!fileList.empty())
       {
-        try
-        {
-          filePath = (*iter).toStdString();
-          CAstroFile astroFile(this, filePath);
-        }
-        catch(...)
-        {
-          ERRORMESSAGE("Error while opening or uploading file:" + filePath.string());
-        };
+        filePath = (*fileList.begin()).toStdString();
 
-        progressDialog.setValue(++fileCount);
+        settings::astroManagerSettings->setValue(settings::IMAGING_DATABASE_UPLOAD_DIRECTORY,
+                                                 QVariant(QString::fromStdString(filePath.parent_path().string())));
 
-        if (progressDialog.wasCanceled())
+        QProgressDialog progressDialog(tr("Uploading Files..."), tr("Abort"), 0, fileList.size(), this);
+        progressDialog.setWindowModality(Qt::WindowModal);
+        progressDialog.setMinimumDuration(1000);
+        progressDialog.setWindowTitle("Upload files to Database");
+
+        int fileCount = 0;
+
+        for (auto iter = fileList.begin(); iter != fileList.end(); ++iter)
         {
-          break;
+          try
+          {
+            filePath = (*iter).toStdString();
+            CAstroFile astroFile(this, filePath);
+          }
+          catch(...)
+          {
+            ERRORMESSAGE("Error while opening or uploading file:" + filePath.string());
+          };
+
+          progressDialog.setValue(++fileCount);
+
+          if (progressDialog.wasCanceled())
+          {
+            break;
+          };
         };
       };
     }
@@ -3172,6 +3176,21 @@ namespace AstroManager
           versionValid = true;
           DEBUGMESSAGE("Latest version: " + std::to_string(imageVersion));
         };
+      }
+      else if (database::databaseARID->versionCount(imageID) == 0)
+      {
+          // Hanging record. This implies that the imageData has been deleted, but not the image. This is
+          // done intentionally, so is not an error. (Think if an image in a sequence is poor, the user may
+          // wish to track what happened with the missing image.
+
+        QMessageBox msgBox;
+
+        msgBox.setText(tr("No Image Stored in Database."));
+        msgBox.setInformativeText(tr("There is no image stored in the database that corresponds to this image record."));
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
       }
       else
       {

@@ -621,6 +621,95 @@ namespace AstroManager
       return returnValue;
     }
 
+    /// @brief Deletes an image. This includes the meta-data and the image data.
+    /// @param[in] imageID - The ID of the image to delete.
+    /// @note 1. All image versions are deleted.
+    /// @note 2. All image data is deleted.
+    /// @note 3. The image master record is deleted.
+    /// @returns true - The imageData was deleted.
+    /// @returns false - The imageData was not deleted.
+    /// @throws None.
+    /// @version 2018-05-12/GGB - Function created.
+
+    bool imageDeleteImage(imageID_t imageID)
+    {
+      bool returnValue = false;
+
+
+      return returnValue;
+    }
+
+    /// @brief Function to delete all the image data (not the master record) associated with the imageID
+    /// @param[in] imageID - The ID of the image to delete.
+    /// @note 1. All image versions are deleted.
+    /// @note 2. All image version data is deleted.
+    /// @returns true - The imageData was deleted.
+    /// @returns false - The imageData was not deleted.
+    /// @throws None.
+    /// @version 2018-05-12/GGB - Function created.
+
+    bool CARID::imageDeleteImageData(imageID_t imageID)
+    {
+      bool returnValue = false;
+
+      if (!ARIDdisabled_)
+      {
+        sqlWriter.resetQuery();
+
+        sqlWriter.deleteFrom("TBL_IMAGESTORAGE").where("IMAGE_ID", "=", imageID);
+
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        {
+          returnValue = true;
+        }
+        else
+        {
+          processErrorInformation();
+        };
+      }
+      else
+      {
+        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+      };
+
+      return returnValue;
+    }
+
+    /// @brief Deletes the specified version of an image.
+    /// @param[in] imageID - The ID of the image.
+    /// @param[in] imageVersion - The version of the image to delete.
+    /// @returns true - The imageData was deleted.
+    /// @returns false - The imageData was not deleted.
+    /// @version 2018-05-12/GGB - Function created.
+
+    bool CARID::imageDeleteImageData(imageID_t imageID, imageVersion_t)
+    {
+      bool returnValue = false;
+
+      if (!ARIDdisabled_)
+      {
+        sqlWriter.resetQuery();
+
+        sqlWriter.deleteFrom("TBL_IMAGESTORAGE").where("IMAGE_ID", "=", imageID);
+
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        {
+          returnValue = true;
+        }
+        else
+        {
+          processErrorInformation();
+        };
+      }
+      else
+      {
+        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+      }
+
+      return returnValue;
+    }
+
+
     /// @brief Checks if an image is registered.
     /// @param[in] fileName - The filename to check
     /// @returns true - The image is registered
@@ -1585,7 +1674,7 @@ namespace AstroManager
 
           sqlQuery->clear();
           sqlQuery->prepare(QString::fromStdString(sqlWriter.string()));
-          sqlQuery->bindValue(":ra", astroFile->getTargetCoordinates().RA().degrees(), QSql::In | QSql::Binary);
+          sqlQuery->bindValue(":ra", astroFile->getTargetCoordinates().RA().hours(), QSql::In | QSql::Binary);
           sqlQuery->bindValue(":dec", astroFile->getTargetCoordinates().DEC().degrees(), QSql::In | QSql::Binary);
           if (hasWCSData)
           {

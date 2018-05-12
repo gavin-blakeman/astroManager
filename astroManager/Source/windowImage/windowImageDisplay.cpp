@@ -528,13 +528,13 @@ namespace AstroManager
       pw->getAction(mdiframe::IDA_IA_COLOUR_SPLIT_GRAYSCALE)->setEnabled(false);
     }
 
-    /// Handles the menu action to bin pixels
-    //
-    // 2013-06-23/GGB - Added code to to reset the blackPoint and white Point. (Bug #1193740)
-    // 2013-05-25/GGB - Added support for View | Magnify and View | Navigator
-    // 2013-02-02/GGB - Added support for the histogram widget.
-    // 2013-01-27/GGB - Added logging of the command.
-    // 2011-06-10/GGB - Function created
+    /// @brief Handles the menu action to bin pixels
+    /// @throws None.
+    /// @version 2013-06-23/GGB - Added code to to reset the blackPoint and white Point. (Bug #1193740)
+    /// @version 2013-05-25/GGB - Added support for View | Magnify and View | Navigator
+    /// @version 2013-02-02/GGB - Added support for the histogram widget.
+    /// @version 2013-01-27/GGB - Added logging of the command.
+    /// @version 2011-06-10/GGB - Function created
 
     void CImageWindow::binPixels()
     {

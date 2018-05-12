@@ -74,6 +74,7 @@ namespace AstroManager
       QPushButton *pushButtonDeleteVersion;
       QPushButton *pushButtonOK;
       QPushButton *pushButtonDelete;
+      QPushButton *pushButtonDeleteImageData;
 
       QTE::CSelectImageVersionQueryModel queryModelVersion;
 
@@ -89,6 +90,7 @@ namespace AstroManager
       void eventPushButtonOK(bool);
       void eventPushButtonCancel(bool) { emit dlg->reject(); }
       void eventPushButtonDelete(bool);
+      void eventPushButtonDeleteImageData(bool);
 
       friend class database::CARID;
 

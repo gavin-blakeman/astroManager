@@ -79,7 +79,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../VSOP.qrc">
+         <iconset>
           <normaloff>:/icons/icons/delete.png</normaloff>:/icons/icons/delete.png</iconset>
         </property>
        </widget>
@@ -132,7 +132,7 @@
       <string>Ok</string>
      </property>
      <property name="icon">
-      <iconset resource="../VSOP.qrc">
+      <iconset>
        <normaloff>:/icons/icons/accept.png</normaloff>:/icons/icons/accept.png</iconset>
      </property>
     </widget>
@@ -293,17 +293,6 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="3">
-    <widget class="QPushButton" name="pushButtonCancel">
-     <property name="text">
-      <string>Cancel</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../VSOP.qrc">
-       <normaloff>:/icons/icons/cancel.png</normaloff>:/icons/icons/cancel.png</iconset>
-     </property>
-    </widget>
-   </item>
    <item row="7" column="1">
     <widget class="QCheckBox" name="checkBoxPhotometric">
      <property name="font">
@@ -353,7 +342,25 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
+   <item row="3" column="3">
+    <widget class="QLabel" name="labelTelescope">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QPushButton" name="pushButtonCancel">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>:/icons/icons/cancel.png</normaloff>:/icons/icons/cancel.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="3">
     <widget class="QPushButton" name="pushButtonDelete">
      <property name="toolTip">
       <string>Delete the image and all associated versions</string>
@@ -362,22 +369,23 @@
       <string>Delete Image</string>
      </property>
      <property name="icon">
-      <iconset resource="../VSOP.qrc">
+      <iconset>
        <normaloff>:/icons/icons/delete.png</normaloff>:/icons/icons/delete.png</iconset>
      </property>
     </widget>
    </item>
-   <item row="3" column="3">
-    <widget class="QLabel" name="labelTelescope">
+   <item row="10" column="2">
+    <widget class="QPushButton" name="pushButtonDeleteImageData">
+     <property name="toolTip">
+      <string>Only deletes the image data in the database. The master record remains</string>
+     </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Delete Image Data</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../VSOP.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

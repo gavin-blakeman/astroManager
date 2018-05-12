@@ -117,8 +117,8 @@ namespace AstroManager
     void CAstroGraphicsView::mouseMoveEvent(QMouseEvent *mouseEvent)
     {
       QPointF point = mapToScene(mouseEvent->pos());
-      long x = static_cast<long>(std::floor(point.x()));
-      long y = static_cast<long>(std::floor(point.y()));
+      AXIS_t x = static_cast<AXIS_t>(std::floor(point.x()));
+      AXIS_t y = static_cast<AXIS_t>(std::floor(point.y()));
       boost::optional<ACL::CAstronomicalCoordinates> wcsCoords;
       mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 

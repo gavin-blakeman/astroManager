@@ -62,7 +62,7 @@ namespace AstroManager
   }
 
   /// @brief Constructor for the class. Calls the parent constructor.
-  /// @details  Substitutes the observaltionLocation to a AstroManager::CObservatory rather than a ACL::CGeographicLocation.
+  /// @details  Substitutes the observationLocation to a AstroManager::CObservatory rather than a ACL::CGeographicLocation.
   /// @param[in] filename - The filename to associate with this file.
   /// @throws std::bad_alloc
   /// @version 2017-07-24/GGB - Function created.
@@ -276,7 +276,7 @@ namespace AstroManager
 
   void CAstroFile::postLoadActions()
   {
-     // If the original image needs to be saved, call the function to perform the saving.
+      // If the original image needs to be saved, call the function to perform the saving.
 
     if (fileNameValid_ && settings::astroManagerSettings->value(settings::IMAGING_DATABASE_SAVEORIGINAL, QVariant(true)).toBool())
     {

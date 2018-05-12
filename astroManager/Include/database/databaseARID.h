@@ -30,7 +30,7 @@
 //                        - CARID
 //                       - CdatabaseWeather
 //
-// HISTORY:             2018-02-03 GGB - Changed application name to AstroManager.
+// HISTORY:             2018-02-03 GGB - Changed application name to astroManager.
 //                      2015-09-22 GGB - astroManager 2015.09 release
 //                      2013-03-01 GGB - Split CARID into it's own file.
 //                      2013-02-24 GGB - Split CATID into it's own file
@@ -100,6 +100,9 @@ namespace AstroManager
 
         // Image functions
 
+      bool imageDeleteImageData(imageID_t);
+      bool imageDeleteImageData(imageID_t, imageVersion_t);
+      bool imageDeleteImage(imageID_t);
       bool isImageNameRegistered(std::string const &);
       bool isImageNameRegistered(std::string const &, QString &);
       bool isImageNameRegistered(std::string const &, imageID_t &);

@@ -49,7 +49,11 @@ namespace AstroManager
     class CSelectImageVersionQueryModel : public CSQLQueryModel
     {
       Q_OBJECT
+
     private:
+      imageID_t imageID_;
+
+
       CSelectImageVersionQueryModel(CSelectImageVersionQueryModel const &) = delete;
 
     protected:
@@ -58,6 +62,7 @@ namespace AstroManager
       virtual ~CSelectImageVersionQueryModel() {}
 
       virtual QVariant data(QModelIndex const &item, int role = Qt::DisplayRole) const;
+      virtual void resetQuery();
     };
 
   } // namespace QTE

@@ -60,7 +60,8 @@ namespace AstroManager
     /// @throws std::bad_alloc
     /// @version 2017-08-16/GGB - Function created.
 
-    CSelectImageVersionQueryModel::CSelectImageVersionQueryModel(imageID_t imageID, QObject *parent) : CSQLQueryModel(parent)
+    CSelectImageVersionQueryModel::CSelectImageVersionQueryModel(imageID_t imageID, QObject *parent) : CSQLQueryModel(parent),
+      imageID_(imageID)
     {
       GCL::sqlwriter::CSQLWriter sqlWriter;
 
@@ -141,5 +142,22 @@ namespace AstroManager
 
       return returnValue;
     }
+
+    /// @brief Forces a refresh of the query data.
+    /// @throws None.
+    /// @version 2018-05-12/GGB - Function created.
+
+    void CSelectImageVersionQueryModel::resetQuery()
+    {
+      GCL::sqlwriter::CSQLWriter sqlWriter;
+
+      sqlWriter.select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
+          .where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID_)})
+          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::CSQLWriter::DESC)});
+
+      setQuery(QString::fromStdString(sqlWriter.string()), database::databaseARID->database());
+
+    }
+
   } // namespace QTE
 } // namespace AstroManager

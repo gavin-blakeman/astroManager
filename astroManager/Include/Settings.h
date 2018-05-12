@@ -47,7 +47,7 @@ namespace AstroManager
     int const RECENT_COUNT(10);
 
     QString const ORG_NAME                                          ("GPLv2");
-    QString const APPL_NAME                                         ("AstroManager");
+    QString const APPL_NAME                                         ("astroManager");
 
       // definitions for astroManager section
 
@@ -69,8 +69,8 @@ namespace AstroManager
     QString const SETTINGS_SITE_SAMEDISTANCE                        ("Site/SameDistance");
 
     QString const SETTINGS_OBSERVER                                 ("UserName");
-#define SETTINGS_TELESCOPE			                    "Telescope"
-#define SETTINGS_INSTRUMENT		  	                  "Instrument"
+    QString const SETTINGS_TELESCOPE                                ("Telescope");
+    QString const SETTINGS_INSTRUMENT                               ("Instrument");
 
       // Various files
 
@@ -389,6 +389,8 @@ namespace AstroManager
     QString const CM_IMAGESTACKING_REMOVE                           ("ConfirmationMessages/ImageStacking/Remove");
     QString const CM_IMAGESTACKING_REMOVEALL                        ("ConfirmationMessages/ImageStacking/RemoveAll");
     QString const CM_DATABASE_OPENFILE_LASTVERSION                  ("ConfirmationMessages/Database/OpenFile/LatestVersion");
+    QString const CM_IMAGE_DELETE_DELETEALL                         ("ConfirmationMessages/Image/Delete/DeleteAll");
+    QString const CM_IMAGE_DELETE_DELETEIMAGE                       ("ConfirmationMessages/Image/Delete/DeleteImage");
 
       // Other definitions
 

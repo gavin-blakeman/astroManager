@@ -39,7 +39,13 @@
 
 #include "../../Include/dialogs/dialogImageDetails.h"
 
+#include "../../Include/Settings.h"
+
 #include "../../Include/qtExtensions/selectImageVersionQueryModel.h"
+
+  // Qxt Library
+
+#include <QxtGui/QxtConfirmationMessage>
 
 namespace AstroManager
 {
@@ -57,8 +63,66 @@ namespace AstroManager
       setupUI();
     }
 
+    /// @brief Function called to delete an image.
+    /// @note 1. This function deletes the image data, as well as the meta-data.
+    /// @throws None.
+    /// @version 2018-05-12/GGB - Function created.
+
     void CDialogImageDetails::eventPushButtonDelete(bool)
     {
+      QxtConfirmationMessage msgBox;
+
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.setText(tr("Are you sure you want to delete."));
+      QIcon messageIcon(":/images/user_judge.png");
+
+      msgBox.setIconPixmap(messageIcon.pixmap(32, 32));
+      msgBox.setInformativeText(tr("The data associated with all versions of this image will be deleted. The metadata for the " \
+                                   "image will not be deleted."));
+      msgBox.setConfirmationText(tr("Do not show again."));
+      msgBox.addButton("Accept", QMessageBox::AcceptRole);
+      msgBox.setDefaultButton(msgBox.addButton("Reject", QMessageBox::RejectRole));
+      msgBox.setOverrideSettingsKey(AstroManager::settings::CM_IMAGE_DELETE_DELETEIMAGE);
+
+      if (msgBox.exec() == QMessageBox::AcceptRole)
+      {
+        database::databaseARID->imageDeleteImage(imageID_);   // Delete the image.
+
+        GCL::logger::defaultLogger().logMessage(GCL::logger::info, "Image Data Deleted. imageID = " + std::to_string(imageID_));
+      };
+
+      queryModelVersion.resetQuery();
+    }
+
+    /// @brief Function to delete an image. Only the image data is deleted. The image metadata is not deleted.
+    /// @note 1. This function leaves "overhanging" TBL_IMAGES records with no TBL_IMAGESTORAGE records.
+    /// @throws None.
+    /// @version 2018-05-12/GGB - Function created.
+
+    void CDialogImageDetails::eventPushButtonDeleteImageData(bool)
+    {
+      QxtConfirmationMessage msgBox;
+
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.setText(tr("Are you sure you want to delete."));
+      QIcon messageIcon(":/images/user_judge.png");
+
+      msgBox.setIconPixmap(messageIcon.pixmap(32, 32));
+      msgBox.setInformativeText(tr("The data associated with all versions of this image will be deleted. The metadata for the " \
+                                   "image will not be deleted."));
+      msgBox.setConfirmationText(tr("Do not show again."));
+      msgBox.addButton("Accept", QMessageBox::AcceptRole);
+      msgBox.setDefaultButton(msgBox.addButton("Reject", QMessageBox::RejectRole));
+      msgBox.setOverrideSettingsKey(AstroManager::settings::CM_IMAGE_DELETE_DELETEALL);
+
+      if (msgBox.exec() == QMessageBox::AcceptRole)
+      {
+        database::databaseARID->imageDeleteImageData(imageID_);   // Delete all the image data.
+
+        GCL::logger::defaultLogger().logMessage(GCL::logger::info, "Image Data Deleted. imageID = " + std::to_string(imageID_));
+      };
+
+      queryModelVersion.resetQuery();
     }
 
     /// @brief Processes the OK Push button event.
@@ -108,6 +172,7 @@ namespace AstroManager
       pushButtonDeleteVersion = findChild<QPushButton *>("pushButtonDeleteVersion");
       pushButtonOK = findChild<QPushButton *>("pushButtonOK");
       pushButtonDelete = findChild<QPushButton *>("pushButtonDelete");
+      pushButtonDeleteImageData = findChild<QPushButton *>("pushButtonDeleteImageData");
 
       tableViewVersions->setModel(&queryModelVersion);
       tableViewVersions->setSortingEnabled(true);
@@ -125,6 +190,7 @@ namespace AstroManager
       connect(findChild<QPushButton *>("pushButtonCancel"), SIGNAL(clicked(bool)), this, SLOT(eventPushButtonCancel(bool)));
       connect(pushButtonOK, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonOK(bool)));
       connect(pushButtonDelete, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonDelete(bool)));
+      connect(pushButtonDeleteImageData, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonDeleteImageData(bool)));
     }
 
   }   // namespace dialogs
