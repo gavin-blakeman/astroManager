@@ -73,7 +73,18 @@
      </property>
      <property name="icon">
       <iconset resource="../VSOP.qrc">
-       <normaloff>:/icons/database/database_edit.png</normaloff>:/icons/database/database_edit.png</iconset>
+       <normaloff>:/images/image_information.png</normaloff>:/images/image_information.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="pushButtonDeleteImage">
+     <property name="text">
+      <string>Delete Image</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../VSOP.qrc">
+       <normaloff>:/images/image_remove.png</normaloff>:/images/image_remove.png</iconset>
      </property>
     </widget>
    </item>

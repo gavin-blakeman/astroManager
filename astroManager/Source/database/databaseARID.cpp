@@ -631,10 +631,39 @@ namespace AstroManager
     /// @throws None.
     /// @version 2018-05-12/GGB - Function created.
 
-    bool imageDeleteImage(imageID_t imageID)
+    bool CARID::imageDeleteImage(imageID_t imageID)
     {
       bool returnValue = false;
 
+      if (!ARIDdisabled_)
+      {
+        sqlWriter.resetQuery();
+
+          // Delete the image data first.
+
+        sqlWriter.deleteFrom("TBL_IMAGESTORAGE").where("IMAGE_ID", "=", imageID);
+
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        {
+          sqlWriter.deleteFrom("TBL_IMAGES").where("IMAGE_ID", "=", imageID);
+          if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+          {
+            returnValue = true;
+          }
+          else
+          {
+            processErrorInformation();
+          };
+        }
+        else
+        {
+          processErrorInformation();
+        };
+      }
+      else
+      {
+        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+      };
 
       return returnValue;
     }

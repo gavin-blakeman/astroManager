@@ -53,6 +53,7 @@ namespace AstroManager
     QPushButton *pushButtonOpenImage;
     QPushButton *pushButtonEditData;
     QPushButton *pushButtonRefreshData;
+    QPushButton *pushButtonDeleteImage;
 
     QTE::CSelectImageQueryModel queryModel;
 
@@ -70,7 +71,8 @@ namespace AstroManager
     virtual void eventRowActivated(const QModelIndex &);
     virtual void eventOpenImage(bool);
     virtual void eventEditImageData(bool);
-    virtual void eventRefreshData(bool);\
+    virtual void eventPushButtonDelete(bool);
+    virtual void eventRefreshData(bool);
   };
 
 } // namespace AstroManager

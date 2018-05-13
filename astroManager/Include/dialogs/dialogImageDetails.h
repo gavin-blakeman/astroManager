@@ -71,9 +71,8 @@ namespace AstroManager
       QGroupBox *groupBoxSyntheticImage;
       QListView *listViewSynthetic;
       QTableView *tableViewVersions;
-      QPushButton *pushButtonDeleteVersion;
       QPushButton *pushButtonOK;
-      QPushButton *pushButtonDelete;
+      QPushButton *pushButtonDeleteVersion;
       QPushButton *pushButtonDeleteImageData;
 
       QTE::CSelectImageVersionQueryModel queryModelVersion;
@@ -89,7 +88,7 @@ namespace AstroManager
     public slots:
       void eventPushButtonOK(bool);
       void eventPushButtonCancel(bool) { emit dlg->reject(); }
-      void eventPushButtonDelete(bool);
+      void eventPushButtonDeleteVersion(bool);
       void eventPushButtonDeleteImageData(bool);
 
       friend class database::CARID;

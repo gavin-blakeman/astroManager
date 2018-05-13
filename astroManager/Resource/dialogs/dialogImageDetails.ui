@@ -361,12 +361,12 @@
     </widget>
    </item>
    <item row="10" column="3">
-    <widget class="QPushButton" name="pushButtonDelete">
+    <widget class="QPushButton" name="pushButtonDeleteVersion_2">
      <property name="toolTip">
       <string>Delete the image and all associated versions</string>
      </property>
      <property name="text">
-      <string>Delete Image</string>
+      <string>Delete Image Version</string>
      </property>
      <property name="icon">
       <iconset>

@@ -24,7 +24,6 @@
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
-//
 // OVERVIEW:						Implements the classes for displaying and analysing images.
 //
 // CLASSES INCLUDED:    CStackImagesWindow
@@ -287,7 +286,7 @@ namespace AstroManager
     }
 
     /// @brief Select images from the ARID database.
-    /// @throws
+    /// @throws None.
     /// @version 2017-08-19/GGB - Function created.
 
     void CStackImagesWindow::eventButtonAddImagesFromDatabase(bool)
@@ -305,8 +304,8 @@ namespace AstroManager
 
         for (auto element : imageIDList)
         {
-          // Add the filename into the list. Strip off the path and just use the filename.
-          // Add the red icon to show that the image does not have alignment points marked at this stage.
+            // Add the filename into the list. Strip off the path and just use the filename.
+            // Add the red icon to show that the image does not have alignment points marked at this stage.
 
           std::string imageName;
           database::databaseARID->getImageName(element, imageName);
@@ -652,7 +651,7 @@ namespace AstroManager
     }
 
     /// @brief Function to remove selected images from the list.
-    /// @throws
+    /// @throws None.
     /// @version 2013-06-30/GGB - Function created.
 
     void CStackImagesWindow::eventButtonImageRemove(bool)
@@ -834,7 +833,8 @@ namespace AstroManager
       if (controlImage)
       {
         if ( (btnAlign1->isChecked()) && (mouseEvent->button() == Qt::LeftButton) )
-        {	// Alignment 1 button is down.
+        {
+            // Alignment 1 button is down.
 
           point = gvImageInput->mapToScene(mouseEvent->pos());									// Get the image coordinates
 
@@ -848,9 +848,11 @@ namespace AstroManager
                                                                                      QVariant(3)).toInt());
 
           if (!centroid)
+          {
             QMessageBox::information(this, tr("Unable to find centroid."),
                                      tr("A centroid was not found at the indicated spot."),
                                      QMessageBox::Ok, QMessageBox::Ok);
+          }
           else
           {
             point = QPointF((*centroid).x(), (*centroid).y());
@@ -859,22 +861,27 @@ namespace AstroManager
 
             labelAlign1->setText(QString("(%1, %2)").arg(point.x(), 0, 'f', 1).arg(point.y(), 0, 'f', 1));
 
-            // Draw the alignment points onto the screen
+              // Draw the alignment points onto the screen
 
             displayAlign1( point );
 
-            // Update the buttons
+              // Update the buttons
 
             btnAlign1->setChecked(false);
 
             if ( !listImages->currentItem()->data(ROLE_ALIGN2).isNull() )
+            {
               listImages->currentItem()->setIcon(iconGreen);
+            }
             else
+            {
               btnAlign2->setChecked(true);
+            };
           };
         }
         else if ( (btnAlign2->isChecked()) && (mouseEvent->button() == Qt::LeftButton) )
-        {	// Alignment 2 button is down.
+        {
+            // Alignment 2 button is down.
 
           point = gvImageInput->mapToScene(mouseEvent->pos());		// Get the image coordinates
 
@@ -885,9 +892,11 @@ namespace AstroManager
                                                        settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_SENSITIVITY,
                                                                                      QVariant(3)).toInt());
           if (!centroid)
+          {
             QMessageBox::information(this, tr("Unable to find centroid."),
                                      tr("A centroid was not found at the indicated spot."),
                                      QMessageBox::Ok, QMessageBox::Ok);
+          }
           else
           {
             point = QPointF((*centroid).x(), (*centroid).y());
@@ -1198,7 +1207,7 @@ namespace AstroManager
     }
 
     /// @brief Performs the save as function. If there is an astroFile created, then it will be saved.
-    /// @throws
+    /// @throws None
     /// version 2013-03-10/GGB - Function created.
 
     bool CStackImagesWindow::saveAs()
@@ -1346,7 +1355,6 @@ namespace AstroManager
 
       toolButtonAddImages->setMenu(addImagesMenu);
 
-
       inputTabWidget = tabWidget->widget(0);
       outputTabWidget = tabWidget->widget(1);
 
@@ -1434,7 +1442,7 @@ namespace AstroManager
 
         gsImageInput->addPixmap(*controlImage->pixmap);      // Draw the main image
         gvImageInput->setCursor(Qt::CrossCursor);
-        zoomAll();
+        //zoomAll();                                           //******
 
         displayAlignmentGraphics(selectedItem);
 

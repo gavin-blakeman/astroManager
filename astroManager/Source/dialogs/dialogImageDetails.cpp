@@ -63,37 +63,6 @@ namespace AstroManager
       setupUI();
     }
 
-    /// @brief Function called to delete an image.
-    /// @note 1. This function deletes the image data, as well as the meta-data.
-    /// @throws None.
-    /// @version 2018-05-12/GGB - Function created.
-
-    void CDialogImageDetails::eventPushButtonDelete(bool)
-    {
-      QxtConfirmationMessage msgBox;
-
-      msgBox.setIcon(QMessageBox::Critical);
-      msgBox.setText(tr("Are you sure you want to delete."));
-      QIcon messageIcon(":/images/user_judge.png");
-
-      msgBox.setIconPixmap(messageIcon.pixmap(32, 32));
-      msgBox.setInformativeText(tr("The data associated with all versions of this image will be deleted. The metadata for the " \
-                                   "image will not be deleted."));
-      msgBox.setConfirmationText(tr("Do not show again."));
-      msgBox.addButton("Accept", QMessageBox::AcceptRole);
-      msgBox.setDefaultButton(msgBox.addButton("Reject", QMessageBox::RejectRole));
-      msgBox.setOverrideSettingsKey(AstroManager::settings::CM_IMAGE_DELETE_DELETEIMAGE);
-
-      if (msgBox.exec() == QMessageBox::AcceptRole)
-      {
-        database::databaseARID->imageDeleteImage(imageID_);   // Delete the image.
-
-        GCL::logger::defaultLogger().logMessage(GCL::logger::info, "Image Data Deleted. imageID = " + std::to_string(imageID_));
-      };
-
-      queryModelVersion.resetQuery();
-    }
-
     /// @brief Function to delete an image. Only the image data is deleted. The image metadata is not deleted.
     /// @note 1. This function leaves "overhanging" TBL_IMAGES records with no TBL_IMAGESTORAGE records.
     /// @throws None.
@@ -123,6 +92,11 @@ namespace AstroManager
       };
 
       queryModelVersion.resetQuery();
+    }
+
+    void CDialogImageDetails::eventPushButtonDeleteVersion(bool)
+    {
+
     }
 
     /// @brief Processes the OK Push button event.
@@ -171,7 +145,7 @@ namespace AstroManager
       tableViewVersions = findChild<QTableView *>("tableViewVersions");
       pushButtonDeleteVersion = findChild<QPushButton *>("pushButtonDeleteVersion");
       pushButtonOK = findChild<QPushButton *>("pushButtonOK");
-      pushButtonDelete = findChild<QPushButton *>("pushButtonDelete");
+      pushButtonDeleteVersion = findChild<QPushButton *>("pushButtonDeleteVersion");
       pushButtonDeleteImageData = findChild<QPushButton *>("pushButtonDeleteImageData");
 
       tableViewVersions->setModel(&queryModelVersion);
@@ -189,7 +163,7 @@ namespace AstroManager
 
       connect(findChild<QPushButton *>("pushButtonCancel"), SIGNAL(clicked(bool)), this, SLOT(eventPushButtonCancel(bool)));
       connect(pushButtonOK, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonOK(bool)));
-      connect(pushButtonDelete, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonDelete(bool)));
+      connect(pushButtonDeleteVersion, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonDeleteVersion(bool)));
       connect(pushButtonDeleteImageData, SIGNAL(clicked(bool)), this, SLOT(eventPushButtonDeleteImageData(bool)));
     }
 
