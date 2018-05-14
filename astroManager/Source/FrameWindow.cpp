@@ -2907,6 +2907,7 @@ namespace AstroManager
     /// @brief Open an image from file.
     /// @details User must choose file to open from dialog box. Create an CImageWindow and set the filename up
     /// @throws None.
+    /// @version 2018-12-14/GGB - Updated to allow opening multiple files. (Bug #33)
     /// @version 2013-03-02/GGB - Included the global settings::fileExtensions for the files extensions.
     /// @version 2013-01-21/GGB - Moved code into loadImage()
     /// @version 2011-10-05/GGB - Function created
@@ -2915,17 +2916,40 @@ namespace AstroManager
     {
       boost::filesystem::path filePath;
 
-      QString szFileName = QFileDialog::getOpenFileName(this, tr("Open Image"),
-        settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY, QVariant(0)).toString(), EXTENSION_IMAGE);
+        // Ask the user for the files that need to be uploaded.
 
-      if ( !szFileName.isNull() )
+      QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Upload Image(s)"),
+                                                            settings::astroManagerSettings->value(settings::IMAGING_DIRECTORY,
+                                                                                                  QVariant(0)).toString(), EXTENSION_IMAGE);
+
+      QStringList fileList = fileNames;   // This is suggested in the Qt documentation.
+
+      if (!fileList.empty())
       {
-        filePath = boost::filesystem::path(szFileName.toStdString());
-
-        loadFromFile(filePath);
+        filePath = (*fileList.begin()).toStdString();
 
         settings::astroManagerSettings->setValue(settings::IMAGING_DIRECTORY,
-                                         QVariant(QString::fromStdString(filePath.parent_path().string())));
+                                                 QVariant(QString::fromStdString(filePath.parent_path().string())));
+
+        QProgressDialog progressDialog(tr("Opening Files..."), tr("Abort"), 0, fileList.size(), this);
+        progressDialog.setWindowModality(Qt::WindowModal);
+        progressDialog.setMinimumDuration(1000);
+        progressDialog.setWindowTitle("Open Files for Editing");
+
+        int fileCount = 0;
+
+        for (auto iter = fileList.begin(); iter != fileList.end(); ++iter)
+        {
+          filePath = (*iter).toStdString();
+          loadFromFile(filePath);
+
+          progressDialog.setValue(++fileCount);
+
+          if (progressDialog.wasCanceled())
+          {
+            break;
+          };
+        };
       };
     }
 
