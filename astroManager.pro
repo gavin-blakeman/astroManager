@@ -3,6 +3,7 @@ TEMPLATE = subdirs
 #CONFIG += ordered
 SUBDIRS += "cfitsio"
 SUBDIRS += "ACL"
+SUBDIRS += "astrometry"
 SUBDIRS += "GCL"
 #SUBDIRS += "../Library/LibRaw"
 SUBDIRS += "libWCS"

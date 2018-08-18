@@ -16,3 +16,6 @@
 [submodule "SCL"]
 	path = SCL
 	url = git@github.com:gavin-blakeman/SCL
+[submodule "astrometry"]
+	path = astrometry
+	url = https://github.com/gavin-blakeman/astrometry.git
