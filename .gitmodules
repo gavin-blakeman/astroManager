@@ -19,3 +19,6 @@
 [submodule "astrometry"]
 	path = astrometry
 	url = https://github.com/gavin-blakeman/astrometry.git
+[submodule "QCL"]
+	path = QCL
+	url = https://github.com/gavin-blakeman/QCL.git

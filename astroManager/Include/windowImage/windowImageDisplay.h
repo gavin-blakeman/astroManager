@@ -43,8 +43,8 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef astroManager_IMAGEDISPLAY_H
-#define astroManager_IMAGEDISPLAY_H
+#ifndef ASTROMANAGER_IMAGEDISPLAY_H
+#define ASTROMANAGER_IMAGEDISPLAY_H
 
   // astroManager files
 
@@ -170,8 +170,8 @@ namespace AstroManager
 
         // Source Extraction functions
 
-      bool extractFindStars(ACL::TImageSourCAstronomicalCoordinatesontainer &);
-      bool extractSimpleXY(ACL::TImageSourCAstronomicalCoordinatesontainer &);
+      bool extractFindStars(ACL::TImageSourceContainer &);
+      bool extractSimpleXY(ACL::TImageSourceContainer &);
 
     protected:
        void DisplayImage();

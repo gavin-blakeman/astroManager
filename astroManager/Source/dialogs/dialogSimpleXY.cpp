@@ -34,6 +34,8 @@
 
 #include "../../Include/dialogs/dialogSimpleXY.h"
 
+  // astroManager header files.
+
 #include "../../Include/Error.h"
 #include "../../Include/Settings.h"
 
@@ -42,11 +44,13 @@ namespace AstroManager
   namespace dialogs
   {
 
-    /// Constructor for the class.
-    //
-    // 2014-02-16/GGB - Function created.
+    /// @brief Constructor for the class.
+    /// @param[in] nsp: Source parameters
+    /// @param[out] nrv: The return value
+    /// @throws std::bad_alloc
+    /// @version 2014-02-16/GGB - Function created.
 
-    CDialogSimpleXY::CDialogSimpleXY(libAstrometry::SSimpleXY &nsp, bool &nrv) : CDialog(":/forms/dialogSimpleXY.ui"), sourceParameters(nsp),
+    CDialogSimpleXY::CDialogSimpleXY(APP::SSimpleXY &nsp, bool &nrv) : CDialog(":/forms/dialogSimpleXY.ui"), sourceParameters(nsp),
       returnValue(nrv)
     {
       returnValue = false;

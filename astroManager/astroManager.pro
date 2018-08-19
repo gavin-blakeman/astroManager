@@ -27,11 +27,10 @@ RCC_DIR = "objects/rcc"
 
 
 INCLUDEPATH += \
-  "../../Library/WeatherLink" \
   "../boost 1.62" \
-  "../../Library" \
   "../cfitsio" \
   "../ACL" \
+  "../astrometry" \
   "../GCL" \
   #"../../Library/LibRaw" \
   "../MCL" \

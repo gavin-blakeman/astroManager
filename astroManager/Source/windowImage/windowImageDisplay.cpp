@@ -867,7 +867,7 @@ namespace AstroManager
     void CImageWindow::createMenu()
     {
       popupMenu = new QMenu();
-      
+
       comboBoxQuality = new QComboBox;
       QWidgetAction *widgetAction = new QWidgetAction(nullptr);
       widgetAction->setDefaultWidget(comboBoxQuality);
@@ -1762,17 +1762,20 @@ namespace AstroManager
     }
 
     /// @brief Function to extract objects using the find stars routine.
-    //
-    // 2014-12-29/GGB - Function created.
+    /// @param[out] sourceContainer: The list of "found" stars.
+    /// @returns true: The dialog was accepted.
+    /// @returns false: The dialog was not accepted.
+    /// @throws None.
+    /// @version 2014-12-29/GGB - Function created.
 
-    bool CImageWindow::extractFindStars(ACL::TImageSourCAstronomicalCoordinatesontainer &sourCAstronomicalCoordinatesontainer)
+    bool CImageWindow::extractFindStars(ACL::TImageSourceContainer &sourceContainer)
     {
       QPen pen;
       QColor const current = Qt::yellow;
       pen.setColor(current);
       std::list<QGraphicsEllipseItem *> markers;
       std::list<QGraphicsEllipseItem *>::iterator markersIterator;
-      ACL::TImageSourCAstronomicalCoordinatesontainer::const_iterator sourceIterator;
+      ACL::TImageSourceContainer::const_iterator sourceIterator;
       QGraphicsEllipseItem *graphicsItem;
 
       auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
@@ -1800,14 +1803,14 @@ namespace AstroManager
           markers.clear();
         };
 
-        sourCAstronomicalCoordinatesontainer.clear();    // Need to remove all items from the list.
-        controlImage.astroFile->findStars(controlImage.currentHDB, sourCAstronomicalCoordinatesontainer, sourceParameters);
+        sourceContainer.clear();    // Need to remove all items from the list.
+        controlImage.astroFile->findStars(controlImage.currentHDB, sourceContainer, sourceParameters);
 
           // Draw the objects on the screen.
 
         TRACEMESSAGE("Drawing items...");
 
-        std::for_each(sourCAstronomicalCoordinatesontainer.begin(), sourCAstronomicalCoordinatesontainer.end(),
+        std::for_each(sourceContainer.begin(), sourceContainer.end(),
                       [&] (ACL::PImageSource pis)
         {
           graphicsItem = new QGraphicsEllipseItem( pis->center.x() - pis->radius, pis->center.y() - pis->radius,
@@ -1837,16 +1840,19 @@ namespace AstroManager
         markers.clear();
       };
 
-      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourCAstronomicalCoordinatesontainer.size()));
+      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourceContainer.size()));
 
       return (dialogReturn == QDialog::Accepted);
     }
 
     /// @brief Extract objects using the Simple XY routine.
-    //
-    // 2014-12-29/GGB - Function created.
+    /// @param[out] sourceContainer: The list of "found" stars.
+    /// @returns true: The dialog was accepted.
+    /// @returns false: The dialog was not accepted.
+    /// @throws None.
+    /// @version 2014-12-29/GGB - Function created.
 
-    bool CImageWindow::extractSimpleXY(ACL::TImageSourCAstronomicalCoordinatesontainer &sourCAstronomicalCoordinatesontainer)
+    bool CImageWindow::extractSimpleXY(ACL::TImageSourceContainer &sourceContainer)
     {
       QPen pen;
       QColor const current = Qt::yellow;
@@ -1857,7 +1863,7 @@ namespace AstroManager
 
       QGraphicsEllipseItem *graphicsItem;
 
-      ACL::TImageSourCAstronomicalCoordinatesontainer::const_iterator sourceIterator;
+      ACL::TImageSourceContainer::const_iterator sourceIterator;
 
       if (!markers.empty())
       {
@@ -1874,7 +1880,7 @@ namespace AstroManager
 
         // Draw the objects on the screen.
 
-      for (sourceIterator = sourCAstronomicalCoordinatesontainer.begin(); sourceIterator != sourCAstronomicalCoordinatesontainer.end(); ++sourceIterator)
+      for (sourceIterator = sourceContainer.begin(); sourceIterator != sourceContainer.end(); ++sourceIterator)
       {
         graphicsItem = new QGraphicsEllipseItem( (*sourceIterator)->center.x() - (*sourceIterator)->radius,
                                                  (*sourceIterator)->center.y() - (*sourceIterator)->radius,
@@ -1886,7 +1892,7 @@ namespace AstroManager
         graphicsItem = nullptr;
       }
 
-      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourCAstronomicalCoordinatesontainer.size()));
+      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourceContainer.size()));
       return false;
     }
 
@@ -2295,7 +2301,7 @@ namespace AstroManager
               LOGMESSAGE(info, "Added object " + elem->objectName() + " to astrometry list.");
 
               astrometryObject.reset();
-            };      
+            };
           }
           {
               // No centroid found. Note this in the debug log.
@@ -2328,7 +2334,7 @@ namespace AstroManager
     {
       TRACEENTER;
 
-      ACL::TImageSourCAstronomicalCoordinatesontainer imageObjectList;
+      ACL::TImageSourceContainer imageObjectList;
       bool returnValue = false;
 
       auto frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());

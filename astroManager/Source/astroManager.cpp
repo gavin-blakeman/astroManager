@@ -191,7 +191,6 @@ int main(int argc, char *argv[])
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading error messages...");
     splash.showMessage(QString("Loading error messages..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
     AstroManager::loadErrorMessages();
-    ACL::loadErrorMessages();
     MCL::CMCLError::loadErrorMessages();
     GCL::loadErrorMessages();
 
@@ -356,7 +355,7 @@ namespace AstroManager
 
   int const MAJORVERSION	= 2015;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x029B;
+  std::uint16_t const BUILDNUMBER = 0x02D4;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

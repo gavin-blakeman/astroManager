@@ -36,7 +36,7 @@
 
 #include "dialogs.h"
 
-#include <Include/simplexy.h>
+#include <include/simplexy.h>
 
 namespace AstroManager
 {
@@ -57,14 +57,14 @@ namespace AstroManager
       QSpinBox *spinBoxHalfBox;
       QDoubleSpinBox *doubleSpinBoxSigma;
 
-      libAstrometry::SSimpleXY &sourceParameters;
+      APP::SSimpleXY &sourceParameters;
       bool &returnValue;
 
       void setupUI();
 
     protected:
     public:
-      CDialogSimpleXY(libAstrometry::SSimpleXY &nsp, bool &nrv);
+      CDialogSimpleXY(APP::SSimpleXY &nsp, bool &nrv);
 
     public slots:
       void eventButtonExtract(bool);

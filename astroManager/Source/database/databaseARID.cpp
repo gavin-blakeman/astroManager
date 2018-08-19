@@ -52,7 +52,7 @@
 #include "../../Include/Settings.h"
 #include "../../Include/astroManager.h"
 
-// Standard C library
+  // Standard C library
 
 #include <cstdint>
 #include <limits>

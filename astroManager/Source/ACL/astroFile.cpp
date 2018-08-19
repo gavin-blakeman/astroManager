@@ -1,4 +1,4 @@
-//*********************************************************************************************************************************
+﻿//*********************************************************************************************************************************
 //
 // PROJECT:							AstroManager (Astronomy Observation Manager)
 // FILE:								astroFile
@@ -260,9 +260,9 @@ namespace AstroManager
       void *ptr = byteArray.data();
       std::size_t size = byteArray.size();
 
-      CFITSIO_TEST(fits_open_memfile(&file, "", READONLY, &ptr, &size, ACL::FITS_BLOCK, nullptr, &status));
+      CFITSIO_TEST(fits_open_memfile, &file, "", READONLY, &ptr, &size, ACL::FITS_BLOCK, nullptr);
       loadFromFITS(file);
-      CFITSIO_TEST(fits_close_file(file, &status));
+      CFITSIO_TEST(fits_close_file, file);
     }
     else
     {
