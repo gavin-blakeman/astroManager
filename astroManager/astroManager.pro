@@ -1,6 +1,36 @@
-# Project file for AstroManager application
+#-----------------------------------------------------------------------------------------------------------------------------------
+#
+# PROJECT:            Astronomy Class Library
+# FILE:								ACL.pro
+# SUBSYSTEM:          Project File
+# LANGUAGE:						C++
+# TARGET OS:          WINDOWS/UNIX/LINUX/MAC
+# LIBRARY DEPENDANCE:	None.
+# NAMESPACE:          N/A
+# AUTHOR:							Gavin Blakeman.
+# LICENSE:            GPLv2
+#
+#                     Copyright 2013-2018 Gavin Blakeman.
+#                     This file is part of the Astronomy Class Library (ACL).
+#
+#                     ACL is free software: you can redistribute it and/or modify it under the terms of the GNU General
+#                     Public License as published by the Free Software Foundation, either version 2 of the License, or (at your
+#                     option) any later version.
+#
+#                     ACL is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+#                     implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+#                     for more details.
+#
+#                     You should have received a copy of the GNU General Public License along with ACL.  If not, see
+#                     <http://www.gnu.org/licenses/>.
+#
+# OVERVIEW:						Project file for compiling the project
+#
+# HISTORY:            2013-06-15/GGB - Development of classes for astroManager
+#
+#-----------------------------------------------------------------------------------------------------------------------------------
 
-TARGET = AstroManager
+TARGET = astroManager
 TEMPLATE = app
 CONFIG += qt thread debug qxt
 QXT += core gui
@@ -43,180 +73,179 @@ INCLUDEPATH += \
   "../astrometry++"
 
 SOURCES += \
-    Source/FrameWindow.cpp \
-    Source/Error.cpp \
-    Source/VSOPView.cpp \
-    Source/Utilities.cpp \
-    Source/TextEditor.cpp \
-    Source/Settings.cpp \
-    Source/Photometry.cpp \
-    Source/ImageComparison.cpp \
-    Source/FileBatchConvert.cpp \
-    Source/Configure.cpp \
-    Source/AstroGraphicsView.cpp \
-    Source/TextEditorFITS.cpp \
-    Source/StellarObjects.cpp \
-    Source/dockWidgets/dockWidgetWeatherScale.cpp \
-    Source/dockWidgets/dockWidget.cpp \
-    Source/dockWidgets/dockWidgetImage.cpp \
-    Source/dockWidgets/dockWidgetImageInformation.cpp \
-    Source/dockWidgets/dockWidgetAstrometry.cpp \
-    Source/dockWidgets/dockWidgetHistogram.cpp \
-    Source/dockWidgets/dockWidgetMagnify.cpp \
-    Source/dockWidgets/dockWidgetMessage.cpp \
-    Source/dockWidgets/dockWidgetNavigator.cpp \
-    Source/dockWidgets/dockWidgetPhotometry.cpp \
-    Source/imaging/imageControl.cpp \
-    Source/astrometry/astrometryObservation.cpp \
-    Source/photometry/photometryObservation.cpp \
-    Source/dockWidgets/dockWidgetWeather.cpp \
-    Source/windowWeather/windowWeatherHistory.cpp \
-    Source/windowWeather/windowWeather.cpp \
-    Source/windowImage/windowImageDisplay.cpp \
-    Source/windowImage/windowImage.cpp \
-    Source/windowCalibration/windowCalibration.cpp \
-    Source/windowCalibration/ImageCalibration.cpp \
-    Source/database/databaseATID.cpp \
-    Source/database/databaseWeather.cpp \
-    Source/database/databaseARID.cpp \
-    Source/database/database.cpp \
-    Source/dialogs/dialogBinPixels.cpp \
-    Source/dialogs/dialogOptions.cpp \
-    Source/dialogs/dialogExportAsJPEG.cpp \
-    Source/dialogs/dialogExportAsPNG.cpp \
-    Source/dialogs/dialogFindStars.cpp \
-    Source/dialogs/dialogImageCalibration.cpp \
-    Source/dialogs/dialogImageCrop.cpp \
-    Source/dialogs/dialogImageFloat.cpp \
-    Source/dialogs/dialogImageResample.cpp \
-    Source/dialogs/dialogSaveAligned.cpp \
-    Source/dialogs/dialogSelectInstrument.cpp \
-    Source/dialogs/dialogSelectObject.cpp \
-    Source/dialogs/dialogSelectObserver.cpp \
-    Source/dialogs/dialogSelectTelescope.cpp \
-    Source/dialogs/dialogSimpleXY.cpp \
-    Source/dialogs/dialogs.cpp \
-    Source/dialogs/dialogWeatherEdit.cpp \
-    Source/dockWidgets/dockWidgetWeatherParameters.cpp \
-    Source/windowCalculation/windowCalculation.cpp \
-    Source/windowCalculation/gregorian2JD.cpp \
-    Source/windowCalculation/JD2Gregorian.cpp \
-    Source/ACL/astroFile.cpp \
-    Source/windowSelectImage.cpp \
-    Source/qtExtensions/application.cpp \
-    Source/qtExtensions/TextEditSink.cpp \
-    Source/qtExtensions/MdiSubWindow.cpp \
-    Source/qtExtensions/sqlQueryModel.cpp \
-    Source/qtExtensions/selectImageQueryModel.cpp \
-    Source/dialogs/dialogConfigureSite.cpp \
-    Source/dialogs/dialogConfigureTelescope.cpp \
-    Source/dialogs/dialogSelectImageVersion.cpp \
-    Source/qtExtensions/selectImageVersionQueryModel.cpp \
-    Source/ACL/FITSMemoryFileArray.cpp \
-    Source/dialogs/dialogImageDetails.cpp \
-    Source/dialogs/dialogSelectImages.cpp \
-    Source/windowImage/windowImageStacking.cpp \
-    Source/ACL/observatoryInformation.cpp \
-    Source/CInstrumentDockwidget.cpp \
-    Source/SIMBAD.cpp \
-    Source/widgets/widget.cpp \
-    Source/dialogs/dialogEditResources.cpp \
-    Source/widgets/widgetSunInformation.cpp \
-    Source/windowPlanning/windowPlanning.cpp \
-    Source/qtExtensions/queryModelPlanning.cpp \
-    Source/astroManager.cpp \
-    Source/astroManagerHelp.cpp
+    source/FrameWindow.cpp \
+    source/Error.cpp \
+    source/VSOPView.cpp \
+    source/Utilities.cpp \
+    source/TextEditor.cpp \
+    source/Settings.cpp \
+    source/Photometry.cpp \
+    source/ImageComparison.cpp \
+    source/FileBatchConvert.cpp \
+    source/Configure.cpp \
+    source/AstroGraphicsView.cpp \
+    source/TextEditorFITS.cpp \
+    source/StellarObjects.cpp \
+    source/dockWidgets/dockWidgetWeatherScale.cpp \
+    source/dockWidgets/dockWidget.cpp \
+    source/dockWidgets/dockWidgetImage.cpp \
+    source/dockWidgets/dockWidgetImageInformation.cpp \
+    source/dockWidgets/dockWidgetAstrometry.cpp \
+    source/dockWidgets/dockWidgetHistogram.cpp \
+    source/dockWidgets/dockWidgetMagnify.cpp \
+    source/dockWidgets/dockWidgetMessage.cpp \
+    source/dockWidgets/dockWidgetNavigator.cpp \
+    source/dockWidgets/dockWidgetPhotometry.cpp \
+    source/imaging/imageControl.cpp \
+    source/astrometry/astrometryObservation.cpp \
+    source/photometry/photometryObservation.cpp \
+    source/dockWidgets/dockWidgetWeather.cpp \
+    source/windowWeather/windowWeatherHistory.cpp \
+    source/windowWeather/windowWeather.cpp \
+    source/windowImage/windowImageDisplay.cpp \
+    source/windowImage/windowImage.cpp \
+    source/windowCalibration/windowCalibration.cpp \
+    source/windowCalibration/ImageCalibration.cpp \
+    source/database/databaseATID.cpp \
+    source/database/databaseWeather.cpp \
+    source/database/databaseARID.cpp \
+    source/database/database.cpp \
+    source/dialogs/dialogBinPixels.cpp \
+    source/dialogs/dialogOptions.cpp \
+    source/dialogs/dialogExportAsJPEG.cpp \
+    source/dialogs/dialogExportAsPNG.cpp \
+    source/dialogs/dialogFindStars.cpp \
+    source/dialogs/dialogImageCalibration.cpp \
+    source/dialogs/dialogImageCrop.cpp \
+    source/dialogs/dialogImageFloat.cpp \
+    source/dialogs/dialogImageResample.cpp \
+    source/dialogs/dialogSaveAligned.cpp \
+    source/dialogs/dialogSelectInstrument.cpp \
+    source/dialogs/dialogSelectObject.cpp \
+    source/dialogs/dialogSelectObserver.cpp \
+    source/dialogs/dialogSelectTelescope.cpp \
+    source/dialogs/dialogSimpleXY.cpp \
+    source/dialogs/dialogs.cpp \
+    source/dialogs/dialogWeatherEdit.cpp \
+    source/dockWidgets/dockWidgetWeatherParameters.cpp \
+    source/windowCalculation/windowCalculation.cpp \
+    source/windowCalculation/gregorian2JD.cpp \
+    source/windowCalculation/JD2Gregorian.cpp \
+    source/ACL/astroFile.cpp \
+    source/windowSelectImage.cpp \
+    source/qtExtensions/application.cpp \
+    source/qtExtensions/TextEditSink.cpp \
+    source/qtExtensions/MdiSubWindow.cpp \
+    source/qtExtensions/sqlQueryModel.cpp \
+    source/qtExtensions/selectImageQueryModel.cpp \
+    source/dialogs/dialogConfigureSite.cpp \
+    source/dialogs/dialogConfigureTelescope.cpp \
+    source/dialogs/dialogSelectImageVersion.cpp \
+    source/qtExtensions/selectImageVersionQueryModel.cpp \
+    source/ACL/FITSMemoryFileArray.cpp \
+    source/dialogs/dialogImageDetails.cpp \
+    source/dialogs/dialogSelectImages.cpp \
+    source/windowImage/windowImageStacking.cpp \
+    source/ACL/observatoryInformation.cpp \
+    source/CInstrumentDockwidget.cpp \
+    source/SIMBAD.cpp \
+    source/widgets/widget.cpp \
+    source/dialogs/dialogEditResources.cpp \
+    source/widgets/widgetSunInformation.cpp \
+    source/windowPlanning/windowPlanning.cpp \
+    source/qtExtensions/queryModelPlanning.cpp \
+    source/astroManager.cpp \
+    source/astroManagerHelp.cpp
 
 HEADERS  += \
-    Include/FrameWindow.h \
-    Include/FileBatchConvert.h \
-    Include/ImageComparison.h \
-    Include/AstroGraphicsView.h \
-    Include/VSOPView.h \
-    Include/Utilities.h \
-    Include/TextEditor.h \
-    Include/Settings.h \
-    Include/Photometry.h \
-    Include/Error.h \
-    Include/Configure.h \
-    Include/TextEditorFITS.h \
-    Include/StellarObjects.h \
-    Include/dockWidgets/dockWidgetWeatherScale.h \
-    Include/dockWidgets/dockWidget.h \
-    Include/dockWidgets/dockWidgetImage.h \
-    Include/dockWidgets/dockWidgetImageInformation.h \
-    Include/dockWidgets/dockWidgetAstrometry.h \
-    Include/dockWidgets/dockWidgetHistogram.h \
-    Include/dockWidgets/dockWidgetMagnify.h \
-    Include/dockWidgets/dockWidgetMessage.h \
-    Include/dockWidgets/dockWidgetNavigator.h \
-    Include/dockWidgets/dockWidgetPhotometry.h \
-    Include/imaging/imageControl.h \
-    Include/astrometry/astrometryObservation.h \
-    Include/photometry/photometryObservation.h \
-    Include/dockWidgets/dockWidgetWeather.h \
-    Include/windowWeather/windowWeatherHistory.h \
-    Include/windowWeather/windowWeather.h \
-    Include/windowImage/windowImage.h \
-    Include/windowImage/windowImageDisplay.h \
-    Include/windowCalibration/windowCalibration.h \
-    Include/windowCalibration/ImageCalibration.h \
-    Include/database/database.h \
-    Include/database/databaseARID.h \
-    Include/database/databaseATID.h \
-    Include/database/databaseWeather.h \
-    Include/dialogs/dialogExportAsJPEG.h \
-    Include/dialogs/dialogExportAsPNG.h \
-    Include/dialogs/dialogFindStars.h \
-    Include/dialogs/dialogImageCalibration.h \
-    Include/dialogs/dialogImageCrop.h \
-    Include/dialogs/dialogImageFloat.h \
-    Include/dialogs/dialogImageResample.h \
-    Include/dialogs/dialogs.h \
-    Include/dialogs/dialogSaveAligned.h \
-    Include/dialogs/dialogSelectInstrument.h \
-    Include/dialogs/dialogSelectObject.h \
-    Include/dialogs/dialogSelectObserver.h \
-    Include/dialogs/dialogSelectTelescope.h \
-    Include/dialogs/dialogSimpleXY.h \
-    Include/dialogs/dialogWeatherEdit.h \
-    Include/dialogs/dialogBinPixels.h \
-    Include/dialogs/dialogOptions.h \
-    Include/dockWidgets/dockWidgetWeatherParameters.h \
-    Include/windowCalculation/windowCalculation.h \
-    Include/windowCalculation/gregorian2JD.h \
-    Include/windowCalculation/JD2Gregorian.h \
-    Include/ACL/astroFile.h \
-    Include/windowSelectImage.h \
-    Include/qtExtensions/application.h \
-    Include/qtExtensions/qt.h \
-    Include/qtExtensions/TextEditSink.h \
-    Include/qtExtensions/MdiSubWindow.h \
-    Include/qtExtensions/sqlQueryModel.h \
-    Include/qtExtensions/selectImageQueryModel.h \
-    Include/dialogs/dialogConfigureSite.h \
-    Include/dialogs/dialogConfigureTelescope.h \
-    Include/ACL/telescope.h \
-    Include/dialogs/dialogSelectImageVersion.h \
-    Include/qtExtensions/selectImageVersionQueryModel.h \
-    Include/ACL/FITSMemoryFileArray.h \
-    Include/dialogs/dialogImageDetails.h \
-    Include/dialogs/dialogSelectImages.h \
-    Include/windowImage/windowImageStacking.h \
-    Include/ACL/observatoryInformation.h \
-    Include/CInstrumentDockwidget.h \
-    Include/QDebugStream.h \
-    Include/SIMBAD.h \
-    Include/widgets/widget.h \
-    Include/dialogs/dialogEditResources.h \
-    Include/widgets/widgetDateTimePanel.h \
-    Include/widgets/widgetSunInformation.h \
-    Include/widgets/widgetMoonInformation.h \
-    Include/widgets/widgetShortTermVisibility.h \
-    Include/qtExtensions/queryModelPlanning.h \
-    Include/windowPlanning/windowPlanning.h \
-    Include/astroManager.h \
-    Include/astroManagerHelp.h
+    include/FrameWindow.h \
+    include/FileBatchConvert.h \
+    include/ImageComparison.h \
+    include/AstroGraphicsView.h \
+    include/VSOPView.h \
+    include/Utilities.h \
+    include/TextEditor.h \
+    include/Settings.h \
+    include/Photometry.h \
+    include/Error.h \
+    include/Configure.h \
+    include/TextEditorFITS.h \
+    include/StellarObjects.h \
+    include/dockWidgets/dockWidgetWeatherScale.h \
+    include/dockWidgets/dockWidget.h \
+    include/dockWidgets/dockWidgetImage.h \
+    include/dockWidgets/dockWidgetImageInformation.h \
+    include/dockWidgets/dockWidgetAstrometry.h \
+    include/dockWidgets/dockWidgetHistogram.h \
+    include/dockWidgets/dockWidgetMagnify.h \
+    include/dockWidgets/dockWidgetMessage.h \
+    include/dockWidgets/dockWidgetNavigator.h \
+    include/dockWidgets/dockWidgetPhotometry.h \
+    include/imaging/imageControl.h \
+    include/astrometry/astrometryObservation.h \
+    include/photometry/photometryObservation.h \
+    include/dockWidgets/dockWidgetWeather.h \
+    include/windowWeather/windowWeatherHistory.h \
+    include/windowWeather/windowWeather.h \
+    include/windowImage/windowImage.h \
+    include/windowImage/windowImageDisplay.h \
+    include/windowCalibration/windowCalibration.h \
+    include/windowCalibration/ImageCalibration.h \
+    include/database/database.h \
+    include/database/databaseARID.h \
+    include/database/databaseATID.h \
+    include/database/databaseWeather.h \
+    include/dialogs/dialogExportAsJPEG.h \
+    include/dialogs/dialogExportAsPNG.h \
+    include/dialogs/dialogFindStars.h \
+    include/dialogs/dialogImageCalibration.h \
+    include/dialogs/dialogImageCrop.h \
+    include/dialogs/dialogImageFloat.h \
+    include/dialogs/dialogImageResample.h \
+    include/dialogs/dialogs.h \
+    include/dialogs/dialogSaveAligned.h \
+    include/dialogs/dialogSelectInstrument.h \
+    include/dialogs/dialogSelectObject.h \
+    include/dialogs/dialogSelectObserver.h \
+    include/dialogs/dialogSelectTelescope.h \
+    include/dialogs/dialogSimpleXY.h \
+    include/dialogs/dialogWeatherEdit.h \
+    include/dialogs/dialogBinPixels.h \
+    include/dialogs/dialogOptions.h \
+    include/dockWidgets/dockWidgetWeatherParameters.h \
+    include/windowCalculation/windowCalculation.h \
+    include/windowCalculation/gregorian2JD.h \
+    include/windowCalculation/JD2Gregorian.h \
+    include/ACL/astroFile.h \
+    include/windowSelectImage.h \
+    include/qtExtensions/application.h \
+    include/qtExtensions/qt.h \
+    include/qtExtensions/TextEditSink.h \
+    include/qtExtensions/MdiSubWindow.h \
+    include/qtExtensions/sqlQueryModel.h \
+    include/qtExtensions/selectImageQueryModel.h \
+    include/dialogs/dialogConfigureSite.h \
+    include/dialogs/dialogConfigureTelescope.h \
+    include/ACL/telescope.h \
+    include/dialogs/dialogSelectImageVersion.h \
+    include/qtExtensions/selectImageVersionQueryModel.h \
+    include/ACL/FITSMemoryFileArray.h \
+    include/dialogs/dialogImageDetails.h \
+    include/dialogs/dialogSelectImages.h \
+    include/windowImage/windowImageStacking.h \
+    include/ACL/observatoryInformation.h \
+    include/CInstrumentDockwidget.h \
+    include/SIMBAD.h \
+    include/widgets/widget.h \
+    include/dialogs/dialogEditResources.h \
+    include/widgets/widgetDateTimePanel.h \
+    include/widgets/widgetSunInformation.h \
+    include/widgets/widgetMoonInformation.h \
+    include/widgets/widgetShortTermVisibility.h \
+    include/qtExtensions/queryModelPlanning.h \
+    include/windowPlanning/windowPlanning.h \
+    include/astroManager.h \
+    include/astroManagerHelp.h
 
 
 RESOURCES += \

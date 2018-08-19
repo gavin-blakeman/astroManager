@@ -1,4 +1,4 @@
-AstroManager (Astronomy Manager)
+﻿AstroManager (Astronomy Manager)
 ================================================================
 
 Website: www.astromanager.org
@@ -11,7 +11,9 @@ ACL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
 GCL           GPLV2 Copyright 2013-2018 Gavin Blakeman.
 MCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
 PCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+QCL           GPLv2 Copyright 2015-2018 Gavin Blakeman.
 SCL           GPLv2 Copyright 2013-2018 Gavin Blakeman.
+WCL           GPLv2 Copyright 2011-2018 Gavin Blakeman.
 
 LibRaw
 NOVAS 3.1
@@ -19,7 +21,6 @@ QT Framework
 qwt 6.0.1
 SBIG
 SOFA
-WeatherImport GPLv2 Copyright 2013-2018 Gavin Blakeman.
 
 
 
