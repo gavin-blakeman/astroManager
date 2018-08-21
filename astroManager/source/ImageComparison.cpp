@@ -178,7 +178,7 @@ namespace astroManager
 
         // Get the image coordinates and convert to WCS coordinates.
 
-      boost::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
+      std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
         controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
 
       if (WCSCoordinates)
@@ -827,7 +827,7 @@ namespace astroManager
     void CImageComparisonWindow::eventMousePress(QMouseEvent *mouseEvent)
     {
       QPointF point;
-      boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
+      std::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
       SControlBlock *controlBlock;
       QIcon iconGreen(":/images/BMP_IMAGESTACK_GREEN.bmp");
 
@@ -1056,7 +1056,7 @@ namespace astroManager
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
-      boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
+      std::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
 
       switch (mouseEvent->button())
       {
@@ -1192,7 +1192,7 @@ namespace astroManager
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
-      boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
+      std::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
 
       switch (mouseEvent->button())
       {
@@ -1353,7 +1353,7 @@ namespace astroManager
 
       // Get the image coordinates and convert to WCS coordinates.
 
-      boost::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
+      std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
         controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(photometryObject->CCDCoordinates());
 
       if (WCSCoordinates)

@@ -42,6 +42,11 @@
 
 #include "../../include/database/databaseARID.h"
 
+  // Standard C++ library header files
+
+#include <cstdint>
+#include <limits>
+
   // astroManager files
 
 #include "../../include/dialogs/dialogConfigureSite.h"
@@ -51,11 +56,6 @@
 #include "../../include/qtExtensions/qt.h"
 #include "../../include/Settings.h"
 #include "../../include/astroManager.h"
-
-  // Standard C library
-
-#include <cstdint>
-#include <limits>
 
   // Other Libraries
 
@@ -1628,7 +1628,7 @@ namespace astroManager
           std::uint32_t siteID;
           std::uint32_t telescopeID;
           bool hasWCSData = false;
-          boost::optional<ACL::CAstronomicalCoordinates> corner1, corner2, corner3, corner4;
+          std::optional<ACL::CAstronomicalCoordinates> corner1, corner2, corner3, corner4;
 
           std::uint16_t filterID = ACL::CPhotometryFilterCollection::findFilterID(astroFile->imageFilter());
 

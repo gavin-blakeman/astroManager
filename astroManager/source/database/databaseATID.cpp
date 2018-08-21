@@ -338,7 +338,7 @@ namespace astroManager
 
             // Create the stellar target object.
 
-          ACL::SPTargetStellar targetStellar(new ACL::CTargetStellar(objectName, ACL::CAstronomicalCoordinates(RA, Dec)));
+          std::shared_ptr<ACL::CTargetStellar> targetStellar(new ACL::CTargetStellar(objectName, ACL::CAstronomicalCoordinates(RA, Dec)));
 
           tokenBegin = tokenEnd + 1;
           tokenEnd = szLine.find(";", tokenBegin);
@@ -436,14 +436,15 @@ namespace astroManager
     }
 
     /// @brief Function to read stellar object information from the database and write/copy it into the stellar object
-    /// @param[in] vNameID - The name of the object to read.
-    /// @param[in] stellarObject - The stellar object to populate.
+    /// @param[in] vNameID: The name of the object to read.
+    /// @param[in] stellarObject: The stellar object to populate.
     /// @returns true - object found
     /// @returns false - object not found.
     /// @throws None.
     /// @version 2011-07-10/GGB - Function created.
 
-    bool CATID::populateStellarObject(QVariant const &vNameID, ACL::SPTargetStellar stellarObject)
+    bool CATID::populateStellarObject(QVariant const &vNameID,
+                                      std::shared_ptr<ACL::CTargetStellar> stellarObject)
     {
       QSqlQuery query(*dBase);
       QString szSQL;
@@ -614,10 +615,9 @@ namespace astroManager
 //        return false;
     }
 
-    // Gets the location number after querying the database and registry.
-    // Calls the BuildLocation function.
-    //
-    // 2010-06-12/GGB - Function Created
+    /// @brief Gets the location number after querying the database and registry.
+    /// @throws
+    /// @version 2010-06-12/GGB - Function Created
 
     ACL::CGeographicLocation *CATID::GetLocation()
     {
@@ -770,9 +770,11 @@ namespace astroManager
     }
 
     /// @brief Queries for objects around the specified coordinates.
-    /// @param[in] coord - The coordinates (RA, Dec) of the center of the search radius.
-    /// @param[in] radius - The search radius.
-    /// @returns A list of all the objects within the search area.
+    /// @param[in] coord: The coordinates (RA, Dec) of the center of the search radius.
+    /// @param[in] radius: The search radius.
+    /// @param[out] targetList: A list of all the objects within the search area.
+    /// @returns true = success
+    /// @returns false = failure.
     /// @throws None.
     /// @version 2013-02-23/GGB - Function created.
 
@@ -789,9 +791,9 @@ namespace astroManager
     }
 
     /// @brief Queries for objects within a box bounded by the two corners.
-    /// @param[in] tl - The top left of the box
-    /// @param[in] rb - The bottom right of the box.
-    /// @returns A list of all the objects within the search area.
+    /// @param[in] tl: The top left of the box
+    /// @param[in] rb: The bottom right of the box.
+    /// @param[out] targetList: A list of all the objects within the search area.
     /// @throws None.
     /// @note The box edges are assumed to be parallel to lines of RA and DEC.
     /// @version 2013-02-23/GGB - Function created.

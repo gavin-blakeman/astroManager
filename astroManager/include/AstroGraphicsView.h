@@ -39,8 +39,6 @@
 
 #include "qtExtensions/qt.h"
 
-//#include "ImageDisplay.h"
-
 namespace astroManager
 {
   namespace imaging

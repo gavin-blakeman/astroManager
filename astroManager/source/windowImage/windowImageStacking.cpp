@@ -550,7 +550,7 @@ namespace astroManager
       {
         bool outOfBounds = false;
         MCL::TPoint2D<ACL::FP_t> BL, TR;
-        boost::optional<ACL::CAstronomicalCoordinates>  BLC, TRC;
+        std::optional<ACL::CAstronomicalCoordinates>  BLC, TRC;
         int initialIndex = 0;
 
         do
@@ -596,8 +596,8 @@ namespace astroManager
 
               // Note that the variables BL and TR are redefined to a different type in this loop to what they are above.
 
-            boost::optional<MCL::TPoint2D<ACL::FP_t>> BL = controlImage->astroFile->wcs2pix(controlImage->currentHDB, *BLC);
-            boost::optional<MCL::TPoint2D<ACL::FP_t>> TR = controlImage->astroFile->wcs2pix(controlImage->currentHDB, *TRC);
+            std::optional<MCL::TPoint2D<ACL::FP_t>> BL = controlImage->astroFile->wcs2pix(controlImage->currentHDB, *BLC);
+            std::optional<MCL::TPoint2D<ACL::FP_t>> TR = controlImage->astroFile->wcs2pix(controlImage->currentHDB, *TRC);
 
             if (!BL || !TR)
             {
@@ -826,7 +826,7 @@ namespace astroManager
     void CStackImagesWindow::eventMousePress(QMouseEvent *mouseEvent)
     {
       QPointF point;
-      boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
+      std::optional<MCL::TPoint2D<ACL::FP_t>> centroid;
       imaging::SControlImage *controlImage = getControlImage();
       QIcon iconGreen(":/images/BMP_IMAGESTACK_GREEN.bmp");
 

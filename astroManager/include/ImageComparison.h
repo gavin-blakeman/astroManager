@@ -42,6 +42,11 @@
 #ifndef IMAGECOMPARISON_H
 #define IMAGECOMPARISON_H
 
+  // Standard C++ Library
+
+#include <optional>
+#include <string>
+
   // astroManager includes
 
 #include "ACL/astroFile.h"
@@ -56,14 +61,9 @@
 #include <ACL>
 #include <MCL>
 
-  // Standard Library
-
-#include <string>
-
   // Boost Library
 
 #include "boost/filesystem.hpp"
-#include "boost/optional.hpp"
 
 namespace astroManager
 {
@@ -80,8 +80,8 @@ namespace astroManager
       bool inputImageValid = false;
       imaging::SControlImage inputImage;
       imaging::SControlImage outputImage;
-      boost::optional<MCL::TPoint2D<FP_t>> alignmentPoint1;
-      boost::optional<MCL::TPoint2D<FP_t>> alignmentPoint2;
+      std::optional<MCL::TPoint2D<FP_t>> alignmentPoint1;
+      std::optional<MCL::TPoint2D<FP_t>> alignmentPoint2;
       ACL::CRegisterImageInformation registerImageInformation;
 
       SControlBlock(imaging::CAstroImageWindow *);

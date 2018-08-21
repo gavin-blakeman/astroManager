@@ -105,7 +105,7 @@ namespace astroManager
       void PopulateCatalogCombo(QComboBox *);
       void PopulatePhotometryProgramCombo(QComboBox *);
       bool InsertObservationProgram(int, QString * /*programName*/, QString * /*programDescription*/) { return false;}
-      bool populateStellarObject(QVariant const &, ACL::SPTargetStellar);
+      bool populateStellarObject(QVariant const &, std::shared_ptr<ACL::CTargetStellar>);
       bool queryStellarObjectByName(std::string const &, ACL::CTargetStellar *, EForce = FORCE_NONE);
       bool getWeather();
 

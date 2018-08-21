@@ -37,16 +37,16 @@
 
 #include "../include/AstroGraphicsView.h"
 
+  // Standard C++ header files
+
+#include <cmath>
+
   // astroManager
 
 #include "../include/dockWidgets/dockWidgetImageInformation.h"
 #include "../include/dockWidgets/dockWidgetMagnify.h"
 #include "../include/dockWidgets/dockWidgetNavigator.h"
 #include "../include/FrameWindow.h"
-
-  // Standard header files
-
-#include <cmath>
 
 namespace astroManager
 {
@@ -119,7 +119,7 @@ namespace astroManager
       QPointF point = mapToScene(mouseEvent->pos());
       AXIS_t x = static_cast<AXIS_t>(std::floor(point.x()));
       AXIS_t y = static_cast<AXIS_t>(std::floor(point.y()));
-      boost::optional<ACL::CAstronomicalCoordinates> wcsCoords;
+      std::optional<ACL::CAstronomicalCoordinates> wcsCoords;
       mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
       if (parentObject->getControlImage())

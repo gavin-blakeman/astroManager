@@ -57,7 +57,7 @@ namespace astroManager
       CAstrometryObservation();
       CAstrometryObservation(ACL::CAstrometryObservation const &);
       CAstrometryObservation(std::string const &);
-      CAstrometryObservation(ACL::SPTargetAstronomy &);
+      CAstrometryObservation(std::shared_ptr<ACL::CTargetAstronomy>);
 
       virtual ~CAstrometryObservation();
 

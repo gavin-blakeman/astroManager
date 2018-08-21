@@ -46,6 +46,10 @@
 #ifndef ASTROMANAGER_IMAGEDISPLAY_H
 #define ASTROMANAGER_IMAGEDISPLAY_H
 
+  // Standard C++ Library header files.
+
+#include <vector>
+
   // astroManager files
 
 #include "../ACL/astroFile.h"
@@ -61,14 +65,6 @@
   // ACL Library
 
 #include <ACL>
-
-  // Boost Library
-
-#include "boost/optional/optional.hpp"
-
-  // Standard Library
-
-#include <vector>
 
 namespace astroManager
 {

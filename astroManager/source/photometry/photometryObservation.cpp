@@ -82,11 +82,12 @@ namespace astroManager
     }
 
     /// @brief Constructor taking an astronomy target.
-    /// @param[in] ta - The astronomy target object.
+    /// @param[in] ta: The astronomy target object.
     /// @throws None.
     /// @version 2016-05-05/GGB - Function created.
 
-    CPhotometryObservation::CPhotometryObservation(ACL::SPTargetAstronomy &ta) : ACL::CPhotometryObservation(ta), group(nullptr), text(nullptr)
+    CPhotometryObservation::CPhotometryObservation(std::shared_ptr<ACL::CTargetAstronomy> ta)
+      : ACL::CPhotometryObservation(ta), group(nullptr), text(nullptr)
     {
 
     }

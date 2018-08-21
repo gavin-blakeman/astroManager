@@ -83,7 +83,8 @@ namespace astroManager
     /// @throws None.
     /// @version 2016-05-04/GGB - Function created.
 
-    CAstrometryObservation::CAstrometryObservation(ACL::SPTargetAstronomy &ta) : ACL::CAstrometryObservation(ta), group(nullptr), text(nullptr)
+    CAstrometryObservation::CAstrometryObservation(std::shared_ptr<ACL::CTargetAstronomy> ta)
+      : ACL::CAstrometryObservation(ta), group(nullptr), text(nullptr)
     {
     }
 

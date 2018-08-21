@@ -45,21 +45,20 @@
 #ifndef ASTROMANAGER_DATABASE_H
 #define ASTROMANAGER_DATABASE_H
 
-#include "../Error.h"
-#include "../qtExtensions/qt.h"
-
-  // Standard header files
+  // Standard C++ library header files
 
 #include <list>
 #include <map>
 #include <string>
 
-  // Astronomy Class ibrary
+  // astroManager header files.
+
+#include "../Error.h"
+#include "../qtExtensions/qt.h"
+
+  // Miscellaneous header files.
 
 #include <ACL>
-
-  // General class library
-
 #include <GCL>
 
 #ifdef _MSC_VER
@@ -125,7 +124,7 @@ namespace astroManager
       virtual bool connectToDatabase(QString const &);
     };
 
-    typedef std::list<ACL::SPTargetStellar> DStellarObject;
+    typedef std::list<std::shared_ptr<ACL::CTargetStellar>> DStellarObject;
 
     //void RebuildConstellationNames(int = 0);
 
@@ -151,7 +150,6 @@ namespace astroManager
     void CreateObserver(QVariant const &, QVariant const &, bool, QVariant &);
 
   } // namespace database
-
 } // namespace AstroManager
 
-#endif  // astroManager_DATABASE_H
+#endif  // ASTROMANAGER_DATABASE_H

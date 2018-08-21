@@ -42,15 +42,17 @@
 #ifndef ASTROMANAGER_DATABASEARID_H
 #define ASTROMANAGER_DATABASEARID_H
 
+  // Standard C++ library header files.
+
+#include <memory>
+
 #include "database.h"
 #include "../ACL/astroFile.h"
 #include "../ACL/observatoryInformation.h"
 #include "../ACL/telescope.h"
 #include "../astroManager.h"
 
-  // Standard C++ libraries
 
-#include <memory>
 
 namespace astroManager
 {

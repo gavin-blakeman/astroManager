@@ -66,7 +66,7 @@ namespace astroManager
 
       CPhotometryObservation();
       CPhotometryObservation(ACL::CPhotometryObservation const &);
-      CPhotometryObservation(ACL::SPTargetAstronomy &);
+      CPhotometryObservation(std::shared_ptr<ACL::CTargetAstronomy>);
 
       virtual ~CPhotometryObservation();
 

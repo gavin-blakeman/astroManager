@@ -246,7 +246,7 @@ namespace astroManager
 
           for (targetIterator = astrometryTargets.begin(); targetIterator != astrometryTargets.end(); ++targetIterator)
           {
-            boost::optional<MCL::TPoint2D<FP_t>> result = controlImage.astroFile->wcs2pix(controlImage.currentHDB,
+            std::optional<MCL::TPoint2D<FP_t>> result = controlImage.astroFile->wcs2pix(controlImage.currentHDB,
                                                                                           *(*targetIterator)->observedCoordinates());
             if (result)
             {
@@ -267,7 +267,7 @@ namespace astroManager
           {
             MCL::TPoint2D<AXIS_t> point = (*targetIterator)->CCDCoordinates();
 
-            boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
+            std::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, point,
                                                  settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
@@ -2195,7 +2195,7 @@ namespace astroManager
     {
       auto &dw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
-      boost::optional<ACL::CAstronomicalCoordinates> tl, br;
+      std::optional<ACL::CAstronomicalCoordinates> tl, br;
       ACL::DTargetAstronomy targetList;       // Will be destructed when it goes out of scope.
       int targetCount = 0, targetOutside = 0, targetCentroid = 0;
 
@@ -2231,7 +2231,7 @@ namespace astroManager
 
       for (auto &elem : targetList)
       {
-        boost::optional<MCL::TPoint2D<FP_t>> ccdPixel;
+        std::optional<MCL::TPoint2D<FP_t>> ccdPixel;
 
         ccdPixel = controlImage.astroFile->wcs2pix(controlImage.currentHDB, elem->catalogueCoordinates());
 
@@ -2401,7 +2401,7 @@ namespace astroManager
 
               // Get the image coordinates and convert to WCS coordinates.
 
-              boost::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
+              std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
                   controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
 
               if (WCSCoordinates)
@@ -2563,7 +2563,7 @@ namespace astroManager
       {
         point = gvImage->mapToScene(mouseEvent->pos());                         // Coordinates of the mouse.
 
-        boost::optional<MCL::TPoint2D<ACL::FP_t>> centroid =
+        std::optional<MCL::TPoint2D<ACL::FP_t>> centroid =
             astroImage->centroid(MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
                                  settings::astroManagerSettings->value(settings::ASTROMETRY_CENTROIDSEARCH_RADIUS,
                                                                QVariant(20)).toLongLong(),
@@ -2594,7 +2594,7 @@ namespace astroManager
 
             // Get the image coordinates and convert to WCS coordinates.
 
-            boost::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
+            std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
                 controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
 
             if (WCSCoordinates)
@@ -2664,7 +2664,7 @@ namespace astroManager
           try
           {
             point = gvImage->mapToScene(mouseEvent->pos());
-            boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
+            std::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, MCL::TPoint2D<ACL::AXIS_t>(point.x(), point.y()),
                                                  settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
@@ -2865,7 +2865,7 @@ namespace astroManager
 
       LOGMESSAGE(info, "Starting Load Photometry Targets...");
 
-      boost::optional<ACL::CAstronomicalCoordinates> wcsCoords = controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(MCL::TPoint2D<FP_t>(0, 0));
+      std::optional<ACL::CAstronomicalCoordinates> wcsCoords = controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(MCL::TPoint2D<FP_t>(0, 0));
 
       if (wcsCoords)
       {
@@ -2936,7 +2936,7 @@ namespace astroManager
 
           for (targetIterator = photometryTargets.begin(); targetIterator != photometryTargets.end(); ++targetIterator)
           {
-            boost::optional<MCL::TPoint2D<FP_t>> result = controlImage.astroFile->wcs2pix(controlImage.currentHDB,
+            std::optional<MCL::TPoint2D<FP_t>> result = controlImage.astroFile->wcs2pix(controlImage.currentHDB,
                                                                                           *(*targetIterator)->observedCoordinates());
             if (result)
               (*targetIterator)->CCDCoordinates(*result);
@@ -2955,7 +2955,7 @@ namespace astroManager
           {
             MCL::TPoint2D<AXIS_t> point = (*targetIterator)->CCDCoordinates();
 
-            boost::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
+            std::optional<MCL::TPoint2D<ACL::FP_t> > centroid =
                 controlImage.astroFile->centroid(controlImage.currentHDB, point,
                                                  settings::astroManagerSettings->value(settings::PHOTOMETRY_CENTROIDSEARCH_RADIUS,
                                                                                QVariant(20)).toInt(),
