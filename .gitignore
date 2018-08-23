@@ -17,3 +17,5 @@ SIMBADReturn.txt
 *.user.*
 *.ods#
 *.odt#
+
+astroManager/Data/MPCORB\.DAT
