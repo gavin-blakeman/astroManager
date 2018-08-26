@@ -55,15 +55,21 @@ namespace astroManager
     QString const FRAME_MAXIMISED                                   ("FrameMaximised");
     QString const FRAME_POSITION                                    ("FramePosition");
     QString const FRAME_SIZE                                        ("FrameSize");
-
-    QString const SETTINGS_BASEDIR                                  ("BaseDir");
-    QString const SETTINGS_LOGDIR                                   ("LogDir");
-    QString const SETTINGS_LOGLEVEL                                 ("LogLevel");
-    QString const SETTINGS_LT                                       ("Local Time");
     QString const FILE_LASTOPENEDDEPTH                              ("LastOpenedDepth");
     QString const FILE_LASTOPENED                                   ("LastOpened");
     QString const MAX_THREADS                                       ("MaximumThreads");
     QString const TOOLBAR_HEIGHT                                    ("ToolbarHeight");
+
+      // Directory Settings
+
+    QString const DIRECTORY_BASEDIR                                 ("Directory/Base");
+    QString const DIRECTORY_LOGDIR                                  ("Directory/Log");
+    QString const DIRECTORY_DATA                                    ("Directory/Data");
+
+      // Log settings
+
+    QString const SETTINGS_LOGLEVEL                                 ("LogLevel");
+    QString const SETTINGS_LT                                       ("Local Time");
 
     QString const SETTINGS_SITE_DEFAULTID                           ("Site/DefaultID");
     QString const SETTINGS_SITE_SAMEDISTANCE                        ("Site/SameDistance");
@@ -74,8 +80,9 @@ namespace astroManager
 
       // Various files
 
-    QString const FILE_TAIUTC                                       ("TAIUTC");
-    QString const FILE_UTCUT1                                       ("UTCUT1");
+    QString const FILE_TAIUTC                                       ("File/TAIUTC");
+    QString const FILE_UTCUT1                                       ("File/UTCUT1");
+    QString const FILE_MPCORB                                       ("File/MPCORB");
 
       // definitions for Astrometry section
 

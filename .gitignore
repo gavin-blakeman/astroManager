@@ -19,3 +19,5 @@ SIMBADReturn.txt
 *.odt#
 
 astroManager/Data/MPCORB\.DAT
+
+astroManager/Data/CometEls\.txt

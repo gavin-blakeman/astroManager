@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
     logSeverity.fTrace = true;
   }
 
-  std::string logFilePath = astroManager::settings::astroManagerSettings->value(astroManager::settings::SETTINGS_LOGDIR,
-                                                                        QVariant(QString(""))).
+  std::string logFilePath = astroManager::settings::astroManagerSettings->value(astroManager::settings::DIRECTORY_LOGDIR,
+                                                                                QVariant(QString(""))).
       toString().toStdString();
 
     // If the logfile directory does not exist, default to the current directory.
@@ -351,7 +351,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2015;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x0319;
+  std::uint16_t const BUILDNUMBER = 0x0326;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

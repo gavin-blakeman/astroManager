@@ -37,6 +37,8 @@
 #ifndef IMAGECONTROL
 #define IMAGECONTROL
 
+  // astroManager header files.
+
 #include "../ACL/astroFile.h"
 #include "../astrometry/astrometryObservation.h"
 #include "../photometry/photometryObservation.h"

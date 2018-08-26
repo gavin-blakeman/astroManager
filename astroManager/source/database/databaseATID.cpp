@@ -338,7 +338,8 @@ namespace astroManager
 
             // Create the stellar target object.
 
-          std::shared_ptr<ACL::CTargetStellar> targetStellar(new ACL::CTargetStellar(objectName, ACL::CAstronomicalCoordinates(RA, Dec)));
+          std::shared_ptr<ACL::CTargetStellar> targetStellar(new ACL::CTargetStellar(objectName,
+                                                                                     ACL::CAstronomicalCoordinates(RA, Dec)));
 
           tokenBegin = tokenEnd + 1;
           tokenEnd = szLine.find(";", tokenBegin);

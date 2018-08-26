@@ -1300,11 +1300,12 @@ namespace astroManager
 
     /// @brief Displays the observation site information.
     /// @throws None.
+    /// @version 2018-08-25/GGB - Changed getObservationLocation() to a raw pointer return.
     /// @version 2011-07-17/GGB - Function created
 
     void CImageWindow::displaySiteInformation()
     {
-      std::unique_ptr<ACL::CObservatory> &location = controlImage.astroFile->getObservationLocation();
+      ACL::CObservatory *location = controlImage.astroFile->getObservationLocation();
       char szNumber[30];
 
       if (!location)
@@ -1339,11 +1340,12 @@ namespace astroManager
 
     /// @brief Displays the weather information.
     /// @throws None.
+    /// @version 2018-08-25/GGB - Changed getObservationWeather() to a raw pointer.
     /// @version 2011-07-17/GGB - Function created.
 
     void CImageWindow::displayWeatherInformation()
     {
-      std::unique_ptr<ACL::CWeather> &weather = controlImage.astroFile->getObservationWeather();
+      ACL::CWeather *weather = controlImage.astroFile->getObservationWeather();
 
       if (!(&*weather))
       {
@@ -1431,7 +1433,7 @@ namespace astroManager
     {
         // If the weather from the astro file is null, then a weather record needs to be created.
 
-      std::unique_ptr<ACL::CWeather> &weather = controlImage.astroFile->getObservationWeather();
+      ACL::CWeather *weather = controlImage.astroFile->getObservationWeather();
       ACL::CWeather weatherData;
 
       if (weather)
@@ -1445,7 +1447,7 @@ namespace astroManager
       {
         if (!weather)
         {
-          weather.reset(new ACL::CWeather(weatherData));
+          controlImage.astroFile->setObservationWeather(std::make_unique<ACL::CWeather>(weatherData));
         }
         else
         {
@@ -2233,7 +2235,7 @@ namespace astroManager
       {
         std::optional<MCL::TPoint2D<FP_t>> ccdPixel;
 
-        ccdPixel = controlImage.astroFile->wcs2pix(controlImage.currentHDB, elem->catalogueCoordinates());
+        ccdPixel = controlImage.astroFile->wcs2pix(controlImage.currentHDB, elem->positionICRS(ACL::CAstroTime()));
 
           // It is possible for the converted coordinate to fall outside of the image.
 

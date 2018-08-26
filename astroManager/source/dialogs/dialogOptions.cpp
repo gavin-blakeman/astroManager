@@ -627,7 +627,7 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::DW_HISTOGRAM_BINS, QVariant(spinBoxHistogramBins->value()));
       settings::astroManagerSettings->setValue(settings::TOOLBAR_HEIGHT, QVariant(spinBoxToolbarHeight->value()));
 
-      settings::astroManagerSettings->setValue(settings::SETTINGS_LOGDIR, QVariant(lineEditLogfileDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::DIRECTORY_LOGDIR, QVariant(lineEditLogfileDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(lineEditDarkDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(lineEditFlatDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(lineEditBiasDirectory->text()));
@@ -951,7 +951,7 @@ namespace astroManager
       checkBoxFlatDirectory = findChild<QCheckBox *>("checkBoxFlatDirectory");
       checkBoxBiasDirectory = findChild<QCheckBox *>("checkBoxBiasDirectory");
 
-      lineEditLogfileDirectory->setText(settings::astroManagerSettings->value(settings::SETTINGS_LOGDIR, QVariant("./log")).toString());
+      lineEditLogfileDirectory->setText(settings::astroManagerSettings->value(settings::DIRECTORY_LOGDIR, QVariant("./log")).toString());
       lineEditDarkDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant("")).toString());
       lineEditFlatDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant("")).toString());
       lineEditBiasDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant("")).toString());

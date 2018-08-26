@@ -1632,13 +1632,13 @@ namespace astroManager
 
           std::uint16_t filterID = ACL::CPhotometryFilterCollection::findFilterID(astroFile->imageFilter());
 
-          if (findObservingSite(dynamic_cast<CObservatory *>(astroFile->getObservationLocation().get())))
+          if (findObservingSite(dynamic_cast<CObservatory *>(astroFile->getObservationLocation())))
           {
-            siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation().get())->siteID();
+            siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation())->siteID();
           }
           else if (registerObservingSite(dynamic_cast<CObservatory *>(&*astroFile->getObservationLocation())))
           {
-            siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation().get())->siteID();
+            siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation())->siteID();
           }
           else
           {
