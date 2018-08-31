@@ -38,9 +38,19 @@
 #ifndef WINDOWPLANNING_H
 #define WINDOWPLANNING_H
 
+  // Standard C++ library header files.
+
+#include <memory>
+#include <vector>
+
+  // astroManager header files.
+
+#include "../ACL/targetAstronomy.h"
+#include "../ACL/telescope.h"
 #include "../qtExtensions/MdiSubWindow.h"
 #include "../qtExtensions/qt.h"
-#include "../qtExtensions/queryModelPlanning.h"
+
+  // Miscellaneous library header files.
 
 #include <ACL>
 
@@ -53,6 +63,7 @@ namespace astroManager
       Q_OBJECT
 
     private:
+      std::vector<std::unique_ptr<CTargetAstronomy>> targetList;
       QComboBox *comboBoxPlans = nullptr;
       QComboBox *comboBoxSites = nullptr;
       QDateEdit *dateEditSelectedDate = nullptr;
@@ -68,13 +79,10 @@ namespace astroManager
       QPushButton *pushButtonTimeDayMinus = nullptr;
       QPushButton *pushButtonRealTime = nullptr;
 
-      QTableView *tableViewPlanning = nullptr;
-
-      QTE::CQueryModelPlanning queryModel;
+      QTableView *tableWidgetPlanning = nullptr;
 
       QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
 
-      ACL::DTargetAstronomy planTargets;
       std::int_least32_t timeZoneOffset = 0;
 
       void setupUI();

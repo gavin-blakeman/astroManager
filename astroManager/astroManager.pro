@@ -64,6 +64,7 @@ INCLUDEPATH += \
   "../GCL" \
   #"../../Library/LibRaw" \
   "../MCL" \
+  "../QCL" \
   "../PCL" \
   "../qwt-6.1.3/src" \
   "../Qxt/include" \
@@ -153,9 +154,9 @@ SOURCES += \
     source/dialogs/dialogEditResources.cpp \
     source/widgets/widgetSunInformation.cpp \
     source/windowPlanning/windowPlanning.cpp \
-    source/qtExtensions/queryModelPlanning.cpp \
     source/astroManager.cpp \
-    source/astroManagerHelp.cpp
+    source/astroManagerHelp.cpp \
+    source/ACL/targetAstronomy.cpp
 
 HEADERS  += \
     include/FrameWindow.h \
@@ -242,10 +243,10 @@ HEADERS  += \
     include/widgets/widgetSunInformation.h \
     include/widgets/widgetMoonInformation.h \
     include/widgets/widgetShortTermVisibility.h \
-    include/qtExtensions/queryModelPlanning.h \
     include/windowPlanning/windowPlanning.h \
     include/astroManager.h \
-    include/astroManagerHelp.h
+    include/astroManagerHelp.h \
+    include/ACL/targetAstronomy.h
 
 
 RESOURCES += \

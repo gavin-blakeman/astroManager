@@ -37,6 +37,8 @@
 
 #include "../../include/windowPlanning/windowPlanning.h"
 
+  // astroManager header files.
+
 #include "../../include/database/databaseARID.h"
 #include "../../include/Settings.h"
 
@@ -52,8 +54,7 @@ namespace astroManager
     /// @param[in] parent - The window that owns this instance.
     /// @version 2017-06-20/GGB - Function created.
 
-    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent),
-      queryModel(settings::astroManagerSettings->value(settings::WINDOWPLANNING_LASTPLAN, 0).toUInt()), planTargets()
+    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent), targetList()
     {
       setAttribute(Qt::WA_DeleteOnClose);
 
@@ -93,7 +94,7 @@ namespace astroManager
 
         // Clear the current list of objects.
 
-      planTargets.clear();
+      //planTargets.clear();
     }
 
     /// @brief Responds to the 1s timer when triggered to update the time in the window and any other information required.
@@ -199,7 +200,7 @@ namespace astroManager
     }
 
     /// @brief Sets up the user interface for the class.
-    /// @throws GCL::CRuntimeError(AstroManager)
+    /// @throws GCL::CRuntimeError(AstroManager, 0001)
     /// @version 2018-02-03/GGB - Function created.
 
     void CWindowPlanning::setupUI()
@@ -225,7 +226,7 @@ namespace astroManager
       ASSOCIATE_CONTROL(comboBoxPlans, formWidget, "comboBoxPlans", QComboBox);
       ASSOCIATE_CONTROL(comboBoxSites, formWidget, "comboBoxSites", QComboBox);
 
-      ASSOCIATE_TABLEVIEW(tableViewPlanning, formWidget, "tableViewPlanning");
+      ASSOCIATE_TABLEVIEW(tableWidgetPlanning, formWidget, "tableWidgetPlanning");
       ASSOCIATE_CONTROL(dateEditSelectedDate, formWidget, "dateEditSelectedDate", QDateEdit);
       ASSOCIATE_CONTROL(timeEditSelectedTime, formWidget, "timeEditSelectedTime", QTimeEdit);
       ASSOCIATE_RADIOBUTTON(radioButtonUT, formWidget, "radioButtonUT");
@@ -239,9 +240,8 @@ namespace astroManager
       ASSOCIATE_PUSHBUTTON(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus");
       ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
 
-      tableViewPlanning->setModel(&queryModel);
-      tableViewPlanning->setSortingEnabled(true);
-      tableViewPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      tableWidgetPlanning->setSortingEnabled(true);
+      //tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
         // Populate combo boxes and select the last values selected.
 

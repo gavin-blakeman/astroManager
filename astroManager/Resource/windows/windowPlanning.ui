@@ -17,13 +17,6 @@
    <item row="0" column="0">
     <widget class="QWidget" name="widgetSunInformation" native="true"/>
    </item>
-   <item row="2" column="0" colspan="4">
-    <widget class="QTableView" name="tableViewPlanning">
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QWidget" name="widgetMoonInformation" native="true"/>
    </item>
@@ -75,7 +68,7 @@
          <string>Universal Coordinated Time (UTC)</string>
         </property>
         <property name="text">
-         <string>UT</string>
+         <string>&amp;UT</string>
         </property>
        </widget>
       </item>
@@ -98,7 +91,7 @@
          <string>Local Time</string>
         </property>
         <property name="text">
-         <string>LT</string>
+         <string>&amp;LT</string>
         </property>
        </widget>
       </item>
@@ -330,6 +323,13 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QTableWidget" name="tableWidgetPlanning">
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
   </layout>
