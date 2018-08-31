@@ -46,12 +46,11 @@
 
 #include "../include/database/databaseARID.h"
 
-  // Include files for Qt
-
-#include "../include/qtExtensions/qt.h"
+  // Miscellaneous library header files.
 
 #include <ACL>
 #include <GCL>
+#include <QCL>
 
 namespace astroManager
 {

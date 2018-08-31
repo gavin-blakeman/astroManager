@@ -37,7 +37,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include "../qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

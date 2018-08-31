@@ -37,12 +37,15 @@
 #ifndef ASTROMETRYOBSERVATION
 #define ASTROMETRYOBSERVATION
 
-#include "../qtExtensions/qt.h"
+  // Standard C++ library header files.
 
 #include <memory>
 #include <vector>
 
+  // Miscellaneous library header files.
+
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {

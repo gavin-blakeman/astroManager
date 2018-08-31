@@ -47,7 +47,9 @@
 #include "database/database.h"
 #include "dialogs/dialogs.h"
 #include "Error.h"
-#include "qtExtensions/qt.h"
+
+
+#include <QCL>
 
 namespace astroManager
 {

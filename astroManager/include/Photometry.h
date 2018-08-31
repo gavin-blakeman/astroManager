@@ -37,7 +37,7 @@
 #ifndef PHOTOMETRY_H
 #define PHOTOMETRY_H
 
-#include "qtExtensions/qt.h"
+#include <QCL>
 
 #include "qwt_plot.h"
 #include "qwt_plot_curve.h"

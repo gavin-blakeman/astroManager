@@ -54,16 +54,13 @@
 #include "FrameWindow.h"
 #include "windowImage/windowImageStacking.h"
 #include "photometry/photometryObservation.h"
-#include "qtExtensions/qt.h"
 
   // Other Headers
 
 #include <ACL>
-#include <MCL>
-
-  // Boost Library
-
 #include "boost/filesystem.hpp"
+#include <MCL>
+#include <QCL>
 
 namespace astroManager
 {

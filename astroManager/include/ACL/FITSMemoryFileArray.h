@@ -40,11 +40,11 @@
 
   // astroManager includes
 
-#include "../qtExtensions/qt.h"
 
   // Miscellaneous libraries
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {

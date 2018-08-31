@@ -53,19 +53,16 @@
 
 #include "dockWidgetImage.h"
 #include "../photometry/photometryObservation.h"
-#include "../qtExtensions/qt.h"
 #include "../FrameWindow.h"
 
   // Standard libraries
 
 #include <memory>
 
-  // libAstroClass include file
+  // Miscellaneous library header files.
 
 #include <ACL>
-
-  // Qwt Library
-
+#include <QCL>
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
 

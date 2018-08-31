@@ -49,12 +49,14 @@
 #ifndef DIALOGS_H
 #define DIALOGS_H
 
-  // Qt
-
-#include "../qtExtensions/qt.h"
+  // Standard C++ library header files.
 
 #include <string>
+
+  // Miscellanous library header files.
+
 #include <GCL>
+#include <QCL>
 
 namespace astroManager
 {

@@ -48,7 +48,6 @@
 
 #include "dockWidgetImage.h"
 #include "../FrameWindow.h"
-#include "../qtExtensions/qt.h"
 
   // Standard library
 
@@ -68,6 +67,7 @@
   // Boost library
 
 #include "boost/tuple/tuple.hpp"
+#include <QCL>
 
 namespace astroManager
 {

@@ -67,9 +67,11 @@
 #include "dialogs/dialogs.h"
 #include "Error.h"
 #include "FrameWindow.h"
-#include "qtExtensions/qt.h"
+
+  // Miscellaneous library header files
 
 #include <GCL>
+#include <QCL>
 
 namespace astroManager
 {

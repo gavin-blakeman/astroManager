@@ -36,8 +36,6 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/qtExtensions/qt.h"
-
 // Standard library
 
 #include <cstdio>
@@ -66,6 +64,7 @@
 #include <MCL>
 #include <SCL>
 #include <GCL>
+#include <QCL>
 #include <QxtGui/QxtConfirmationMessage>
 
   // These do not need to be defined in C++

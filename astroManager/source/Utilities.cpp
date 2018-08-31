@@ -60,7 +60,7 @@
 
 #include "boost/algorithm/string.hpp"
 #include "boost/filesystem.hpp"
-#include "../include/qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

@@ -47,12 +47,13 @@
 //
 //*********************************************************************************************************************************
 
-#ifndef PHOTOMETRYOBSERVATION
-#define PHOTOMETRYOBSERVATION
+#ifndef PHOTOMETRYOBSERVATION_H
+#define PHOTOMETRYOBSERVATION_H
 
-#include "../qtExtensions/qt.h"
+  // Miscellaneous library header files.
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {
@@ -80,5 +81,4 @@ namespace astroManager
 
 } // namespace AstroManager
 
-#endif // PHOTOMETRYOBSERVATION
-
+#endif // PHOTOMETRYOBSERVATION_H

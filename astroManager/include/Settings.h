@@ -38,7 +38,7 @@
 #ifndef ASTROMANAGER_SETTINGS_H
 #define ASTROMANAGER_SETTINGS_H
 
-#include "qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

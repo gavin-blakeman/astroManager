@@ -39,7 +39,7 @@
 #ifndef SQLQUERYMODEL
 #define SQLQUERYMODEL
 
-#include "qt.h"
+#include <QCL>
 
 namespace astroManager
 {

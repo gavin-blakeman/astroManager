@@ -42,7 +42,7 @@
 
 #include "dockWidgets/dockWidget.h"
 
-#include "qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

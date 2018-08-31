@@ -40,9 +40,11 @@
 #define DIALOGSELECTIMAGEVERSION
 
 #include "dialogs.h"
-#include "../qtExtensions/qt.h"
+
 #include "../qtExtensions/selectImageVersionQueryModel.h"
 #include "../astroManager.h"
+
+#include <QCL>
 
 namespace astroManager
 {

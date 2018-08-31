@@ -37,7 +37,7 @@
 #ifndef ASTROGRAPHICSVIEW_H
 #define ASTROGRAPHICSVIEW_H
 
-#include "qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

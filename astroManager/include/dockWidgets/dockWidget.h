@@ -56,9 +56,9 @@
 #ifndef DOCKWIDGET
 #define DOCKWIDGET
 
-// Qt Library
+  // Miscellaneous library header files
 
-#include "../qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

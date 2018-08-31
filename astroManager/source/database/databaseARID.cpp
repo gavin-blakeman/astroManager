@@ -53,7 +53,6 @@
 #include "../../include/dialogs/dialogConfigureTelescope.h"
 #include "../../include/dialogs/dialogImageDetails.h"
 #include "../../include/Error.h"
-#include "../../include/qtExtensions/qt.h"
 #include "../../include/Settings.h"
 #include "../../include/astroManager.h"
 
@@ -62,7 +61,7 @@
 #include <ACL>
 #include "GeographicLib/Geodesic.hpp"
 #include "GeographicLib/Math.hpp"
-
+#include <QCL>
 
 namespace astroManager
 {

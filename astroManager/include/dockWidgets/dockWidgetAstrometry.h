@@ -46,7 +46,6 @@
 #include "../astrometry/astrometryObservation.h"
 #include "dockWidgetImage.h"
 #include "../FrameWindow.h"
-#include "../qtExtensions/qt.h"
 
   // Standard libraries
 
@@ -55,6 +54,7 @@
   // libAstroImages Library
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {

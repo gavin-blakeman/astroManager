@@ -37,13 +37,16 @@
 #ifndef ASTROMANAGER_H
 #define ASTROMANAGER_H
 
-#include "qtExtensions/qt.h"
-
-#include <ACL>
+  // Standard C++ library header files
 
 #include <string>
 #include <utility>
 #include <vector>
+
+  // Miscellaneous library header files.
+
+#include <ACL>
+#include <QCL>
 
 namespace astroManager
 {

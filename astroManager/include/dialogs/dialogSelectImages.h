@@ -41,13 +41,14 @@
 
 #include "dialogs.h"
 #include "../qtExtensions/selectImageQueryModel.h"
-#include "../qtExtensions/qt.h"
 #include "../astroManager.h"
 
   // Standard C++ headers
 
 #include <cstdint>
 #include <vector>
+
+#include <QCL>
 
 namespace astroManager
 {

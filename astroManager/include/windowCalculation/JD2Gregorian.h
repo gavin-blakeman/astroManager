@@ -40,8 +40,9 @@
 #ifndef JD2GREGORIAN_H
 #define JD2GREGORIAN_H
 
-#include "../qtExtensions/qt.h"
 #include "windowCalculation.h"
+
+#include <QCL>
 
 namespace astroManager
 {

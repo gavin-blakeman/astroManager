@@ -48,11 +48,11 @@
 #include "../ACL/targetAstronomy.h"
 #include "../ACL/telescope.h"
 #include "../qtExtensions/MdiSubWindow.h"
-#include "../qtExtensions/qt.h"
 
   // Miscellaneous library header files.
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {

@@ -44,7 +44,6 @@
 
 #include "../../include/database/database.h"
 #include "../../include/Error.h"
-#include "../../include/qtExtensions/qt.h"
 #include "../../include/Settings.h"
 #include "../../include/astroManager.h"
 
@@ -57,6 +56,7 @@
   // Class Libraries
 
 #include <GCL>
+#include <QCL>
 
 namespace astroManager
 {

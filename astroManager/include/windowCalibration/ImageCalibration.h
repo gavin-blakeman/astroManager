@@ -45,8 +45,10 @@
 #ifndef IMAGECALIBRATION_H
 #define IMAGECALIBRATION_H
 
-#include "include/qtExtensions/qt.h"
+
 #include "windowCalibration.h"
+
+#include <QCL>
 
 namespace astroManager
 {

@@ -54,12 +54,12 @@
   // astroManager header files.
 
 #include "../Error.h"
-#include "../qtExtensions/qt.h"
 
   // Miscellaneous header files.
 
 #include <ACL>
 #include <GCL>
+#include <QCL>
 
 #ifdef _MSC_VER
 # pragma warning( disable : 4290 )  /* Disable the warning about C++ exception specifications. */

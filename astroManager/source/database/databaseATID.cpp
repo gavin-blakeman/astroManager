@@ -47,7 +47,6 @@
   // astroManager files
 
 #include "../../include/Settings.h"
-#include "../../include/qtExtensions/qt.h"
 #include "../../include/astroManager.h"
 
 // Qt Library
@@ -65,6 +64,7 @@
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string.hpp"
 #include "boost/optional.hpp"
+#include <QCL>
 
 namespace astroManager
 {

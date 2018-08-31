@@ -39,8 +39,7 @@
 #define TEXTEDITSINK_H
 
 #include <GCL>
-
-#include "qt.h"
+#include <QCL>
 
 namespace astroManager
 {

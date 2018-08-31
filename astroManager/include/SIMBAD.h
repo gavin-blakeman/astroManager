@@ -38,7 +38,7 @@
 #include <string>
 #include <vector>
 
-#include "qtExtensions/qt.h"
+#include <QCL>
 
 namespace astroManager
 {

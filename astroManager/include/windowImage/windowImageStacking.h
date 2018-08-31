@@ -50,7 +50,9 @@
 #include "windowImage.h"
 #include "../imaging/imageControl.h"
 #include "../photometry/photometryObservation.h"
-#include "../qtExtensions/qt.h"
+
+
+#include <QCL>
 
 namespace astroManager
 {

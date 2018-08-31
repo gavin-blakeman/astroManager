@@ -48,25 +48,25 @@
 #ifndef FRAMEWINDOW_H
 #define FRAMEWINDOW_H
 
-  // astroManager include files
-
-#include "ACL/astroFile.h"
-#include "dockWidgets/dockWidget.h"
-#include "Error.h"
-#include "qtExtensions/MdiSubWindow.h"
-#include "qtExtensions/qt.h"
-#include "astroManager.h"
-
-// Standard include files
+  // Standard C++ Library header files
 
 #include <list>
 #include <map>
 #include <memory>
 #include <vector>
 
+  // astroManager include files
+
+#include "ACL/astroFile.h"
+#include "astroManager.h"
+#include "dockWidgets/dockWidget.h"
+#include "Error.h"
+#include "qtExtensions/MdiSubWindow.h"
+
   // Boost Library
 
 #include "boost/filesystem.hpp"
+#include <QCL>
 
 #ifdef _MSC_VER
 # pragma warning( disable : 4290 )  /* Disable the warning about C++ exception specifications. */

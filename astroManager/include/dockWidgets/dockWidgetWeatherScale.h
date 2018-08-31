@@ -43,7 +43,9 @@
 #define DOCKWIDGETWEATHERSCALE
 
 #include "dockWidgetWeather.h"
-#include "../qtExtensions/qt.h"
+
+
+#include <QCL>
 
 namespace astroManager
 {

@@ -44,9 +44,9 @@
 #ifndef MDISUBWINDOW_H
 #define MDISUBWINDOW_H
 
-  // Qt Library
+  // Miscellaneous library header files
 
-#include "qt.h"
+#include <QCL>
 
 namespace astroManager
 {

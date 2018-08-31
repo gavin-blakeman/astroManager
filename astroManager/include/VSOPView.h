@@ -42,7 +42,9 @@
   // Includes
 
 #include "FrameWindow.h"
-#include "qtExtensions/qt.h"
+
+
+#include <QCL>
 
 namespace astroManager
 {

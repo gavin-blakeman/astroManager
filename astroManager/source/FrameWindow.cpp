@@ -78,7 +78,6 @@
 #include "../include/ImageComparison.h"
 #include "../include/windowImage/windowImageDisplay.h"
 #include "../include/windowImage/windowImageStacking.h"
-#include "../include/qtExtensions/qt.h"
 #include "../include/Settings.h"
 #include "../include/TextEditorFITS.h"
 #include "../include/Photometry.h"

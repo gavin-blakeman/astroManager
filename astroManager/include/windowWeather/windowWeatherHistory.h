@@ -41,7 +41,6 @@
 
   // astroManager
 
-#include "../qtExtensions/qt.h"
 #include "windowWeather.h"
 
   // Standard libraries
@@ -49,10 +48,12 @@
 #include <memory>
 #include <vector>
 
-// Qwt Library
+  // Miscellaneous library header files
 
+#include <QCL>
 #include <qwt_plot.h>
 //#include <qwt_plot.h>
+
 
 namespace astroManager
 {

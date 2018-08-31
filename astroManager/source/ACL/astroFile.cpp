@@ -45,8 +45,9 @@
 #include "../../include/ACL/FITSMemoryFileArray.h"
 #include "../../include/ACL/observatoryInformation.h"
 #include "../../include/ACL/telescope.h"
-#include "../../include/qtExtensions/qt.h"
 #include "../../include/Settings.h"
+
+#include <QCL>
 
 namespace astroManager
 {

@@ -150,7 +150,7 @@ namespace astroManager
 
       tableViewVersions->setModel(&queryModelVersion);
       tableViewVersions->setSortingEnabled(true);
-      tableViewVersions->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      //tableViewVersions->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
       //tableViewImages->setColumnHidden(10, true);
 
       comboBoxQuality->addItem("*", 1);
