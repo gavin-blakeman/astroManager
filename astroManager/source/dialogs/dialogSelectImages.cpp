@@ -289,7 +289,7 @@ namespace astroManager
 
       tableViewImages->setModel(&queryModel);
       tableViewImages->setSortingEnabled(true);
-      //tableViewImages->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      tableViewImages->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
       tableViewImages->setColumnHidden(9, true);
 
       populateTargets();

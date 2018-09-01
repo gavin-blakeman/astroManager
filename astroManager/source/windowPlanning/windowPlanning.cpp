@@ -66,6 +66,8 @@ namespace astroManager
       setupUI();
 
       setWindowTitle(tr("Observation Planning"));
+
+      loadPlanData();
     }
 
     /// @brief Responds when the observing site is changed.
@@ -82,11 +84,11 @@ namespace astroManager
     }
 
     /// @brief Function called when a different Observing Plan is selected.
-    /// @param[in] currentIndex - The new items index. (Zero based)
+    /// @param[in] currentIndex: The new items index. (Zero based)
     /// @throws None.
     /// @version 2018-02-13/GGB - Function created.
 
-    void CWindowPlanning::currentIndexChangedPlans(int currentIndex)
+    void CWindowPlanning::currentIndexChangedPlans(int)
     {
         // Save the new index as the default.
 
@@ -94,7 +96,7 @@ namespace astroManager
 
         // Clear the current list of objects.
 
-      //planTargets.clear();
+      loadPlanData();
     }
 
     /// @brief Responds to the 1s timer when triggered to update the time in the window and any other information required.
@@ -123,6 +125,23 @@ namespace astroManager
       {
         CODE_ERROR(astroManager);
       };
+    }
+
+    /// @brief Loads and displays the data for the plan.
+    /// @throws
+    /// @version 2018-09-01/GGB - Function created.
+
+    void CWindowPlanning::loadPlanData()
+    {
+      std::uint32_t currentPlan = comboBoxPlans->currentData().toUInt();
+
+        // Clear the current data.
+
+      targetList.clear();
+
+        // Load the list of items from the current plan.
+
+
     }
 
     /// @brief Responds to the Real Time push button being clicked.
@@ -161,7 +180,7 @@ namespace astroManager
     }
 
     /// @brief Respond to the LT Radio button being pressed.
-    /// @param[in] checked - Is the button in the checked state.
+    /// @param[in] checked: Is the button in the checked state.
     /// @throws None.
     /// @version 2018-04-15/GGB - Function created.
 
@@ -174,7 +193,7 @@ namespace astroManager
     }
 
     /// @brief Respond to the UT Radio button being pressed.
-    /// @param[in] checked - Is the button in the checked state.
+    /// @param[in] checked: Is the button in the checked state.
     /// @throws None.
     /// @version 2018-04-15/GGB - Function created.
 
@@ -187,7 +206,7 @@ namespace astroManager
     }
 
     /// @brief Respond to the LST Radio button being pressed.
-    /// @param[in] checked - Is the button in the checked state.
+    /// @param[in] checked: Is the button in the checked state.
     /// @throws None.
     /// @version 2018-04-15/GGB - Function created.
 
@@ -241,7 +260,7 @@ namespace astroManager
       ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
 
       tableWidgetPlanning->setSortingEnabled(true);
-      //tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
         // Populate combo boxes and select the last values selected.
 

@@ -43,9 +43,9 @@
 #include <memory>
 #include <vector>
 
-  // astroManager header files
+  // astroManager application header files
 
-
+#include "../astroManager.h"
 
   // Miscellaneous library header files
 
@@ -84,7 +84,6 @@ namespace astroManager
       col_columnCount,              // Always leave this one at the end as it contains the total column count.
     };
   private:
-    QTableWidget *parent_ = nullptr;
     std::vector<QTableWidgetItem *> columnMap;
     std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy;
 
@@ -92,7 +91,7 @@ namespace astroManager
 
   protected:
   public:
-    CTargetAstronomy(QTableWidget *, std::unique_ptr<ACL::CTargetAstronomy>);
+    CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>);
     void setColumnWidget(std::uint8_t, QTableWidgetItem *);
   };
 

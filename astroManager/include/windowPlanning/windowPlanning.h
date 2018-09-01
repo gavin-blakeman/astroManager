@@ -58,7 +58,7 @@ namespace astroManager
 {
   namespace windowPlanning
   {
-    class CWindowPlanning : public CMdiSubWindow
+    class CWindowPlanning final : public CMdiSubWindow
     {
       Q_OBJECT
 
@@ -86,6 +86,7 @@ namespace astroManager
       std::int_least32_t timeZoneOffset = 0;
 
       void setupUI();
+      void loadPlanData();
 
     protected:
     public:

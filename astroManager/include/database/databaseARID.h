@@ -46,13 +46,14 @@
 
 #include <memory>
 
+  // astroManager application header files.
+
 #include "database.h"
 #include "../ACL/astroFile.h"
 #include "../ACL/observatoryInformation.h"
+#include "../ACL/targetAstronomy.h"
 #include "../ACL/telescope.h"
 #include "../astroManager.h"
-
-
 
 namespace astroManager
 {
@@ -63,8 +64,17 @@ namespace astroManager
 
   namespace database
   {
-    class CARID : public CDatabase
+    class CARID final : public CDatabase
     {
+    public:
+      enum ETargetType
+      {
+        MAJORPLANET = 0x01,
+        MINORPLANET,
+        COMET,
+        STELLAR
+      };
+
     private:
       bool ARIDdisabled_;
       std::unique_ptr<QSqlQuery> sqlQuery;       ///< Pointer to the query that will be used
@@ -142,6 +152,10 @@ namespace astroManager
         // Dialog functions
 
       void populateDialogImageDetails(dialogs::CDialogImageDetails *);
+
+        // Observing plan functions
+
+      void readObservingPlanTargets(planID_t, std::vector<std::unique_ptr<CTargetAstronomy>> &targetList);
     };
 
     extern CARID *databaseARID;

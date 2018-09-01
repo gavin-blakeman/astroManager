@@ -196,7 +196,7 @@ namespace astroManager
 
     tableViewImages->setModel(&queryModel);
     tableViewImages->setSortingEnabled(true);
-    //tableViewImages->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    tableViewImages->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     tableViewImages->setColumnHidden(QTE::CSelectImageQueryModel::imageID_c, true);
 
     pushButtonOpenImage->setEnabled(false);

@@ -47,7 +47,7 @@
 #include <cstdint>
 #include <limits>
 
-  // astroManager files
+  // astroManager application headerfiles
 
 #include "../../include/dialogs/dialogConfigureSite.h"
 #include "../../include/dialogs/dialogConfigureTelescope.h"
@@ -56,7 +56,7 @@
 #include "../../include/Settings.h"
 #include "../../include/astroManager.h"
 
-  // Other Libraries
+  // Miscellaneous library header files
 
 #include <ACL>
 #include "GeographicLib/Geodesic.hpp"
@@ -72,13 +72,12 @@ namespace astroManager
 
     //*****************************************************************************************************************************
     //
-    // ARID
-    // Astronomical Research Information Database
+    // ARID - Astronomical Research Information Database
     //
     //*****************************************************************************************************************************
 
     /// @brief Constructor for the class.
-    /// @param[in] connectionName - The name to associate with this database.
+    /// @param[in] connectionName: The name to associate with this database.
     /// @version 2017-06-21/GGB - Added sqlWriter information.
     /// @version 2017-06-20/GGB - Updated to match changes to CDatabase. (Bug #69)
     /// @version 2013-05-15/GGB - Added code to check if the database is disabled. (Will be disabled by default!)
@@ -210,9 +209,9 @@ namespace astroManager
     }
 
     /// @brief Downloads an image from the database.
-    /// @param[in] imageID - The ID of the image to download.
-    /// @param[in] imageVersion - The version of the image to download.
-    /// @param[out] byteArray - The QByteArray to receive the downloaded image.
+    /// @param[in] imageID: The ID of the image to download.
+    /// @param[in] imageVersion: The version of the image to download.
+    /// @param[out] byteArray: The QByteArray to receive the downloaded image.
     /// @throws None.
     /// @version 2017-08-12/GGB - Function created.
 
@@ -270,8 +269,7 @@ namespace astroManager
     }
 
     /// @brief Finds the observing site closest to the coordinate passed in observatory.
-    /// @param[in/out] observatory - The coordinates to search for the observing site. The site name, ID and IAUCode are written
-    ///                              back.
+    /// @param[in/out] observatory: The coordinates to search for the observing site. The site name, ID and IAUCode are written back.
     /// @returns true - Site found
     /// @returns false  - Site not found.
     /// @throws None.
@@ -412,7 +410,7 @@ namespace astroManager
     }
 
     /// @brief Searches the database to find the details of a telescope that is defined in telescope.
-    /// @param[in/out] telescope - Structure with data that will be filled with database data.
+    /// @param[in/out] telescope: Structure with data that will be filled with database data.
     /// @returns true - telescope found
     /// @returns false - telescope not found.
     /// @throws GCL::CRuntimeAssert(...)
@@ -466,8 +464,8 @@ namespace astroManager
     }
 
     /// @brief Retrieves an imageName from the database.
-    /// @param[in] imageID - The ID of the image to get the name.
-    /// @param[out] imageName - The retrieved name of the image.
+    /// @param[in] imageID: The ID of the image to get the name.
+    /// @param[out] imageName: The retrieved name of the image.
     /// @returns true - image found and imageName valid.
     /// @returns false - image not found. imageName invalid.
     /// @throws None.
@@ -514,8 +512,8 @@ namespace astroManager
     }
 
     /// @brief Gets information on a specified observing site (if available).
-    /// @param[in] siteID - The ID of the site to retrieve information for.
-    /// @param[out] site - The object to store the information in.
+    /// @param[in] siteID: The ID of the site to retrieve information for.
+    /// @param[out] site: The object to store the information in.
     /// @returns true - Success
     /// @returns false - The object was not found.
     /// @throws None.
@@ -572,8 +570,8 @@ namespace astroManager
     }
 
     /// @brief Gets the timezone offset from the database.
-    /// @param[in] siteID - The site ID to use.
-    /// @param[out] offset - The offset value from the site ID.
+    /// @param[in] siteID: The site ID to use.
+    /// @param[out] offset: The offset value from the site ID.
     /// @returns true - Success
     /// @returns false - Unable to find site.
     /// @throws None.
@@ -621,7 +619,7 @@ namespace astroManager
     }
 
     /// @brief Deletes an image. This includes the meta-data and the image data.
-    /// @param[in] imageID - The ID of the image to delete.
+    /// @param[in] imageID: The ID of the image to delete.
     /// @note 1. All image versions are deleted.
     /// @note 2. All image data is deleted.
     /// @note 3. The image master record is deleted.
@@ -668,7 +666,7 @@ namespace astroManager
     }
 
     /// @brief Function to delete all the image data (not the master record) associated with the imageID
-    /// @param[in] imageID - The ID of the image to delete.
+    /// @param[in] imageID: The ID of the image to delete.
     /// @note 1. All image versions are deleted.
     /// @note 2. All image version data is deleted.
     /// @returns true - The imageData was deleted.
@@ -704,8 +702,8 @@ namespace astroManager
     }
 
     /// @brief Deletes the specified version of an image.
-    /// @param[in] imageID - The ID of the image.
-    /// @param[in] imageVersion - The version of the image to delete.
+    /// @param[in] imageID: The ID of the image.
+    /// @param[in] imageVersion: The version of the image to delete.
     /// @returns true - The imageData was deleted.
     /// @returns false - The imageData was not deleted.
     /// @version 2018-05-12/GGB - Function created.
@@ -739,7 +737,7 @@ namespace astroManager
 
 
     /// @brief Checks if an image is registered.
-    /// @param[in] fileName - The filename to check
+    /// @param[in] fileName: The filename to check
     /// @returns true - The image is registered
     /// @returns false - The image is not registered.
     /// @throws None.
@@ -790,8 +788,8 @@ namespace astroManager
     }
 
     /// @brief Checks if an image has been registered with the same file name.
-    /// @param[in] fileName - The file name to check.
-    /// @param[out] uuid - The UUID of the image if the image has been registered. Undefined if the image has not been registered.
+    /// @param[in] fileName: The file name to check.
+    /// @param[out] uuid: The UUID of the image if the image has been registered. Undefined if the image has not been registered.
     /// @returns true - The file name is already registered.
     /// @returns false - The file name is not registered
     /// @throws
@@ -843,8 +841,8 @@ namespace astroManager
     }
 
     /// @brief Checks if an image has been registered with the same file name.
-    /// @param[in] fileName - The file name to check.
-    /// @param[out] imageId - The ID f the image if the image has been registered. Undefined if the image has not been registered.
+    /// @param[in] fileName: The file name to check.
+    /// @param[out] imageId: The ID f the image if the image has been registered. Undefined if the image has not been registered.
     /// @returns true - The file name is already registered.
     /// @returns false - The file name is not registered
     /// @throws GCL::CError(astroManager, 0x4000)
@@ -899,8 +897,8 @@ namespace astroManager
     }
 
     /// @brief Determines if the UUID has been registered.
-    /// @param[in] UUID - The UUID to check for registration.
-    /// @param[out] imageID - The imageID correesponding to the UUID.
+    /// @param[in] UUID: The UUID to check for registration.
+    /// @param[out] imageID: The imageID correesponding to the UUID.
     /// @returns true - UUID is registered and imageID is a valid ID.
     /// @returns false - The UUID is not registered.
     /// @throws
@@ -1085,7 +1083,7 @@ namespace astroManager
     }
 
     /// @brief Function to save the original image.
-    /// @param[in] astroFile - Pointer to the astroFile that needs to be saved.
+    /// @param[in] astroFile: Pointer to the astroFile that needs to be saved.
     /// @note 1. When an original image is saved, it is always saved as version 0. Any other image saves will only save from
     ///          revision 1.
     /// @note 2. While the astroFile contains the information to be saved, the actual information that will be written is on the
@@ -1197,7 +1195,7 @@ namespace astroManager
     }
 
     /// @brief Populates a list widget with filter information.
-    /// @param[in] listWidget - The listWidget to populate.
+    /// @param[in] listWidget: The listWidget to populate.
     /// @throws None.
     /// @version 2017-08-19/GGB - Function created.
 
@@ -1221,7 +1219,7 @@ namespace astroManager
     }
 
     /// @brief Populates a combo with the available filters. TBL_FILTERS
-    /// @param[in] combo - Pointer to the comboBox to populate.
+    /// @param[in] combo: Pointer to the comboBox to populate.
     /// @throws None.
     /// @version 2010-05-29/GGB - Function created.
 
@@ -1278,8 +1276,8 @@ namespace astroManager
     }
 
     /// @brief Populates a list widget with a list of imager names.
-    /// @param[in] listWidget - Pointer to the list widget to populate.
-    /// @param[in] includeDeleted - Include deleted sites.
+    /// @param[in] listWidget: Pointer to the list widget to populate.
+    /// @param[in] includeDeleted: Include deleted sites.
     /// @throws GCL::CRuntimeError
     /// @version 2018-02-02/GGB - Function created.
 
@@ -1318,8 +1316,8 @@ namespace astroManager
     }
 
     /// @brief Populates a list widget with a list of site names.
-    /// @param[in] listWidget - Pointer to the list widget to populate.
-    /// @param[in] includeDeleted - Include deleted sites.
+    /// @param[in] listWidget: Pointer to the list widget to populate.
+    /// @param[in] includeDeleted: Include deleted sites.
     /// @throws GCL::CRuntimeError
     /// @version 2018-02-02/GGB - Function created.
 
@@ -1358,7 +1356,7 @@ namespace astroManager
     }
 
     /// @brief Populates a list widget with a list of telescope names.
-    /// @param[in] listWidget - Pointer to the list widget to populate.
+    /// @param[in] listWidget: Pointer to the list widget to populate.
     /// @throws GCL::CRuntimeError
     /// @version 2018-02-03/GGB - Function created.
 
@@ -1397,8 +1395,8 @@ namespace astroManager
     }
 
     /// @brief Fills a comboBox with available observing plans.
-    /// @param[in] comboBox - The comboBox to populate.
-    /// @param[in] selectDefault - Select the default (last selected plan)
+    /// @param[in] comboBox: The comboBox to populate.
+    /// @param[in] selectDefault: Select the default (last selected plan)
     /// @throws None.
     /// @version 2018-02-06/GGB - Function created.
 
@@ -1426,7 +1424,7 @@ namespace astroManager
 
             std::uint_fast32_t index;
 
-            for (index = 0; index < comboBox->count(); index++)
+            for (index = 0; index < static_cast<std::uint_least32_t>(comboBox->count()); index++)
             {
               if (comboBox->itemData(index) == siteID)
               {
@@ -1446,8 +1444,8 @@ namespace astroManager
     }
 
     /// @brief Populates a combo box with site information.
-    /// @param[in] comboBox - The combo box to populate.
-    /// @param[in] bSelect - boolean of whether the default value should be selected.
+    /// @param[in] comboBox: The combo box to populate.
+    /// @param[in] bSelect: boolean of whether the default value should be selected.
     /// @throws None.
     /// @version 2018-02-06/GGB - Changed function name and updated logic.
     /// @version 2010-05-28/GGB - 1) Parameter 2 changed to bool from BOOL
@@ -1498,11 +1496,12 @@ namespace astroManager
       };
     }
 
-    /// Called to populate a combo box with the observer names.
-    //
-    // 2010-05-28/GGB - Uses the Qt API.
-    // 2010-01-18/GGB - Added additional paramter to determine if the current selected value should be selected.
-    // 2009-11-20/GGB - Function created.
+    /// @brief Called to populate a combo box with the observer names.
+    /// @param[in] combo: The comboBox to populate.
+    /// @param[in] bSelect:
+    /// @version 2010-05-28/GGB - Uses the Qt API.
+    /// @version 2010-01-18/GGB - Added additional paramter to determine if the current selected value should be selected.
+    /// @version 2009-11-20/GGB - Function created.
 
     void CARID::PopulateObserverCombo(QComboBox *combo, bool bSelect)
     {
@@ -1531,7 +1530,7 @@ namespace astroManager
     }
 
     /// @brief Populates a combo box with the table of standard filters.
-    /// @param[in] combo - The comboBox to populate.
+    /// @param[in] combo: The comboBox to populate.
     /// @throws None.
     /// @version 2010-05-29/GGB - Function created.
 
@@ -1554,11 +1553,13 @@ namespace astroManager
       };
     }
 
-    /// Populates available telescope names into a combo box.
-    //
-    // 2010-05-28/GGB - Changed to use Qt API.
-    // 2010-01-18/GGB - Added additional paramter to determine if the current selected value should be selected.
-    // 2009-11-20/GGB - Function created.
+    /// @brief Populates available telescope names into a combo box.
+    /// @param[in] combo: The comboBox to populate.
+    /// @param[in] bSelect:
+    /// @throws
+    /// @version 2010-05-28/GGB - Changed to use Qt API.
+    /// @version 2010-01-18/GGB - Added additional paramter to determine if the current selected value should be selected.
+    /// @version 2009-11-20/GGB - Function created.
 
     void CARID::PopulateTelescopeCombo(QComboBox *combo, bool bSelect)
     {
@@ -1600,6 +1601,69 @@ namespace astroManager
       ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
       ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
       ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+    }
+
+    /// @brief Reads the plan targets in from the database.
+    /// @param[in] planID: The plan ID to read.
+    /// @param[out] targetList: The vector to write the targets to.
+    /// @throws
+    /// @version 2018-09-01/GGB - Function created.
+
+    void CARID::readObservingPlanTargets(planID_t planID, std::vector<std::unique_ptr<CTargetAstronomy>> &targetList)
+    {
+        // Create the query.
+
+      sqlWriter.resetQuery();
+      sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID"})
+               .from({"TBL_TARGETS"})
+               .where({GCL::sqlwriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
+
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      {
+        while (sqlQuery->next())
+        {
+            // Check the type and create the object.
+
+          switch(sqlQuery->value(2).toUInt())
+          {
+            case MAJORPLANET:
+            {
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                        std::make_unique<ACL::CTargetMajorPlanet>(sqlQuery->value(3).toUInt())));
+              break;
+            };
+            case MINORPLANET:
+            {
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                        std::make_unique<ACL::CTargetMinorPlanet>()));
+              break;
+            };
+            case COMET:
+            {
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                        std::make_unique<ACL::CTargetMinorComet>()));
+              break;
+            };
+            case STELLAR:
+            {
+                // Need to load the information needed form the ATID database.
+
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                        std::make_unique<ACL::CTargetMinorStellar>()));
+              break;
+            };
+            default:
+            {
+              ASTROMANAGER_CODE_ERROR;
+              break;
+            };
+          };
+        };
+      }
+      else
+      {
+        processErrorInformation();
+      };
     }
 
     /// @brief Adds an image record to the images table.
@@ -1746,7 +1810,7 @@ namespace astroManager
     }
 
     /// @brief Registers an observing site based on the existing CObservatory parameters passed to the function.
-    /// @param[in] newSite - The new site to register.
+    /// @param[in] newSite: The new site to register.
     /// @returns true = success
     /// @returns false = fail
     /// @throws None
@@ -1795,7 +1859,7 @@ namespace astroManager
     }
 
     /// @brief Function to register a new telescope.
-    /// @param[in] telescope - The new telescope to register.
+    /// @param[in] telescope: The new telescope to register.
     /// @returns true = success
     /// @returns false = fail
     /// @throws None.
@@ -1842,8 +1906,8 @@ namespace astroManager
     }
 
     /// @brief Register and upload an image to the database.
-    /// @param[in] image - Pointer to the image to upload.
-    /// @param[in] filePath - The complete path and file name.
+    /// @param[in] image: Pointer to the image to upload.
+    /// @param[in] filePath: The complete path and file name.
     /// @returns true - Image registered and uploaded.
     /// @returns false - Image not registered or uploaded.
     /// @throws None.
@@ -1872,9 +1936,9 @@ namespace astroManager
     }
 
     /// @brief Updates the image flags.
-    /// @param[in] imageID - The ID of the image to update.
-    /// @param[in] astrometryFlag - New value for the astrometric value.
-    /// @param[in] photometryFlag - New value for the photometric value.
+    /// @param[in] imageID: The ID of the image to update.
+    /// @param[in] astrometryFlag: New value for the astrometric value.
+    /// @param[in] photometryFlag: New value for the photometric value.
     /// @returns true - Success
     /// @returns false - Failure
     /// @throws None.
@@ -1905,8 +1969,8 @@ namespace astroManager
     }
 
     /// @brief Updates the image name.
-    /// @param[in] imageID - The ID of the image to update.
-    /// @param[in] imageName - The new image name to assign.
+    /// @param[in] imageID: The ID of the image to update.
+    /// @param[in] imageName: The new image name to assign.
     /// @returns true - Success
     /// @returns false - Failure
     /// @throws None.
@@ -1950,8 +2014,8 @@ namespace astroManager
     }
 
     /// @brief Updates the image Quality.
-    /// @param[in] imageID - The ID of the image to update.
-    /// @param[in] imageQuality - The new Quality value.
+    /// @param[in] imageID: The ID of the image to update.
+    /// @param[in] imageQuality: The new Quality value.
     /// @returns true - Success
     /// @returns false - Failure
     /// @throws None.
@@ -1984,9 +2048,9 @@ namespace astroManager
     }
 
     /// @brief Saves an image into the image storage table.
-    /// @param[in] fileName - The filename of the image to save.
-    /// @param[in] imageID - The ID to associate with the imaged.
-    /// @param[in] imageVersion - The version number to associate with the image.
+    /// @param[in] fileName: The filename of the image to save.
+    /// @param[in] imageID: The ID to associate with the imaged.
+    /// @param[in] imageVersion: The version number to associate with the image.
     /// @throws None.
     /// @version 2017-07-28/GGB - Function created.
 
