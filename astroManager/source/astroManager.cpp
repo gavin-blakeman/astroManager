@@ -36,7 +36,7 @@
 //
 //*********************************************************************************************************************************
 
-// Standard library
+  // Standard C++ library header files
 
 #include <cstdio>
 #include <ctime>
@@ -46,16 +46,15 @@
 #include <iostream>
 #include <sstream>
 
-  // astroManager Header Files
+  // astroManager application header files
 
 #include "../include/qtExtensions/application.h"
-#include "../include/database/database.h"
 #include "../include/database/databaseARID.h"
 #include "../include/database/databaseATID.h"
 #include "../include/database/databaseWeather.h"
-#include "../include/Error.h"
+#include "../include/error.h"
 #include "../include/FrameWindow.h"
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
     // Miscellaneous include files
 
@@ -196,7 +195,7 @@ int main(int argc, char *argv[])
       // Identify the available database drivers and initialise the list of drivers.
 
     INFOMESSAGE("Available database drivers: " + QSqlDatabase::drivers().join(", ").toStdString());
-    astroManager::database::CDatabase::initialiseDrivers();
+    QCL::CDatabase::initialiseDrivers();
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating database Connections...");
     splash.showMessage("Creating database objects...", Qt::AlignTop | Qt::AlignHCenter, Qt::white);

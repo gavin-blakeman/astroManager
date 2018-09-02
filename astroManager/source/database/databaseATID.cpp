@@ -44,26 +44,21 @@
 
 #include "../../include/database/databaseATID.h"
 
-  // astroManager files
-
-#include "../../include/Settings.h"
-#include "../../include/astroManager.h"
-
-// Qt Library
-
-//#include <QtSql/QtSql>
-//#include <QtNetwork/QtNetwork>
-
-  // Standard libraries
+  // Standard C++ library header files
 
 #include <sstream>
 #include <string>
 
-  // Boost libraries
+  // astroManager application header files
+
+#include "../../include/astroManager.h"
+#include "../../include/error.h"
+#include "../../include/settings.h"
+
+  // Miscellaneous library header files
 
 #include "boost/lexical_cast.hpp"
 #include "boost/algorithm/string.hpp"
-#include "boost/optional.hpp"
 #include <QCL>
 
 namespace astroManager
@@ -196,10 +191,14 @@ namespace astroManager
     }
 
     /// @brief Gets the most current magnitude and mag error values for the given filter number.
-    //
+    /// @param[in] OBJECT_ID:
+    /// @param[in] FILTER_ID:
+    /// @param[in] Mag:
+    /// @param[in] Mag_err:
+    /// @throws
     /// @version 2010-11-28/GGB - Function created
 
-    void CATID::GetLatestMagnitude(const long long OBJECT_ID, const long long FILTER_ID, float &Mag, float &Mag_err) const
+    void CATID::GetLatestMagnitude(objectID_t OBJECT_ID, const long long FILTER_ID, float &Mag, float &Mag_err) const
     {
       QSqlQuery query(*dBase);
       QString szSQL = QString("SELECT TBL_MAGNITUDES.MAG, TBL_MAGNITUDES.MAG_ERR " \
@@ -283,8 +282,8 @@ namespace astroManager
     }
 
     /// @brief Parse a returned reply from SIMBAD.
-    /// @param[in] replyString - The SIMBAD reply.
-    /// @param[in] targetStore - Vector containing the returned objects.
+    /// @param[in] replyString: The SIMBAD reply.
+    /// @param[in] targetStore: Vector containing the returned objects.
     /// @returns true - Returned string is a valid return from SIMBAD
     /// @returns false - Returned string is not a valid return from SIMBAD.
     /// @throws Nome.
@@ -390,9 +389,9 @@ namespace astroManager
       return returnValue;
     }
 
-    // Adds the filters into the specified list widget.
-    //
-    // 2011-06-18/GGB - Initial creation of function
+    /// @brief Adds the filters into the specified list widget.
+    /// @param[in] lw:
+    /// @version 2011-06-18/GGB - Initial creation of function
 
     void CATID::PopulateFiltersList(QListWidget *lw)
     {
@@ -413,9 +412,10 @@ namespace astroManager
       };
     }
 
-    // Adds the filters into the specified list widget.
-    //
-    // 2011-06-18/GGB - Function Created
+    /// @brief Adds the filters into the specified list widget.
+    /// @param[in] lw:
+    /// @param[in] icon:
+    /// @version 2011-06-18/GGB - Function Created
 
     void CATID::PopulateFiltersList(QListWidget *lw, QIcon &icon)
     {
@@ -591,44 +591,6 @@ namespace astroManager
       {
         sqlWriter.readMapFile(mfn);
       };
-    }
-
-    // Builds a TLocation object from the database using the location number passed in the parameter.
-    // If no valid location is found, then NULL is returned.
-    //
-    // 2011-07-16/GGB
-    // 2010-07-07/GGB - Function created.
-
-    bool CATID::getLocation(QVariant const &vSiteID, ACL::CGeographicLocation &location)
-    {
-//      QSqlQuery query(*dBase);
-//      QString szSQL = QString( \
-//        "SELECT l.Latitude, l.Longitude, l.Altitude, l.TimeZone FROM TBL_SITES l WHERE l.SITE_ID = %1").arg(vSiteID.toString());
-
-//      query.exec(szSQL);
-
-//      if (query.first())
-//      {
-//        location.setLocation(query.value(0).toDouble(), query.value(1).toDouble(), query.value(2).toInt(), query.value(3).toDouble());
-//        return true;
-//      }
-//      else
-//        return false;
-    }
-
-    /// @brief Gets the location number after querying the database and registry.
-    /// @throws
-    /// @version 2010-06-12/GGB - Function Created
-
-    ACL::CGeographicLocation *CATID::GetLocation()
-    {
-      QVariant vSiteID;
-      ACL::CGeographicLocation *returnValue = new ACL::CGeographicLocation();
-
-      vSiteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID);
-
-      getLocation(vSiteID, *returnValue);
-      return ( returnValue);
     }
 
     // Gets an object name from the ATID database.
@@ -1001,7 +963,7 @@ namespace astroManager
         }
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         }
       }
@@ -1080,6 +1042,63 @@ namespace astroManager
       bool returnValue = false;
 
       return returnValue;
+    }
+
+    /// @brief Reads the stellar object information for the specified stellar object.
+    /// @param[in] objectID: The ID of the object to query.
+    /// @param[in] target: The stellar target to write the information to.
+    /// @throws
+    /// @version 2018-09-02/GGB - Function created.
+
+    void CATID::readStellarObjectInformation(objectID_t objectID, ACL::CTargetStellar *target)
+    {
+      if (useSIMBAD || ATIDdisabled_)
+      {
+        readStellarObjectInformation_SIMBAD(objectID, target);
+      }
+      else
+      {
+        readStellarObjectInformation_ATID(objectID, target);
+      };
+    }
+
+    /// @brief Reads the stellar object information for the specified stellar object.
+    /// @param[in] objectID: The ID of the object to query.
+    /// @param[in] target: The stellar target to write the information to.
+    /// @throws
+    /// @version 2018-09-02/GGB - Function created.
+
+    void CATID::readStellarObjectInformation_ATID(objectID_t objectID, ACL::CTargetStellar *target)
+    {
+      sqlWriter.resetQuery();
+      sqlWriter.select({"RA", "DEC", "EPOCH", "pmRA", "pmDEC", "RadialVelocity", "Parallax"})
+               .from({"TBL_STELLAROBJECTS"})
+               .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      {
+        target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
+        target->setEpoch(sqlQuery->value(2).toString().toStdString());
+        target->pmRA(sqlQuery->value(3).toDouble());
+        target->pmDec(sqlQuery->value(4).toDouble());
+        target->radialVelocity(sqlQuery->value(5).toDouble());
+        target->parallax(sqlQuery->value(6).toDouble());
+      }
+      else
+      {
+        processErrorInformation();
+      };
+    }
+
+    /// @brief Reads the stellar object information for the specified stellar object.
+    /// @param[in] objectID: The ID of the object to query.
+    /// @param[in] target: The stellar target to write the information to.
+    /// @throws
+    /// @version 2018-09-02/GGB - Function created.
+
+    void CATID::readStellarObjectInformation_SIMBAD(objectID_t, ACL::CTargetStellar *)
+    {
+
     }
 
     /// @brief Procedure to open SQLite database.

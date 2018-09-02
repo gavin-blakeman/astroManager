@@ -53,7 +53,7 @@
 #include "../include/dockWidgets/dockWidgetMagnify.h"
 #include "../include/dockWidgets/dockWidgetNavigator.h"
 #include "../include/dockWidgets/dockWidgetPhotometry.h"
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
   // Qt Framework
 

@@ -50,31 +50,23 @@
 
 #include "../../include/dialogs/dialogs.h"
 
-  // astroManager include files
-
-#include "../../include/database/database.h"
-#include "../../include/database/databaseARID.h"
-#include "../../include/database/databaseATID.h"
-#include "../../include/Settings.h"
-#include "../../include/astroManager.h"
-
-  // Qt Framework
-
-#include <QtSql/QtSql>
-#include <QtUiTools/QtUiTools>
-
-  // Standard library
+  // Standard C++ library header files
 
 #include <cfloat>
 #include <cmath>
 
-  // Boost library
+  // astroManager application header files
+
+#include "../../include/database/databaseARID.h"
+#include "../../include/database/databaseATID.h"
+#include "../../include/settings.h"
+#include "../../include/astroManager.h"
+
+  // Miscellaneous library header files.
 
 #include "boost/filesystem.hpp"
-
-  // Other libraries
-
 #include <GCL>
+#include <QCL>
 
 namespace astroManager
 {

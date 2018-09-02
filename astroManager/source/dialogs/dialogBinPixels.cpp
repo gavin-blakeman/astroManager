@@ -49,8 +49,8 @@
 //*********************************************************************************************************************************
 
 #include "../../include/dialogs/dialogBinPixels.h"
-#include "../../include/Error.h"
-#include "../../include/Settings.h"
+#include "../../include/error.h"
+#include "../../include/settings.h"
 
 #include <GCL>
 

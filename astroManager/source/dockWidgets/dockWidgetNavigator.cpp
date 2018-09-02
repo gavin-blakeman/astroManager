@@ -47,7 +47,7 @@
 
   // astroManager header files
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 #include "../../include/astroManager.h"
 
 namespace astroManager

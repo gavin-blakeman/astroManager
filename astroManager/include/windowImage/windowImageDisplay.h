@@ -57,7 +57,7 @@
 #include "../astrometry/astrometryObservation.h"
 #include "windowImage.h"
 #include "../dialogs/dialogs.h"
-#include "../Error.h"
+#include "../error.h"
 #include "../FrameWindow.h"
 #include "../qtExtensions/MdiSubWindow.h"
 #include "../photometry/photometryObservation.h"

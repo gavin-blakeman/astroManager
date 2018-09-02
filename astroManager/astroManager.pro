@@ -75,11 +75,9 @@ INCLUDEPATH += \
 
 SOURCES += \
     source/FrameWindow.cpp \
-    source/Error.cpp \
     source/VSOPView.cpp \
     source/Utilities.cpp \
     source/TextEditor.cpp \
-    source/Settings.cpp \
     source/Photometry.cpp \
     source/ImageComparison.cpp \
     source/FileBatchConvert.cpp \
@@ -110,7 +108,6 @@ SOURCES += \
     source/database/databaseATID.cpp \
     source/database/databaseWeather.cpp \
     source/database/databaseARID.cpp \
-    source/database/database.cpp \
     source/dialogs/dialogBinPixels.cpp \
     source/dialogs/dialogOptions.cpp \
     source/dialogs/dialogExportAsJPEG.cpp \
@@ -156,7 +153,9 @@ SOURCES += \
     source/windowPlanning/windowPlanning.cpp \
     source/astroManager.cpp \
     source/astroManagerHelp.cpp \
-    source/ACL/targetAstronomy.cpp
+    source/ACL/targetAstronomy.cpp \
+    source/error.cpp \
+    source/settings.cpp
 
 HEADERS  += \
     include/FrameWindow.h \
@@ -166,9 +165,7 @@ HEADERS  += \
     include/VSOPView.h \
     include/Utilities.h \
     include/TextEditor.h \
-    include/Settings.h \
     include/Photometry.h \
-    include/Error.h \
     include/Configure.h \
     include/TextEditorFITS.h \
     include/StellarObjects.h \
@@ -192,7 +189,6 @@ HEADERS  += \
     include/windowImage/windowImageDisplay.h \
     include/windowCalibration/windowCalibration.h \
     include/windowCalibration/ImageCalibration.h \
-    include/database/database.h \
     include/database/databaseARID.h \
     include/database/databaseATID.h \
     include/database/databaseWeather.h \
@@ -220,7 +216,6 @@ HEADERS  += \
     include/ACL/astroFile.h \
     include/windowSelectImage.h \
     include/qtExtensions/application.h \
-    include/qtExtensions/qt.h \
     include/qtExtensions/TextEditSink.h \
     include/qtExtensions/MdiSubWindow.h \
     include/qtExtensions/sqlQueryModel.h \
@@ -246,7 +241,9 @@ HEADERS  += \
     include/windowPlanning/windowPlanning.h \
     include/astroManager.h \
     include/astroManagerHelp.h \
-    include/ACL/targetAstronomy.h
+    include/ACL/targetAstronomy.h \
+    include/error.h \
+    include/settings.h
 
 
 RESOURCES += \
@@ -289,6 +286,7 @@ else:unix:CONFIG(debug, debug|release) {
   #LIBS += -L../../Library/Library -lRaw
   LIBS += -L../SCL -lSCL
   LIBS += -L../../Library/Library -lWCS
+  LIBS += -L../QCL -lQCL
   LIBS += -L../WCL -lWCL
   LIBS += -L../../../Library/Library -lboost_filesystem
   LIBS += -L../../../Library/Library/unix/debug -lboost_system
@@ -309,6 +307,7 @@ else:unix:CONFIG(release, debug|release) {
   LIBS += -L../../Library/Library/unix/release -lqwt
   #LIBS += -L../../Library/Library/unix/release -lRaw
   LIBS += -L../../Library/Library/unix/release -lSCL
+  LIBS += -L../QCL -lQCL
   LIBS += -L../../Library/Library/unix/release -lWCS
   LIBS += -L../../Library/Library/unix/release -lWCL
   LIBS += -L../../Library/Library/unix/release -lboost_filesystem

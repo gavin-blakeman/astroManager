@@ -37,23 +37,23 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/Settings.h"
+#include "../include/settings.h"
+
+  // Standard C++ library header files.
+
+#include <thread>
 
   // astroManager include files.
 
 #include "../include/astroManager.h"
 
-  // Miscellaneous Libraries
+  // Miscellaneous Library header files.
 
 #include <ACL>
 #include <GCL>
 #include <MCL>
 #include <PCL>
 #include <SCL>
-
-  // Standard C++ libraries.
-
-#include <thread>
 
 namespace astroManager
 {
@@ -73,7 +73,7 @@ namespace astroManager
     }
 
     /// @brief Copys the recent photometry values to one older and adds the new value at position 1.
-    /// @param[in] mostRecent - The most recent entry to add.
+    /// @param[in] mostRecent: The most recent entry to add.
     /// @throws None.
     /// @version 2010-11-27/GGB - Function created.
 

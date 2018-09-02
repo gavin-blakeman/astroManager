@@ -48,7 +48,7 @@
 #include "../../include/dialogs/dialogSelectObserver.h"
 
 #include "../../include/database/databaseATID.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
 namespace astroManager
 {

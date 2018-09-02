@@ -62,15 +62,15 @@
 
 #include "../include/Configure.h"
 
-  // astroManager
+  // astroManager application header files.
 
-#include "../include/database/database.h"
 #include "../include/database/databaseATID.h"
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
-  // Miscellaneous libraries
+  // Miscellaneous library header files.
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {
@@ -134,7 +134,7 @@ namespace astroManager
         vSortOrder = query.value(1);
         nSortOrder = vSortOrder.toUInt();
 
-        database::CreateRecord_TBL_CATALOGORDER(record);
+        //database::CreateRecord_TBL_CATALOGORDER(record);
 
         model.setTable("TBL_CATALOGORDER");
         model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -208,7 +208,7 @@ namespace astroManager
         vSortOrder = query.value(1);
         nSortOrder = vSortOrder.toUInt();
 
-        database::CreateRecord_TBL_CATALOGORDER(record);
+        //database::CreateRecord_TBL_CATALOGORDER(record);
 
         model.setTable("TBL_CATALOGORDER");
         model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -378,7 +378,7 @@ namespace astroManager
       QSqlTableModel model(0,database::databaseATID->database());
       QSqlRecord record;
 
-      database::CreateRecord_TBL_INSTRUMENTS(record);
+      //database::CreateRecord_TBL_INSTRUMENTS(record);
 
       model.setTable("TBL_INSTRUMENTS");
       model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -616,7 +616,7 @@ namespace astroManager
         nRow = tableWidget->rowCount();
         insertRow(nRow, query);
       };
-    };
+    }
 
     // Handles the don't display button being pressed.
     //
@@ -628,7 +628,7 @@ namespace astroManager
       QSqlTableModel model(0, database::databaseATID->database());
       QSqlRecord record;
 
-      database::CreateRecord_TBL_OBSERVERS(record);
+      //database::CreateRecord_TBL_OBSERVERS(record);
 
       model.setTable("TBL_OBSERVERS");
       model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -832,7 +832,7 @@ namespace astroManager
       QSqlTableModel model;
       QSqlRecord record;
 
-      database::CreateRecord_TBL_SITES(record);
+      //database::CreateRecord_TBL_SITES(record);
 
       model.setTable("TBL_SITES");
       model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -1112,7 +1112,7 @@ namespace astroManager
       QSqlTableModel model(0, database::databaseATID->database());
       QSqlRecord record;
 
-      database::CreateRecord_TBL_TELESCOPES(record);
+      //database::CreateRecord_TBL_TELESCOPES(record);
 
       model.setTable("TBL_TELESCOPES");
       model.setEditStrategy(QSqlTableModel::OnRowChange);
@@ -1328,7 +1328,7 @@ namespace astroManager
       model.setEditStrategy(QSqlTableModel::OnRowChange);
       model.select();
 
-      database::CreateRecord_TBL_INSTRUMENTS(record);
+      //database::CreateRecord_TBL_INSTRUMENTS(record);
       if (szShortText.isNull())
         dlg->reject();
       else
@@ -1458,7 +1458,7 @@ namespace astroManager
       model.setEditStrategy(QSqlTableModel::OnRowChange);
       model.select();
 
-      database::CreateRecord_TBL_OBSERVERS(record);
+      //database::CreateRecord_TBL_OBSERVERS(record);
 
       if (szShortText.isNull())
         dlg->reject();
@@ -1468,7 +1468,7 @@ namespace astroManager
         {
             // Must create a new record.
 
-          database::CreateObserver(QVariant(szShortText), QVariant(szAAVSOInitials), dontdisplay, vObserverID);
+          //database::CreateObserver(QVariant(szShortText), QVariant(szAAVSOInitials), dontdisplay, vObserverID);
         }
         else
         {

@@ -40,10 +40,13 @@
 #ifndef ERROR_H
 #define ERROR_H
 
+  // Standard C++ library header fles.
+
 #include <map>
 #include <string>
-
 #include <stdexcept>
+
+  // Miscellaneous library header files.
 
 #include <GCL>
 

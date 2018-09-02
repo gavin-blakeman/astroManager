@@ -38,6 +38,8 @@
 #ifndef ASTROMANAGER_SETTINGS_H
 #define ASTROMANAGER_SETTINGS_H
 
+  // Miscellaneous library header files.
+
 #include <QCL>
 
 namespace astroManager

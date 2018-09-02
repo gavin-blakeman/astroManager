@@ -48,7 +48,7 @@
 
   // astroManager include files
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 #include "../../include/database/databaseARID.h"
 #include "../../include/dockWidgets/dockWidgetAstrometry.h"
 #include "../../include/dockWidgets/dockWidgetHistogram.h"

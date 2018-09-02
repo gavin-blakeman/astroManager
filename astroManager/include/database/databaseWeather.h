@@ -42,13 +42,15 @@
 #ifndef ASTROMANAGER_DATABASEWEATHER_H
 #define ASTROMANAGER_DATABASEWEATHER_H
 
-#include "database.h"
+  // Miscellaneous library header files.
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace database
   {
-    class CDatabaseWeather : public CDatabase
+    class CDatabaseWeather final : public QCL::CDatabase
     {
     private:
       bool WDdisabled_;           ///< Flag to determine if the weather database is disabled.

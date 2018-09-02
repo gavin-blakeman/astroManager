@@ -65,7 +65,7 @@
 #define CONFIGURE_H
 
 #include "dialogs/dialogs.h"
-#include "Error.h"
+#include "error.h"
 #include "FrameWindow.h"
 
   // Miscellaneous library header files

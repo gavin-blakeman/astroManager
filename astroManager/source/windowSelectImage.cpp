@@ -42,7 +42,7 @@
 #include "../include/database/databaseARID.h"
 #include "../include/dialogs/dialogImageDetails.h"
 #include "../include/FrameWindow.h"
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
 #include <GCL>
 

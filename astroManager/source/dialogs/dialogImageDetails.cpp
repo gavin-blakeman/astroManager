@@ -39,7 +39,7 @@
 
 #include "../../include/dialogs/dialogImageDetails.h"
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
 #include "../../include/qtExtensions/selectImageVersionQueryModel.h"
 

@@ -50,7 +50,7 @@
 #include "../../include/windowImage/windowImage.h"
 #include "../../include/dockWidgets/dockWidgetMagnify.h"
 #include "../../include/dockWidgets/dockWidgetNavigator.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
   // QWT Library
 

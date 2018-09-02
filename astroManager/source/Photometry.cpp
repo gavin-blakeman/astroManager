@@ -54,7 +54,7 @@
 #include "../include/database/databaseARID.h"
 #include "../include/database/databaseATID.h"
 #include "../include/FrameWindow.h"
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
 #include "float.h"
 
@@ -796,8 +796,8 @@ namespace astroManager
 
       szComp = cbComparison->currentText();
       szCheck = cbCheck->currentText();
-      vComp = database::GetObjectID(szComp);
-      vCheck = database::GetObjectID(szCheck);
+      //vComp = database::GetObjectID(szComp);
+      //vCheck = database::GetObjectID(szCheck);
       nInterval = sbObservationInterval->value();
       dNext = deNextObservation->date();
 
@@ -818,7 +818,7 @@ namespace astroManager
       {
         lwi = lwFilters->takeItem(0);   // Take the first row.
         vBool = lwi->data(ROLE_FILTERSELECT);
-        vFilter = lwi->data(database::ROLE_FILTERID);
+        //vFilter = lwi->data(database::ROLE_FILTERID);
 
         szSQL = QString( \
           "SELECT pof.PHOTOBJECT_ID " \

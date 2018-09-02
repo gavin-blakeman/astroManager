@@ -48,7 +48,7 @@
 
 #include "../../include/dockWidgets/dockWidgetImageInformation.h"
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
   // Qt Library
 

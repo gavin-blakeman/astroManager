@@ -36,16 +36,18 @@
 //
 //*********************************************************************************************************************************
 
-
 #include "../../include/ACL/astroFile.h"
 
-  // astroManager Files
+  // astroManager application header files
 
 #include "../../include/database/databaseARID.h"
+#include "../../include/error.h"
 #include "../../include/ACL/FITSMemoryFileArray.h"
 #include "../../include/ACL/observatoryInformation.h"
 #include "../../include/ACL/telescope.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
+
+  // Miscellaneous library header files.
 
 #include <QCL>
 

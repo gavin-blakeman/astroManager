@@ -34,8 +34,8 @@
 
 #include "../../include/dialogs/dialogFindStars.h"
 
-#include "../../include/Error.h"
-#include "../../include/Settings.h"
+#include "../../include/error.h"
+#include "../../include/settings.h"
 
 #include <ACL>
 

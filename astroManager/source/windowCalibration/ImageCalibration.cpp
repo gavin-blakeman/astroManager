@@ -41,7 +41,7 @@
 
 //#include <QtUiTools/QtUiTools>
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
 #include "boost/filesystem.hpp"
 

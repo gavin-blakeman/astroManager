@@ -44,10 +44,10 @@
 
   // astroManager files
 
-#include "database/database.h"
 #include "dialogs/dialogs.h"
-#include "Error.h"
+#include "error.h"
 
+  // Miscellaneous library header files.
 
 #include <QCL>
 

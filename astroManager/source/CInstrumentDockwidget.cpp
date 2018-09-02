@@ -247,7 +247,7 @@ namespace astroManager
 
       try
       {
-        database::GetInstrumentDetails(ID, PixelX, PixelY, SensorX, SensorY, Gain);
+        //database::GetInstrumentDetails(ID, PixelX, PixelY, SensorX, SensorY, Gain);
         sbPixelX->setValue(PixelX);
         sbPixelY->setValue(PixelY);
         sbGain->setValue(Gain);

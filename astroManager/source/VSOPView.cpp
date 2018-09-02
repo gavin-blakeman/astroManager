@@ -44,13 +44,12 @@
 
   // astroManager files
 
-#include "../include/database/database.h"
 #include "../include/database/databaseATID.h"
 
   // Miscellaneous header files
 
 #include <ACL>
-#include <QUiLoader>
+#include <QCL>
 
 namespace astroManager
 {

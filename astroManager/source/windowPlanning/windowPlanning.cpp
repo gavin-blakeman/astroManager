@@ -40,7 +40,7 @@
   // astroManager header files.
 
 #include "../../include/database/databaseARID.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
 namespace astroManager
 {

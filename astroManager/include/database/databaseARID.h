@@ -48,12 +48,15 @@
 
   // astroManager application header files.
 
-#include "database.h"
 #include "../ACL/astroFile.h"
 #include "../ACL/observatoryInformation.h"
 #include "../ACL/targetAstronomy.h"
 #include "../ACL/telescope.h"
 #include "../astroManager.h"
+
+  // Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
@@ -64,7 +67,7 @@ namespace astroManager
 
   namespace database
   {
-    class CARID final : public CDatabase
+    class CARID final : public QCL::CDatabase
     {
     public:
       enum ETargetType
@@ -87,8 +90,6 @@ namespace astroManager
 
     protected:
       void loadPhotometryFilterData();
-
-      void processErrorInformation() const;
 
     public:
       CARID();

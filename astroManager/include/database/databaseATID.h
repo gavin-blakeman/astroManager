@@ -42,21 +42,28 @@
 #ifndef ASTROMANAGER_DATABASEATID_H
 #define ASTROMANAGER_DATABASEATID_H
 
-#include "database.h"
+  // astroManager application header files.
 
-  // General libraries
+#include "../astroManager.h"
+
+  // Miscellaneous library header files.
 
 #include <ACL>
+#include <QCL>
 
 namespace astroManager
 {
   namespace database
   {
+
+    const int ROLE_FILTERID  = Qt::UserRole + 0;
+
     // Class for the Astronomical Target Database
 
-    class CATID : public CDatabase
+    class CATID final : public QCL::CDatabase
     {
       Q_OBJECT
+
     private:
       bool ATIDdisabled_;                     ///< If true, then the ATID database is disabled.
       bool useSIMBAD;                         ///< If true, the SIMBAD lookups are used, not the ATID database.
@@ -73,6 +80,13 @@ namespace astroManager
 
       bool queryStellarObjectByName_ATID(std::string const &, ACL::CTargetStellar *);
       bool queryStellarObjectByName_SIMBAD(std::string const &, ACL::CTargetStellar *);
+
+      void readStellarObjectInformation_ATID(objectID_t, ACL::CTargetStellar *);
+      void readStellarObjectInformation_SIMBAD(objectID_t, ACL::CTargetStellar *);
+
+        // Deleted functions
+
+      CATID(CATID const &) = delete;
 
     protected:
       bool parseSIMBADReply(std::string const &, ACL::DTargetAstronomy &);
@@ -104,20 +118,19 @@ namespace astroManager
       void PopulateConstellationsCombo(QComboBox *);
       void PopulateCatalogCombo(QComboBox *);
       void PopulatePhotometryProgramCombo(QComboBox *);
-      bool InsertObservationProgram(int, QString * /*programName*/, QString * /*programDescription*/) { return false;}
       bool populateStellarObject(QVariant const &, std::shared_ptr<ACL::CTargetStellar>);
       bool queryStellarObjectByName(std::string const &, ACL::CTargetStellar *, EForce = FORCE_NONE);
-      bool getWeather();
 
-      void GetLatestMagnitude(const long long, const long long, float &, float &) const;
-
-      bool getLocation(QVariant const &, ACL::CGeographicLocation &);		// Builds a TLocation for the location number passed.
-      ACL::CGeographicLocation *GetLocation(void); // Gets the location from the database after getting the location number from the registry.
+      void GetLatestMagnitude(objectID_t, const long long, float &, float &) const;
 
       bool queryByCoordinates(ACL::CAstronomicalCoordinates const &RADEC, double radius, ACL::DTargetAstronomy &);
       bool queryByCoordinates(ACL::CAstronomicalCoordinates const &, ACL::CAstronomicalCoordinates const &, ACL::DTargetAstronomy &);
 
       bool queryNamesFromATID(std::uint64_t, std::vector<std::string> &);
+
+        // Functions handling stellarObject information
+
+      void readStellarObjectInformation(objectID_t, ACL::CTargetStellar *);
 
     };
 
@@ -126,4 +139,4 @@ namespace astroManager
   }   // namespace database
 }    // namespace AstroManager
 
-#endif // astroManager_DATABASEATID_H
+#endif // ASTROMANAGER_DATABASEATID_H

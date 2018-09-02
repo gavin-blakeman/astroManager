@@ -39,7 +39,7 @@
 #include "../../include/qtExtensions/selectImageQueryModel.h"
 
 #include "../../include/database/databaseARID.h"
-#include "../../include/Error.h"
+#include "../../include/error.h"
 
   // Miscellanous libraries
 

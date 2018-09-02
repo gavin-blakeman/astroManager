@@ -49,26 +49,19 @@
 
 #include "../../include/dockWidgets/dockWidgetPhotometry.h"
 
-  // astroManager include files
+  // astroManager application header files.
 
-#include "../../include/database/database.h"
 #include "../../include/database/databaseATID.h"
 #include "../../include/dialogs/dialogSelectObject.h"
 #include "../../include/ImageComparison.h"
 #include "../../include/windowImage/windowImageDisplay.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 #include "../../include/astroManager.h"
 
-  // Boost Library
+  // Miscellaneous library header files
 
 #include "boost/algorithm/string.hpp"
-
-  // Qt Library
-
-#include <QtUiTools/QtUiTools>
-
-  // Qwt Library
-
+#include <QCL>
 #include <qwt_symbol.h>
 
 namespace astroManager

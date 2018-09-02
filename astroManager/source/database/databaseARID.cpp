@@ -52,8 +52,8 @@
 #include "../../include/dialogs/dialogConfigureSite.h"
 #include "../../include/dialogs/dialogConfigureTelescope.h"
 #include "../../include/dialogs/dialogImageDetails.h"
-#include "../../include/Error.h"
-#include "../../include/Settings.h"
+#include "../../include/error.h"
+#include "../../include/settings.h"
 #include "../../include/astroManager.h"
 
   // Miscellaneous library header files
@@ -1589,20 +1589,6 @@ namespace astroManager
       };
     }
 
-    /// @brief Processes and displays the error information.
-    /// @throws None.
-    /// @version 2017-08-13/GGB - FUnction created.
-
-    void CARID::processErrorInformation() const
-    {
-      QSqlError error = sqlQuery->lastError();
-
-      ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-      ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-      ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-      ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
-    }
-
     /// @brief Reads the plan targets in from the database.
     /// @param[in] planID: The plan ID to read.
     /// @param[out] targetList: The vector to write the targets to.
@@ -1614,7 +1600,7 @@ namespace astroManager
         // Create the query.
 
       sqlWriter.resetQuery();
-      sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID"})
+      sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID", "TARGET_NAME"})
                .from({"TBL_TARGETS"})
                .where({GCL::sqlwriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
 
@@ -1628,28 +1614,28 @@ namespace astroManager
           {
             case MAJORPLANET:
             {
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMajorPlanet>(sqlQuery->value(3).toUInt())));
+              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+              //                          std::make_unique<ACL::CTargetMajorPlanet>(sqlQuery->value(3).toUInt())));
               break;
             };
             case MINORPLANET:
             {
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMinorPlanet>()));
+              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+              //                          std::make_unique<ACL::CTargetMinorPlanet>(sqlQuery->value(4).toString().toStdString())));
               break;
             };
             case COMET:
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMinorComet>()));
+                                        std::make_unique<ACL::CTargetComet>(sqlQuery->value(4).toString().toStdString())));
               break;
             };
             case STELLAR:
             {
                 // Need to load the information needed form the ATID database.
 
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMinorStellar>()));
+              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+              //                          std::make_unique<ACL::CTargetStellar>()));
               break;
             };
             default:

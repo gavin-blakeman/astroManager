@@ -39,7 +39,7 @@
 
 #include "../../include/dialogs/dialogConfigureSite.h"
 
-#include "../../include/Error.h"
+#include "../../include/error.h"
 #include "../../include/astroManager.h"
 
 #include <cmath>

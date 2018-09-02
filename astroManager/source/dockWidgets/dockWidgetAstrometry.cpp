@@ -45,17 +45,16 @@
 
   // astroManager Include files
 
-#include "../../include/database/database.h"
 #include "../../include/database/databaseATID.h"
 #include "../../include/dialogs/dialogSelectObject.h"
 #include "../../include/ImageComparison.h"
 #include "../../include/windowImage/windowImageDisplay.h"
 #include "../../include/qtExtensions/MdiSubWindow.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
-  // Qt Library
+  // Miscellaneous library header files
 
-#include <QtUiTools/QtUiTools>
+#include <QCL>
 
 namespace astroManager
 {
@@ -71,8 +70,8 @@ namespace astroManager
 #define ROLE_OBJECTINDEX  Qt::UserRole + 0
 
     /// @brief Class constructor.
-    /// @param[in] action - Pointer to the action
-    /// @param[in] parent - Pointer to the parent object.
+    /// @param[in] action: Pointer to the action
+    /// @param[in] parent: Pointer to the parent object.
     /// @throws None.
     /// @version 2017-07-01/GGB - Changed order of parameters. Updated heirarchy for weather window.
     /// @version 2013-07-27/GGB - Added objectName.

@@ -47,11 +47,14 @@
 
 #include "../../include/dialogs/dialogSelectObject.h"
 
-  // astroManager includes
+  // astroManager application header files
 
-#include "../../include/database/database.h"
 #include "../../include/database/databaseATID.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
+
+  // Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {

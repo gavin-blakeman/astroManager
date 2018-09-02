@@ -38,7 +38,7 @@
 
 #include "../../include/qtExtensions/selectImageVersionQueryModel.h"
 
-#include "../../include/Error.h"
+#include "../../include/error.h"
 #include "../../include/database/databaseARID.h"
 
   // Standard C++ libraries

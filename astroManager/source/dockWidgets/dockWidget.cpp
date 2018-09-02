@@ -54,7 +54,7 @@
 
 #include "../../include/dockWidgets/dockWidget.h"
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
 namespace astroManager
 {

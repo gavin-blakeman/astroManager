@@ -40,20 +40,19 @@
 
 #include "../../include/dialogs/dialogOptions.h"
 
-  // astroManager headers
-
-#include "../../include/database/database.h"
-#include "../../include/Error.h"
-#include "../../include/Settings.h"
-#include "../../include/astroManager.h"
-
-  // Standard C++ headers
+  // Standard C++ library header files
 
 #include <algorithm>
 #include <thread>
 #include <tuple>
 
-  // Class Libraries
+  // astroManager application header files
+
+#include "../../include/error.h"
+#include "../../include/settings.h"
+#include "../../include/astroManager.h"
+
+  // Miscellaneous library header files.
 
 #include <GCL>
 #include <QCL>
@@ -277,7 +276,7 @@ namespace astroManager
 
       switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
       {
-        case database::CDatabase::SQLDB_MYSQL:
+        case QCL::CDatabase::SQLDB_MYSQL:
         {
           szDBMS = "QMYSQL";
           szHostName = lineEditARIDMySQLHost->text();
@@ -287,12 +286,12 @@ namespace astroManager
           szPassword = lineEditARIDMySQLPassword->text();
           break;
         };
-        case database::CDatabase::SQLDB_ODBC:
+        case QCL::CDatabase::SQLDB_ODBC:
         {
           szDBMS = "QODBC";
           break;
         };
-        case database::CDatabase::SQLDB_PSQL:
+        case QCL::CDatabase::SQLDB_PSQL:
         {
           szDBMS = "QPSQL";
           szHostName = lineEditARIDPostgreSQLHost->text();
@@ -302,7 +301,7 @@ namespace astroManager
           szPassword = lineEditARIDPostgreSQLPassword->text();
           break;
         };
-        case database::CDatabase::SQLDB_QOCI:
+        case QCL::CDatabase::SQLDB_QOCI:
         {
           szDBMS = "QOCI";
           szHostName = lineEditARIDOracleHost->text();
@@ -312,7 +311,7 @@ namespace astroManager
           szPassword = lineEditARIDOraclePassword->text();
           break;
         }
-        case database::CDatabase::SQLDB_SQLITE:
+        case QCL::CDatabase::SQLDB_SQLITE:
         {
           szDBMS = "QSQLITE";
           break;
@@ -396,7 +395,7 @@ namespace astroManager
 
       switch (comboBoxWeatherDatabaseType->itemData(comboBoxWeatherDatabaseType->currentIndex(), Qt::UserRole).toInt())
       {
-        case database::CDatabase::SQLDB_MYSQL:
+        case QCL::CDatabase::SQLDB_MYSQL:
         {
           szDBMS = "QMYSQL";
           szHostName = lineEditWeatherMySQLHost->text();
@@ -406,12 +405,12 @@ namespace astroManager
           szPassword = lineEditWeatherMySQLPassword->text();
           break;
         };
-        case database::CDatabase::SQLDB_ODBC:
+        case QCL::CDatabase::SQLDB_ODBC:
         {
           szDBMS = "QODBC";
           break;
         };
-        case database::CDatabase::SQLDB_PSQL:
+        case QCL::CDatabase::SQLDB_PSQL:
         {
           szDBMS = "QPSQL";
           szHostName = lineEditWeatherPostgreSQLHost->text();
@@ -421,7 +420,7 @@ namespace astroManager
           szPassword = lineEditWeatherPostgreSQLPassword->text();
           break;
         };
-        case database::CDatabase::SQLDB_QOCI:
+        case QCL::CDatabase::SQLDB_QOCI:
         {
           szDBMS = "QOCI";
           szHostName = lineEditWeatherOracleHost->text();
@@ -431,7 +430,7 @@ namespace astroManager
           szPassword = lineEditWeatherOraclePassword->text();
           break;
         }
-        case database::CDatabase::SQLDB_SQLITE:
+        case QCL::CDatabase::SQLDB_SQLITE:
         {
           szDBMS = "QSQLITE";
           break;
@@ -553,7 +552,7 @@ namespace astroManager
 
         switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
         {
-          case database::CDatabase::SQLDB_MYSQL:
+          case QCL::CDatabase::SQLDB_MYSQL:
           {
             settings::astroManagerSettings->setValue(settings::ARID_MYSQL_HOSTADDRESS, lineEditARIDMySQLHost->text());
             settings::astroManagerSettings->setValue(settings::ARID_MYSQL_PORT, spinBoxARIDMySQLPort->value());
@@ -562,11 +561,11 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::ARID_MYSQL_PASSWORD, lineEditARIDMySQLPassword->text());
             break;
           };
-          case database::CDatabase::SQLDB_ODBC:
+          case QCL::CDatabase::SQLDB_ODBC:
           {
             break;
           };
-          case database::CDatabase::SQLDB_PSQL:
+          case QCL::CDatabase::SQLDB_PSQL:
           {
             settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_HOSTADDRESS, lineEditARIDPostgreSQLHost->text());
             settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_PORT, spinBoxARIDMySQLPort->value());
@@ -575,7 +574,7 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::ARID_POSTGRESQL_PASSWORD, lineEditARIDPostgreSQLPassword->text());
             break;
           };
-          case database::CDatabase::SQLDB_QOCI:
+          case QCL::CDatabase::SQLDB_QOCI:
           {
             settings::astroManagerSettings->setValue(settings::ARID_ORACLE_HOSTADDRESS, lineEditARIDOracleHost->text());
             settings::astroManagerSettings->setValue(settings::ARID_ORACLE_PORT, spinBoxARIDOraclePort->value());
@@ -584,7 +583,7 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::ARID_ORACLE_PASSWORD, lineEditARIDOraclePassword->text());
             break;
           }
-          case database::CDatabase::SQLDB_SQLITE:
+          case QCL::CDatabase::SQLDB_SQLITE:
           {
             break;
           }
@@ -696,7 +695,7 @@ namespace astroManager
 
         switch (comboBoxWeatherDatabaseType->itemData(comboBoxWeatherDatabaseType->currentIndex(), Qt::UserRole).toInt())
         {
-          case database::CDatabase::SQLDB_MYSQL:
+          case QCL::CDatabase::SQLDB_MYSQL:
           {
             settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_HOSTADDRESS, lineEditWeatherMySQLHost->text());
             settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_PORT, spinBoxWeatherMySQLPort->value());
@@ -705,11 +704,11 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::WEATHER_MYSQL_PASSWORD, lineEditWeatherMySQLPassword->text());
             break;
           };
-          case database::CDatabase::SQLDB_ODBC:
+          case QCL::CDatabase::SQLDB_ODBC:
           {
             break;
           };
-          case database::CDatabase::SQLDB_PSQL:
+          case QCL::CDatabase::SQLDB_PSQL:
           {
             settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_HOSTADDRESS, lineEditWeatherPostgreSQLHost->text());
             settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_PORT, spinBoxWeatherPostgreSQLPort->value());
@@ -718,7 +717,7 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::WEATHER_POSTGRESQL_PASSWORD, lineEditWeatherPostgreSQLPassword->text());
             break;
           };
-          case database::CDatabase::SQLDB_QOCI:
+          case QCL::CDatabase::SQLDB_QOCI:
           {
             settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_HOSTADDRESS, lineEditWeatherOracleHost->text());
             settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_PORT, spinBoxWeatherOraclePort->value());
@@ -727,7 +726,7 @@ namespace astroManager
             settings::astroManagerSettings->setValue(settings::WEATHER_ORACLE_PASSWORD, lineEditWeatherOraclePassword->text());
             break;
           }
-          case database::CDatabase::SQLDB_SQLITE:
+          case QCL::CDatabase::SQLDB_SQLITE:
           {
             break;
           }
@@ -786,8 +785,8 @@ namespace astroManager
 
         // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
 
-      std::for_each(database::CDatabase::databaseDrivers.begin(),database::CDatabase::databaseDrivers.end(),
-                    [&](std::pair<const int, database::CDatabase::SDatabaseDriver> &dt)
+      std::for_each(QCL::CDatabase::databaseDrivers.begin(),QCL::CDatabase::databaseDrivers.end(),
+                    [&](std::pair<const int, QCL::CDatabase::SDatabaseDriver> &dt)
                        {comboBoxARIDDatabaseType->addItem(dt.second.driverText, QVariant(dt.first));} );
 
         // Set the current/default values from the settings file.
@@ -825,23 +824,23 @@ namespace astroManager
 
         if (szDatabase == "MySQL")
         {
-          stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_MYSQL);
+          stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
         }
         else if (szDatabase == "Oracle")
         {
-          stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_QOCI);
+          stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_QOCI);
         }
         else if (szDatabase == "SQLite")
         {
-          stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_SQLITE);
+          stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_SQLITE);
         }
         else if (szDatabase == "PostgreSQL")
         {
-          stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_PSQL);
+          stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_PSQL);
         }
         else if (szDatabase == "ODBC")
         {
-          stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_ODBC);
+          stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_ODBC);
         }
         else
         {
@@ -850,7 +849,7 @@ namespace astroManager
       }
       else
       {
-        stackedWidgetARID->setCurrentIndex(database::CDatabase::SQLDB_MYSQL);
+        stackedWidgetARID->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
       }
       connect(pushButtonARIDTestConnection, SIGNAL(clicked(bool)), this, SLOT(eventARIDTestConnection(bool)));
     }
@@ -1136,8 +1135,8 @@ namespace astroManager
 
         // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
 
-      std::for_each(database::CDatabase::databaseDrivers.begin(),database::CDatabase::databaseDrivers.end(),
-                    [&](std::pair<const int, database::CDatabase::SDatabaseDriver> &dt)
+      std::for_each(QCL::CDatabase::databaseDrivers.begin(), QCL::CDatabase::databaseDrivers.end(),
+                    [&](std::pair<const int, QCL::CDatabase::SDatabaseDriver> &dt)
                        {comboBoxWeatherDatabaseType->addItem(dt.second.driverText, QVariant(dt.first));} );
 
         // MySQL
@@ -1174,29 +1173,29 @@ namespace astroManager
 
         std::string szDatabase = settings::astroManagerSettings->value(settings::WEATHER_DATABASE_DBMS).toString().toStdString();
 
-        if ( (szDatabase == "MySQL") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_MYSQL)) )
+        if ( (szDatabase == "MySQL") && (QCL::CDatabase::isDriverAvailable(QCL::CDatabase::SQLDB_MYSQL)) )
         {
-          stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_MYSQL);
+          stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
           driverValid = true;
         }
-        else if ( (szDatabase == "Oracle") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_QOCI)) )
+        else if ( (szDatabase == "Oracle") && (QCL::CDatabase::isDriverAvailable(QCL::CDatabase::SQLDB_QOCI)) )
         {
-          stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_QOCI);
+          stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_QOCI);
           driverValid = true;
         }
-        else if ( (szDatabase == "SQLite") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_SQLITE)) )
+        else if ( (szDatabase == "SQLite") && (QCL::CDatabase::isDriverAvailable(QCL::CDatabase::SQLDB_SQLITE)) )
         {
-          stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_SQLITE);
+          stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_SQLITE);
           driverValid = true;
         }
-        else if ( (szDatabase == "PostgreSQL") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_PSQL)) )
+        else if ( (szDatabase == "PostgreSQL") && (QCL::CDatabase::isDriverAvailable(QCL::CDatabase::SQLDB_PSQL)) )
         {
-          stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_PSQL);
+          stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_PSQL);
           driverValid = true;
         }
-        else if ( (szDatabase == "ODBC") && (database::CDatabase::isDriverAvailable(database::CDatabase::SQLDB_ODBC)) )
+        else if ( (szDatabase == "ODBC") && (QCL::CDatabase::isDriverAvailable(QCL::CDatabase::SQLDB_ODBC)) )
         {
-          stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_ODBC);
+          stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_ODBC);
           driverValid = true;
         }
         else
@@ -1211,12 +1210,11 @@ namespace astroManager
       }
       else
       {
-        stackedWidgetWeather->setCurrentIndex(database::CDatabase::SQLDB_MYSQL);
+        stackedWidgetWeather->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
       }
 
       connect(pushButtonWeatherTestConnection, SIGNAL(clicked(bool)), this, SLOT(eventWeatherTestConnection(bool)));
     }
-
 
   }  // namespace dialogs
 }  // namespace AstroManager

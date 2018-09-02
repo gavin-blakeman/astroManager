@@ -44,27 +44,22 @@
 
 #include "../include/astroManagerHelp.h"
 
-  // Qt Framework files
-
-
-
-  // astroManager include files
-
-#include "../include/database/database.h"
-#include "../include/database/databaseATID.h"
-#include "../include/astroManager.h"
-
-  // Standard header files
+  // Standard C++ library header files
 
 #include <cstdio>
 
-  // Other libraries
+  // astroManager application header files
+
+#include "../include/database/databaseATID.h"
+#include "../include/astroManager.h"
+
+  // Miscellaneous library header files.
 
 #include <GCL>
 #include <QCL>
 
-// The following are defined in cfitsio and need to be undefined to be able to include libraw (winnt.h).
-// As cfitsio is never accessed directly by the code in this library, this will not be a concern.
+  // The following are defined in cfitsio and need to be undefined to be able to include libraw (winnt.h).
+  // As cfitsio is never accessed directly by the code in this library, this will not be a concern.
 
 #ifdef WIN32
 #undef TBYTE

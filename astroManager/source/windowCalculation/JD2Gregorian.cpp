@@ -41,7 +41,7 @@
 
   // astroManager include files
 
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
   // Miscellaneous include files.
 

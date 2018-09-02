@@ -47,7 +47,7 @@
 
   // astroManager include files
 
-#include "../include/Settings.h"
+#include "../include/settings.h"
 
   // Boost library
 

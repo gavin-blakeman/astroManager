@@ -47,7 +47,7 @@
   // astroManager Include Files
 
 #include "dialogs/dialogs.h"
-#include "Error.h"
+#include "error.h"
 
 namespace astroManager
 {

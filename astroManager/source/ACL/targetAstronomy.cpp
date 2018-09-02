@@ -49,8 +49,8 @@ namespace astroManager
   /// @throws std::bad_alloc
   /// @version 2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(QTableWidget *parent, std::unique_ptr<ACL::CTargetAstronomy> newTarget)
-    : parent_(parent), columnMap(col_columnCount), targetAstronomy(std::move(newTarget))
+  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy> newTarget)
+    : columnMap(col_columnCount), targetAstronomy(std::move(newTarget))
   {
 
   }

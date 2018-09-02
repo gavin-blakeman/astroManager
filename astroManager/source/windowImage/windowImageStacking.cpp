@@ -55,7 +55,7 @@
 #include "../../include/dockWidgets/dockWidgetMagnify.h"
 #include "../../include/dockWidgets/dockWidgetNavigator.h"
 #include "../../include/FrameWindow.h"
-#include "../../include/Settings.h"
+#include "../../include/settings.h"
 
   // Qxt Library
 

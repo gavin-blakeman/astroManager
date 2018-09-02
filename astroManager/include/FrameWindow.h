@@ -60,7 +60,7 @@
 #include "ACL/astroFile.h"
 #include "astroManager.h"
 #include "dockWidgets/dockWidget.h"
-#include "Error.h"
+#include "error.h"
 #include "qtExtensions/MdiSubWindow.h"
 
   // Boost Library

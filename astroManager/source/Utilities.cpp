@@ -97,7 +97,7 @@ namespace astroManager
 
       QMessageBox msgBox;
 
-      msgBox.setWindowTitle(tr("Changesto dAT (TAI-UTC)"));
+      msgBox.setWindowTitle(tr("Changes to dAT (TAI-UTC)"));
       msgBox.setText(tr("Are you sure that you wish to add the entry?"));
       msgBox.setInformativeText(tr("Data should only be added to this table when the IERS indicates that a leap second will occur. Are you sure  that you wish to add the entry into the dAT (TAI-UTC) table?"));
       msgBox.setIcon(QMessageBox::Question);
@@ -111,7 +111,7 @@ namespace astroManager
         model.setEditStrategy(QSqlTableModel::OnRowChange);
         model.select();
 
-        database::CreateRecord_TBL_LEAPSECONDS(record);
+        //database::CreateRecord_TBL_LEAPSECONDS(record);
 
         ACL::TJD JD((double) date.toJulianDay());
 
