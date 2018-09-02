@@ -85,7 +85,7 @@ namespace astroManager
     ///                           found.
     /// @version 2010-11-23/GGB - Function created
 
-    CATID::CATID(): CDatabase("ATID"), useSIMBAD(true), ATIDdisabled_(false)
+    CATID::CATID(): CDatabase("ATID"), ATIDdisabled_(false), useSIMBAD(true)
     {
       QVariant variant = settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant());
 

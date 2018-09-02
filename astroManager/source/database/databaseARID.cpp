@@ -49,6 +49,7 @@
 
   // astroManager application headerfiles
 
+#include "../../include/database/databaseATID.h"
 #include "../../include/dialogs/dialogConfigureSite.h"
 #include "../../include/dialogs/dialogConfigureTelescope.h"
 #include "../../include/dialogs/dialogImageDetails.h"
@@ -77,7 +78,7 @@ namespace astroManager
     //*****************************************************************************************************************************
 
     /// @brief Constructor for the class.
-    /// @param[in] connectionName: The name to associate with this database.
+    /// @throws std::bad_alloc
     /// @version 2017-06-21/GGB - Added sqlWriter information.
     /// @version 2017-06-20/GGB - Updated to match changes to CDatabase. (Bug #69)
     /// @version 2013-05-15/GGB - Added code to check if the database is disabled. (Will be disabled by default!)
@@ -153,6 +154,7 @@ namespace astroManager
     }
 
     /// @brief Destructor for the class. Ensures that the database connection is removed.
+    /// @throws None.
     /// @version 2013-05-15/GGB - Conditional removal of the database.
     /// @version 2010-11-28/GGB - Function created.
 
@@ -396,13 +398,7 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          ERRORMESSAGE("CARID::findObservingSite - Error when executing query.");
-          ERRORMESSAGE("Error while executing query: " + sqlString);
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
         };
       };
 
@@ -740,7 +736,7 @@ namespace astroManager
     /// @param[in] fileName: The filename to check
     /// @returns true - The image is registered
     /// @returns false - The image is not registered.
-    /// @throws None.
+    /// @throws 0x4000:
     /// @version 2017-08-05/GGB - Function created.
 
     bool CARID::isImageNameRegistered(std::string const &imageName)
@@ -769,14 +765,8 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          ERRORMESSAGE("Error while executing query: " + sqlString);
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
-
-          ERROR(astroManager, 0x4000);
+          processErrorInformation();
+          ASTROMANAGER_ERROR(0x4000);
         }
       }
       else
@@ -822,14 +812,8 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          ERRORMESSAGE("Error while executing query: " + sqlString);
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
-
-          ERROR(astroManager, 0x4000);
+          processErrorInformation();
+          ASTROMANAGER_ERROR(0x4000);
         }
       }
       else
@@ -875,17 +859,8 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          if (error.type() != QSqlError::NoError)
-          {
-            ERRORMESSAGE("Error while executing query: " + sqlString);
-            ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-            ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-            ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
-
-            ERROR(astroManager, 0x4000);
-          };
+          processErrorInformation();
+          ASTROMANAGER_ERROR(0x4000);
         }
       }
       else
@@ -977,12 +952,7 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          ERRORMESSAGE("Error while executing query: " + sqlString);
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
         }
       }
       else
@@ -1145,12 +1115,7 @@ namespace astroManager
         }
         else
         {
-          QSqlError error = query.lastError();
-
-          ERRORMESSAGE("Error while executing query: " + sqlString);
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
         };
       }
       else
@@ -1614,28 +1579,35 @@ namespace astroManager
           {
             case MAJORPLANET:
             {
-              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-              //                          std::make_unique<ACL::CTargetMajorPlanet>(sqlQuery->value(3).toUInt())));
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                        std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery->value(3).toUInt()))));
               break;
             };
             case MINORPLANET:
             {
-              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-              //                          std::make_unique<ACL::CTargetMinorPlanet>(sqlQuery->value(4).toString().toStdString())));
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+                                      std::make_unique<ACL::CTargetMinorPlanet>(
+                                          settings::astroManagerSettings->value(settings::FILE_MPCORB, "Data/MPCORB.DAT").toString().toStdString(),
+                                          sqlQuery->value(4).toString().toStdString())));
               break;
             };
             case COMET:
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetComet>(sqlQuery->value(4).toString().toStdString())));
+                                        std::make_unique<ACL::CTargetComet>(
+                                            settings::astroManagerSettings->value(settings::FILE_COMETELS, "Data/CometEls.txt").toString().toStdString(),
+                                            sqlQuery->value(4).toString().toStdString())));
               break;
             };
             case STELLAR:
             {
                 // Need to load the information needed form the ATID database.
 
-              //targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-              //                          std::make_unique<ACL::CTargetStellar>()));
+              std::unique_ptr<ACL::CTargetStellar> targetStellar(new ACL::CTargetStellar());
+
+              databaseATID->readStellarObjectInformation(sqlQuery->value(4).toULongLong(), targetStellar.get());
+
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::move(targetStellar)));
               break;
             };
             default:
@@ -1826,12 +1798,7 @@ namespace astroManager
         }
         else
         {
-          ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-          QSqlError error = query.lastError();
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
 
           INFOMESSAGE("Observatory not registered.");
         };
@@ -1873,12 +1840,7 @@ namespace astroManager
         }
         else
         {
-          ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-          QSqlError error = query.lastError();
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
 
           INFOMESSAGE("Telescope not registered.");
         };
@@ -2152,22 +2114,12 @@ namespace astroManager
           }
           else
           {
-            ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-            QSqlError error = query.lastError();
-            ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-            ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-            ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+            processErrorInformation();
           }
         }
         else
         {
-          ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-          QSqlError error = query.lastError();
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
         }
       }
       else
@@ -2206,22 +2158,12 @@ namespace astroManager
           }
           else
           {
-            ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-            QSqlError error = query.lastError();
-            ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-            ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-            ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+            processErrorInformation();
           }
         }
         else
         {
-          ERRORMESSAGE("Error while executing query: " + sqlWriter.string());
-
-          QSqlError error = query.lastError();
-          ERRORMESSAGE("Error returned by Driver: " + error.nativeErrorCode().toStdString());
-          ERRORMESSAGE("Text returned by driver: " + error.driverText().toStdString());
-          ERRORMESSAGE("Text returned by database: " + error.databaseText().toStdString());
+          processErrorInformation();
         }
       }
       else

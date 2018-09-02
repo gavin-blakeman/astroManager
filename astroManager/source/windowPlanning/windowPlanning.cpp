@@ -133,14 +133,13 @@ namespace astroManager
 
     void CWindowPlanning::loadPlanData()
     {
-      std::uint32_t currentPlan = comboBoxPlans->currentData().toUInt();
-
         // Clear the current data.
 
       targetList.clear();
 
         // Load the list of items from the current plan.
 
+      databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
 
     }
 

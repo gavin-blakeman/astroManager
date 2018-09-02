@@ -85,6 +85,7 @@ namespace astroManager
     QString const FILE_TAIUTC                                       ("File/TAIUTC");
     QString const FILE_UTCUT1                                       ("File/UTCUT1");
     QString const FILE_MPCORB                                       ("File/MPCORB");
+    QString const FILE_COMETELS                                     ("File/CometEls");
 
       // definitions for Astrometry section
 

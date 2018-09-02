@@ -49,19 +49,18 @@ namespace astroManager
   /// @throws std::bad_alloc
   /// @version 2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy> newTarget)
+  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget)
     : columnMap(col_columnCount), targetAstronomy(std::move(newTarget))
   {
 
   }
 
-  /// @brief Sets the widget for the specified column.
-  /// @param[in] columnNumber: The column to set the widget for.
-  /// @param[in] widget: The widget associated with the column.
+  /// @brief Creates and sets the widgets for the item.
+  /// @param[in] tableWidget: The table widget to populate.
   /// @throws None.
   /// @version 2018-08-31/GGB - Function created.
 
-  void CTargetAstronomy::setColumnWidget(std::uint8_t columnNumber, QTableWidgetItem *widget)
+  void CTargetAstronomy::setColumnWidgets(QTableWidget *tableWidget)
   {
     columnMap.at(columnNumber) = widget;
   }
