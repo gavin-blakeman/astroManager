@@ -581,8 +581,8 @@ namespace astroManager
 
     }; */
 
-    /// Overloaded readMapFile(). This allows to not read the map file if the application is using SIMBAD.
-    //
+    /// @brief Overloaded readMapFile(). This allows to not read the map file if the application is using SIMBAD.
+    /// @param[in] mfn:
     // 2013-01-26/GGB - Function created.
 
     void CATID::readMapFile(boost::filesystem::path const &mfn)
@@ -629,11 +629,10 @@ namespace astroManager
       return (nameQuery.value(0).toString());
     }
 
-    // Function to populate a combo box with object type information.
-    // The data is the index of the record.
-    //
-    // 2013-07-29/GGB - Added check if the ATID database is disabled.
-    // 2010-11-14/GGB - Function created
+    /// @brief Function to populate a combo box with object type information. The data is the index of the record.
+    /// @param[in] combo: The combo box to populate.
+    /// @version 2013-07-29/GGB - Added check if the ATID database is disabled.
+    /// @version 2010-11-14/GGB - Function created
 
     void CATID::PopulateObjectTypeCombo(QComboBox *combo)
     {
@@ -1071,8 +1070,12 @@ namespace astroManager
     void CATID::readStellarObjectInformation_ATID(objectID_t objectID, ACL::CTargetStellar *target)
     {
       sqlWriter.resetQuery();
-      sqlWriter.select({"RA", "DEC", "EPOCH", "pmRA", "pmDEC", "RadialVelocity", "Parallax"})
+      sqlWriter.select({"TBL_STELLAROBJECTS.RA", "TBL_STELLAROBJECTS.DEC", "TBL_STELLAROBJECTS.EPOCH", "TBL_STELLAROBJECTS.pmRA",
+                        "TBL_STELLAROBJECTS.pmDEC", "TBL_STELLAROBJECTS.RadialVelocity", "TBL_STELLAROBJECTS.Parallax",
+                        "TBL_STELLAROBJECTS.OBJECTTYPE"})
                .from({"TBL_STELLAROBJECTS"})
+               .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
+                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")}
                .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1083,6 +1086,7 @@ namespace astroManager
         target->pmDec(sqlQuery->value(4).toDouble());
         target->radialVelocity(sqlQuery->value(5).toDouble());
         target->parallax(sqlQuery->value(6).toDouble());
+        target->objectType(sqlQuery->value(7).toString().toStdString());
       }
       else
       {

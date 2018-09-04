@@ -62,7 +62,160 @@ namespace astroManager
 
   void CTargetAstronomy::setColumnWidgets(QTableWidget *tableWidget)
   {
-    columnMap.at(columnNumber) = widget;
+    columnMap.clear();
+    int row = tableWidget->rowCount();
+
+
+    for (int index = column_id; index != col_columnCount; index++)
+    {
+      columnMap.push_back(new QTableWidgetItem());
+      tableWidget->setItem(row, index, columnMap.back());
+    };
+
+    updateAllColumnValues();
+  }
+
+  /// @brief Updates the widget with the object name.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnName()
+  {
+    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy->objectName()));
+  }
+
+  /// @brief Updates the widget with the type of the object.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnType()
+  {
+    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy->objectType()));
+  }
+
+  /// @brief Sets the RA value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnRA()
+  {
+
+  }
+
+  /// @brief Sets the DEC value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnDEC()
+  {
+
+  }
+
+  /// @brief Sets the Altitude value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnAltitude()
+  {
+
+  }
+
+  /// @brief Sets the Azimuth value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnAzimuth()
+  {
+
+  }
+
+  /// @brief Sets the Airmass value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnAirmass()
+  {
+
+  }
+
+  /// @brief Sets the Apparent Magnitude value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnApparentMagnitude()
+  {
+
+  }
+
+  /// @brief Sets the Constellation value into the widget.
+  /// @throws None.
+  /// @version 2018-09-03/GGB - Function created.
+
+  void CTargetAstronomy::updateColumnConstellation()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnExtinction()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnHourAngle()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnMagnitude()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnObservationCount()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnRiseTime()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnSetTime()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnTransitTime()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnTransitAltitude()
+  {
+
+  }
+  void CTargetAstronomy::updateColumnAngularCatalogue()
+  {
+
+  }
+
+  /// @brief Update the widget text for all columns.
+  /// @throws None.
+  /// @version 2018-04-03/GGB - Function created.
+
+  void CTargetAstronomy::updateAllColumnValues()
+  {
+    updateColumnName();
+    updateColumnType();
+    updateColumnRA();
+    updateColumnDEC();
+    updateColumnAltitude();
+    updateColumnAzimuth();
+    updateColumnAirmass();
+    updateColumnApparentMagnitude();
+    updateColumnConstellation();
+    updateColumnExtinction();
+    updateColumnHourAngle();
+    updateColumnMagnitude();
+    updateColumnObservationCount();
+    updateColumnRiseTime();
+    updateColumnSetTime();
+    updateColumnTransitTime();
+    updateColumnTransitAltitude();
+    updateColumnAngularCatalogue();
   }
 
 } // namespace astroManager

@@ -86,7 +86,7 @@ namespace astroManager
       virtual bool Oracle();
       virtual bool MySQL();
       virtual bool SQLite();
-      virtual bool PostgreSQL() {}
+      virtual bool PostgreSQL() { return false; }
 
     protected:
       void loadPhotometryFilterData();

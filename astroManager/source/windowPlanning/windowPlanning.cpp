@@ -141,6 +141,10 @@ namespace astroManager
 
       databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
 
+        // Now need to setup all the listWidgetItems for the columns.
+
+
+
     }
 
     /// @brief Responds to the Real Time push button being clicked.

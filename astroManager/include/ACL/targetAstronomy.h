@@ -54,7 +54,7 @@
 
 namespace astroManager
 {
-  class CTargetAstronomy
+  class CTargetAstronomy final
   {
   public:
     enum
@@ -90,9 +90,30 @@ namespace astroManager
     CTargetAstronomy() = delete;
 
   protected:
+    void updateColumnName();
+    void updateColumnType();
+    void updateColumnRA();
+    void updateColumnDEC();
+    void updateColumnAltitude();
+    void updateColumnAzimuth();
+    void updateColumnAirmass();
+    void updateColumnApparentMagnitude();
+    void updateColumnConstellation();
+    void updateColumnExtinction();
+    void updateColumnHourAngle();
+    void updateColumnMagnitude();
+    void updateColumnObservationCount();
+    void updateColumnRiseTime();
+    void updateColumnSetTime();
+    void updateColumnTransitTime();
+    void updateColumnTransitAltitude();
+    void updateColumnAngularCatalogue();
+
   public:
     CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>);
-    void setColumnWidget(std::uint8_t, QTableWidgetItem *);
+
+    void setColumnWidgets(QTableWidget *);
+    void updateAllColumnValues();
   };
 
 } // namespace astroManager
