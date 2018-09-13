@@ -40,7 +40,7 @@
 
 #include "../astroManager.h"
 
-  // Standard C++ Library
+  // Standard C++ Library header files.
 
 #include <memory>
 #include <vector>
@@ -48,9 +48,6 @@
   // Miscellaneous libraries
 
 #include <ACL>
-
-  // Boost library
-
 #include "boost/filesystem.hpp"
 
 namespace astroManager
@@ -99,7 +96,7 @@ namespace astroManager
     CAstroFile(QWidget *, ACL::CAstroFile const &);
     CAstroFile(CAstroFile const &);
 
-    virtual ACL::CAstroFile *createCopy() const;
+    virtual std::unique_ptr<ACL::CAstroFile> createCopy() const;
 
     virtual bool save();                                      // Save file
     virtual bool saveAs();

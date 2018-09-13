@@ -183,14 +183,15 @@ namespace astroManager
   }
 
   /// @brief Creates a copy of this astroFile.
-  /// @returns A shared pointer to the newly created copy.
+  /// @returns A unique pointer to the newly created copy.
   /// @throws None.
   /// @details Simply creates a new copy by calling the copy constructor.
+  /// @version 2018-09-05/GGB - Changed return value to a std::unique_ptr<ACL::CAstroFile>.
   /// @version 2017-08-26/GGB - Function created.
 
-  ACL::CAstroFile *CAstroFile::createCopy() const
+  std::unique_ptr<ACL::CAstroFile> CAstroFile::createCopy() const
   {
-    return (new CAstroFile(*this));
+    return std::make_unique<ACL::CAstroFile>(*this);
   }
 
   /// @brief Returns the file name and path.

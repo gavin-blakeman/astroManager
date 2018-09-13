@@ -34,7 +34,7 @@ TARGET = astroManager
 TEMPLATE = app
 CONFIG += qt thread debug qxt
 QXT += core gui
-DEFINES += BOOST_THREAD_USE_LIB QT_GUI_LIB QT_CORE_LIB
+DEFINES += BOOST_THREAD_USE_LIB QT_GUI_LIB QT_CORE_LIB USE_SOFA
 
 QT += core gui sql network printsupport uitools widgets svg
 

@@ -67,6 +67,7 @@ namespace astroManager
     QString const DIRECTORY_BASEDIR                                 ("Directory/Base");
     QString const DIRECTORY_LOGDIR                                  ("Directory/Log");
     QString const DIRECTORY_DATA                                    ("Directory/Data");
+    QString const DIRECTORY_IERS_BA                                 ("Directory/IERS/BA");
 
       // Log settings
 

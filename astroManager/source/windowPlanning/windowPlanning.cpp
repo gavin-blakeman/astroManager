@@ -139,7 +139,7 @@ namespace astroManager
 
         // Load the list of items from the current plan.
 
-      databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
+      database::databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
 
         // Now need to setup all the listWidgetItems for the columns.
 

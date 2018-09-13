@@ -1075,7 +1075,7 @@ namespace astroManager
                         "TBL_STELLAROBJECTS.OBJECTTYPE"})
                .from({"TBL_STELLAROBJECTS"})
                .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
-                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")}
+                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
                .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
