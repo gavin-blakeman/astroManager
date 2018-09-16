@@ -109,6 +109,21 @@ namespace astroManager
       stackedWidgetARID->setCurrentIndex(comboBoxARIDDatabaseType->itemData(index, Qt::UserRole).toInt() );
     }
 
+    /// @brief Processes the event to choose the coment elements file.
+    /// @throws None.
+    /// @version 2018-09-16/GGB - Function created.
+
+    void CDialogOptions::eventCometEls()
+    {
+      QString fileName = lineEditCometEls->text();
+      fileName = QFileDialog::getOpenFileName(dlg, tr("Comet Elements File"), fileName);
+
+      if (!fileName.isNull())
+      {
+        lineEditCometEls->setText(fileName);
+      };
+    }
+
     /// @brief Function to update the CSV directory.
     /// @throws None.
     /// @version 2013-06-01/GGB - Function created.
@@ -140,6 +155,7 @@ namespace astroManager
     }
 
     /// @brief Responds to the button press for the dark frame directory.
+    /// @throws None.
     /// @version 2013-06-01/GGB - Function created.
 
     void CDialogOptions::eventDarkDirectory(bool)
@@ -153,9 +169,25 @@ namespace astroManager
       }
     }
 
-    /// Responds to the button press for the flat frame directory.
-    //
-    // 2013-06-01/GGB - Function created.
+    /// @brief Responds to the button press for the data directory.
+    /// @throws None.
+    /// @version 2018-09-16/GGB - Function created.
+    /// @todo Can these be converted into a single function with lookups?
+
+    void CDialogOptions::eventDataDirectory()
+    {
+      QString directory = lineEditDataDirectory->text();
+      directory = QFileDialog::getExistingDirectory(dlg, tr("Data File directory"), directory);
+
+      if (!directory.isNull())
+      {
+        lineEditDataDirectory->setText(directory);
+      }
+    }
+
+    /// @brief Responds to the button press for the flat frame directory.
+    /// @throws None
+    /// @version 2013-06-01/GGB - Function created.
 
     void CDialogOptions::eventFlatDirectory(bool)
     {
@@ -228,6 +260,21 @@ namespace astroManager
       }
     }
 
+    /// @brief Processes the event to choose the MPCORB file.
+    /// @throws None.
+    /// @version 2018-09-16/GGB - Function created.
+
+    void CDialogOptions::eventMPCORB()
+    {
+      QString fileName = lineEditMPCORB->text();
+      fileName = QFileDialog::getOpenFileName(dlg, tr("MPC Orbitals File"), fileName);
+
+      if (!fileName.isNull())
+      {
+        lineEditMPCORB->setText(fileName);
+      };
+    }
+
     /// @brief Reset all the warning dialogs.
     /// @throws None.
     /// @version 2015-01-03/GGB - Function created.
@@ -239,6 +286,36 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::CM_IMAGECOMPARISON_REMOVEALL, QVariant(-1));
       settings::astroManagerSettings->setValue(settings::CM_IMAGESTACKING_REMOVE, QVariant(-1));
       settings::astroManagerSettings->setValue(settings::CM_IMAGESTACKING_REMOVEALL, QVariant(-1));
+    }
+
+    /// @brief Processes the event to choose the coment elements file.
+    /// @throws None.
+    /// @version 2018-09-16/GGB - Function created.
+
+    void CDialogOptions::eventTAIUTC()
+    {
+      QString fileName = lineEditTAIUTC->text();
+      fileName = QFileDialog::getOpenFileName(dlg, tr("TAI-UTC data file"), fileName);
+
+      if (!fileName.isNull())
+      {
+        lineEditTAIUTC->setText(fileName);
+      };
+    }
+
+    /// @brief Processes the event to choose the coment elements file.
+    /// @throws None.
+    /// @version 2018-09-16/GGB - Function created.
+
+    void CDialogOptions::eventUTCUT1()
+    {
+      QString fileName = lineEditUTCUT1->text();
+      fileName = QFileDialog::getOpenFileName(dlg, tr("UTC-UT1 data file"), fileName);
+
+      if (!fileName.isNull())
+      {
+        lineEditUTCUT1->setText(fileName);
+      };
     }
 
     /// @brief Processes the event when a weather database type is chosen.
@@ -613,12 +690,15 @@ namespace astroManager
     }
 
     /// @brief Writes the general values to the settings.
+    /// @version 2018-09-16/GGB - Added support for data directory
     /// @version 2017-06-25/GGB - Updates the number of threads used. (Bug #72)
     /// @version 2013-06-02/GGB - Added toolbar height.
     /// @version 2013-06-01/GGB - Function created.
 
     void CDialogOptions::saveGeneral()
     {
+        // General
+
       settings::astroManagerSettings->setValue(settings::SETTINGS_OBSERVER, QVariant(lineEditUserName->text()));
       settings::astroManagerSettings->setValue(settings::MAX_THREADS, QVariant(spinBoxMaximumThreads->value()));
       settings::astroManagerSettings->setValue(settings::SETTINGS_LT, QVariant(radioButtonLocalTime->isChecked()));
@@ -626,7 +706,10 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::DW_HISTOGRAM_BINS, QVariant(spinBoxHistogramBins->value()));
       settings::astroManagerSettings->setValue(settings::TOOLBAR_HEIGHT, QVariant(spinBoxToolbarHeight->value()));
 
+        // Directories
+
       settings::astroManagerSettings->setValue(settings::DIRECTORY_LOGDIR, QVariant(lineEditLogfileDirectory->text()));
+      settings::astroManagerSettings->setValue(settings::DIRECTORY_DATA, QVariant(lineEditDataDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant(lineEditDarkDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant(lineEditFlatDirectory->text()));
       settings::astroManagerSettings->setValue(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant(lineEditBiasDirectory->text()));
@@ -637,6 +720,13 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxDarkDirectory->isChecked()));
       settings::astroManagerSettings->setValue(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxFlatDirectory->isChecked()));
       settings::astroManagerSettings->setValue(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(checkBoxBiasDirectory->isChecked()));
+
+        // Data Files
+
+      settings::astroManagerSettings->setValue(settings::FILE_TAIUTC, QVariant(lineEditTAIUTC->text()));
+      settings::astroManagerSettings->setValue(settings::FILE_UTCUT1, QVariant(lineEditUTCUT1->text()));
+      settings::astroManagerSettings->setValue(settings::FILE_MPCORB, QVariant(lineEditMPCORB->text()));
+      settings::astroManagerSettings->setValue(settings::FILE_COMETELS, QVariant(lineEditCometEls->text()));
 
         // Source Extraction Data
 
@@ -904,6 +994,7 @@ namespace astroManager
 
     /// @brief Gets the window handles and sets up the settings into the edit controls.
     /// @throws CRuntimeAssert.
+    /// @version 2018-09-16/GGB - Added Data directory support
     /// @version 2017-06-25/GGB - Added code to set the maximum number of threads allowed. (Bug #72)
     /// @version 2017-06-18/GGB - Updated to use CDialog::findChild(). (Bug #67)
     /// @version 2014-02-16/GGB - Added source extraction tab.
@@ -940,6 +1031,7 @@ namespace astroManager
         // Directories Tab
 
       lineEditLogfileDirectory = findChild<QLineEdit *>("lineEditLogfileDirectory");
+      ASSOCIATE_LINEEDIT(lineEditDataDirectory, dlg, "lineEditDataDirectory");
       lineEditDarkDirectory = findChild<QLineEdit *>("lineEditDarkDirectory");
       lineEditFlatDirectory = findChild<QLineEdit *>("lineEditFlatDirectory");
       lineEditBiasDirectory = findChild<QLineEdit *>("lineEditBiasDirectory");
@@ -951,6 +1043,7 @@ namespace astroManager
       checkBoxBiasDirectory = findChild<QCheckBox *>("checkBoxBiasDirectory");
 
       lineEditLogfileDirectory->setText(settings::astroManagerSettings->value(settings::DIRECTORY_LOGDIR, QVariant("./log")).toString());
+      lineEditDataDirectory->setText(settings::astroManagerSettings->value(settings::DIRECTORY_DATA, QVariant("data")).toString());
       lineEditDarkDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_DARKFRAME_DIRECTORY, QVariant("")).toString());
       lineEditFlatDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_FLATFRAME_DIRECTORY, QVariant("")).toString());
       lineEditBiasDirectory->setText(settings::astroManagerSettings->value(settings::IMAGE_CALIBRATION_BIASFRAME_DIRECTORY, QVariant("")).toString());
@@ -960,6 +1053,18 @@ namespace astroManager
       checkBoxDarkDirectory->setChecked(settings::astroManagerSettings->value(settings::DARKFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
       checkBoxFlatDirectory->setChecked(settings::astroManagerSettings->value(settings::FLATFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
       checkBoxBiasDirectory->setChecked(settings::astroManagerSettings->value(settings::BIASFRAME_DIRECTORY_AUTOUPDATE, QVariant(true)).toBool());
+
+        // Data Files
+
+      ASSOCIATE_LINEEDIT(lineEditTAIUTC, dlg, "lineEditTAIUTC");
+      ASSOCIATE_LINEEDIT(lineEditUTCUT1, dlg, "lineEditUTCUT1");
+      ASSOCIATE_LINEEDIT(lineEditMPCORB, dlg, "lineEditMPCORB");
+      ASSOCIATE_LINEEDIT(lineEditCometEls, dlg, "lineEditCometEls");
+
+      lineEditTAIUTC->setText(settings::astroManagerSettings->value(settings::FILE_TAIUTC, QVariant("TAI-UTC.csv")).toString());
+      lineEditUTCUT1->setText(settings::astroManagerSettings->value(settings::FILE_UTCUT1, QVariant("finals2000A.data.csv")).toString());
+      lineEditMPCORB->setText(settings::astroManagerSettings->value(settings::FILE_MPCORB, QVariant("MPCORB.DAT")).toString());
+      lineEditCometEls->setText(settings::astroManagerSettings->value(settings::FILE_COMETELS, QVariant("CometEls.txt")).toString());
 
         // Source Extraction tab
 
@@ -982,6 +1087,22 @@ namespace astroManager
 
       checkBoxSEAstrometry->setChecked(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_ASTROMETRY, QVariant(true)).toBool());
       checkBoxSEPhotometry->setChecked(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_ADD_PHOTOMETRY, QVariant(false)).toBool());
+
+        // Directories
+
+      connect(findChild<QPushButton *>("pushButtonLogfileDirectory"), SIGNAL(clicked(bool)), this, SLOT(eventLogFileDirectory(bool)));
+      connect(findChild<QPushButton *>("pushButtonDataDirectory"), SIGNAL(clicked()), this, SLOT(eventDataDirectory()));
+      connect(findChild<QPushButton *>("pushButtonDarkDirectory"), SIGNAL(clicked(bool)), this, SLOT(eventDarkDirectory(bool)));
+      connect(findChild<QPushButton *>("pushButtonFlatDirectory"), SIGNAL(clicked(bool)), this, SLOT(eventFlatDirectory(bool)));
+      connect(findChild<QPushButton *>("pushButtonBiasDirectory"), SIGNAL(clicked(bool)), this, SLOT(eventBiasDirectory(bool)));
+      connect(findChild<QPushButton *>("pushButtonCSVDirectory"), SIGNAL(clicked(bool)), this, SLOT(eventCSVDirectory(bool)));
+
+        // Data files
+
+      connect(findChild<QPushButton *>("pushButtonTAIUTC"), SIGNAL(clicked()), this, SLOT(eventTAIUTC()));
+      connect(findChild<QPushButton *>("pushButtonUTCUT1"), SIGNAL(clicked()), this, SLOT(eventUTCUT1()));
+      connect(findChild<QPushButton *>("pushButtonMPCORB"), SIGNAL(clicked()), this, SLOT(eventMPCORB()));
+      connect(findChild<QPushButton *>("pushButtonCometEls"), SIGNAL(clicked()), this, SLOT(eventCometEls()));
     }
 
     /// @brief Sets up the data for the image managementoptions.
@@ -1075,16 +1196,6 @@ namespace astroManager
       connect(buttonBox, SIGNAL(accepted()), this, SLOT(save()));
       connect(buttonBox, SIGNAL(rejected()), dlg, SLOT(reject()));
 
-      connect(findChild<QPushButton *>("pushButtonLogfileDirectory"), SIGNAL(clicked(bool)), this,
-        SLOT(eventLogFileDirectory(bool)));
-      connect(findChild<QPushButton *>("pushButtonDarkDirectory"), SIGNAL(clicked(bool)), this,
-        SLOT(eventDarkDirectory(bool)));
-      connect(findChild<QPushButton *>("pushButtonFlatDirectory"), SIGNAL(clicked(bool)), this,
-        SLOT(eventFlatDirectory(bool)));
-      connect(findChild<QPushButton *>("pushButtonBiasDirectory"), SIGNAL(clicked(bool)), this,
-        SLOT(eventBiasDirectory(bool)));
-      connect(findChild<QPushButton *>("pushButtonCSVDirectory"), SIGNAL(clicked(bool)), this,
-        SLOT(eventCSVDirectory(bool)));
       connect(findChild<QPushButton *>("pushButtonResetWarnings"), SIGNAL(clicked(bool)), this,
               SLOT(eventResetWarnings(bool)));
 
@@ -1218,4 +1329,3 @@ namespace astroManager
 
   }  // namespace dialogs
 }  // namespace AstroManager
-

@@ -42,12 +42,14 @@
 #ifndef VSOPHELP_H
 #define VSOPHELP_H
 
-#include <Qt>
-
   // astroManager Include Files
 
 #include "dialogs/dialogs.h"
 #include "error.h"
+
+  // Miscellaneous library header files.
+
+#include <QCL>
 
 namespace astroManager
 {

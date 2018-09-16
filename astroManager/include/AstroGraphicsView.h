@@ -37,6 +37,8 @@
 #ifndef ASTROGRAPHICSVIEW_H
 #define ASTROGRAPHICSVIEW_H
 
+  // Miscellaneous library header files.
+
 #include <QCL>
 
 namespace astroManager

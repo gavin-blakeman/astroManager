@@ -1555,7 +1555,7 @@ namespace astroManager
     }
 
     /// @brief Reads the plan targets in from the database.
-    /// @param[in] planID: The plan ID to read.
+    /// @param[in] planID: The ID of the plan to read.
     /// @param[out] targetList: The vector to write the targets to.
     /// @throws
     /// @version 2018-09-01/GGB - Function created.

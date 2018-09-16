@@ -192,6 +192,10 @@
         <file>images/Button_Last.png</file>
         <file>images/Button_Rewind.png</file>
         <file>icons/clock.png</file>
+        <file>icons/folders/folder_brick.png</file>
+        <file>icons/folders/folder_image.png</file>
+        <file>icons/folders/folder_bug.png</file>
+        <file>icons/folders/folder_error.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>images/weather_cloudy.png</file>
@@ -216,6 +220,7 @@
         <file>icons/save_as.png</file>
         <file>icons/image/image_save.png</file>
         <file>icons/clock.png</file>
+        <file>icons/files/file_extension_dat.png</file>
     </qresource>
     <qresource prefix="/dialogs">
         <file>dialogs/dialogSelectImageVersion.ui</file>

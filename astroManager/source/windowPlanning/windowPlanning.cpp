@@ -52,6 +52,7 @@ namespace astroManager
 
     /// @brief Constructor for the class.
     /// @param[in] parent - The window that owns this instance.
+    /// @throws std::bad_alloc
     /// @version 2017-06-20/GGB - Function created.
 
     CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent), targetList()

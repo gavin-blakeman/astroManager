@@ -1,5 +1,7 @@
 ﻿2018-08
 ------------------------------------------------------------------------------------------------------------------------------------
+ADDED:    Support for MPCORB file and CometEls file.
+ADDED:    Support for data directory
 CHANGED:  Directory names
 CHANGED:  namespace to astroManager
 

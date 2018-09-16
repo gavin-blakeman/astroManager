@@ -43,11 +43,11 @@
 
 #include "dialogs.h"
 
-  // Standard libraries
+  // Standard C++ library header files
 
 #include <list>
 
-  // Boost Library
+  // Miscellaneous library header files
 
 #include "boost/tuple/tuple.hpp"
 
@@ -79,6 +79,7 @@ namespace astroManager
         // General - Directories
 
       QLineEdit *lineEditLogfileDirectory;
+      QLineEdit *lineEditDataDirectory;
       QLineEdit *lineEditDarkDirectory;
       QLineEdit *lineEditFlatDirectory;
       QLineEdit *lineEditBiasDirectory;
@@ -88,6 +89,13 @@ namespace astroManager
       QCheckBox *checkBoxDarkDirectory;
       QCheckBox *checkBoxFlatDirectory;
       QCheckBox *checkBoxBiasDirectory;
+
+        // General Data files
+
+      QLineEdit *lineEditTAIUTC;
+      QLineEdit *lineEditUTCUT1;
+      QLineEdit *lineEditMPCORB;
+      QLineEdit *lineEditCometEls;
 
         // General - Source Extraction
 
@@ -218,7 +226,11 @@ namespace astroManager
 
     private slots:
       void save();
+
+        // Directories
+
       void eventLogFileDirectory(bool);
+      void eventDataDirectory();
       void eventDarkDirectory(bool);
       void eventFlatDirectory(bool);
       void eventBiasDirectory(bool);
@@ -226,6 +238,15 @@ namespace astroManager
       void eventMasterFlatDirectory(bool);
       void eventMasterBiasDirectory(bool);
       void eventCSVDirectory(bool);
+
+        // Data files
+
+      void eventTAIUTC();
+      void eventUTCUT1();
+      void eventMPCORB();
+      void eventCometEls();
+
+
       void eventResetWarnings(bool);
       void eventARIDDatabaseCombo(int);
       void eventWeatherDatabaseCombo(int);
