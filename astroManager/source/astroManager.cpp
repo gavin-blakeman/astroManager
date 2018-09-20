@@ -185,8 +185,6 @@ int main(int argc, char *argv[])
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading error messages...");
     splash.showMessage(QString("Loading error messages..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
     astroManager::loadErrorMessages();
-    MCL::CMCLError::loadErrorMessages();
-    GCL::loadErrorMessages();
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Initialising settings...");
     splash.showMessage(QString("Initialising settings..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
@@ -465,4 +463,4 @@ namespace astroManager
     SCL::maxThreads = numThreads;
   }
 
-}    // namespace AstroManager
+}    // namespace astroManager

@@ -49,6 +49,11 @@
 
 #include "../../include/dockWidgets/dockWidgetPhotometry.h"
 
+  // Standard C++ library header files
+
+#include <limits>
+#include <tuple>
+
   // astroManager application header files.
 
 #include "../../include/database/databaseATID.h"
@@ -105,26 +110,27 @@ namespace astroManager
 
     /// @brief Function to plot the profile of the selected object.
     /// @param[in] centroid - The centroid of the object.
-    //
-    // 2013-05-18/GGB - Function created.
+    /// @throws None
+    /// @version 2018-09-20/GGB - Converted variable to std::tuple from boost::tuple.
+    /// @version 2013-05-18/GGB - Function created.
 
     void CPhotometryDockWidget::drawProfile(MCL::TPoint2D<ACL::FP_t> const &centroid)
     {
-      std::vector<boost::tuple<ACL::FP_t, ACL::FP_t> > data;
+      std::vector<std::tuple<ACL::FP_t, ACL::FP_t> > data;
       QVector<FP_t> xData;
       QVector<FP_t> yData;
-      FP_t fMax = -1e9, fMin = 1e9;
-      std::vector<boost::tuple<ACL::FP_t, ACL::FP_t> >::const_iterator iterator;
+      FP_t fMax = std::numeric_limits<FP_t>::min(), fMin = std::numeric_limits<FP_t>::max();
+      std::vector<std::tuple<ACL::FP_t, ACL::FP_t> >::const_iterator iterator;
 
       currentImage->astroFile->objectProfile(0, centroid, uiRadius2, data);
 
       for (iterator = data.begin(); iterator!= data.end(); iterator++)
       {
-        xData.push_back( (*iterator).get<0>() );
-        yData.push_back( (*iterator).get<1>() );
+        xData.push_back(std::get<0>(*iterator));
+        yData.push_back(std::get<1>(*iterator));
 
-        fMax = std::max((*iterator).get<1>(), fMax);
-        fMin = std::min((*iterator).get<1>(), fMin);
+        fMax = std::max(std::get<1>(*iterator), fMax);
+        fMin = std::min(std::get<1>(*iterator), fMin);
       };
 
       profilePlot->setAxisScale( QwtPlot::xBottom, 0.0, uiRadius2 );
@@ -161,25 +167,45 @@ namespace astroManager
           boost::to_upper(data);
 
           if (data == "U")
+          {
             labelFilter->setStyleSheet("QLabel { color: violet }");
+          }
           else if (data == "B")
+          {
             labelFilter->setStyleSheet("QLabel { color: blue }");
+          }
           else if (data == "V")
+          {
             labelFilter->setStyleSheet("QLabel { color: green }");
+          }
           else if (data == "R")
+          {
             labelFilter->setStyleSheet("QLabel { color: red }");
+          }
           else if (data == "I")
+          {
             labelFilter->setStyleSheet("QLabel { color: darkred }");
+          }
           else if (data == "R")
+          {
             labelFilter->setStyleSheet("QLabel { color: red }");
+          }
           else if (data == "G")
+          {
             labelFilter->setStyleSheet("QLabel { color: green }");
+          }
           else if (data == "B")
+          {
             labelFilter->setStyleSheet("QLabel { color: blue }");
+          }
           else if (data == "CLEAR")
+          {
             labelFilter->setStyleSheet("QLabel { color: black }");
+          }
           else
+          {
             labelFilter->setStyleSheet("QLabel { color: black }");
+          };
         }
         else
         {
@@ -202,21 +228,22 @@ namespace astroManager
     }
 
     /// @brief Adds a new object into the object list.
-    //
-    // 2013-05-12/GGB - Removed support for export csv button.
-    // 2013-05-10/GGB - Removed support for the objectStore.
-    // 2013-03-28/GGB - Added support for the objectStore.
-    // 2012-11-11/GGB - Function created.
+    /// @param[in] newObject: The object to add.
+    /// @throws None.
+    /// @version 2013-05-12/GGB - Removed support for export csv button.
+    /// @version 2013-05-10/GGB - Removed support for the objectStore.
+    /// @version 2013-03-28/GGB - Added support for the objectStore.
+    /// @version 2012-11-11/GGB - Function created.
 
     void CPhotometryDockWidget::addNewObject(photometry::PPhotometryObservation newObject)
     {
-      // Add the object to the table view.
+        // Add the object to the table view.
 
       insertRow(tableWidgetPhotometry->rowCount(), newObject);
     }
 
     /// @brief Function called when an image is deactivated.
-    //
+    /// @throws None.
     /// @version 2017-09-23/GGB - Updated to use CAngle.
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2012-11-09/GGB - Function created.
@@ -227,7 +254,7 @@ namespace astroManager
     }
 
     /// @brief Displays all the information for a selected object.
-    /// @param[in] po - The photometry observation to display the data for.
+    /// @param[in] po: The photometry observation to display the data for.
     /// @throws CCodeError(astroManager)
     /// @version 2012-11-10/GGB - Function created.
 
@@ -412,10 +439,11 @@ namespace astroManager
       }
     }
 
-    /// Function used when the user wishes to select an object for Photometry.
-    /// Change the window mode to Photometry and select the photometry cursor.
-    ///
-    // 2012-11-08/GGB - Function created.
+    /// @brief Function used when the user wishes to select an object for Photometry. Change the window mode to Photometry and
+    ///        select the photometry cursor.
+    /// @param[in] btnState: The button state.
+    /// @throws CCodeError
+    /// @version 2012-11-08/GGB - Function created.
 
     void CPhotometryDockWidget::eventButtonSelect(bool btnState)
     {
@@ -427,12 +455,18 @@ namespace astroManager
       frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(parentObject);
 
       if (frameWindow)
+      {
         subWindow = dynamic_cast<CMdiSubWindow *>(frameWindow->activeMdiChild());
+      }
       else
+      {
         CODE_ERROR(astroManager);
+      };
 
       if (!subWindow)
+      {
         CODE_ERROR(astroManager);
+      };
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) ||
            (subWindow->getWindowType() == SWT_IMAGE_COMPARE) )
@@ -454,10 +488,11 @@ namespace astroManager
       }
     }
 
-    // Handles the changed event from the Radius 1 check box.
-    //
-    // 2013-05-18/GGB - Added save to settings.
-    // 2011-05-29/GGB - Function created.
+    /// @brief Handles the changed event from the Radius 1 check box.
+    /// @param[in] newValue: The new value for the radius 1.
+    /// @throws None.
+    /// @version 2013-05-18/GGB - Added save to settings.
+    /// @version 2011-05-29/GGB - Function created.
 
     void CPhotometryDockWidget::eventRadius1Changed(int newValue)
     {
@@ -595,10 +630,14 @@ namespace astroManager
           // Remove all the existing data
 
         while (tableWidgetPhotometry->rowCount())
+        {
           tableWidgetPhotometry->removeRow(0);
+        };
 
         if (isEnabled())
+        {
           pushButtonSelect->setEnabled(true);
+        };
 
         pushButtonRemove->setEnabled(false);
         btnObjectName->setEnabled(false);  // Nothing selected.
@@ -641,7 +680,9 @@ namespace astroManager
 
 
         while (tableWidgetPhotometry->rowCount())
+        {
           tableWidgetPhotometry->removeRow(0);
+        };
 
         pushButtonSelect->setEnabled(false);
         pushButtonRemove->setEnabled(false);
