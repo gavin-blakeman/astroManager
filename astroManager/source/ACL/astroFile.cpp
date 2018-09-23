@@ -54,7 +54,7 @@
 namespace astroManager
 {
   /// @brief Copy constructor.
-  /// @param[in] toCopy - The instance to copy from.
+  /// @param[in] toCopy: The instance to copy from.
   /// @throws std::bad_alloc
   /// @version 2017-08-26/GGB - Function created.
 
@@ -65,8 +65,8 @@ namespace astroManager
   }
 
   /// @brief Constructor for the class. Calls the parent constructor.
+  /// @param[in] filename: The filename to associate with this file.
   /// @details  Substitutes the observationLocation to a AstroManager::CObservatory rather than a ACL::CGeographicLocation.
-  /// @param[in] filename - The filename to associate with this file.
   /// @throws std::bad_alloc
   /// @version 2017-07-24/GGB - Function created.
 
@@ -83,8 +83,8 @@ namespace astroManager
   }
 
   /// @brief Constructor to construct from a database object.
-  /// @param[in] imageID - The imageID to load from the database.
-  /// @param[in] imageVersion - The version of the image to load.
+  /// @param[in] imageID: The imageID to load from the database.
+  /// @param[in] imageVersion: The version of the image to load.
   /// @throws std::bad_alloc
   /// @version 2017-08-12/GGB - Function created.
 
@@ -101,8 +101,8 @@ namespace astroManager
   }
 
   /// Constructor to construct from a ACL::CAstroFile
-  /// @param[in] parent - The parent (owner) of the astroFile.
-  /// @param[in] astroFile - The astroFile to construct from.
+  /// @param[in] parent: The parent (owner) of the astroFile.
+  /// @param[in] astroFile: 5The astroFile to construct from.
   /// @throws std::bad_alloc
   /// @version 2017-08-18/GGB - Function created.
 
@@ -136,7 +136,7 @@ namespace astroManager
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->latitude(), ACL::astroManager_COMMENT_LATITUDE);
+      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->latitude(), ACL::ASTROMANAGER_COMMENT_LATITUDE);
 
         // Delete the keywords that are not required.
 
@@ -156,7 +156,7 @@ namespace astroManager
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->longitude(), ACL::astroManager_COMMENT_LONGITUDE);
+      keywordWrite(0, ACL::MAXIM_LATITUDE, getObservationLocation()->longitude(), ACL::ASTROMANAGER_COMMENT_LONGITUDE);
 
         // Delete the keywords that are not required.
 
@@ -168,17 +168,17 @@ namespace astroManager
     {
         // The MAXIM one is the one we want.
 
-      keywordDelete(0, ACL::astroManager_ALTITUDE);
+      keywordDelete(0, ACL::ASTROMANAGER_ALTITUDE);
     }
-    else if (keywordExists(0, ACL::astroManager_ALTITUDE))
+    else if (keywordExists(0, ACL::ASTROMANAGER_ALTITUDE))
     {
         // Wrong keyword. Lets first save the preferred keyword.
 
-      keywordWrite(0, ACL::MAXIM_ALTITUDE, getObservationLocation()->altitude(), ACL::astroManager_COMMENT_ALTITUDE);
+      keywordWrite(0, ACL::MAXIM_ALTITUDE, getObservationLocation()->altitude(), ACL::ASTROMANAGER_COMMENT_ALTITUDE);
 
         // Delete the keywords that are not required.
 
-      keywordDelete(0, ACL::astroManager_ALTITUDE);
+      keywordDelete(0, ACL::ASTROMANAGER_ALTITUDE);
     };
   }
 
@@ -212,7 +212,7 @@ namespace astroManager
   }
 
   /// @brief Sets the imageID. This also changes the save Method to database.
-  /// @param[in] imageID - The new ID to assign to the image.
+  /// @param[in] imageID: The new ID to assign to the image.
   /// @throws None.
   /// @version 2017-09-01/GGB - Function created.
 
@@ -310,11 +310,11 @@ namespace astroManager
 
       // Check if the keyword exists for the UUID
 
-    if (keywordExists(0, ACL::astroManager_UUID) )
+    if (keywordExists(0, ACL::ASTROMANAGER_UUID) )
     {
         // If so, load the UUID value
 
-      std::string suuid = static_cast<std::string>(keywordData(0, ACL::astroManager_UUID));
+      std::string suuid = static_cast<std::string>(keywordData(0, ACL::ASTROMANAGER_UUID));
 
       _uuid = QUuid(QString::fromStdString(suuid));
       imageRegistered = true;
@@ -354,7 +354,7 @@ namespace astroManager
 
         // Try to associate the latiitude/longitude with an observing site.
 
-      keywordWrite(0, ACL::astroManager_UUID, _uuid.toString().toUpper().toStdString(), ACL::astroManager_COMMENT_UUID);
+      keywordWrite(0, ACL::ASTROMANAGER_UUID, _uuid.toString().toUpper().toStdString(), ACL::ASTROMANAGER_COMMENT_UUID);
     };
 
       // Search for the observatory that is closest.
@@ -559,9 +559,9 @@ namespace astroManager
         // Need to register the image.
         // Check if the UUID exists.
 
-      if (keywordExists(0, ACL::astroManager_UUID))
+      if (keywordExists(0, ACL::ASTROMANAGER_UUID))
       {
-        std::string szUUID = static_cast<std::string>(keywordData(0, ACL::astroManager_UUID));
+        std::string szUUID = static_cast<std::string>(keywordData(0, ACL::ASTROMANAGER_UUID));
         QUuid UUID(QString::fromStdString(szUUID));
 
         if (UUID.isNull())
@@ -574,7 +574,7 @@ namespace astroManager
           }
           while (database::databaseARID->isImageUUIDRegistered(UUID, imageID_));
 
-          keywordWrite(0, ACL::astroManager_UUID, UUID.toString().toStdString(), ACL::astroManager_COMMENT_UUID);
+          keywordWrite(0, ACL::ASTROMANAGER_UUID, UUID.toString().toStdString(), ACL::ASTROMANAGER_COMMENT_UUID);
         }
         else if (database::databaseARID->isImageUUIDRegistered(UUID, imageID_))
         {

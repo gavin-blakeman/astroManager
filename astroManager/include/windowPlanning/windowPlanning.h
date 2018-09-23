@@ -79,7 +79,7 @@ namespace astroManager
       QPushButton *pushButtonTimeDayMinus = nullptr;
       QPushButton *pushButtonRealTime = nullptr;
 
-      QTableView *tableWidgetPlanning = nullptr;
+      QTableWidget *tableWidgetPlanning = nullptr;
 
       QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
 

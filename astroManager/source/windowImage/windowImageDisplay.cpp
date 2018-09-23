@@ -78,20 +78,14 @@
 #include "../../include/settings.h"
 #include "../../include/astroManager.h"
 
-  // SOFA library
-
-#include "sofam.h"
-
-  // Boost Library
+  // Miscellaneous library header files.
 
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-
-  // Miscellaneous libraries
-
 #include <GCL>
 #include <PCL>
+#include "sofam.h"
 
 namespace astroManager
 {
@@ -119,7 +113,7 @@ namespace astroManager
     /// @version 2011-03-14/GGB - Changed class to use CAstroFile with no direct references to CCFits
     /// @version 2010-10-30/GGB - Function Created
 
-    CImageWindow::CImageWindow(PAstroFile newAstroFile, QWidget *parent) :
+    CImageWindow::CImageWindow(std::shared_ptr<CAstroFile> newAstroFile, QWidget *parent) :
       CAstroImageWindow(parent), controlImage(this, newAstroFile)
     {
       ACL::DHDBStore::size_type nIndex;
@@ -311,7 +305,7 @@ namespace astroManager
 
                   if ( !controlImage.astroFile->hasAstrometryHDB() )
                   {
-                    ACL::PHDBAstrometry phdb = controlImage.astroFile->createAstrometryHDB();
+                    ACL::CHDBAstrometry *phdb = controlImage.astroFile->createAstrometryHDB();
                     phdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                     phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                   };
@@ -386,9 +380,9 @@ namespace astroManager
 
         // Need to add the astrometry HDU to the list of available HDU's?
 
-      if ( cbHDU->findText(QString::fromStdString(ACL::astroManager_HDB_ASTROMETRY)) == -1)
+      if ( cbHDU->findText(QString::fromStdString(ACL::ASTROMANAGER_HDB_ASTROMETRY)) == -1)
       {
-        cbHDU->addItem(QString::fromStdString(ACL::astroManager_HDB_ASTROMETRY));
+        cbHDU->addItem(QString::fromStdString(ACL::ASTROMANAGER_HDB_ASTROMETRY));
       }
 
         // Add the items into the table for references
@@ -635,14 +629,14 @@ namespace astroManager
 
     void CImageWindow::calibrateImage()
     {
-      ACL::SCalibrateImage_Ptr calibrateImage(new ACL::SCalibrateImage);
+      std::unique_ptr<ACL::SCalibrateImage> calibrateImage(new ACL::SCalibrateImage);
       QMessageBox msgBox;
 
       if (controlImage.astroFile->HDBType(controlImage.currentHDB) == ACL::BT_IMAGE)
       {
           // Calibration dialog.
 
-        dialogs::CImageCalibrationDialog dlg(calibrateImage);
+        dialogs::CImageCalibrationDialog dlg(calibrateImage.get());
 
         if (dlg.exec() == QDialog::Accepted)
         {
@@ -650,7 +644,7 @@ namespace astroManager
 
           try
           {
-            controlImage.astroFile->calibrateImage(calibrateImage);
+            controlImage.astroFile->calibrateImage(calibrateImage.get());
 
             historyUpdate();
 
@@ -946,12 +940,12 @@ namespace astroManager
 
     /// @brief Called to display the data for an HDU.
     /// @param[in] nHDU = number of the HDU to display information for. 0 = Primary.
-    /// @throws None.
     /// @details All the keywords are read from the HDU file. All the standard keywords are also shown, even if there is no value
-    /// associated with them.
+    ///          associated with them.
+    /// @throws None.
     /// @version 2013-06-20/GGB
-    ///   @li Updated QString use.
-    ///   @li Fixed bug: 1165777 (Exposure time not displayed.)
+    ///                           @li Updated QString use.
+    ///                           @li Fixed bug: 1165777 (Exposure time not displayed.)
     /// @version 2011-03-17/GGB - Changed to use the ACL::CAstroFile class.
     /// @version 2010-10-23/GGB - Function created.
 
@@ -1131,8 +1125,8 @@ namespace astroManager
     }
 
     /// @brief Called to display the data for the selected HDU.
-    /// @pre This function must be called after the HDUType has been set by a call to DisplayKeywords
     /// @details This function hides unused tabs and calls the relevant routines for getting the correct data into the correct tab.
+    /// @pre This function must be called after the HDUType has been set by a call to DisplayKeywords
     /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-07-28/GGB - Added default and BT_NONE to switch statement.
     /// @version 2012-01-09/GGB - Added functionallity for astrometry and photometry tabs.
@@ -1334,8 +1328,8 @@ namespace astroManager
     void CImageWindow::displayTargetInformation()
     {
       labelTarget->setText(QString::fromStdString(controlImage.astroFile->getObservationTarget()));
-      labelTargetRA->setText(QString::fromStdString(controlImage.astroFile->getTargetCoordinates().RA().A2SHMS()));
-      labelTargetDEC->setText(QString::fromStdString(controlImage.astroFile->getTargetCoordinates().DEC().A2SDMS()));
+      labelTargetRA->setText(QString::fromStdString(controlImage.astroFile->imageCenter().RA().A2SHMS()));
+      labelTargetDEC->setText(QString::fromStdString(controlImage.astroFile->imageCenter().DEC().A2SDMS()));
     }
 
     /// @brief Displays the weather information.
@@ -1404,8 +1398,8 @@ namespace astroManager
     }
 
     /// @brief Event handler when the current HDU is changed from the combo box.
+    /// @param[in] nHDU: The number of the new HDU
     /// @details All exisiting display data must be cleared and the new data loaded and displayed.
-    /// @param[in] nHDU - The number of the new HDU
     /// @throws None.
     /// @version 2010-10-24/GGB - Function created.
 
@@ -1650,7 +1644,7 @@ namespace astroManager
       std::string szDateTime;
       astrometry::DAstrometryObservationStore::iterator iterator;
 
-      ACL::CHDB *currentHDB = controlImage.astroFile->getHDB(0).get();
+      ACL::CHDB *currentHDB = controlImage.astroFile->getHDB(0);
 
         // Read the date/time from the image.
 
@@ -1702,13 +1696,13 @@ namespace astroManager
       std::string filterName;
       std::string szDateTime;
 
-      currentHDB = controlImage.astroFile->getHDB(0).get();     // Need to check the original image for ZMAG and filter.
+      currentHDB = controlImage.astroFile->getHDB(0);     // Need to check the original image for ZMAG and filter.
 
       if (currentHDB->HDBType() == ACL::BT_IMAGE)
       {
-        if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
+        if (currentHDB->keywordExists(ACL::ASTROMANAGER_ZMAG))
         {
-          zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
+          zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::ASTROMANAGER_ZMAG));
         }
         else
         {
@@ -2038,14 +2032,15 @@ namespace astroManager
         infoTabActivating();
     }
 
-    // Returns the astroFile associated with the window.
-    //
-    // 2013-03-03/GGB - Additional items enabled.
-    // 2012-01-07/GGB - Function created.
+    /// @brief Returns the astroFile associated with the window.
+    /// @returns Pointer to the astroFile.
+    /// @version 2018-09-22/GGB - Converted to std::shared_ptr.
+    /// @version 2013-03-03/GGB - Additional items enabled.
+    /// @version 2012-01-07/GGB - Function created.
 
-    ACL::PAstroFile CImageWindow::getAstroFile() const
+    ACL::CAstroFile *CImageWindow::getAstroFile() const
     {
-      return controlImage.astroFile;
+      return controlImage.astroFile.get();
     }
 
     /// Updates the history being displayed.
@@ -2281,7 +2276,7 @@ namespace astroManager
 
               if ( !controlImage.astroFile->hasAstrometryHDB() )
               {
-                ACL::PHDBAstrometry ahdb = controlImage.astroFile->createAstrometryHDB();
+                ACL::CHDBAstrometry *ahdb = controlImage.astroFile->createAstrometryHDB();
                 ahdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                 ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
               };
@@ -2418,7 +2413,7 @@ namespace astroManager
 
               if ( !controlImage.astroFile->hasAstrometryHDB() )
               {
-                ACL::PHDBAstrometry ahdb = controlImage.astroFile->createAstrometryHDB();
+                ACL::CHDBAstrometry *ahdb = controlImage.astroFile->createAstrometryHDB();
                 ahdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                 ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
               };
@@ -2496,7 +2491,7 @@ namespace astroManager
 
                 if ( !controlImage.astroFile->hasPhotometryHDB() )
                 {
-                  ACL::PHDBPhotometry phdb = controlImage.astroFile->createPhotometryHDB();
+                  ACL::CHDBPhotometry *phdb = controlImage.astroFile->createPhotometryHDB();
                   phdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                   phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                 };
@@ -2609,7 +2604,7 @@ namespace astroManager
 
             if ( !controlImage.astroFile->hasAstrometryHDB() )
             {
-              ACL::PHDBAstrometry ahdb = controlImage.astroFile->createAstrometryHDB();
+              ACL::CHDBAstrometry *ahdb = controlImage.astroFile->createAstrometryHDB();
               ahdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
               ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
             };
@@ -2722,7 +2717,7 @@ namespace astroManager
 
                 if ( !controlImage.astroFile->hasPhotometryHDB() )
                 {
-                  ACL::PHDBPhotometry phdb = controlImage.astroFile->createPhotometryHDB();
+                  ACL::CHDBPhotometry *phdb = controlImage.astroFile->createPhotometryHDB();
                   phdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                   phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                 };
@@ -3010,7 +3005,7 @@ namespace astroManager
 
                   if ( !controlImage.astroFile->hasPhotometryHDB() )
                   {
-                    ACL::PHDBPhotometry phdb = controlImage.astroFile->createPhotometryHDB();
+                    ACL::CHDBPhotometry *phdb = controlImage.astroFile->createPhotometryHDB();
                     phdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
                     phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                   };
@@ -3085,9 +3080,9 @@ namespace astroManager
 
         // Need to add the photometry HDU to the list of available HDU's?
 
-      if ( cbHDU->findText(QString::fromStdString(ACL::astroManager_HDB_PHOTOMETRY)) == -1 )
+      if ( cbHDU->findText(QString::fromStdString(ACL::ASTROMANAGER_HDB_PHOTOMETRY)) == -1 )
       {
-        cbHDU->addItem(QString::fromStdString(ACL::astroManager_HDB_PHOTOMETRY));
+        cbHDU->addItem(QString::fromStdString(ACL::ASTROMANAGER_HDB_PHOTOMETRY));
       };
 
         // Add the items into the table for references

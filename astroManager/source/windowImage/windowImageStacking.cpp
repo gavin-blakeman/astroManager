@@ -1629,8 +1629,8 @@ namespace astroManager
         std::unique_ptr<ACL::CAstroFile> &outputImage = imageStack.stackImages(stackMode);
         outputControlImage.astroFile.reset(dynamic_cast<CAstroFile *>(outputImage.release()));
 
-        outputControlImage.astroFile->keywordWrite(0, ACL::astroManager_UUID, QUuid::createUuid().toString().toUpper().toStdString(),
-                                                   ACL::astroManager_COMMENT_UUID);
+        outputControlImage.astroFile->keywordWrite(0, ACL::ASTROMANAGER_UUID, QUuid::createUuid().toString().toUpper().toStdString(),
+                                                   ACL::ASTROMANAGER_COMMENT_UUID);
         outputControlImage.astroFile->fileNameValid(false);
         outputControlImage.astroFile->imageIDValid(false);
         outputControlImage.astroFile->syntheticImage(true);

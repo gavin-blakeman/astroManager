@@ -1086,7 +1086,7 @@ namespace astroManager
         target->pmDec(sqlQuery->value(4).toDouble());
         target->radialVelocity(sqlQuery->value(5).toDouble());
         target->parallax(sqlQuery->value(6).toDouble());
-        target->objectType(sqlQuery->value(7).toString().toStdString());
+        target->stellarType(sqlQuery->value(7).toString().toStdString());
       }
       else
       {

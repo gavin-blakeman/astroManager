@@ -119,9 +119,6 @@ namespace astroManager
     void syntheticImage(bool synthetic) { syntheticImage_ = synthetic; }
 
   };
-
-  typedef std::shared_ptr<CAstroFile> PAstroFile;
-
 } // namespace AstroManager
 
 #endif // ASTROFILE

@@ -62,6 +62,7 @@ namespace astroManager
 
     /// @brief Default constructor. Loads the white and black point from the astroFile if it is specified.
     /// @throws std::bad_alloc
+    /// @version 2018-09-22/GGB - Updated to use std::unique_ptr.
     /// @version 2015-08-01/GGB - Added renderMode member.
     /// @version 2013-06-16/GGB - Changed code around the astrometry store copy to correct bug.
     /// @version 2013-05-20/GGB - Added the pixmap member.
@@ -69,7 +70,7 @@ namespace astroManager
     /// @version 2012-07-17/GGB - Added parameter to function call and extract white and black levels.
     /// @version 2011-06-12/GGB - Function created
 
-    SControlImage::SControlImage(imaging::CAstroImageWindow *parent, PAstroFile af) : parent_(parent), astroFile(af),
+    SControlImage::SControlImage(imaging::CAstroImageWindow *parent, std::shared_ptr<CAstroFile> af) : parent_(parent), astroFile(af),
       currentHDB(0), ScreenImage(nullptr), pixmap(new QPixmap()), renderMode(ACL::RM_GREY8), isActive(false), whitePoint(),
       blackPoint()
     {

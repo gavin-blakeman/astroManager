@@ -126,7 +126,7 @@ namespace astroManager
       {
         if (parentObject->getControlImage()->astroFile)
         {
-          ACL::PAstroFile af = parentObject->getControlImage()->astroFile;
+          ACL::CAstroFile *af = parentObject->getControlImage()->astroFile.get();
 
           if ( (x < 0) || (y < 0) ||
             (x >= parentObject->getControlImage()->astroFile->getAstroImage(parentObject->getControlImage()->currentHDB)->width()) ||

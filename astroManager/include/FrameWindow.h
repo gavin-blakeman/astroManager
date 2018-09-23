@@ -312,7 +312,7 @@ namespace astroManager
 
       void enableDockWidgetsImage(bool);
 
-      void imageCreateWindow(PAstroFile);
+      void imageCreateWindow(std::shared_ptr<CAstroFile>);
       void imageOpenFromDatabase(imageID_t);
 
       private slots:

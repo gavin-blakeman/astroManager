@@ -393,14 +393,16 @@ namespace astroManager
     }
 
     /// @brief Inserts a row into the table.
-    //
-    // 2015-01-04/GGB - Function created.
+    /// @param[in] nRow:
+    /// @param[in] toInsert:
+    /// @throws None
+    /// @version 2015-01-04/GGB - Function created.
 
     void CAstrometryDockWidget::insertRow(int nRow, astrometry::PAstrometryObservation toInsert)
     {
       ACL::CHDB *currentHDB;
 
-      currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB).get();
+      currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB);
 
       tableWidgetAstrometry->insertRow(nRow);
       tableWidgetAstrometry->setRowHeight(nRow, 16);
@@ -408,12 +410,11 @@ namespace astroManager
       tableWidgetAstrometry->setCurrentCell(nRow, 0);
     }
 
-    /// Redraws all the information in the dock widget.
-    /// Is called after the astrometry image changes.
+    /// @brief Redraws all the information in the dock widget. Is called after the astrometry image changes.
     //
-    // 2013-03-17/GGB - Changed type of object stored to be descendant of SAstrometryObjectInformation
-    // 2013-02-06/GGB - Removed all target code and have only one set of object code.
-    // 2011-06-29/GGB - Function created.
+    /// @version 2013-03-17/GGB - Changed type of object stored to be descendant of SAstrometryObjectInformation
+    /// @version 2013-02-06/GGB - Removed all target code and have only one set of object code.
+    /// @version 2011-06-29/GGB - Function created.
 
     void CAstrometryDockWidget::redraw()
     {

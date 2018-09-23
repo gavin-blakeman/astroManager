@@ -213,9 +213,9 @@ namespace astroManager
           labelFilter->setStyleSheet("QLabel { color : gray");
         };
 
-        if (currentImage->astroFile->keywordExists(currentImage->currentHDB, ACL::astroManager_ZMAG))
+        if (currentImage->astroFile->keywordExists(currentImage->currentHDB, ACL::ASTROMANAGER_ZMAG))
         {
-          FP_t zmag = static_cast<FP_t>(currentImage->astroFile->keywordData(currentImage->currentHDB, ACL::astroManager_ZMAG));
+          FP_t zmag = static_cast<FP_t>(currentImage->astroFile->keywordData(currentImage->currentHDB, ACL::ASTROMANAGER_ZMAG));
           labelZMAG->setText(QString("%1").arg(zmag));
         }
         else
@@ -273,15 +273,15 @@ namespace astroManager
       {
           // Object is selected. Show the relevant information.
 
-        currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB).get();
+        currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB);
 
         if (settings::astroManagerSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
         {
           if (currentHDB->HDBType() == ACL::BT_IMAGE)
           {
-            if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
+            if (currentHDB->keywordExists(ACL::ASTROMANAGER_ZMAG))
             {
-              zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
+              zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::ASTROMANAGER_ZMAG));
             }
             else
             {
@@ -581,15 +581,15 @@ namespace astroManager
       ACL::CHDB *currentHDB;
       FP_t zmag;
 
-      currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB).get();
+      currentHDB = currentImage->astroFile->getHDB(currentImage->currentHDB);
 
       if (settings::astroManagerSettings->value(settings::PHOTOMETRY_USEZMAG, QVariant(false)).toBool())
       {
         if (currentHDB->HDBType() == ACL::BT_IMAGE)
         {
-          if (currentHDB->keywordExists(ACL::astroManager_ZMAG))
+          if (currentHDB->keywordExists(ACL::ASTROMANAGER_ZMAG))
           {
-            zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::astroManager_ZMAG));
+            zmag = static_cast<FP_t>(currentHDB->keywordData(ACL::ASTROMANAGER_ZMAG));
           }
           else
           {

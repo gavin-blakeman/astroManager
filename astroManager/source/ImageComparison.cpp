@@ -192,7 +192,7 @@ namespace astroManager
 
       if ( !controlImage->astroFile->hasAstrometryHDB() )
       {
-        ACL::PHDBAstrometry ahdb = controlImage->astroFile->createAstrometryHDB();
+        ACL::CHDBAstrometry *ahdb = controlImage->astroFile->createAstrometryHDB();
         ahdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
         ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
       };
@@ -1367,7 +1367,7 @@ namespace astroManager
 
       if ( !controlImage->astroFile->hasPhotometryHDB() )
       {
-        ACL::PHDBPhotometry phdb = controlImage->astroFile->createPhotometryHDB();
+        ACL::CHDBPhotometry *phdb = controlImage->astroFile->createPhotometryHDB();
         phdb->keywordWrite(ACL::HEASARC_CREATOR, CREATOR(), ACL::HEASARC_COMMENT_CREATOR);
         phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
       };

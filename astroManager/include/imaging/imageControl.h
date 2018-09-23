@@ -37,6 +37,10 @@
 #ifndef IMAGECONTROL
 #define IMAGECONTROL
 
+  // Standard C++ library header files
+
+#include <memory>
+
   // astroManager header files.
 
 #include "../ACL/astroFile.h"
@@ -61,7 +65,7 @@ namespace astroManager
       photometry::PPhotometryObservation currentPhotometrySelection;
 
       imaging::CAstroImageWindow *parent_ = nullptr;
-      PAstroFile astroFile;
+      std::shared_ptr<CAstroFile> astroFile;
       ACL::DHDBStore::size_type currentHDB = 0;
       QImage *ScreenImage = nullptr;
       QPixmap *pixmap = new QPixmap();
@@ -73,7 +77,7 @@ namespace astroManager
       bool isActive = false;                      ///< Indicates if the particular record is Active. Only changed by the dockWidget.
 
       explicit SControlImage() {}
-      SControlImage(imaging::CAstroImageWindow *, PAstroFile);
+      SControlImage(imaging::CAstroImageWindow *, std::shared_ptr<CAstroFile>);
       explicit SControlImage(imaging::CAstroImageWindow *);
       explicit SControlImage(SControlImage const &);
       virtual ~SControlImage();

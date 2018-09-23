@@ -1183,8 +1183,8 @@ namespace astroManager
 
       CMdiSubWindow *activeChild = activeMdiChild();
       imaging::CImageWindow *imageWindow = nullptr;
-      ACL::PAstroFile astroFile;
-      ACL::PAstroFile astroFileGrayscale;
+      ACL::CAstroFile *astroFile;
+      ACL::CAstroFile *astroFileGrayscale;
       boost::thread_group threadGroup;
       boost::thread *thread;
 
@@ -1234,8 +1234,8 @@ namespace astroManager
 
       CMdiSubWindow *activeChild = activeMdiChild();
       imaging::CImageWindow *imageWindow = nullptr;
-      ACL::PAstroFile astroFile;
-      ACL::PAstroFile astroFileRed, astroFileGreen, astroFileBlue, astroFileLuminance;
+      ACL::CAstroFile *astroFile;
+      ACL::CAstroFile *astroFileRed, astroFileGreen, astroFileBlue, astroFileLuminance;
       boost::thread_group threadGroup;
       boost::thread *thread;
 
@@ -1303,8 +1303,8 @@ namespace astroManager
 
       CMdiSubWindow *activeChild = activeMdiChild();
       imaging::CImageWindow *imageWindow = nullptr;
-      ACL::PAstroFile astroFile;
-      ACL::PAstroFile astroFileRed, astroFileGreen, astroFileBlue;
+      ACL::CAstroFile *astroFile;
+      ACL::CAstroFile *astroFileRed, *astroFileGreen, *astroFileBlue;
       boost::thread_group threadGroup;
       boost::thread *thread;
 
@@ -3149,9 +3149,10 @@ namespace astroManager
     /// @param[in] astroFile - The astrofile to open a window for.
     /// @note The astrofile should already be loaded.
     /// @throws None.
+    /// @version 2018-09-22/GGB - Converted to std::shared_ptr.
     /// @version 2013-02-10/GGB - Function created.
 
-    void CFrameWindow::imageCreateWindow(PAstroFile astroFile)
+    void CFrameWindow::imageCreateWindow(std::shared_ptr<CAstroFile> astroFile)
     {
       imaging::CImageWindow *imageWindow = new imaging::CImageWindow(astroFile, this);
 
@@ -3233,7 +3234,7 @@ namespace astroManager
 
         try
         {
-          PAstroFile astroFile(std::make_shared<CAstroFile>(this, imageID, imageVersion));   // Create from database.
+          std::shared_ptr<CAstroFile> astroFile(std::make_shared<CAstroFile>(this, imageID, imageVersion));   // Create from database.
 
           //GCL::logger::defaultLogger().logMessage(GCL::logger::info, "File: " + filePath.string() + " has been opened");
 
@@ -3327,7 +3328,7 @@ namespace astroManager
 
       try
       {
-        PAstroFile astroFile(std::make_shared<CAstroFile>(this, filePath));   // Create and load all the data from the file.
+        std::shared_ptr<CAstroFile> astroFile(std::make_shared<CAstroFile>(this, filePath));   // Create and load all the data from the file.
 
         GCL::logger::defaultLogger().logMessage(GCL::logger::info, "File: " + filePath.string() + " has been opened");
 

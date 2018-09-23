@@ -66,14 +66,14 @@ namespace astroManager
       QCheckBox *checkBoxSaveOriginal;
       QCheckBox *checkBoxAppendFrames;
 
-      ACL::SCalibrateImage_Ptr calibrateImage;
+      ACL::SCalibrateImage *calibrateImage;
 
       void setupUI();
       void saveUI();
 
     protected:
     public:
-      CImageCalibrationDialog(ACL::SCalibrateImage_Ptr);
+      CImageCalibrationDialog(ACL::SCalibrateImage *);
       virtual ~CImageCalibrationDialog() {;}
 
     private slots:

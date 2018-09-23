@@ -59,8 +59,8 @@ namespace astroManager
   public:
     enum
     {
-      column_id = 0,
-      column_rank,
+      column_start = 0,
+      column_rank = 0,
       column_name,
       column_type,
       column_ra,
@@ -81,7 +81,7 @@ namespace astroManager
       col_transitAltitude,
       col_angularSize,
       col_catalogue,
-      col_columnCount,              // Always leave this one at the end as it contains the total column count.
+      column_end,              // Always leave this one at the end as it contains the total column count.
     };
   private:
     std::vector<QTableWidgetItem *> columnMap;

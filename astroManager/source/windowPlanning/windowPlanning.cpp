@@ -144,7 +144,10 @@ namespace astroManager
 
         // Now need to setup all the listWidgetItems for the columns.
 
-
+      for (std::unique_ptr<CTargetAstronomy> const &target: targetList)
+      {
+        target->setColumnWidgets(tableWidgetPlanning);
+      };
 
     }
 
@@ -249,7 +252,7 @@ namespace astroManager
       ASSOCIATE_CONTROL(comboBoxPlans, formWidget, "comboBoxPlans", QComboBox);
       ASSOCIATE_CONTROL(comboBoxSites, formWidget, "comboBoxSites", QComboBox);
 
-      ASSOCIATE_TABLEVIEW(tableWidgetPlanning, formWidget, "tableWidgetPlanning");
+      ASSOCIATE_TABLEWIDGET(tableWidgetPlanning, formWidget, "tableWidgetPlanning");
       ASSOCIATE_CONTROL(dateEditSelectedDate, formWidget, "dateEditSelectedDate", QDateEdit);
       ASSOCIATE_CONTROL(timeEditSelectedTime, formWidget, "timeEditSelectedTime", QTimeEdit);
       ASSOCIATE_RADIOBUTTON(radioButtonUT, formWidget, "radioButtonUT");
@@ -263,6 +266,7 @@ namespace astroManager
       ASSOCIATE_PUSHBUTTON(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus");
       ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
 
+      tableWidgetPlanning->setColumnCount(CTargetAstronomy::column_end);
       tableWidgetPlanning->setSortingEnabled(true);
       tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 

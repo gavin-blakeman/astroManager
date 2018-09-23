@@ -1,6 +1,6 @@
 ﻿//*********************************************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Observation Manager)
+// PROJECT:							astroManager (Astronomy Observation Manager)
 // FILE:								targetAstronomy
 // SUBSYSTEM:						Display weather data
 // LANGUAGE:						C++
@@ -40,6 +40,10 @@
 
 #include <utility>
 
+  // astroManager application header files
+
+#include "../../include/error.h"
+
 namespace astroManager
 {
 
@@ -50,7 +54,7 @@ namespace astroManager
   /// @version 2018-08-31/GGB - Function created
 
   CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget)
-    : columnMap(col_columnCount), targetAstronomy(std::move(newTarget))
+    : columnMap(column_end), targetAstronomy(std::move(newTarget))
   {
 
   }
@@ -65,10 +69,24 @@ namespace astroManager
     columnMap.clear();
     int row = tableWidget->rowCount();
 
+    tableWidget->insertRow(row);
 
-    for (int index = column_id; index != col_columnCount; index++)
+    for (int index = column_start; index != column_end; index++)
     {
-      columnMap.push_back(new QTableWidgetItem());
+      switch (index)
+      {
+        case column_rank:
+        {
+          columnMap.push_back(new QTableWidgetItem(QString("%1").arg(row)));
+          break;
+        };
+        default:
+        {
+          columnMap.push_back(new QTableWidgetItem("Test"));
+          break;
+        };
+      };
+
       tableWidget->setItem(row, index, columnMap.back());
     };
 
@@ -90,7 +108,35 @@ namespace astroManager
 
   void CTargetAstronomy::updateColumnType()
   {
-    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy->objectType()));
+    switch (targetAstronomy->targetType())
+    {
+      case ACL::CTargetAstronomy::TT_STELLAR:
+      {
+        columnMap[column_type]->setText("Comet");
+        break;
+      };
+      case ACL::CTargetAstronomy::TT_MAJORPLANET:
+      {
+        columnMap[column_type]->setText("Planet");
+        break;
+      };
+      case ACL::CTargetAstronomy::TT_MINORPLANET:
+      {
+        columnMap[column_type]->setText("Minor Planet");
+        break;
+      };
+      case ACL::CTargetAstronomy::TT_COMET:
+      {
+        columnMap[column_type]->setText("Comet");
+        break;
+      };
+      case ACL::CTargetAstronomy::TT_NONE:
+      default:
+      {
+        ASTROMANAGER_CODE_ERROR;
+        break;
+      };
+    };
   }
 
   /// @brief Sets the RA value into the widget.

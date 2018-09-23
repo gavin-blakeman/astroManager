@@ -179,13 +179,13 @@ namespace astroManager
        virtual void closeEvent(QCloseEvent *);
 
     public:
-      CImageWindow(PAstroFile, QWidget * = 0);
+      CImageWindow(std::shared_ptr<CAstroFile>, QWidget * = 0);
       virtual ~CImageWindow();
 
       virtual void setMode(EMode);
 
       virtual ESubWindowType getWindowType() const {return SWT_IMAGEWINDOW;}
-      ACL::PAstroFile getAstroFile() const;
+      ACL::CAstroFile *getAstroFile() const;
 
       virtual void eventMousePress(QMouseEvent *);
 

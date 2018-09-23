@@ -1683,9 +1683,9 @@ namespace astroManager
 
             // UUID
 
-          if (astroFile->keywordExists(0, ACL::astroManager_UUID))
+          if (astroFile->keywordExists(0, ACL::ASTROMANAGER_UUID))
           {
-            uuid = static_cast<std::string>(astroFile->keywordData(0, ACL::astroManager_UUID));
+            uuid = static_cast<std::string>(astroFile->keywordData(0, ACL::ASTROMANAGER_UUID));
           }
           else
           {

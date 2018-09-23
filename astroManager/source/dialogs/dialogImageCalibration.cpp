@@ -63,7 +63,7 @@ namespace astroManager
     //
     // 2011-06-04/GGB - Function created.
 
-    CImageCalibrationDialog::CImageCalibrationDialog(ACL::SCalibrateImage_Ptr ci) :
+    CImageCalibrationDialog::CImageCalibrationDialog(ACL::SCalibrateImage *ci) :
       CDialog(":/forms/dialogCalibrateSingleImage.ui"), calibrateImage(ci)
     {
       setupUI();
@@ -71,9 +71,9 @@ namespace astroManager
 
     /// @brief Handles the OK button press.
     /// @details Checks that all the specified information is present and correct. Saves the information for future use.
-    /// A check is made that the frames specified are valid.
-    //
-    // 2011-06-04/GGB - Function created.
+    ///          A check is made that the frames specified are valid.
+    /// @throws None
+    /// @version 2011-06-04/GGB - Function created.
 
     void CImageCalibrationDialog::eventButtonCalibrate(bool)
     {
