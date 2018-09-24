@@ -55,7 +55,6 @@ namespace astroManager
 {
   namespace database
   {
-
     const int ROLE_FILTERID  = Qt::UserRole + 0;
 
     // Class for the Astronomical Target Database
@@ -126,7 +125,7 @@ namespace astroManager
       bool queryByCoordinates(ACL::CAstronomicalCoordinates const &RADEC, double radius, ACL::DTargetAstronomy &);
       bool queryByCoordinates(ACL::CAstronomicalCoordinates const &, ACL::CAstronomicalCoordinates const &, ACL::DTargetAstronomy &);
 
-      bool queryNamesFromATID(std::uint64_t, std::vector<std::string> &);
+      bool queryNamesFromATID(objectID_t, std::vector<std::string> &);
 
         // Functions handling stellarObject information
 

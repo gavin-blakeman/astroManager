@@ -61,7 +61,6 @@ namespace astroManager
 {
   namespace dialogs
   {
-
     struct SColourRecord
     {
       QColor colourValue;
@@ -100,13 +99,261 @@ namespace astroManager
     }
 
     /// @brief Processes the event when a database type is chosen.
-    /// @param[in] index - The index of the currently selected option.
+    /// @param[in] index: The index of the currently selected option.
     /// @throws None.
     /// @version 2015-06-14/GGB - Function created.
 
     void CDialogOptions::eventARIDDatabaseCombo(int index)
     {
       stackedWidgetARID->setCurrentIndex(comboBoxARIDDatabaseType->itemData(index, Qt::UserRole).toInt() );
+    }
+
+    /// @brief Test the connection to the ARID database.
+    /// @throws None.
+    /// @version 2017-07-21/GGB - Function created.
+
+    void CDialogOptions::eventARIDTestConnection(bool)
+    {
+      QString szDBMS;
+      QString szHostName;
+      std::uint16_t szPortNumber;
+      QString szDatabaseName;
+      QString szUserName;
+      QString szPassword;
+
+        // Let the user know that we are beginning
+
+      textEditARIDTestConnection->clear();
+      textEditARIDTestConnection->setTextColor(QColor("black"));
+      textEditARIDTestConnection->append(tr("Starting Test..."));
+
+        // Determine the strings that we need.
+
+      szDBMS = comboBoxARIDDatabaseType->currentText();
+
+      switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
+      {
+        case QCL::CDatabase::SQLDB_MYSQL:
+        {
+          szDBMS = "QMYSQL";
+          szHostName = lineEditARIDMySQLHost->text();
+          szPortNumber = spinBoxARIDMySQLPort->value();
+          szDatabaseName = lineEditARIDMySQLDatabase->text();
+          szUserName = lineEditARIDMySQLUser->text();
+          szPassword = lineEditARIDMySQLPassword->text();
+          break;
+        };
+        case QCL::CDatabase::SQLDB_ODBC:
+        {
+          szDBMS = "QODBC";
+          break;
+        };
+        case QCL::CDatabase::SQLDB_PSQL:
+        {
+          szDBMS = "QPSQL";
+          szHostName = lineEditARIDPostgreSQLHost->text();
+          szPortNumber = spinBoxARIDPostgreSQLPort->value();
+          szDatabaseName = lineEditARIDPostgreSQLDatabase->text();
+          szUserName = lineEditARIDPostgreSQLUser->text();
+          szPassword = lineEditARIDPostgreSQLPassword->text();
+          break;
+        };
+        case QCL::CDatabase::SQLDB_QOCI:
+        {
+          szDBMS = "QOCI";
+          szHostName = lineEditARIDOracleHost->text();
+          szPortNumber = spinBoxARIDOraclePort->value();
+          szDatabaseName = lineEditARIDOracleSchema->text();
+          szUserName = lineEditARIDOracleUser->text();
+          szPassword = lineEditARIDOraclePassword->text();
+          break;
+        }
+        case QCL::CDatabase::SQLDB_SQLITE:
+        {
+          szDBMS = "QSQLITE";
+          break;
+        }
+        default:
+        {
+          CODE_ERROR(astroManager);
+          break;
+        }
+      };
+
+      textEditARIDTestConnection->setTextColor(QColor("darkBlue"));
+      textEditARIDTestConnection->append(tr("Driver name: ") + szDBMS);
+      textEditARIDTestConnection->append(tr("Host name: ") + szHostName);
+      textEditARIDTestConnection->append(QString(tr("Host port: %1")).arg(szPortNumber));
+      textEditARIDTestConnection->append(tr("Database name: ") + szDatabaseName);
+      textEditARIDTestConnection->append(tr("User name: ") + szUserName);
+      textEditARIDTestConnection->append(tr("Password: ") + szPassword);
+      textEditARIDTestConnection->setTextColor(QColor("magenta"));
+      textEditARIDTestConnection->append(tr("Attempting connection..."));
+
+      {
+        QSqlDatabase testConnection = QSqlDatabase::addDatabase(szDBMS, "testConnection");
+        testConnection.setHostName(szHostName);
+        testConnection.setPort(szPortNumber);
+        testConnection.setDatabaseName(szDatabaseName);
+        testConnection.setUserName(szUserName);
+        testConnection.setPassword(szPassword);
+
+        if (testConnection.open())
+        {
+          textEditARIDTestConnection->setTextColor(QColor("darkGreen"));
+          textEditARIDTestConnection->append(tr("Connection succesful."));
+
+          testConnection.close();
+        }
+        else
+        {
+          textEditARIDTestConnection->setTextColor(QColor("darkRed"));
+          textEditARIDTestConnection->append(tr("Connection failed."));
+
+            // List the error strings.
+
+          QSqlError error = testConnection.lastError();
+
+          textEditARIDTestConnection->append(tr("Error while connecting to Database: ") + szHostName + "." + szDatabaseName);
+          textEditARIDTestConnection->append(tr("Error returned by driver: ") + error.nativeErrorCode());
+          textEditARIDTestConnection->append(tr("Text returned by driver: ") + error.driverText());
+          textEditARIDTestConnection->append(tr("Text returned by database: ") + error.databaseText());
+        };
+      };
+
+      QSqlDatabase::removeDatabase("testConnection");
+
+      textEditARIDTestConnection->setTextColor(QColor("black"));
+      textEditARIDTestConnection->append(tr("Test Complete."));
+    }
+
+    /// @brief Processes the event when a database type is chosen.
+    /// @param[in] index: The index of the currently selected option.
+    /// @throws None.
+    /// @version 2018-09-24/GGB - Function created.
+
+    void CDialogOptions::eventATIDDatabaseCombo(int index)
+    {
+      stackedWidgetATID->setCurrentIndex(comboBoxATIDDatabaseType->itemData(index, Qt::UserRole).toInt() );
+    }
+
+    /// @brief Test the connection to the ATID database.
+    /// @throws None.
+    /// @version 2018-09-22/GGB - Function created.
+
+    void CDialogOptions::eventATIDTestConnection()
+    {
+      QString szDBMS;
+      QString szHostName;
+      std::uint16_t szPortNumber;
+      QString szDatabaseName;
+      QString szUserName;
+      QString szPassword;
+
+        // Let the user know that we are beginning
+
+      textEditATIDTestConnection->clear();
+      textEditATIDTestConnection->setTextColor(QColor("black"));
+      textEditATIDTestConnection->append(tr("Starting Test..."));
+
+        // Determine the strings that we need.
+
+      szDBMS = comboBoxATIDDatabaseType->currentText();
+
+      switch (comboBoxATIDDatabaseType->itemData(comboBoxATIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
+      {
+        case QCL::CDatabase::SQLDB_MYSQL:
+        {
+          szDBMS = "QMYSQL";
+          szHostName = lineEditATIDMySQLHost->text();
+          szPortNumber = spinBoxATIDMySQLPort->value();
+          szDatabaseName = lineEditATIDMySQLDatabase->text();
+          szUserName = lineEditATIDMySQLUser->text();
+          szPassword = lineEditATIDMySQLPassword->text();
+          break;
+        };
+        case QCL::CDatabase::SQLDB_ODBC:
+        {
+          szDBMS = "QODBC";
+          break;
+        };
+        case QCL::CDatabase::SQLDB_PSQL:
+        {
+          szDBMS = "QPSQL";
+          szHostName = lineEditATIDPostgreSQLHost->text();
+          szPortNumber = spinBoxATIDPostgreSQLPort->value();
+          szDatabaseName = lineEditATIDPostgreSQLDatabase->text();
+          szUserName = lineEditATIDPostgreSQLUser->text();
+          szPassword = lineEditATIDPostgreSQLPassword->text();
+          break;
+        };
+        case QCL::CDatabase::SQLDB_QOCI:
+        {
+          szDBMS = "QOCI";
+          szHostName = lineEditATIDOracleHost->text();
+          szPortNumber = spinBoxATIDOraclePort->value();
+          szDatabaseName = lineEditATIDOracleSchema->text();
+          szUserName = lineEditATIDOracleUser->text();
+          szPassword = lineEditATIDOraclePassword->text();
+          break;
+        }
+        case QCL::CDatabase::SQLDB_SQLITE:
+        {
+          szDBMS = "QSQLITE";
+          break;
+        }
+        default:
+        {
+          ASTROMANAGER_CODE_ERROR;
+          break;
+        }
+      };
+
+      textEditATIDTestConnection->setTextColor(QColor("darkBlue"));
+      textEditATIDTestConnection->append(tr("Driver name: ") + szDBMS);
+      textEditATIDTestConnection->append(tr("Host name: ") + szHostName);
+      textEditATIDTestConnection->append(QString(tr("Host port: %1")).arg(szPortNumber));
+      textEditATIDTestConnection->append(tr("Database name: ") + szDatabaseName);
+      textEditATIDTestConnection->append(tr("User name: ") + szUserName);
+      textEditATIDTestConnection->append(tr("Password: ") + szPassword);
+      textEditATIDTestConnection->setTextColor(QColor("magenta"));
+      textEditATIDTestConnection->append(tr("Attempting connection..."));
+
+      {
+        QSqlDatabase testConnection = QSqlDatabase::addDatabase(szDBMS, "testConnection");
+        testConnection.setHostName(szHostName);
+        testConnection.setPort(szPortNumber);
+        testConnection.setDatabaseName(szDatabaseName);
+        testConnection.setUserName(szUserName);
+        testConnection.setPassword(szPassword);
+
+        if (testConnection.open())
+        {
+          textEditATIDTestConnection->setTextColor(QColor("darkGreen"));
+          textEditATIDTestConnection->append(tr("Connection succesful."));
+
+          testConnection.close();
+        }
+        else
+        {
+          textEditATIDTestConnection->setTextColor(QColor("darkRed"));
+          textEditATIDTestConnection->append(tr("Connection failed."));
+
+            // List the error strings.
+
+          QSqlError error = testConnection.lastError();
+
+          textEditATIDTestConnection->append(tr("Error while connecting to Database: ") + szHostName + "." + szDatabaseName);
+          textEditATIDTestConnection->append(tr("Error returned by driver: ") + error.nativeErrorCode());
+          textEditATIDTestConnection->append(tr("Text returned by driver: ") + error.driverText());
+          textEditATIDTestConnection->append(tr("Text returned by database: ") + error.databaseText());
+        };
+      };
+
+      QSqlDatabase::removeDatabase("testConnection");
+
+      textEditATIDTestConnection->setTextColor(QColor("black"));
+      textEditATIDTestConnection->append(tr("Test Complete."));
     }
 
     /// @brief Processes the event to choose the coment elements file.
@@ -328,125 +575,6 @@ namespace astroManager
       stackedWidgetWeather->setCurrentIndex(comboBoxWeatherDatabaseType->itemData(index, Qt::UserRole).toInt() );
     }
 
-    /// @brief Test the connection to the ARID database.
-    /// @throws None.
-    /// @version 2017-07-21/GGB - Function created.
-
-    void CDialogOptions::eventARIDTestConnection(bool)
-    {
-      QString szDBMS;
-      QString szHostName;
-      std::uint16_t szPortNumber;
-      QString szDatabaseName;
-      QString szUserName;
-      QString szPassword;
-
-        // Let the user know that we are beginning
-
-      textEditARIDTestConnection->clear();
-      textEditARIDTestConnection->setTextColor(QColor("black"));
-      textEditARIDTestConnection->append(tr("Starting Test..."));
-
-        // Determine the strings that we need.
-
-      szDBMS = comboBoxARIDDatabaseType->currentText();
-
-      switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
-      {
-        case QCL::CDatabase::SQLDB_MYSQL:
-        {
-          szDBMS = "QMYSQL";
-          szHostName = lineEditARIDMySQLHost->text();
-          szPortNumber = spinBoxARIDMySQLPort->value();
-          szDatabaseName = lineEditARIDMySQLDatabase->text();
-          szUserName = lineEditARIDMySQLUser->text();
-          szPassword = lineEditARIDMySQLPassword->text();
-          break;
-        };
-        case QCL::CDatabase::SQLDB_ODBC:
-        {
-          szDBMS = "QODBC";
-          break;
-        };
-        case QCL::CDatabase::SQLDB_PSQL:
-        {
-          szDBMS = "QPSQL";
-          szHostName = lineEditARIDPostgreSQLHost->text();
-          szPortNumber = spinBoxARIDPostgreSQLPort->value();
-          szDatabaseName = lineEditARIDPostgreSQLDatabase->text();
-          szUserName = lineEditARIDPostgreSQLUser->text();
-          szPassword = lineEditARIDPostgreSQLPassword->text();
-          break;
-        };
-        case QCL::CDatabase::SQLDB_QOCI:
-        {
-          szDBMS = "QOCI";
-          szHostName = lineEditARIDOracleHost->text();
-          szPortNumber = spinBoxARIDOraclePort->value();
-          szDatabaseName = lineEditARIDOracleSchema->text();
-          szUserName = lineEditARIDOracleUser->text();
-          szPassword = lineEditARIDOraclePassword->text();
-          break;
-        }
-        case QCL::CDatabase::SQLDB_SQLITE:
-        {
-          szDBMS = "QSQLITE";
-          break;
-        }
-        default:
-        {
-          CODE_ERROR(astroManager);
-          break;
-        }
-      };
-
-      textEditARIDTestConnection->setTextColor(QColor("darkBlue"));
-      textEditARIDTestConnection->append(tr("Driver name: ") + szDBMS);
-      textEditARIDTestConnection->append(tr("Host name: ") + szHostName);
-      textEditARIDTestConnection->append(QString(tr("Host port: %1")).arg(szPortNumber));
-      textEditARIDTestConnection->append(tr("Database name: ") + szDatabaseName);
-      textEditARIDTestConnection->append(tr("User name: ") + szUserName);
-      textEditARIDTestConnection->append(tr("Password: ") + szPassword);
-      textEditARIDTestConnection->setTextColor(QColor("magenta"));
-      textEditARIDTestConnection->append(tr("Attempting connection..."));
-
-      {
-        QSqlDatabase testConnection = QSqlDatabase::addDatabase(szDBMS, "testConnection");
-        testConnection.setHostName(szHostName);
-        testConnection.setPort(szPortNumber);
-        testConnection.setDatabaseName(szDatabaseName);
-        testConnection.setUserName(szUserName);
-        testConnection.setPassword(szPassword);
-
-        if (testConnection.open())
-        {
-          textEditARIDTestConnection->setTextColor(QColor("darkGreen"));
-          textEditARIDTestConnection->append(tr("Connection succesful."));
-
-          testConnection.close();
-        }
-        else
-        {
-          textEditARIDTestConnection->setTextColor(QColor("darkRed"));
-          textEditARIDTestConnection->append(tr("Connection failed."));
-
-            // List the error strings.
-
-          QSqlError error = testConnection.lastError();
-
-          textEditARIDTestConnection->append(tr("Error while connecting to Database: ") + szHostName + "." + szDatabaseName);
-          textEditARIDTestConnection->append(tr("Error returned by driver: ") + error.nativeErrorCode());
-          textEditARIDTestConnection->append(tr("Text returned by driver: ") + error.driverText());
-          textEditARIDTestConnection->append(tr("Text returned by database: ") + error.databaseText());
-        };
-      };
-
-      QSqlDatabase::removeDatabase("testConnection");
-
-      textEditARIDTestConnection->setTextColor(QColor("black"));
-      textEditARIDTestConnection->append(tr("Test Complete."));
-    }
-
     /// @brief Processes the user request to test the weather database connection.
     /// @throws None.
     /// @version 2017-07-01/GGB - Function created.
@@ -624,7 +752,6 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::ARID_DATABASE_DISABLE, QVariant(!groupBoxARID->isChecked()));
       if ( groupBoxARID->isChecked() )
       {
-        settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DBMS, QVariant(comboBoxWeatherDatabaseType->currentText()));
         settings::astroManagerSettings->setValue(settings::ARID_DATABASE_DBMS, QVariant(comboBoxARIDDatabaseType->currentText()));
 
         switch (comboBoxARIDDatabaseType->itemData(comboBoxARIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
@@ -672,9 +799,66 @@ namespace astroManager
         };
       }
     }
+    /// @brief Saves the ATID database options.
+    /// @throws GCL::CCodeError(...)
+    /// @version 2019-09-24/GGB - Function created.
+
+    void CDialogOptions::saveATIDDatabase()
+    {
+      settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(!groupBoxATID->isChecked()));
+      if ( groupBoxATID->isChecked() )
+      {
+        settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DBMS, QVariant(comboBoxATIDDatabaseType->currentText()));
+
+        switch (comboBoxATIDDatabaseType->itemData(comboBoxATIDDatabaseType->currentIndex(), Qt::UserRole).toInt())
+        {
+          case QCL::CDatabase::SQLDB_MYSQL:
+          {
+            settings::astroManagerSettings->setValue(settings::ATID_MYSQL_HOSTADDRESS, lineEditATIDMySQLHost->text());
+            settings::astroManagerSettings->setValue(settings::ATID_MYSQL_PORT, spinBoxATIDMySQLPort->value());
+            settings::astroManagerSettings->setValue(settings::ATID_MYSQL_DATABASENAME, lineEditATIDMySQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::ATID_MYSQL_USERNAME, lineEditATIDMySQLUser->text());
+            settings::astroManagerSettings->setValue(settings::ATID_MYSQL_PASSWORD, lineEditATIDMySQLPassword->text());
+            break;
+          };
+          case QCL::CDatabase::SQLDB_ODBC:
+          {
+            break;
+          };
+          case QCL::CDatabase::SQLDB_PSQL:
+          {
+            settings::astroManagerSettings->setValue(settings::ATID_POSTGRESQL_HOSTADDRESS, lineEditATIDPostgreSQLHost->text());
+            settings::astroManagerSettings->setValue(settings::ATID_POSTGRESQL_PORT, spinBoxATIDMySQLPort->value());
+            settings::astroManagerSettings->setValue(settings::ATID_POSTGRESQL_DATABASENAME, lineEditATIDPostgreSQLDatabase->text());
+            settings::astroManagerSettings->setValue(settings::ATID_POSTGRESQL_USERNAME, lineEditATIDPostgreSQLUser->text());
+            settings::astroManagerSettings->setValue(settings::ATID_POSTGRESQL_PASSWORD, lineEditATIDPostgreSQLPassword->text());
+            break;
+          };
+          case QCL::CDatabase::SQLDB_QOCI:
+          {
+            settings::astroManagerSettings->setValue(settings::ATID_ORACLE_HOSTADDRESS, lineEditATIDOracleHost->text());
+            settings::astroManagerSettings->setValue(settings::ATID_ORACLE_PORT, spinBoxATIDOraclePort->value());
+            settings::astroManagerSettings->setValue(settings::ATID_ORACLE_SCHEMANAME, lineEditATIDOracleSchema->text());
+            settings::astroManagerSettings->setValue(settings::ATID_ORACLE_USERNAME, lineEditATIDOracleUser->text());
+            settings::astroManagerSettings->setValue(settings::ATID_ORACLE_PASSWORD, lineEditATIDOraclePassword->text());
+            break;
+          }
+          case QCL::CDatabase::SQLDB_SQLITE:
+          {
+            break;
+          }
+          default:
+          {
+            ASTROMANAGER_CODE_ERROR;
+            break;
+          }
+        };
+      }
+    }
 
     /// @brief Saves the database values.
     /// @throws None.
+    /// @version 2018-09-24/GGB - Added support for ARID database.
     /// @version 2017-06-18/GGB - Added support for the weather database.
     /// @version 2015-06-14/GGB - Moved ARID into saveARIDDatabase() function.
     /// @version 2014-02-16/GGB - Added source extraction tab.
@@ -682,10 +866,8 @@ namespace astroManager
 
     void CDialogOptions::saveDatabase()
     {
-      settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(!groupBoxATID->isChecked()));
       saveARIDDatabase();
-      settings::astroManagerSettings->setValue(settings::WEATHER_DATABASE_DISABLE, QVariant(!groupBoxWeather->isChecked()));
-
+      saveATIDDatabase();
       saveWeatherDatabase();
     }
 
@@ -851,8 +1033,8 @@ namespace astroManager
 
         lineEditARIDMySQLHost = findChild<QLineEdit *>("lineEditARIDMySQLHost");
         spinBoxARIDMySQLPort = findChild<QSpinBox *>("spinBoxARIDMySQLPort");
-        lineEditARIDMySQLDatabase = findChild<QLineEdit *>("lineEditMySQLDatabase");
-        lineEditARIDMySQLUser = findChild<QLineEdit *>("lineEditMySQLUser");
+        lineEditARIDMySQLDatabase = findChild<QLineEdit *>("lineEditARIDMySQLDatabase");
+        lineEditARIDMySQLUser = findChild<QLineEdit *>("lineEditARIDMySQLUser");
         lineEditARIDMySQLPassword = findChild<QLineEdit *>("lineEditARIDMySQLPassword");
 
           // PostgreSQL
@@ -944,8 +1126,118 @@ namespace astroManager
       connect(pushButtonARIDTestConnection, SIGNAL(clicked(bool)), this, SLOT(eventARIDTestConnection(bool)));
     }
 
+    /// @brief Sets up the ATID database options.
+    /// @throws CRuntimeAssert
+    /// @version 2018-09-24/GGB - Function created.
+
+    void CDialogOptions::setupATIDDatabase()
+    {
+      groupBoxATID = findChild<QGroupBox *>("groupBoxATID");
+        comboBoxATIDDatabaseType = findChild<QComboBox *>("comboBoxATIDDatabaseType");
+        stackedWidgetATID = findChild<QStackedWidget *>("stackedWidgetATID");
+        pushButtonATIDTestConnection = findChild<QPushButton *>("pushButtonATIDTestConnection");
+        textEditATIDTestConnection = findChild<QTextEdit *>("textEditATIDTestConnection");
+
+          // MySQL
+
+        lineEditATIDMySQLHost = findChild<QLineEdit *>("lineEditATIDMySQLHost");
+        spinBoxATIDMySQLPort = findChild<QSpinBox *>("spinBoxATIDMySQLPort");
+        lineEditATIDMySQLDatabase = findChild<QLineEdit *>("lineEditATIDMySQLDatabase");
+        lineEditATIDMySQLUser = findChild<QLineEdit *>("lineEditATIDMySQLUser");
+        lineEditATIDMySQLPassword = findChild<QLineEdit *>("lineEditATIDMySQLPassword");
+
+          // PostgreSQL
+
+        lineEditATIDPostgreSQLHost = findChild<QLineEdit *>("lineEditATIDPostgreHost");
+        spinBoxATIDPostgreSQLPort = findChild<QSpinBox *>("spinBoxATIDPostgreSQLPort");
+        lineEditATIDPostgreSQLDatabase = findChild<QLineEdit *>("lineEditATIDPostgreSQLDatabase");
+        lineEditATIDPostgreSQLUser = findChild<QLineEdit *>("lineEditATIDPostgreSQLUser");
+        lineEditATIDPostgreSQLPassword = findChild<QLineEdit *>("lineEditATIDPostgreSQLPassword");
+
+          // Oracle
+
+        lineEditATIDOracleHost = findChild<QLineEdit *>("lineEditATIDOracleHost");
+        spinBoxATIDOraclePort = findChild<QSpinBox *>("spinBoxATIDOraclePort");
+        lineEditATIDOracleSchema = findChild<QLineEdit *>("lineEditATIDOracleSchema");
+        lineEditATIDOracleUser = findChild<QLineEdit *>("lineEditATIDOracleUser");
+        lineEditATIDOraclePassword = findChild<QLineEdit *>("lineEditATIDOraclePassword");
+
+      groupBoxARID->setChecked(!settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
+
+        // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
+
+      std::for_each(QCL::CDatabase::databaseDrivers.begin(),QCL::CDatabase::databaseDrivers.end(),
+                    [&](std::pair<const int, QCL::CDatabase::SDatabaseDriver> &dt)
+                       {comboBoxATIDDatabaseType->addItem(dt.second.driverText, QVariant(dt.first));} );
+
+        // Set the current/default values from the settings file.
+        // MySQL
+
+      lineEditATIDMySQLHost->setText(settings::astroManagerSettings->value(settings::ATID_MYSQL_HOSTADDRESS, "localhost").toString());
+      spinBoxATIDMySQLPort->setValue(settings::astroManagerSettings->value(settings::ATID_MYSQL_PORT, QVariant(3306)).toInt());
+      lineEditATIDMySQLDatabase->setText(settings::astroManagerSettings->value(settings::ATID_MYSQL_DATABASENAME, "").toString());
+      lineEditATIDMySQLUser->setText(settings::astroManagerSettings->value(settings::ATID_MYSQL_USERNAME, "").toString());
+      lineEditATIDMySQLPassword->setText(settings::astroManagerSettings->value(settings::ATID_MYSQL_PASSWORD, "").toString());
+
+        // PostgreSQL
+
+      lineEditATIDPostgreSQLHost->setText(settings::astroManagerSettings->value(settings::ATID_POSTGRESQL_HOSTADDRESS, "localhost").toString());
+      spinBoxATIDPostgreSQLPort->setValue(settings::astroManagerSettings->value(settings::ATID_POSTGRESQL_PORT, QVariant(5432)).toInt());
+      lineEditATIDPostgreSQLDatabase->setText(settings::astroManagerSettings->value(settings::ATID_POSTGRESQL_DATABASENAME, "").toString());
+      lineEditATIDPostgreSQLUser->setText(settings::astroManagerSettings->value(settings::ATID_POSTGRESQL_USERNAME, "").toString());
+      lineEditATIDPostgreSQLPassword->setText(settings::astroManagerSettings->value(settings::ATID_POSTGRESQL_PASSWORD, "").toString());
+
+        // Oracle
+
+      lineEditATIDOracleHost->setText(settings::astroManagerSettings->value(settings::ATID_ORACLE_HOSTADDRESS, "localhost").toString());
+      spinBoxATIDOraclePort->setValue(settings::astroManagerSettings->value(settings::ATID_ORACLE_PORT, QVariant(1521)).toInt());
+      lineEditATIDOracleSchema->setText(settings::astroManagerSettings->value(settings::ATID_ORACLE_SCHEMANAME, "").toString());
+      lineEditATIDOracleUser->setText(settings::astroManagerSettings->value(settings::ATID_ORACLE_USERNAME, "").toString());
+      lineEditATIDOraclePassword->setText(settings::astroManagerSettings->value(settings::ATID_ORACLE_PASSWORD, "").toString());
+
+      connect(comboBoxATIDDatabaseType, SIGNAL(currentIndexChanged(int)), this, SLOT(eventATIDDatabaseCombo(int)));
+
+        // Select the current driver.
+
+      if (groupBoxATID->isChecked())
+      {
+        std::string szDatabase = settings::astroManagerSettings->value(settings::ATID_DATABASE_DBMS, QVariant("MySQL")).toString().toStdString();
+
+        if (szDatabase == "MySQL")
+        {
+          stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
+        }
+        else if (szDatabase == "Oracle")
+        {
+          stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_QOCI);
+        }
+        else if (szDatabase == "SQLite")
+        {
+          stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_SQLITE);
+        }
+        else if (szDatabase == "PostgreSQL")
+        {
+          stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_PSQL);
+        }
+        else if (szDatabase == "ODBC")
+        {
+          stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_ODBC);
+        }
+        else
+        {
+          ASTROMANAGER_CODE_ERROR;
+        }
+      }
+      else
+      {
+        stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
+      }
+      connect(pushButtonATIDTestConnection, SIGNAL(clicked()), this, SLOT(eventATIDTestConnection()));
+    }
+
     /// @brief Sets up the database information.
     /// @throws CRuntimeAssert
+    /// @version 2018-09-24/GGB - Added support for the ATID database (Bug #161)
     /// @version 2017-07-01/GGB - Added support for the weather database.
     /// @version 2017-06-18/GGB - Use the CDialog findChild(). (Bug #67)
     /// @version 2015-06-11/GGB - Moved ARID setup to a seperate function.
@@ -956,6 +1248,8 @@ namespace astroManager
       setupARIDDatabase();
       groupBoxATID = findChild<QGroupBox *>("groupBoxATID");
       groupBoxATID->setChecked(!settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
+
+      setupATIDDatabase();
 
       setupWeatherDatabase();
     }
@@ -1328,4 +1622,4 @@ namespace astroManager
     }
 
   }  // namespace dialogs
-}  // namespace AstroManager
+}  // namespace astroManager

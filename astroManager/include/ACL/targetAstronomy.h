@@ -85,7 +85,7 @@ namespace astroManager
     };
   private:
     std::vector<QTableWidgetItem *> columnMap;
-    std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy;
+    std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy_;
 
     CTargetAstronomy() = delete;
 
@@ -111,6 +111,8 @@ namespace astroManager
 
   public:
     CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>);
+
+    ACL::CTargetAstronomy *targetAstronomy() const;
 
     void setColumnWidgets(QTableWidget *);
     void updateAllColumnValues();

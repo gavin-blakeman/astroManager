@@ -64,7 +64,7 @@
    <item row="0" column="1">
     <widget class="QStackedWidget" name="stackedWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="General">
       <layout class="QGridLayout" name="gridLayout_2">
@@ -967,7 +967,7 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="iconSize">
           <size>
@@ -987,7 +987,7 @@
            <item row="1" column="0">
             <widget class="QGroupBox" name="groupBoxATID">
              <property name="title">
-              <string>Enab&amp;le Database</string>
+              <string>E&amp;nable Database</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -996,30 +996,20 @@
               <item row="0" column="0">
                <widget class="QLabel" name="label_9">
                 <property name="text">
-                 <string>Database</string>
+                 <string>Database Type</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QComboBox" name="comboBox"/>
+               <widget class="QComboBox" name="comboBoxATIDDatabaseType"/>
               </item>
-              <item row="2" column="1">
-               <widget class="QComboBox" name="comboBox_2"/>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>Driver</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QStackedWidget" name="stackedWidget_2">
+              <item row="2" column="0" colspan="2">
+               <widget class="QStackedWidget" name="stackedWidgetATID">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>3</number>
                 </property>
                 <widget class="QWidget" name="MySQL">
-                 <layout class="QFormLayout" name="formLayout_2">
+                 <layout class="QGridLayout" name="gridLayout_35">
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_12">
                     <property name="sizePolicy">
@@ -1035,30 +1025,14 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Host Name</string>
+                     <string>Host Address</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLHostName"/>
+                   <widget class="QLineEdit" name="lineEditATIDMySQLHost"/>
                   </item>
                   <item row="1" column="0">
-                   <widget class="QLabel" name="label_14">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Database Name</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLDatabaseName"/>
-                  </item>
-                  <item row="2" column="0">
                    <widget class="QLabel" name="label_11">
                     <property name="font">
                      <font>
@@ -1071,12 +1045,31 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="2" column="1">
-                   <widget class="QSpinBox" name="spinBoxMySQLPort">
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinBoxATIDMySQLPort">
                     <property name="maximum">
                      <number>65535</number>
                     </property>
+                    <property name="value">
+                     <number>3306</number>
+                    </property>
                    </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_14">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Database Name</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDMySQLDatabase"/>
                   </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_15">
@@ -1092,7 +1085,7 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLUserName"/>
+                   <widget class="QLineEdit" name="lineEditATIDMySQLUser"/>
                   </item>
                   <item row="4" column="0">
                    <widget class="QLabel" name="label_13">
@@ -1108,11 +1101,15 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLPassword"/>
+                   <widget class="QLineEdit" name="lineEditATIDMySQLPassword">
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
-                <widget class="QWidget" name="Oracle">
+                <widget class="QWidget" name="OCI">
                  <layout class="QFormLayout" name="formLayout_3">
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_17">
@@ -1129,14 +1126,14 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Host Name</string>
+                     <string>Host Address</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEditOracleHostName"/>
+                   <widget class="QLineEdit" name="lineEditATIDOracleHost"/>
                   </item>
-                  <item row="1" column="0">
+                  <item row="2" column="0">
                    <widget class="QLabel" name="label_18">
                     <property name="font">
                      <font>
@@ -1145,34 +1142,18 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>Database Name</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEditOracleDatabaseName"/>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_19">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>Port</string>
+                     <string>Database Schema</string>
                     </property>
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QSpinBox" name="spinBoxOraclePort">
-                    <property name="maximum">
-                     <number>65535</number>
+                   <widget class="QLineEdit" name="lineEditATIDOracleSchema">
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="0">
+                  <item row="4" column="0">
                    <widget class="QLabel" name="label_20">
                     <property name="font">
                      <font>
@@ -1185,10 +1166,10 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditOracleUserName"/>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDOracleUser"/>
                   </item>
-                  <item row="4" column="0">
+                  <item row="5" column="0">
                    <widget class="QLabel" name="label_16">
                     <property name="font">
                      <font>
@@ -1201,8 +1182,35 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditOraclePassword"/>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDOraclePassword">
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_19">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Port Number</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinBoxATIDOraclePort">
+                    <property name="maximum">
+                     <number>65535</number>
+                    </property>
+                    <property name="value">
+                     <number>1521</number>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1226,7 +1234,123 @@
                   </item>
                  </layout>
                 </widget>
+                <widget class="QWidget" name="PostgreSQL">
+                 <layout class="QGridLayout" name="gridLayout_36">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_59">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Host Address</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDPostgreHost"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_85">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Port Number</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="spinBoxATIDPostgreSQLPort">
+                    <property name="maximum">
+                     <number>65535</number>
+                    </property>
+                    <property name="value">
+                     <number>5432</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_83">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Database Name</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDPostgreSQLDatabase">
+                    <property name="maxLength">
+                     <number>63</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_84">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>User Name</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDPostgreSQLUser">
+                    <property name="maxLength">
+                     <number>62</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_86">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Password</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="lineEditATIDPostgreSQLPassword">
+                    <property name="maxLength">
+                     <number>62</number>
+                    </property>
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
+              </item>
+              <item row="3" column="0" colspan="2">
+               <widget class="QPushButton" name="pushButtonATIDTestConnection">
+                <property name="text">
+                 <string>Test Connection</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0" colspan="2">
+               <widget class="QTextEdit" name="textEditATIDTestConnection"/>
               </item>
              </layout>
             </widget>
@@ -1281,7 +1405,7 @@
               <item row="3" column="0" colspan="3">
                <widget class="QStackedWidget" name="stackedWidgetARID">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="MySQL">
                  <layout class="QGridLayout" name="gridLayout_19">
@@ -1320,7 +1444,7 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLDatabase"/>
+                   <widget class="QLineEdit" name="lineEditARIDMySQLDatabase"/>
                   </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_48">
@@ -1330,7 +1454,7 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="lineEditMySQLUser"/>
+                   <widget class="QLineEdit" name="lineEditARIDMySQLUser"/>
                   </item>
                   <item row="4" column="0">
                    <widget class="QLabel" name="label_49">
@@ -1345,7 +1469,7 @@
                      <bool>true</bool>
                     </property>
                     <property name="echoMode">
-                     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+                     <enum>QLineEdit::Password</enum>
                     </property>
                    </widget>
                   </item>
@@ -1366,7 +1490,7 @@
                   <item row="4" column="0">
                    <widget class="QLabel" name="label_66">
                     <property name="text">
-                     <string>TextLabel</string>
+                     <string>Password</string>
                     </property>
                    </widget>
                   </item>
@@ -1390,7 +1514,7 @@
                   <item row="4" column="1">
                    <widget class="QLineEdit" name="lineEditARIDOraclePassword">
                     <property name="echoMode">
-                     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+                     <enum>QLineEdit::Password</enum>
                     </property>
                    </widget>
                   </item>
@@ -1414,7 +1538,7 @@
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_65">
                     <property name="text">
-                     <string>TextLabel</string>
+                     <string>User Name</string>
                     </property>
                    </widget>
                   </item>
@@ -1446,7 +1570,7 @@
                      <number>62</number>
                     </property>
                     <property name="echoMode">
-                     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+                     <enum>QLineEdit::Password</enum>
                     </property>
                    </widget>
                   </item>
@@ -1604,7 +1728,7 @@
               <item row="1" column="0" colspan="3">
                <widget class="QStackedWidget" name="stackedWidgetWeather">
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>1</number>
                 </property>
                 <widget class="QWidget" name="MySQL">
                  <layout class="QGridLayout" name="gridLayout_23">
@@ -1683,7 +1807,7 @@
                   <item row="4" column="1">
                    <widget class="QLineEdit" name="lineEditWeatherOraclePassword">
                     <property name="echoMode">
-                     <enum>QLineEdit::PasswordEchoOnEdit</enum>
+                     <enum>QLineEdit::Password</enum>
                     </property>
                    </widget>
                   </item>
@@ -1796,7 +1920,11 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="lineEditWeatherPostgreSQLPassword"/>
+                   <widget class="QLineEdit" name="lineEditWeatherPostgreSQLPassword">
+                    <property name="echoMode">
+                     <enum>QLineEdit::Password</enum>
+                    </property>
+                   </widget>
                   </item>
                   <item row="0" column="0">
                    <widget class="QLabel" name="label_73">
@@ -2096,8 +2224,8 @@
  </widget>
  <tabstops>
   <tabstop>spinBoxARIDMySQLPort</tabstop>
-  <tabstop>lineEditMySQLDatabase</tabstop>
-  <tabstop>lineEditMySQLUser</tabstop>
+  <tabstop>lineEditARIDMySQLDatabase</tabstop>
+  <tabstop>lineEditARIDMySQLUser</tabstop>
   <tabstop>lineEditARIDMySQLPassword</tabstop>
   <tabstop>spinBoxARIDPostgreSQLPort</tabstop>
   <tabstop>lineEditARIDPostgreSQLDatabase</tabstop>
@@ -2137,18 +2265,15 @@
   <tabstop>radioButton</tabstop>
   <tabstop>radioButton_2</tabstop>
   <tabstop>groupBoxATID</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>lineEditMySQLHostName</tabstop>
-  <tabstop>lineEditMySQLDatabaseName</tabstop>
-  <tabstop>spinBoxMySQLPort</tabstop>
-  <tabstop>lineEditMySQLUserName</tabstop>
-  <tabstop>lineEditMySQLPassword</tabstop>
-  <tabstop>lineEditOracleHostName</tabstop>
-  <tabstop>lineEditOracleDatabaseName</tabstop>
-  <tabstop>spinBoxOraclePort</tabstop>
-  <tabstop>lineEditOracleUserName</tabstop>
-  <tabstop>lineEditOraclePassword</tabstop>
+  <tabstop>comboBoxATIDDatabaseType</tabstop>
+  <tabstop>lineEditATIDMySQLHost</tabstop>
+  <tabstop>lineEditATIDMySQLDatabase</tabstop>
+  <tabstop>lineEditATIDMySQLUser</tabstop>
+  <tabstop>lineEditATIDMySQLPassword</tabstop>
+  <tabstop>lineEditATIDOracleHost</tabstop>
+  <tabstop>lineEditATIDOracleSchema</tabstop>
+  <tabstop>lineEditATIDOracleUser</tabstop>
+  <tabstop>lineEditATIDOraclePassword</tabstop>
   <tabstop>lineEditODBCDataSourceName</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>pushButton</tabstop>

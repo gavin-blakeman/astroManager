@@ -710,7 +710,9 @@ namespace astroManager
         // Fill the combo box.
 
       while (query.next())
+      {
         combo->addItem(*new QString(query.value(0).toString()), *new QVariant(query.value(1)));
+      }
 
         // Now select the additional object and add it if necessary.
 
@@ -721,13 +723,19 @@ namespace astroManager
         query.first();
         nIndex = combo->findText(query.value(0).toString(), Qt::MatchExactly);
         if (nIndex < 0)
-        {	// Item not in combo box.
+        {
+            // Item not in combo box.
+
           combo->addItem(*new QString(query.value(0).toString()), *new QVariant(*addObject));
         };
         if (addObject->isNull())
+        {
           combo->setCurrentIndex(-1);
+        }
         else
+        {
           combo->setCurrentIndex(nIndex);
+        }
       };
     }
 
@@ -895,7 +903,7 @@ namespace astroManager
     /// @throws None.
     /// @version 2016-05-07/GGB - Function created.
 
-    bool CATID::queryNamesFromATID(std::uint64_t OID, std::vector<std::string> &objectNames)
+    bool CATID::queryNamesFromATID(objectID_t OID, std::vector<std::string> &objectNames)
     {
       bool returnValue = false;
       QSqlQuery query(*dBase);
@@ -1069,29 +1077,41 @@ namespace astroManager
 
     void CATID::readStellarObjectInformation_ATID(objectID_t objectID, ACL::CTargetStellar *target)
     {
-      sqlWriter.resetQuery();
-      sqlWriter.select({"TBL_STELLAROBJECTS.RA", "TBL_STELLAROBJECTS.DEC", "TBL_STELLAROBJECTS.EPOCH", "TBL_STELLAROBJECTS.pmRA",
-                        "TBL_STELLAROBJECTS.pmDEC", "TBL_STELLAROBJECTS.RadialVelocity", "TBL_STELLAROBJECTS.Parallax",
-                        "TBL_STELLAROBJECTS.OBJECTTYPE"})
-               .from({"TBL_STELLAROBJECTS"})
-               .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
-                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
-               .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+      std::vector<std::string> objectNames;
 
-      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      if (queryNamesFromATID(objectID, objectNames))
       {
-        target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
-        target->setEpoch(sqlQuery->value(2).toString().toStdString());
-        target->pmRA(sqlQuery->value(3).toDouble());
-        target->pmDec(sqlQuery->value(4).toDouble());
-        target->radialVelocity(sqlQuery->value(5).toDouble());
-        target->parallax(sqlQuery->value(6).toDouble());
-        target->stellarType(sqlQuery->value(7).toString().toStdString());
+        target->objectName(objectNames);
+
+        sqlWriter.resetQuery();
+        sqlWriter.select({"TBL_STELLAROBJECTS.RA", "TBL_STELLAROBJECTS.DEC", "TBL_STELLAROBJECTS.EPOCH", "TBL_STELLAROBJECTS.pmRA",
+                          "TBL_STELLAROBJECTS.pmDEC", "TBL_STELLAROBJECTS.RadialVelocity", "TBL_STELLAROBJECTS.Parallax",
+                          "TBL_STELLAROBJECTS.OBJECTTYPE"})
+                 .from({"TBL_STELLAROBJECTS"})
+                 .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
+                        GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
+                 .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        {
+          target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
+          target->setEpoch(sqlQuery->value(2).toString().toStdString());
+          target->pmRA(sqlQuery->value(3).toDouble());
+          target->pmDec(sqlQuery->value(4).toDouble());
+          target->radialVelocity(sqlQuery->value(5).toDouble());
+          target->parallax(sqlQuery->value(6).toDouble());
+          target->stellarType(sqlQuery->value(7).toString().toStdString());
+        }
+        else
+        {
+          processErrorInformation();
+        };
       }
       else
       {
-        processErrorInformation();
-      };
+        ERRORMESSAGE(boost::format("Object with ID: %u not found.") % objectID);
+        ASTROMANAGER_CODE_ERROR;
+      }
     }
 
     /// @brief Reads the stellar object information for the specified stellar object.

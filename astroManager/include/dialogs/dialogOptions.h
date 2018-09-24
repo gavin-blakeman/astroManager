@@ -126,9 +126,6 @@ namespace astroManager
 
         // ARID Database
 
-      QGroupBox *groupBoxATID;
-
-
       QGroupBox *groupBoxARID;
         QCheckBox *checkBoxEnableARID;
         QComboBox *comboBoxARIDDatabaseType;
@@ -159,6 +156,41 @@ namespace astroManager
           QSpinBox *spinBoxARIDOraclePort;
           QLineEdit *lineEditARIDOracleUser;
           QLineEdit *lineEditARIDOraclePassword;
+
+        // ATID Database
+
+      QGroupBox *groupBoxATID;
+      QCheckBox *checkBoxEnableATID;
+      QComboBox *comboBoxATIDDatabaseType;
+      QStackedWidget *stackedWidgetATID;
+      QPushButton *pushButtonATIDTestConnection;
+      QTextEdit *textEditATIDTestConnection;
+
+          // ARID MySQL
+
+        QLineEdit *lineEditATIDMySQLHost;
+        QLineEdit *lineEditATIDMySQLDatabase;
+        QSpinBox *spinBoxATIDMySQLPort;
+        QLineEdit *lineEditATIDMySQLUser;
+        QLineEdit *lineEditATIDMySQLPassword;
+
+          // ARID Postgre
+
+        QLineEdit *lineEditATIDPostgreSQLHost;
+        QLineEdit *lineEditATIDPostgreSQLDatabase;
+        QSpinBox *spinBoxATIDPostgreSQLPort;
+        QLineEdit *lineEditATIDPostgreSQLUser;
+        QLineEdit *lineEditATIDPostgreSQLPassword;
+
+          // ARID Oracle
+
+        QLineEdit *lineEditATIDOracleHost;
+        QLineEdit *lineEditATIDOracleSchema;
+        QSpinBox *spinBoxATIDOraclePort;
+        QLineEdit *lineEditATIDOracleUser;
+        QLineEdit *lineEditATIDOraclePassword;
+
+        // Weather Database
 
       QGroupBox *groupBoxWeather;
         QComboBox *comboBoxWeatherDatabaseType;
@@ -207,6 +239,7 @@ namespace astroManager
       void setupPhotometry();
       void setupDatabase();
         void setupARIDDatabase();
+        void setupATIDDatabase();
         void setupWeatherDatabase();
       void setupImageManager();
 
@@ -215,6 +248,7 @@ namespace astroManager
       void savePhotometry();
       void saveDatabase();
         void saveARIDDatabase();
+        void saveATIDDatabase();
         void saveWeatherDatabase();
       void saveImageManager();
 
@@ -246,12 +280,15 @@ namespace astroManager
       void eventMPCORB();
       void eventCometEls();
 
+        // Database
 
       void eventResetWarnings(bool);
       void eventARIDDatabaseCombo(int);
+      void eventATIDDatabaseCombo(int);
       void eventWeatherDatabaseCombo(int);
       void eventWeatherTestConnection(bool);
       void eventARIDTestConnection(bool);
+      void eventATIDTestConnection();
     };
   }
 }

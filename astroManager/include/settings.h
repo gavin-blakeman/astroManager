@@ -176,6 +176,15 @@ namespace astroManager
     QString const ATID_MYSQL_USERNAME                               ("Database/ATID/MySQL/UserName");
     QString const ATID_MYSQL_PASSWORD                               ("Database/ATID/MySQL/Password");
 
+    QString const ATID_ORACLE_HOSTADDRESS                           ("Database/ATID/Oracle/HostAddress");
+    QString const ATID_ORACLE_SCHEMANAME                            ("Database/ATID/Oracle/DatabaseName");
+
+    QString const ATID_POSTGRESQL_HOSTADDRESS                       ("Database/ATID/PostgreSQL/HostAddress");
+    QString const ATID_POSTGRESQL_PORT                              ("Database/ATID/PostgreSQL/Port");
+    QString const ATID_POSTGRESQL_DATABASENAME                      ("Database/ATID/PostgreSQL/DatabaseName");
+    QString const ATID_POSTGRESQL_USERNAME                          ("Database/ATID/PostgreSQL/UserName");
+    QString const ATID_POSTGRESQL_PASSWORD                          ("Database/ATID/PostgreSQL/Password");
+
     QString const ATID_SQLITE_DRIVERNAME                            ("Database/ATID/SQLite/DriverName");
     QString const ATID_SQLITE_DATABASENAME                          ("Database/ATID/SQLite/DatabaseName");
 

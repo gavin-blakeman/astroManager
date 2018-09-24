@@ -54,7 +54,7 @@ namespace astroManager
   /// @version 2018-08-31/GGB - Function created
 
   CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget)
-    : columnMap(column_end), targetAstronomy(std::move(newTarget))
+    : columnMap(column_end), targetAstronomy_(std::move(newTarget))
   {
 
   }
@@ -93,13 +93,21 @@ namespace astroManager
     updateAllColumnValues();
   }
 
+  /// @brief Returns a pointer to the managed object
+  /// @returns Raw pointer to the managed object.
+
+  ACL::CTargetAstronomy *CTargetAstronomy::targetAstronomy() const
+  {
+    return targetAstronomy_.get();
+  }
+
   /// @brief Updates the widget with the object name.
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
   void CTargetAstronomy::updateColumnName()
   {
-    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy->objectName()));
+    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy_->objectName()));
   }
 
   /// @brief Updates the widget with the type of the object.
@@ -108,7 +116,7 @@ namespace astroManager
 
   void CTargetAstronomy::updateColumnType()
   {
-    switch (targetAstronomy->targetType())
+    switch (targetAstronomy_->targetType())
     {
       case ACL::CTargetAstronomy::TT_STELLAR:
       {
@@ -199,7 +207,6 @@ namespace astroManager
 
   void CTargetAstronomy::updateColumnConstellation()
   {
-
   }
   void CTargetAstronomy::updateColumnExtinction()
   {

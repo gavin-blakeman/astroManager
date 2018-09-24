@@ -1581,33 +1581,38 @@ namespace astroManager
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
                                         std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery->value(3).toUInt()))));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
               break;
             };
             case MINORPLANET:
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
                                       std::make_unique<ACL::CTargetMinorPlanet>(
-                                          settings::astroManagerSettings->value(settings::FILE_MPCORB, "Data/MPCORB.DAT").toString().toStdString(),
+                                          settings::astroManagerSettings->value(settings::FILE_MPCORB,
+                                                                                "Data/MPCORB.DAT").toString().toStdString(),
                                           sqlQuery->value(4).toString().toStdString())));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
               break;
             };
             case COMET:
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
                                         std::make_unique<ACL::CTargetComet>(
-                                            settings::astroManagerSettings->value(settings::FILE_COMETELS, "Data/CometEls.txt").toString().toStdString(),
+                                            settings::astroManagerSettings->value(settings::FILE_COMETELS,
+                                                                                  "Data/CometEls.txt").toString().toStdString(),
                                             sqlQuery->value(4).toString().toStdString())));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
               break;
             };
             case STELLAR:
             {
                 // Need to load the information needed form the ATID database.
 
-              std::unique_ptr<ACL::CTargetStellar> targetStellar(new ACL::CTargetStellar());
+              targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
 
-              databaseATID->readStellarObjectInformation(sqlQuery->value(4).toULongLong(), targetStellar.get());
+              databaseATID->readStellarObjectInformation(sqlQuery->value(4).toULongLong(),
+                                                         dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
 
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::move(targetStellar)));
               break;
             };
             default:
