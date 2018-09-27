@@ -200,8 +200,13 @@ int main(int argc, char *argv[])
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating ATID Database Connection...");
     astroManager::database::databaseATID = new astroManager::database::CATID();		// Create the database connection
-    GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading ATID SQL mapping file...");
-    astroManager::database::databaseATID->readMapFile("SQLMap/ATID.map");
+    if (astroManager::settings::astroManagerSettings->value(astroManager::settings::ATID_DATABASE_USEMAPFILE).toBool())
+    {
+      GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading ATID SQL mapping file...");
+      astroManager::database::databaseATID->readMapFile(astroManager::settings::astroManagerSettings->
+                                                        value(astroManager::settings::ATID_DATABASE_MAPFILE).toString().
+                                                        toStdString());
+    };
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Connecting to ATID database...");
     astroManager::database::databaseATID->connectToDatabase();
 
@@ -345,9 +350,9 @@ namespace astroManager
 {
   // Software version information
 
-  int const MAJORVERSION	= 2015;       // Major version (year)
+  int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x0366;
+  std::uint16_t const BUILDNUMBER = 0x000F;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

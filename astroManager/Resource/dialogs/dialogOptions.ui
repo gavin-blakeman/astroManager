@@ -967,7 +967,7 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="iconSize">
           <size>
@@ -1356,7 +1356,7 @@
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBox">
+            <widget class="QCheckBox" name="checkBoxUseSimbad">
              <property name="text">
               <string>Use SIMBAD</string>
              </property>
@@ -2275,7 +2275,7 @@
   <tabstop>lineEditATIDOracleUser</tabstop>
   <tabstop>lineEditATIDOraclePassword</tabstop>
   <tabstop>lineEditODBCDataSourceName</tabstop>
-  <tabstop>checkBox</tabstop>
+  <tabstop>checkBoxUseSimbad</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>groupBoxARID</tabstop>
   <tabstop>radioButtonUTC</tabstop>

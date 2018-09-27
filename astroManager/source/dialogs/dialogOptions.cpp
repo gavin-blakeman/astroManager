@@ -356,6 +356,42 @@ namespace astroManager
       textEditATIDTestConnection->append(tr("Test Complete."));
     }
 
+    /// @brief Responds to the useSimbad checkbox being pressed.
+    /// @throws None.
+    /// @version 2018-09-27/GGB - Function created.
+
+    void CDialogOptions::eventATIDUseSimbad(bool isChecked)
+    {
+      if (isChecked)
+      {
+        groupBoxATID->setChecked(false);
+        pushButtonATIDTestConnection->setEnabled(false);
+      }
+      else
+      {
+        groupBoxATID->setChecked(true);
+        pushButtonATIDTestConnection->setEnabled(false);
+      }
+    }
+
+    /// @brief Responds to the useSimbad checkbox being pressed.
+    /// @throws None.
+    /// @version 2018-09-27/GGB - Function created.
+
+    void CDialogOptions::eventATIDUseATID(bool isChecked)
+    {
+      if (isChecked)
+      {
+        checkBoxUseSimbad->setChecked(false);
+        pushButtonATIDTestConnection->setEnabled(true);
+      }
+      else
+      {
+        checkBoxUseSimbad->setChecked(false);
+        pushButtonATIDTestConnection->setEnabled(true);
+      }
+    }
+
     /// @brief Processes the event to choose the coment elements file.
     /// @throws None.
     /// @version 2018-09-16/GGB - Function created.
@@ -805,7 +841,8 @@ namespace astroManager
 
     void CDialogOptions::saveATIDDatabase()
     {
-      settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(!groupBoxATID->isChecked()));
+      settings::astroManagerSettings->setValue(settings::ATID_DATABASE_USESIMBAD, checkBoxUseSimbad->isChecked());
+
       if ( groupBoxATID->isChecked() )
       {
         settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DBMS, QVariant(comboBoxATIDDatabaseType->currentText()));
@@ -1132,6 +1169,7 @@ namespace astroManager
 
     void CDialogOptions::setupATIDDatabase()
     {
+      checkBoxUseSimbad = findChild<QCheckBox *>("checkBoxUseSimbad");
       groupBoxATID = findChild<QGroupBox *>("groupBoxATID");
         comboBoxATIDDatabaseType = findChild<QComboBox *>("comboBoxATIDDatabaseType");
         stackedWidgetATID = findChild<QStackedWidget *>("stackedWidgetATID");
@@ -1161,8 +1199,6 @@ namespace astroManager
         lineEditATIDOracleSchema = findChild<QLineEdit *>("lineEditATIDOracleSchema");
         lineEditATIDOracleUser = findChild<QLineEdit *>("lineEditATIDOracleUser");
         lineEditATIDOraclePassword = findChild<QLineEdit *>("lineEditATIDOraclePassword");
-
-      groupBoxARID->setChecked(!settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
 
         // Add the items to the combo box. The driver map key value is used as user data to identify the driver selected.
 
@@ -1231,7 +1267,24 @@ namespace astroManager
       else
       {
         stackedWidgetATID->setCurrentIndex(QCL::CDatabase::SQLDB_MYSQL);
+      };
+
+      if (settings::astroManagerSettings->value(settings::ATID_DATABASE_USESIMBAD, false).toBool())
+      {
+        groupBoxATID->setChecked(false);
+        checkBoxUseSimbad->setChecked(true);
+        pushButtonATIDTestConnection->setEnabled(false);
       }
+      else
+      {
+        groupBoxATID->setChecked(true);
+        checkBoxUseSimbad->setChecked(false);
+        pushButtonATIDTestConnection->setEnabled(true);
+      }
+
+      connect(checkBoxUseSimbad, SIGNAL(clicked(bool)), this, SLOT(eventATIDUseSimbad(bool)));
+      connect(groupBoxATID, SIGNAL(clicked(bool)), this, SLOT(eventATIDUseATID(bool)));
+
       connect(pushButtonATIDTestConnection, SIGNAL(clicked()), this, SLOT(eventATIDTestConnection()));
     }
 
@@ -1247,7 +1300,6 @@ namespace astroManager
     {
       setupARIDDatabase();
       groupBoxATID = findChild<QGroupBox *>("groupBoxATID");
-      groupBoxATID->setChecked(!settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant(true)).toBool());
 
       setupATIDDatabase();
 

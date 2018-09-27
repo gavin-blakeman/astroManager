@@ -155,9 +155,10 @@ namespace astroManager
 
       // Definitions for the ATID Database section
 
-    QString const ATID_DATABASE_DISABLE                             ("Database/ATID/Disable");
-    QString const ATID_DATABASE_DBMS                                ("Database/ATID/DBMS");
     QString const ATID_DATABASE_USESIMBAD                           ("Database/ATID/UseSIMBAD");
+    QString const ATID_DATABASE_DBMS                                ("Database/ATID/DBMS");
+    QString const ATID_DATABASE_USEMAPFILE                          ("Database/ATID/UseMapFile");
+    QString const ATID_DATABASE_MAPFILE                             ("Database/ATID/MapFile");
 
     QString const ATID_ORACLE_DRIVERNAME                            ("Database/ATID/Oracle/DriverName");
     QString const ATID_ORACLE_HOSTNAME                              ("Database/ATID/Oracle/HostName");

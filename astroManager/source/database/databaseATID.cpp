@@ -75,8 +75,9 @@ namespace astroManager
     //*****************************************************************************************************************************
 
     /// @brief Constructor for the CATID class.
-    /// @details The class reads the database key and calls the relevant setup routine.
+    /// @details The class reads the database keys and calls the relevant setup routine.
     /// @throws None.
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_ and use member useSIMBAD for ATID use.
     /// @version 2017-06-20/GGB - Updated to reflect changes to CDatabase. (Bug #69)
     /// @version 2013-05-15/GGB - Added setting for disabling the database by default.
     /// @version 2013-01-26/GGB - connectToDatabase function created and body of code moved.
@@ -85,24 +86,22 @@ namespace astroManager
     ///                           found.
     /// @version 2010-11-23/GGB - Function created
 
-    CATID::CATID(): CDatabase("ATID"), ATIDdisabled_(false), useSIMBAD(true)
+    CATID::CATID(): CDatabase("ATID"), useSIMBAD(true)
     {
-      QVariant variant = settings::astroManagerSettings->value(settings::ATID_DATABASE_DISABLE, QVariant());
+      QVariant variant = settings::astroManagerSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant());
 
       if (variant.isNull())
       {
-        settings::astroManagerSettings->setValue(settings::ATID_DATABASE_DISABLE, QVariant(true));
-        ATIDdisabled_ = true;
+        settings::astroManagerSettings->setValue(settings::ATID_DATABASE_USESIMBAD, QVariant(true));
+        useSIMBAD = true;
       }
       else
       {
-        ATIDdisabled_ = variant.toBool();
+        useSIMBAD = variant.toBool();
       };
 
-      if (!ATIDdisabled_)
+      if (!useSIMBAD)
       {
-        useSIMBAD = settings::astroManagerSettings->value(settings::ATID_DATABASE_USESIMBAD, QVariant(true)).toBool();
-
         sqlWriter.createTable("TBL_CATALOG");
           sqlWriter.createColumn("TBL_CATALOG", "CATALOG_ID");
           sqlWriter.createColumn("TBL_CATALOG", "ABBREVIATION");
@@ -143,7 +142,7 @@ namespace astroManager
 
     CATID::~CATID()
     {
-      if (!ATIDdisabled_)
+      if (!useSIMBAD)
       {
         if (dBase)
         {
@@ -157,6 +156,7 @@ namespace astroManager
 
     /// @brief Connects to the ATID database.
     /// @throws None.
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
     /// @version 2013-05-15/GGB - Conditional connection to database.
     /// @version 2013-01-26/GGB - Function created.
 
@@ -165,9 +165,8 @@ namespace astroManager
       QVariant database = settings::astroManagerSettings->value(settings::ATID_DATABASE_DBMS);
       QString szDatabase;
 
-      if ( !ATIDdisabled_ && !useSIMBAD )
+      if ( !useSIMBAD )
       {
-
         if ( !database.isNull() )
         {
           szDatabase = database.toString();		// Get the database type
@@ -175,7 +174,6 @@ namespace astroManager
           if (!CDatabase::connectToDatabase(szDatabase))
           {
             INFOMESSAGE("Unable to connect to ATID database. Disabling ATID database.");
-            ATIDdisabled_ = true;
             useSIMBAD = true;
           }
         }
@@ -185,7 +183,6 @@ namespace astroManager
 
           WARNINGMESSAGE("Setting " + settings::ATID_DATABASE_DBMS.toStdString() + "not found.");
           INFOMESSAGE("Unable to connect to ATID database. Disabling ATID database.");
-          ATIDdisabled_ = true;
         };
       };
     }
@@ -582,8 +579,9 @@ namespace astroManager
     }; */
 
     /// @brief Overloaded readMapFile(). This allows to not read the map file if the application is using SIMBAD.
-    /// @param[in] mfn:
-    // 2013-01-26/GGB - Function created.
+    /// @param[in] mfn: Map file name.
+    /// @throws
+    /// @version 2013-01-26/GGB - Function created.
 
     void CATID::readMapFile(boost::filesystem::path const &mfn)
     {
@@ -631,12 +629,13 @@ namespace astroManager
 
     /// @brief Function to populate a combo box with object type information. The data is the index of the record.
     /// @param[in] combo: The combo box to populate.
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
     /// @version 2013-07-29/GGB - Added check if the ATID database is disabled.
     /// @version 2010-11-14/GGB - Function created
 
     void CATID::PopulateObjectTypeCombo(QComboBox *combo)
     {
-      if (!ATIDdisabled_)
+      if (!useSIMBAD)
       {
         QString szSQL = "SELECT s.OBJECTTYPE_ID, s.SHORTTEXT FROM TBL_OBJECTTYPES s";
         QSqlQuery query(*(databaseATID->dBase));
@@ -938,6 +937,7 @@ namespace astroManager
     /// @returns true - stellarObject updated with data from query
     /// @returns false - Unable to update stellarObject
     /// @throws CCodeError(astroManager)
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
     /// @version 2016-05-07/GGB - Function created.
 
     bool CATID::queryStellarObjectByName(std::string const &objectName, ACL::CTargetStellar *stellarObject, EForce forceQuery)
@@ -948,7 +948,7 @@ namespace astroManager
       {
         case FORCE_NONE:
         {
-          if (useSIMBAD || ATIDdisabled_)
+          if (useSIMBAD)
           {
             returnValue = queryStellarObjectByName_SIMBAD(objectName, stellarObject);
           }
@@ -1055,11 +1055,12 @@ namespace astroManager
     /// @param[in] objectID: The ID of the object to query.
     /// @param[in] target: The stellar target to write the information to.
     /// @throws
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
     /// @version 2018-09-02/GGB - Function created.
 
     void CATID::readStellarObjectInformation(objectID_t objectID, ACL::CTargetStellar *target)
     {
-      if (useSIMBAD || ATIDdisabled_)
+      if (useSIMBAD)
       {
         readStellarObjectInformation_SIMBAD(objectID, target);
       }
@@ -1266,15 +1267,15 @@ namespace astroManager
       };
     }
 
-    // Function to populate a combo box with constellation names.
-    // The data is the index of the record.
-    //
-    // 2013-07-29/GGB - Added check for ATID disabled.
-    // 2010-11-14/GGB - Function created
+    /// @brief  Function to populate a combo box with constellation names. The data is the index of the record.
+    /// @throws
+    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
+    /// @version 2013-07-29/GGB - Added check for ATID disabled.
+    /// @version 2010-11-14/GGB - Function created
 
     void CATID::PopulateConstellationsCombo(QComboBox *combo)
     {
-      if (!ATIDdisabled_)
+      if (!useSIMBAD)
       {
         QString szSQL = "SELECT c.CONSTELLATION_ID, c.LONGTEXT FROM TBL_CONSTELLATIONS c";
         QSqlQuery query(*(databaseATID->dBase));

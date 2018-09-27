@@ -64,13 +64,12 @@ namespace astroManager
       Q_OBJECT
 
     private:
-      bool ATIDdisabled_;                     ///< If true, then the ATID database is disabled.
       bool useSIMBAD;                         ///< If true, the SIMBAD lookups are used, not the ATID database.
       virtual bool ODBC();
       virtual bool Oracle();
       virtual bool MySQL();
       virtual bool SQLite();
-      virtual bool PostgreSQL() {}
+      virtual bool PostgreSQL() {return false;}
 
       bool queryByCoordinatesSIMBAD(ACL::CAstronomicalCoordinates const &, double, ACL::DTargetAstronomy &);
       bool queryByCoordinatesATID(ACL::CAstronomicalCoordinates const &, double, ACL::DTargetAstronomy &);
@@ -106,7 +105,6 @@ namespace astroManager
       virtual void readMapFile(boost::filesystem::path const &);
 
       bool usingSIMBAD() const { return useSIMBAD; }
-      bool usingATID() const { return !ATIDdisabled_; }
 
       long long GetObservationCount(const long long) const;
       void PopulateFiltersList(QListWidget *);

@@ -186,7 +186,7 @@ namespace astroManager
       int nRow, nColumn;
       QString szKey;
 
-      if (!database::databaseATID->usingATID())
+      if (!database::databaseATID->usingSIMBAD())
       {
           // Not using ATID. Don't lookup and information on recent objects.
 
@@ -540,7 +540,7 @@ namespace astroManager
       tabWidget->setTabEnabled(1, false);
       tabWidget->setTabEnabled(2, false);
 
-      if (database::databaseATID->usingATID())
+      if (database::databaseATID->usingSIMBAD())
       {
 
         tabWidget->setTabEnabled(1, true);

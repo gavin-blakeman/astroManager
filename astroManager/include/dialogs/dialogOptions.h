@@ -103,7 +103,6 @@ namespace astroManager
       QCheckBox *checkBoxSEAstrometry;
       QCheckBox *checkBoxSEPhotometry;
 
-
         // Astrometry
 
       QSpinBox *spinBoxCentroidRadius;
@@ -160,6 +159,7 @@ namespace astroManager
         // ATID Database
 
       QGroupBox *groupBoxATID;
+      QCheckBox *checkBoxUseSimbad;
       QCheckBox *checkBoxEnableATID;
       QComboBox *comboBoxATIDDatabaseType;
       QStackedWidget *stackedWidgetATID;
@@ -282,13 +282,18 @@ namespace astroManager
 
         // Database
 
-      void eventResetWarnings(bool);
+      void eventATIDUseSimbad(bool);
+      void eventATIDUseATID(bool);
       void eventARIDDatabaseCombo(int);
       void eventATIDDatabaseCombo(int);
       void eventWeatherDatabaseCombo(int);
       void eventWeatherTestConnection(bool);
       void eventARIDTestConnection(bool);
       void eventATIDTestConnection();
+
+        // Other
+
+      void eventResetWarnings(bool);
     };
   }
 }

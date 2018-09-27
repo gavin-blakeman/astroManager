@@ -1610,7 +1610,7 @@ namespace astroManager
 
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
 
-              databaseATID->readStellarObjectInformation(sqlQuery->value(4).toULongLong(),
+              databaseATID->readStellarObjectInformation(sqlQuery->value(3).toULongLong(),
                                                          dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
 
               break;
