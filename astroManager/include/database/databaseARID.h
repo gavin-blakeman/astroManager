@@ -80,7 +80,6 @@ namespace astroManager
 
     private:
       bool ARIDdisabled_;
-      std::unique_ptr<QSqlQuery> sqlQuery;       ///< Pointer to the query that will be used
 
       virtual bool ODBC();
       virtual bool Oracle();

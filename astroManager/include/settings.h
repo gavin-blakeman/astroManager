@@ -193,6 +193,8 @@ namespace astroManager
 
     QString const ARID_DATABASE_DISABLE                             ("Database/ARID/Disable");
     QString const ARID_DATABASE_DBMS                                ("Database/ARID/DBMS");
+    QString const ARID_DATABASE_USEMAPFILE                          ("Database/ARID/UseMapFile");
+    QString const ARID_DATABASE_MAPFILE                             ("Database/ARID/MapFile");
 
     QString const ARID_ORACLE_DRIVERNAME                            ("Database/ARID/Oracle/DriverName");
     QString const ARID_ORACLE_HOSTADDRESS                           ("Database/ARID/Oracle/HostAddress");
@@ -224,6 +226,8 @@ namespace astroManager
 
     QString const WEATHER_DATABASE_DISABLE                          ("Database/Weather/Disable");
     QString const WEATHER_DATABASE_DBMS                             ("Database/Weather/DBMS");
+    QString const WEATHER_DATABASE_USEMAPFILE                       ("Database/Weather/UseMapFile");
+    QString const WEATHER_DATABASE_MAPFILE                          ("Database/Weather/MapFile");
 
     QString const WEATHER_ORACLE_DRIVERNAME                         ("Database/Weather/Oracle/DriverName");
     QString const WEATHER_ORACLE_HOSTADDRESS                        ("Database/Weather/Oracle/HostName");

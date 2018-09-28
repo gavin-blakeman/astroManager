@@ -100,6 +100,6 @@ namespace astroManager
 
       setEnabled(false);
     }
-  } // namespace dockwidgets
 
+  } // namespace dockwidgets
 } // namespace AstroManager

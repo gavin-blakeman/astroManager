@@ -21,7 +21,6 @@
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
-//
 // OVERVIEW:            Data support functions.
 //
 // CLASSES INCLUDED:    CARID
@@ -86,7 +85,7 @@ namespace astroManager
     /// @version 2013-01-25/GGB - Added SQLite support
     /// @version 2012-01-01/GGB - Function created
 
-    CARID::CARID() : CDatabase("ARID"), ARIDdisabled_(false), sqlQuery()
+    CARID::CARID() : CDatabase("ARID"), ARIDdisabled_(false)
     {
       QVariant variant = settings::astroManagerSettings->value(settings::ARID_DATABASE_DISABLE, QVariant());
 
@@ -1490,7 +1489,9 @@ namespace astroManager
         query.first();
         nRow = combo->findText(query.value(0).toString());
         if (nRow >= 0)
+        {
           combo->setCurrentIndex(nRow);
+        };
       };
     }
 
@@ -1549,7 +1550,9 @@ namespace astroManager
         {
           nRow = combo->findText(query.value(0).toString());
           if (nRow >= 0)
+          {
             combo->setCurrentIndex(nRow);
+          };
         };
       };
     }
@@ -1610,7 +1613,8 @@ namespace astroManager
 
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
 
-              databaseATID->readStellarObjectInformation(sqlQuery->value(3).toULongLong(),
+
+              databaseATID->queryStellarObjectByNameID(sqlQuery->value(3).toULongLong(),
                                                          dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
 
               break;

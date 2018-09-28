@@ -122,8 +122,5 @@ namespace astroManager
       QDockWidget::showEvent(event);
     }
 
-
-
   } // namespace dockwidgets
-
 } // namespace AstroManager

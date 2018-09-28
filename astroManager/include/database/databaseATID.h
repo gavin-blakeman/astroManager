@@ -102,7 +102,6 @@ namespace astroManager
       virtual ~CATID();
 
       void connectToDatabase();
-      virtual void readMapFile(boost::filesystem::path const &);
 
       bool usingSIMBAD() const { return useSIMBAD; }
 
@@ -116,6 +115,8 @@ namespace astroManager
       void PopulateCatalogCombo(QComboBox *);
       void PopulatePhotometryProgramCombo(QComboBox *);
       bool populateStellarObject(QVariant const &, std::shared_ptr<ACL::CTargetStellar>);
+
+      void queryStellarObjectByNameID(nameID_t, ACL::CTargetStellar *);
       bool queryStellarObjectByName(std::string const &, ACL::CTargetStellar *, EForce = FORCE_NONE);
 
       void GetLatestMagnitude(objectID_t, const long long, float &, float &) const;

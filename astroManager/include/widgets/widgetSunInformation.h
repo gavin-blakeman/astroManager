@@ -37,6 +37,8 @@
 #ifndef WIDGETSUNINFORMATION_H
 #define WIDGETSUNINFORMATION_H
 
+  // astroManager application header files.
+
 #include "widget.h"
 
 namespace astroManager
@@ -51,6 +53,7 @@ namespace astroManager
     public:
       CWidgetSunInformation(QWidget * = nullptr);
     };
+
   } // namespace widgets
 } // namespace AstroManager
 

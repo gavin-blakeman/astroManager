@@ -58,8 +58,8 @@ namespace astroManager
     //*****************************************************************************************************************************
 
     /// @brief Constructor for the class.
-    /// @param[in] parent - The parent object.
-    /// @param[in] action - The action object.
+    /// @param[in] parent: The parent object.
+    /// @param[in] action: The action object.
     /// @throws None.
     /// @version 2017-07-01/GGB - Changed order of parameters.
     /// @version 2012-07-28/GGB - Function created.

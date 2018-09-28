@@ -24,7 +24,6 @@
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
-//
 // OVERVIEW:
 //
 // CLASSES INCLUDED:    CAstrometryDockWidget     - Used when referencing images

@@ -65,8 +65,8 @@ namespace astroManager
     //*****************************************************************************************************************************
 
     /// @brief Constructor for the class.
-    /// @param[in] parent - The parent object.
-    /// @param[in] action - The action object.
+    /// @param[in] parent: The parent object.
+    /// @param[in] action: The action object.
     /// @throws None.
     /// @version 2017-07-01/GGB - Changed order of parameters and updated hierarchy.
     /// @version 2013-07-27/GGB - Added objectName.
@@ -81,16 +81,16 @@ namespace astroManager
     }
 
     /// @brief Saves the widget settings on exit.
-    //
-    // 2013-05-24/GGB - Function created.
+    /// @throws None.
+    /// @version 2013-05-24/GGB - Function created.
 
     CDockWidgetNavigator::~CDockWidgetNavigator()
     {
     }
 
     /// @brief Function called when the image is updated.
-    //
-    // 2013-05-24/GGB - Function created.
+    /// @throws
+    /// @version 2013-05-24/GGB - Function created.
 
     void CDockWidgetNavigator::imageChanged()
     {
@@ -129,10 +129,11 @@ namespace astroManager
       };
     }
 
-    /// Deactivates the window if the image deactivates.
-    //
-    // 2013-06-22/GGB - Changed function name to setEnabled.
-    // 2013-05-25/GGB - Function created.
+    /// @brief Deactivates the window if the image deactivates.
+    /// @param[in] enabledValue
+    /// @throws None.
+    /// @version 2013-06-22/GGB - Changed function name to setEnabled.
+    /// @version 2013-05-25/GGB - Function created.
 
     void CDockWidgetNavigator::setEnabled(bool enabledValue)
     {
@@ -182,7 +183,7 @@ namespace astroManager
     }
 
     /// @brief Redraws the view limits rectangle.
-    /// @param[in] limits - The current rectangle containing the view.
+    /// @param[in] limits: The current rectangle containing the view.
     /// @throws None.
     /// @version 2013-05-25/GGB - Function created.
 

@@ -176,6 +176,10 @@ namespace astroManager
             INFOMESSAGE("Unable to connect to ATID database. Disabling ATID database.");
             useSIMBAD = true;
           }
+          else
+          {
+            sqlQuery.reset(new QSqlQuery(*dBase));
+          }
         }
         else
         {
@@ -578,19 +582,6 @@ namespace astroManager
 
     }; */
 
-    /// @brief Overloaded readMapFile(). This allows to not read the map file if the application is using SIMBAD.
-    /// @param[in] mfn: Map file name.
-    /// @throws
-    /// @version 2013-01-26/GGB - Function created.
-
-    void CATID::readMapFile(boost::filesystem::path const &mfn)
-    {
-      if (!useSIMBAD)
-      {
-        sqlWriter.readMapFile(mfn);
-      };
-    }
-
     // Gets an object name from the ATID database.
     // The function first checks if the object has a preferred name defined and returns the
     // preferred name if one is defined. Otherwise it looks at the user preferred name order list and
@@ -905,27 +896,36 @@ namespace astroManager
     bool CATID::queryNamesFromATID(objectID_t OID, std::vector<std::string> &objectNames)
     {
       bool returnValue = false;
-      QSqlQuery query(*dBase);
 
-      query.setForwardOnly(true);
+      sqlQuery->setForwardOnly(true);
       sqlWriter.resetQuery();
 
       sqlWriter.select({"TBL_NAMES.Name"}).from({"TBL_NAMES"}).where({ GCL::sqlwriter::parameterTriple("OID", "=", OID) });
 
-      QString szSQL = QString::fromStdString(sqlWriter.string());
-
-      query.exec(szSQL);
-      query.first();
-
-      do
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
-        if (query.value(0).isValid())
+        sqlQuery->first();
+        if (sqlQuery->isValid())
         {
-          objectNames.push_back(query.value(0).toString().toStdString());
-          returnValue = true;
+          do
+          {
+            if (sqlQuery->value(0).isValid())
+            {
+              objectNames.push_back(sqlQuery->value(0).toString().toStdString());
+              returnValue = true;
+            }
+          }
+          while (sqlQuery->next());
         }
+        else
+        {
+          processErrorInformation();
+        };
       }
-      while (query.next());
+      else
+      {
+        processErrorInformation();
+      };
 
       return returnValue;
     }
@@ -976,6 +976,39 @@ namespace astroManager
       }
 
       return returnValue;
+    }
+
+    /// @brief Queries and populates a stellar object by name ID.
+    /// @param[in] nameID: The nameID to query.
+    /// @param[out] targetStellar: The class to populate.
+    /// @throws
+    /// @version 2018-09-28/GGB - Function created.
+
+    void CATID::queryStellarObjectByNameID(nameID_t nameID, ACL::CTargetStellar *targetStellar)
+    {
+      sqlWriter.resetQuery();
+      sqlWriter.select({"TBL_NAMES.OID" })
+               .from({"TBL_NAMES"})
+               .where({GCL::sqlwriter::parameterTriple(std::string("NAME_ID"), std::string("="), nameID)});
+
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      {
+        sqlQuery->first();
+        if (sqlQuery->isValid())
+        {
+          objectID_t OID = sqlQuery->value(0).toUInt();
+          sqlQuery->finish();
+          readStellarObjectInformation(OID, targetStellar);
+        }
+        else
+        {
+          processErrorInformation();
+        }
+      }
+      else
+      {
+        processErrorInformation();
+      };
     }
 
     bool CATID::queryStellarObjectByName_ATID(const std::string &objectName, ACL::CTargetStellar *)
@@ -1087,7 +1120,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlWriter.select({"TBL_STELLAROBJECTS.RA", "TBL_STELLAROBJECTS.DEC", "TBL_STELLAROBJECTS.EPOCH", "TBL_STELLAROBJECTS.pmRA",
                           "TBL_STELLAROBJECTS.pmDEC", "TBL_STELLAROBJECTS.RadialVelocity", "TBL_STELLAROBJECTS.Parallax",
-                          "TBL_STELLAROBJECTS.OBJECTTYPE"})
+                          "TBL_OBJECTTYPES.OBJECTTYPE"})
                  .from({"TBL_STELLAROBJECTS"})
                  .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
                         GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
@@ -1095,13 +1128,24 @@ namespace astroManager
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
-          target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
-          target->setEpoch(sqlQuery->value(2).toString().toStdString());
-          target->pmRA(sqlQuery->value(3).toDouble());
-          target->pmDec(sqlQuery->value(4).toDouble());
-          target->radialVelocity(sqlQuery->value(5).toDouble());
-          target->parallax(sqlQuery->value(6).toDouble());
-          target->stellarType(sqlQuery->value(7).toString().toStdString());
+          sqlQuery->first();
+          if (sqlQuery->isValid())
+          {
+            target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
+            if (!sqlQuery->value(2).isNull())
+            {
+              target->setEpoch(sqlQuery->value(2).toString().toStdString());
+            };
+            //target->pmRA(sqlQuery->value(3).toDouble());
+            //target->pmDec(sqlQuery->value(4).toDouble());
+            //target->radialVelocity(sqlQuery->value(5).toDouble());
+            //target->parallax(sqlQuery->value(6).toDouble());
+            //target->stellarType(sqlQuery->value(7).toString().toStdString());
+          }
+          else
+          {
+            processErrorInformation();
+          };
         }
         else
         {
@@ -1112,7 +1156,7 @@ namespace astroManager
       {
         ERRORMESSAGE(boost::format("Object with ID: %u not found.") % objectID);
         ASTROMANAGER_CODE_ERROR;
-      }
+      };
     }
 
     /// @brief Reads the stellar object information for the specified stellar object.
@@ -1166,7 +1210,7 @@ namespace astroManager
         return query.value(0);
       else
         return retVal;
-    };
+    }
 
     // Gets the number of observations for an object.
     //

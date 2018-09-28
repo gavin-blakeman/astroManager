@@ -200,7 +200,7 @@ int main(int argc, char *argv[])
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating ATID Database Connection...");
     astroManager::database::databaseATID = new astroManager::database::CATID();		// Create the database connection
-    if (astroManager::settings::astroManagerSettings->value(astroManager::settings::ATID_DATABASE_USEMAPFILE).toBool())
+    if (astroManager::settings::astroManagerSettings->value(astroManager::settings::ATID_DATABASE_USEMAPFILE, false).toBool())
     {
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading ATID SQL mapping file...");
       astroManager::database::databaseATID->readMapFile(astroManager::settings::astroManagerSettings->
@@ -214,8 +214,14 @@ int main(int argc, char *argv[])
     {
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating ARID Database Connection...");
       astroManager::database::databaseARID = new astroManager::database::CARID();   // Create the database connection.
-      GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading ARID SQL mapping file...");
-      astroManager::database::databaseATID->readMapFile("SQLMap/ARID.map");
+      if (astroManager::settings::astroManagerSettings->value(astroManager::settings::ARID_DATABASE_USEMAPFILE, false).toBool())
+      {
+        GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading ARID SQL mapping file...");
+        astroManager::database::databaseARID->readMapFile(astroManager::settings::astroManagerSettings->
+                                                          value(astroManager::settings::ARID_DATABASE_MAPFILE).toString().
+                                                          toStdString());
+      };
+
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Connecting to ARID database...");
       astroManager::database::databaseARID->connectToDatabase();
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading default ARID data...");
@@ -231,8 +237,13 @@ int main(int argc, char *argv[])
     {
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating Weather Database Connection...");
       astroManager::database::databaseWeather = new astroManager::database::CDatabaseWeather();  // Create the database connection.
-      GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading WEATHER SQL mapping file...");
-      astroManager::database::databaseATID->readMapFile("SQLMap/WEATHER.map");
+      if (astroManager::settings::astroManagerSettings->value(astroManager::settings::WEATHER_DATABASE_USEMAPFILE, false).toBool())
+      {
+        GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading WEATHER SQL mapping file...");
+        astroManager::database::databaseWeather->readMapFile(astroManager::settings::astroManagerSettings->
+                                                             value(astroManager::settings::ARID_DATABASE_MAPFILE).toString().
+                                                             toStdString());
+      };
       GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Connecting to WEATHER database...");
       splash.showMessage(QString("Connecting to WEATHER database"), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
       astroManager::database::databaseWeather->connectToDatabase();
@@ -352,7 +363,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x000F;
+  std::uint16_t const BUILDNUMBER = 0x0029;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },
@@ -455,7 +466,7 @@ namespace astroManager
   /// @brief Sets the number of threads.
   /// @details There are a number of libraries that track the number of threads to use. This function will set the number
   ///          of threads to use for each of the libraries.
-  /// @param[in] numThreads - The number of threads to use
+  /// @param[in] numThreads: The number of threads to use
   /// @throws None.
   /// @version 2017-06-25/GGB - Function created.
 

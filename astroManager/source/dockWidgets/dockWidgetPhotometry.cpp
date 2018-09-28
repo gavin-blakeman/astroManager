@@ -24,7 +24,6 @@
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
-//
 // OVERVIEW:
 //
 // CLASSES INCLUDED:    CPhotometryDockWidget     - Used when referencing images
@@ -748,9 +747,10 @@ namespace astroManager
       tableWidgetPhotometry->item(nRow, 0)->setData(ROLE_OBJECINDEX_t, QVariant(nRow));
     }
 
-    /// Called when the object needs to be enabled or disabled.
-    //
-    // 2013-07-18/GGB - Function created.
+    /// @brief Called when the object needs to be enabled or disabled.
+    /// @param[in] enabledValue:
+    /// @throws None.
+    /// @version 2013-07-18/GGB - Function created.
 
     void CPhotometryDockWidget::setEnabled(bool enabledValue)
     {
@@ -840,7 +840,9 @@ namespace astroManager
           glayout->addWidget(profilePlot, 0, 0, 1, 2);
 
       if (!tlStar || !tlSky || !tlStarSky || !tlMagnitude || !labelMagnitudeError || !labelFWHM)
+      {
         CODE_ERROR(astroManager);
+      };
 
       infoTab->setEnabled(false);		// Must not be useable until an object is chosen.
 
