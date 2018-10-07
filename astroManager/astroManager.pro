@@ -63,6 +63,7 @@ INCLUDEPATH += \
   "../astrometry" \
   "../GCL" \
   #"../../Library/LibRaw" \
+  "../libWCS/wcstools-3.8.7/libwcs" \
   "../MCL" \
   "../QCL" \
   "../PCL" \
@@ -277,7 +278,7 @@ else:win32:CONFIG(debug, debug|release) {
 else:unix:CONFIG(debug, debug|release) {
   LIBS += -L../ACL -lACL
   LIBS += -L../../Library/Library -lSBIG
-  LIBS += -L../../Library/Library -lcfitsio
+  LIBS += -L../../Library/Library/unix/debug -lcfitsio
   LIBS += -L../GCL -lGCL
   LIBS += -L../MCL -lMCL
   LIBS += -L../NOVAS -lNOVAS
@@ -288,10 +289,10 @@ else:unix:CONFIG(debug, debug|release) {
   LIBS += -L../../Library/Library -lWCS
   LIBS += -L../QCL -lQCL
   LIBS += -L../WCL -lWCL
-  LIBS += -L../../../Library/Library -lboost_filesystem
-  LIBS += -L../../../Library/Library/unix/debug -lboost_system
-  LIBS += -L../../Library/Library/unix/debug -lboost_thread
-  LIBS += -L../../Library/Library/unix/debug -lboost_chrono
+  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/filesystem/build/gcc-7/release/link-static/threading-multi" -lboost_filesystem
+  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/system/build/gcc-7/release/link-static/threading-multi" -lboost_system
+  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/thread/build/gcc-7/release/link-static/threading-multi" -lboost_thread
+  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/chrono/build/gcc-7/release/link-static/threading-multi" -lboost_chrono
   LIBS += -L../SOFA -lSOFA
   LIBS += -L../../Library/Library -lQxt
   LIBS += -L../GeographicLib-1.48 -lGeographicLib
