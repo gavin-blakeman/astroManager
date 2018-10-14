@@ -120,7 +120,7 @@ namespace astroManager
       void setupUI();
 
       void redraw();    // Redraws all the information in the window.
-      void insertRow(int, photometry::PPhotometryObservation);
+      void insertRow(int, photometry::CPhotometryObservation *);
       void drawProfile(MCL::TPoint2D<ACL::FP_t> const &);
 
     protected:
@@ -133,9 +133,9 @@ namespace astroManager
 
       virtual void setEnabled(bool);
 
-      void referenceCompleted(photometry::PPhotometryObservation);
-      void addNewObject(photometry::PPhotometryObservation);
-      void displayPhotometry(photometry::PPhotometryObservation);
+      void referenceCompleted(photometry::CPhotometryObservation *);
+      void addNewObject(photometry::CPhotometryObservation *);
+      void displayPhotometry(photometry::CPhotometryObservation *);
 
       ACL::AXIS_t getRadius1() const { return uiRadius1; }
       ACL::AXIS_t getRadius2() const { return uiRadius2; }

@@ -83,10 +83,10 @@ namespace astroManager
     protected:
       EMode mode;
 
-      void drawAstrometryIndicator(astrometry::PAstrometryObservation, QPen const &);
-      void drawCrossIndicator(astrometry::PAstrometryObservation, QPen const &);
-      void drawPhotometryIndicator(photometry::PPhotometryObservation, QPen const &);
-      void drawCircleIndicator(astrometry::PAstrometryObservation, QPen const &);
+      void drawAstrometryIndicator(astrometry::CAstrometryObservation *, QPen const &);
+      void drawCrossIndicator(astrometry::CAstrometryObservation *, QPen const &);
+      void drawPhotometryIndicator(photometry::CPhotometryObservation *, QPen const &);
+      void drawCircleIndicator(astrometry::CAstrometryObservation *, QPen const &);
 
       //void processAstroFile(ACL::PAstroFile);
 
@@ -106,11 +106,11 @@ namespace astroManager
 
         // Astrometry functions
 
-      virtual void changeAstrometrySelection(astrometry::PAstrometryObservation) = 0;
+      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *) = 0;
 
         // Photometry functions
 
-      virtual void changePhotometrySelection(photometry::PPhotometryObservation) = 0;
+      virtual void changePhotometrySelection(photometry::CPhotometryObservation *) = 0;
 
     };
 

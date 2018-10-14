@@ -241,15 +241,15 @@ namespace astroManager
 
         // Astrometry functions
 
-      void astrometryReferenceAdd(astrometry::PAstrometryObservation);      // Adds an astrometry reference to the list.
+      void astrometryReferenceAdd(astrometry::CAstrometryObservation *);      // Adds an astrometry reference to the list.
       void astrometryLoadTargets();
-      virtual void changeAstrometrySelection(astrometry::PAstrometryObservation);
+      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *);
 
         // Photometry functions
 
-      void photometryReferenceAdd(photometry::PPhotometryObservation);   // Adds a photometry reference to the list.
+      void photometryReferenceAdd(photometry::CPhotometryObservation *);   // Adds a photometry reference to the list.
       void photometryLoadTargets();
-      virtual void changePhotometrySelection(photometry::PPhotometryObservation);
+      virtual void changePhotometrySelection(photometry::CPhotometryObservation *);
 
 
     private slots:

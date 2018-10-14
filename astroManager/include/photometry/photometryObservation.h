@@ -73,12 +73,8 @@ namespace astroManager
 
       friend std::ostream &operator << (std::ostream &, CPhotometryObservation &);
     };
-    typedef std::shared_ptr<CPhotometryObservation> PPhotometryObservation;
-
-    typedef std::vector<photometry::PPhotometryObservation> DPhotometryObservationStore;
 
   } // namespace photometry
-
 } // namespace AstroManager
 
 #endif // PHOTOMETRYOBSERVATION_H

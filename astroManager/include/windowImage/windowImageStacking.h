@@ -164,11 +164,11 @@ namespace astroManager
 
         // Astrometry functions
 
-      virtual void changeAstrometrySelection(astrometry::PAstrometryObservation) {}
+      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *) {}
 
         // Photometry functions
 
-      virtual void changePhotometrySelection(photometry::PPhotometryObservation) {}
+      virtual void changePhotometrySelection(photometry::CPhotometryObservation *) {}
 
     private slots:
       void eventButtonAddImagesFromFolder(bool);
@@ -193,6 +193,6 @@ namespace astroManager
     };
 
   }  // namespace imagestacking
-}  // namespace AstroManager
+}  // namespace astroManager
 
 #endif // WINDOWIMAGESTACKING_H

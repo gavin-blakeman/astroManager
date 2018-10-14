@@ -80,28 +80,26 @@ namespace astroManager
         blackPoint = astroFile->blackPoint(currentHDB);
       };
 
-      // Create the list of astrometry information.
+        // Create the list of astrometry information.
 
       if ( astroFile->hasAstrometryHDB() )
       {
-        ACL::SPAstrometryObservation ao = astroFile->astrometryObjectFirst();
+        ACL::CAstrometryObservation *ao = astroFile->astrometryObjectFirst();
 
         while (ao)
         {
-          // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
+            // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          astrometry::PAstrometryObservation nao(new astrometry::CAstrometryObservation(*ao));
-
-          astrometryObservations.push_back(nao);    // Add this to the new list.
+          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));    // Add this to the new list.
 
           ao = astroFile->astrometryObjectNext();
         };
 
         astroFile->astrometryObjectRemoveAll();
 
-        // Recreate the list.
+          // Recreate the list.
 
-        astrometry::DAstrometryObservationStore::const_iterator iterator;
+        DAstrometryObservationStore::const_iterator iterator;
 
         for (iterator = astrometryObservations.begin(); iterator != astrometryObservations.end(); ++iterator)
         {
@@ -113,24 +111,22 @@ namespace astroManager
 
       if ( astroFile->hasPhotometryHDB() )
       {
-        ACL::SPPhotometryObservation po = astroFile->photometryObjectFirst();
+        ACL::CPhotometryObservation *po = astroFile->photometryObjectFirst();
 
         while (po)
         {
-          // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
+            // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          photometry::PPhotometryObservation npo(new photometry::CPhotometryObservation(*po));
-
-          photometryObservations.push_back(npo);    // Add this to the new list.
+          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));    // Add this to the new list.
 
           po = astroFile->photometryObjectNext();
         };
 
         astroFile->photometryObjectRemoveAll();   // Delete all the items in the photometry HDB
 
-        // Re-create the objects in the astrofile.
+          // Re-create the objects in the astrofile.
 
-        photometry::DPhotometryObservationStore::const_iterator iterator;
+        DPhotometryObservationStore::const_iterator iterator;
 
         for (iterator = photometryObservations.begin(); iterator != photometryObservations.end(); iterator++)
         {
@@ -159,28 +155,26 @@ namespace astroManager
         pixmap->convertFromImage(*ScreenImage);
       };
 
-      // Create the list of astrometry information.
+        // Create the list of astrometry information.
 
       if ( astroFile->hasAstrometryHDB() )
       {
-        ACL::SPAstrometryObservation ao = astroFile->astrometryObjectFirst();
+        ACL::CAstrometryObservation *ao = astroFile->astrometryObjectFirst();
 
         while (ao)
         {
-          // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
+            // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          astrometry::PAstrometryObservation nao(new astrometry::CAstrometryObservation(*ao));
-
-          astrometryObservations.push_back(nao);    // Add this to the new list.
+          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));    // Add this to the new list.
 
           ao = astroFile->astrometryObjectNext();
         };
 
         astroFile->astrometryObjectRemoveAll();
 
-        // Recreate the list.
+          // Recreate the list.
 
-        astrometry::DAstrometryObservationStore::const_iterator iterator;
+        DAstrometryObservationStore::const_iterator iterator;
 
         for (iterator = astrometryObservations.begin(); iterator != astrometryObservations.end(); ++iterator)
         {
@@ -189,28 +183,26 @@ namespace astroManager
 
       };
 
-      // Create the list of photometry information
+        // Create the list of photometry information
 
       if ( astroFile->hasPhotometryHDB() )
       {
-        ACL::SPPhotometryObservation po = astroFile->photometryObjectFirst();
+        ACL::CPhotometryObservation *po = astroFile->photometryObjectFirst();
 
         while (po)
         {
-          // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
+            // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          photometry::PPhotometryObservation npo(new photometry::CPhotometryObservation(*po));
-
-          photometryObservations.push_back(npo);    // Add this to the new list.
+          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));    // Add this to the new list.
 
           po = astroFile->photometryObjectNext();
         };
 
         astroFile->photometryObjectRemoveAll();   // Delete all the items in the photometry HDB
 
-        // Re-create the objects in the astrofile.
+          // Re-create the objects in the astrofile.
 
-        photometry::DPhotometryObservationStore::const_iterator iterator;
+        DPhotometryObservationStore::const_iterator iterator;
 
         for (iterator = photometryObservations.begin(); iterator != photometryObservations.end(); iterator++)
         {

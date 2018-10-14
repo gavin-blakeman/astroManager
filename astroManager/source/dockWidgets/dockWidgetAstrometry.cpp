@@ -86,11 +86,11 @@ namespace astroManager
     }
 
     /// @brief Adds a new object into the object list.
-    /// @param[in] newObject - The new object being created.
+    /// @param[in] newObject: The new object being created.
     /// @throws None.
     /// @version 2015-01-04/GGB - Function created.
 
-    void CAstrometryDockWidget::addNewObject(astrometry::PAstrometryObservation newObject)
+    void CAstrometryDockWidget::addNewObject(astrometry::CAstrometryObservation *newObject)
     {
       // Add the object to the table view.
 
@@ -102,7 +102,7 @@ namespace astroManager
     /// @throws
     /// @version
 
-    void CAstrometryDockWidget::displayAstrometry(astrometry::PAstrometryObservation ao)
+    void CAstrometryDockWidget::displayAstrometry(astrometry::CAstrometryObservation *ao)
     {
     }
 
@@ -208,11 +208,11 @@ namespace astroManager
       }
     }
 
-    /// Allows the user to delete a reference object from the list of objects.
-    //
-    // 2015-01-01/GGB - Added code to delete the text and group and also to reset the current selection. (Bug #1406897)
-    // 2013-08-11/GGB - Added code to delete the reference from the astroFile. (Bug #1210750)
-    // 2011-06-29/GGB - Function created.
+    /// @brief Allows the user to delete a reference object from the list of objects.
+    /// @throws
+    /// @version 2015-01-01/GGB - Added code to delete the text and group and also to reset the current selection. (Bug #1406897)
+    /// @version 2013-08-11/GGB - Added code to delete the reference from the astroFile. (Bug #1210750)
+    /// @version 2011-06-29/GGB - Function created.
 
     void CAstrometryDockWidget::eventButtonReferenceDelete(bool)
     {
@@ -233,7 +233,7 @@ namespace astroManager
 
           // Delete the object from the list.
 
-        currentImage->currentAstrometrySelection.reset();   // Remove the selection link.
+        currentImage->currentAstrometrySelection = nullptr;   // Remove the selection link.
 
         currentImage->astroFile->astrometryObjectRemove(currentImage->astrometryObservations[nRow]->objectName());
         currentImage->astrometryObservations.erase(currentImage->astrometryObservations.begin() + nRow);
@@ -347,7 +347,7 @@ namespace astroManager
       pushButtonReferenceEdit->setEnabled(true);
       pushButtonReferenceDelete->setEnabled(true);
 
-      astrometry::PAstrometryObservation &ao(currentImage->astrometryObservations[nRow]);
+      astrometry::CAstrometryObservation *ao(currentImage->astrometryObservations[nRow].get());
 
       bReference = true;
 
@@ -373,9 +373,9 @@ namespace astroManager
 
       //  query.exec(szSQL);
       //  query.first();
-        labelObjectName->setText(QString::fromStdString(currentImage->astrometryObservations[nRow]->objectName()));
-        labelCCDCoordinates->setText(QString("(%1, %2)").arg(currentImage->astrometryObservations[nRow]->CCDCoordinates().x()).
-                                     arg(currentImage->astrometryObservations[nRow]->CCDCoordinates().y()));
+        labelObjectName->setText(QString::fromStdString(ao->objectName()));
+        labelCCDCoordinates->setText(QString("(%1, %2)").arg(ao->CCDCoordinates().x()).
+                                     arg(ao->CCDCoordinates().y()));
       }
 
       if (ao->observedCoordinates())
@@ -397,7 +397,7 @@ namespace astroManager
     /// @throws None
     /// @version 2015-01-04/GGB - Function created.
 
-    void CAstrometryDockWidget::insertRow(int nRow, astrometry::PAstrometryObservation toInsert)
+    void CAstrometryDockWidget::insertRow(int nRow, astrometry::CAstrometryObservation *toInsert)
     {
       ACL::CHDB *currentHDB;
 
@@ -410,14 +410,13 @@ namespace astroManager
     }
 
     /// @brief Redraws all the information in the dock widget. Is called after the astrometry image changes.
-    //
+    /// @throws
     /// @version 2013-03-17/GGB - Changed type of object stored to be descendant of SAstrometryObjectInformation
     /// @version 2013-02-06/GGB - Removed all target code and have only one set of object code.
     /// @version 2011-06-29/GGB - Function created.
 
     void CAstrometryDockWidget::redraw()
     {
-      astrometry::DAstrometryObservationStore::const_iterator iter;
       int nRow;
 
       if (currentImage)
@@ -425,7 +424,9 @@ namespace astroManager
           // Remove all the lines already in the reference tableWidget
 
         while (tableWidgetAstrometry->rowCount())
+        {
           tableWidgetAstrometry->removeRow(0);
+        };
 
         pushButtonReferenceSelect->setEnabled(true);
         pushButtonReferenceEdit->setEnabled(false);
@@ -440,11 +441,11 @@ namespace astroManager
         labelObjectType->setText("");
 
         nRow = 0;
-        for (iter = currentImage->astrometryObservations.begin(); iter != currentImage->astrometryObservations.end(); iter++)
+        for ( auto iter : currentImage->astrometryObservations)
         {
           tableWidgetAstrometry->insertRow(nRow);
 
-          tableWidgetAstrometry->setItem(nRow, 0, new QTableWidgetItem(QString::fromStdString((*iter)->objectName())));
+          tableWidgetAstrometry->setItem(nRow, 0, new QTableWidgetItem(QString::fromStdString(iter->objectName())));
           nRow++;
         };
       }
@@ -484,7 +485,7 @@ namespace astroManager
     /// @version 2013-02-03/GGB - Moved code from CImageDisplay to this class.
     /// @version 2011-06-26/GGB - Function created.
 
-    void CAstrometryDockWidget::referenceCompleted(astrometry::PAstrometryObservation astrometryObject)
+    void CAstrometryDockWidget::referenceCompleted(astrometry::CAstrometryObservation *astrometryObject)
     {
       int nRow = tableWidgetAstrometry->rowCount();
 

@@ -161,32 +161,34 @@ namespace astroManager
     }
 
     /// @brief Adds an astrometry reference into the relevant astroFile.
+    /// @param[in] controlImage: The class controlling this image.
+    /// @param[in] centroid: The centroid of the object
+    /// @param[in] objectName: The name for the newly created object.
     /// @throws None.
     /// @version 2017-06-14/GGB - Updated to Qt5
     /// @version 2013-08-04/GGB - Function created.
 
-    astrometry::PAstrometryObservation CImageComparisonWindow::astrometryAdd(imaging::SControlImage *controlImage,
-                                                                             MCL::TPoint2D<ACL::FP_t> const &centroid,
-                                                                             QString const &objectName)
+    astrometry::CAstrometryObservation *CImageComparisonWindow::astrometryAdd(imaging::SControlImage *controlImage,
+                                                                              MCL::TPoint2D<ACL::FP_t> const &centroid,
+                                                                              QString const &objectName)
     {
       QPen pen;
       int ai = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
-      astrometry::PAstrometryObservation astrometryObject(new astrometry::CAstrometryObservation());
 
-      astrometryObject->objectName(objectName.toStdString());
-      astrometryObject->CCDCoordinates(centroid);
+      controlImage->astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
+
+      controlImage->astrometryObservations.back()->objectName(objectName.toStdString());
+      controlImage->astrometryObservations.back()->CCDCoordinates(centroid);
 
         // Get the image coordinates and convert to WCS coordinates.
 
       std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
-        controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
+        controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(controlImage->astrometryObservations.back()->CCDCoordinates());
 
       if (WCSCoordinates)
       {
-        astrometryObject->observedCoordinates(*WCSCoordinates);
+        controlImage->astrometryObservations.back()->observedCoordinates(*WCSCoordinates);
       };
-
-      controlImage->astrometryObservations.push_back(astrometryObject);   // Add the objects into the vector.
 
         // Add the astrometry observation to the reference list.
 
@@ -197,27 +199,27 @@ namespace astroManager
         ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
       };
 
-      controlImage->astroFile->astrometryObjectAdd(astrometryObject);
+      controlImage->astroFile->astrometryObjectAdd(controlImage->astrometryObservations.back());
 
       pen.setColor(settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
 
       switch (ai)
       {
       case 0:
-        drawCrossIndicator(astrometryObject, pen);
+        drawCrossIndicator(controlImage->astrometryObservations.back().get(), pen);
         break;
       case 1:
-        drawCircleIndicator(astrometryObject, pen);
+        drawCircleIndicator(controlImage->astrometryObservations.back().get(), pen);
         break;
       default:
-        drawCrossIndicator(astrometryObject, pen);
+        drawCrossIndicator(controlImage->astrometryObservations.back().get(), pen);
         break;
       };
 
       controlImage->astroFile->isDirty(true);
       controlImage->astroFile->hasData(true);
 
-      return astrometryObject;
+      return controlImage->astrometryObservations.back().get();
     }
 
     /// @brief Ensures that all the dynamically allocated memory is freed.
@@ -1086,7 +1088,8 @@ namespace astroManager
           {
               // Create the astrometry reference in the original image.
 
-            astrometry::PAstrometryObservation astrometryObjectOriginal = astrometryAdd(&controlBlock->inputImage, *centroid, objectName);
+            astrometry::CAstrometryObservation *astrometryObjectOriginal = astrometryAdd(&controlBlock->inputImage,
+                                                                                         *centroid, objectName);
             graphicsSceneImageInput->addItem(astrometryObjectOriginal->group);    // Ownership passes to the scene.
 
               // Create the astrometry reference on the aligned image (if there is one)
@@ -1100,11 +1103,11 @@ namespace astroManager
                                                                                     controlBlock->registerImageInformation.sc,
                                                                                     controlBlock->registerImageInformation.pixSize);
 
-              astrometry::PAstrometryObservation astrometryObjectAligned = astrometryAdd(&controlBlock->outputImage,
+              astrometry::CAstrometryObservation *astrometryObjectAligned = astrometryAdd(&controlBlock->outputImage,
                                                                                          alignedCentroid,
                                                                                          objectName);
               graphicsSceneImageOutput->addItem(astrometryObjectAligned->group);    // Ownership passes to the scene.
-            }
+            };
           }
           else
           {
@@ -1137,7 +1140,7 @@ namespace astroManager
           {
               // Create the astrometry reference in the aligned image.
 
-            astrometry::PAstrometryObservation astrometryObjectAligned = astrometryAdd(&controlBlock->outputImage,
+            astrometry::CAstrometryObservation *astrometryObjectAligned = astrometryAdd(&controlBlock->outputImage,
                                                                                         *centroid, objectName);
             graphicsSceneImageOutput->addItem(astrometryObjectAligned->group);    // Ownership passes to the scene.
 
@@ -1150,7 +1153,7 @@ namespace astroManager
                                                                                    controlBlock->registerImageInformation.sc,
                                                                                    controlBlock->registerImageInformation.pixSize);
 
-            astrometry::PAstrometryObservation astrometryObjectOriginal = astrometryAdd(&controlBlock->inputImage, originalCentroid,
+            astrometry::CAstrometryObservation *astrometryObjectOriginal = astrometryAdd(&controlBlock->inputImage, originalCentroid,
                                                                                          objectName);
             graphicsSceneImageInput->addItem(astrometryObjectOriginal->group);    // Ownership passes to the scene.
           }
@@ -1178,7 +1181,7 @@ namespace astroManager
     }
 
     /// @brief Adds a photometry label at the selected spot.
-    /// @param[in] mouseEvent - The mouse event information.
+    /// @param[in] mouseEvent: The mouse event information.
     /// @returns None.
     /// @throws CRuntimeAssert(astroManager)
     /// @throws CCodeError(astroManager)
@@ -1222,10 +1225,10 @@ namespace astroManager
           {
               // Create the photometry reference in the original image.
 
-            photometry::PPhotometryObservation photometryObjectOriginal = photometryAdd(&controlBlock->inputImage,
+            photometry::CPhotometryObservation *photometryObjectOriginal = photometryAdd(&controlBlock->inputImage,
                                                                                          *centroid, objectName);
-            dwp.addNewObject(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObjectOriginal));
-            dwp.displayPhotometry(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObjectOriginal));
+            dwp.addNewObject(photometryObjectOriginal);
+            dwp.displayPhotometry(photometryObjectOriginal);
 
             graphicsSceneImageInput->addItem(photometryObjectOriginal->group);    // Ownership passes to the scene.
 
@@ -1241,7 +1244,7 @@ namespace astroManager
                                                                                     controlBlock->registerImageInformation.pixSize);
 
 
-              photometry::PPhotometryObservation photometryObjectAligned = photometryAdd(&controlBlock->outputImage,
+              photometry::CPhotometryObservation *photometryObjectAligned = photometryAdd(&controlBlock->outputImage,
                                                                                           alignedCentroid, objectName);
 
               graphicsSceneImageOutput->addItem(photometryObjectAligned->group);    // Ownership passes to the scene.
@@ -1278,11 +1281,11 @@ namespace astroManager
           {
               // Create the photometry reference in the aligned image.
 
-            photometry::PPhotometryObservation photometryObjectAligned = photometryAdd(&controlBlock->outputImage,
+            photometry::CPhotometryObservation *photometryObjectAligned = photometryAdd(&controlBlock->outputImage,
                                                                                         *centroid, objectName);
 
-            dwp.addNewObject(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObjectAligned));
-            dwp.displayPhotometry(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObjectAligned));
+            dwp.addNewObject(photometryObjectAligned);
+            dwp.displayPhotometry(photometryObjectAligned);
 
             graphicsSceneImageOutput->addItem(photometryObjectAligned->group);    // Ownership passes to the scene.
 
@@ -1295,7 +1298,7 @@ namespace astroManager
                                                                                    controlBlock->registerImageInformation.sc,
                                                                                    controlBlock->registerImageInformation.pixSize);
 
-            photometry::PPhotometryObservation photometryObjectOriginal = photometryAdd(&controlBlock->inputImage,
+            photometry::CPhotometryObservation *photometryObjectOriginal = photometryAdd(&controlBlock->inputImage,
                                                                                          originalCentroid, objectName);
             graphicsSceneImageInput->addItem(photometryObjectOriginal->group);    // Ownership passes to the scene.
           }
@@ -1322,19 +1325,18 @@ namespace astroManager
     }
 
     /// @brief Adds an photometry reference into the relevant astroFile.
-    /// @param[in] controlImage - The image to act on
-    /// @param[in] centroid - The centroid of the object to add.
-    /// @param[in] objectName - The name of the object
+    /// @param[in] controlImage: The image to act on
+    /// @param[in] centroid: The centroid of the object to add.
+    /// @param[in] objectName: The name of the object
     /// @throws None
     /// @version 2017-06-14/GGB - Updated to Qt5
     /// @version 2013-08-05/GGB - Function created.
 
-    photometry::PPhotometryObservation CImageComparisonWindow::photometryAdd(imaging::SControlImage *controlImage,
-                                                                             MCL::TPoint2D<ACL::FP_t> const &centroid,
-                                                                             QString const &objectName)
+    photometry::CPhotometryObservation *CImageComparisonWindow::photometryAdd(imaging::SControlImage *controlImage,
+                                                                                              MCL::TPoint2D<ACL::FP_t> const &centroid,
+                                                                                              QString const &objectName)
     {
       QPen pen;
-      photometry::PPhotometryObservation photometryObject(new photometry::CPhotometryObservation());
       dockwidgets::CPhotometryDockWidget &pw =
           dynamic_cast<dockwidgets::CPhotometryDockWidget &>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
@@ -1343,25 +1345,28 @@ namespace astroManager
                                                                                        pw.getRadius2(),
                                                                                        pw.getRadius3()));
 
-      photometryObject->objectName(objectName.toStdString());
-      photometryObject->CCDCoordinates(centroid);
-      photometryObject->photometryAperture(photometryAperture);
-      photometryObject->exposure() = controlImage->astroFile->getHDB(controlImage->currentHDB)->EXPOSURE();
-      photometryObject->gain(static_cast<FP_t>((controlImage->astroFile->getHDB(controlImage->currentHDB)->keywordData(ACL::SBIG_EGAIN))));
-      photometryObject->FWHM(controlImage->astroFile->FWHM(controlImage->currentHDB, centroid));
-      controlImage->astroFile->pointPhotometry(controlImage->currentHDB, photometryObject);    // Now perform the photometry on the object
+        // Add the object into the vector.
+
+      controlImage->photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
+
+
+      controlImage->photometryObservations.back()->objectName(objectName.toStdString());
+      controlImage->photometryObservations.back()->CCDCoordinates(centroid);
+      controlImage->photometryObservations.back()->photometryAperture(photometryAperture);
+      controlImage->photometryObservations.back()->exposure() = controlImage->astroFile->getHDB(controlImage->currentHDB)->EXPOSURE();
+      controlImage->photometryObservations.back()->gain(static_cast<FP_t>((controlImage->astroFile->getHDB(controlImage->currentHDB)->keywordData(ACL::SBIG_EGAIN))));
+      controlImage->photometryObservations.back()->FWHM(controlImage->astroFile->FWHM(controlImage->currentHDB, centroid));
+      controlImage->astroFile->pointPhotometry(controlImage->currentHDB, *controlImage->photometryObservations.back());    // Now perform the photometry on the object
 
       // Get the image coordinates and convert to WCS coordinates.
 
       std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
-        controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(photometryObject->CCDCoordinates());
+        controlImage->astroFile->getHDB(controlImage->currentHDB)->pix2wcs(controlImage->photometryObservations.back()->CCDCoordinates());
 
       if (WCSCoordinates)
       {
-        photometryObject->observedCoordinates(*WCSCoordinates);
+        controlImage->photometryObservations.back()->observedCoordinates(*WCSCoordinates);
       }
-
-      controlImage->photometryObservations.push_back(photometryObject);   // Add the objects into the vector.
 
       // Add the photometry observation to the reference list.
 
@@ -1372,16 +1377,16 @@ namespace astroManager
         phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
       };
 
-      controlImage->astroFile->photometryObjectAdd(photometryObject);
+      controlImage->astroFile->photometryObjectAdd(controlImage->photometryObservations.back());
 
       pen.setColor(settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).toInt());
 
-      drawPhotometryIndicator(photometryObject, pen);
+      drawPhotometryIndicator(controlImage->photometryObservations.back().get(), pen);
 
       controlImage->astroFile->isDirty(true);
       controlImage->astroFile->hasData(true);
 
-      return photometryObject;
+      return controlImage->photometryObservations.back().get();
     }
 
     /// @brief Redraws the image when required.
@@ -1430,13 +1435,12 @@ namespace astroManager
       if (pw->getAction(mdiframe::IDA_VIEW_ASTROMETRY)->isChecked())
       {
         QPen pen;
-        astrometry::DAstrometryObservationStore::iterator iterator;
 
         pen.setColor(Qt::red);
 
-        for(iterator = controlImage->astrometryObservations.begin(); iterator != controlImage->astrometryObservations.end(); iterator++)
+        for(auto iterator = controlImage->astrometryObservations.begin(); iterator != controlImage->astrometryObservations.end(); iterator++)
         {
-          drawCrossIndicator(*iterator, pen);
+          drawCrossIndicator((*iterator).get(), pen);
           gsImage->addItem((*iterator)->group);
         };
       };
@@ -1446,13 +1450,12 @@ namespace astroManager
       if (pw->getAction(mdiframe::IDA_VIEW_PHOTOMETRY)->isChecked())
       {
         QPen pen;
-        photometry::DPhotometryObservationStore::iterator iterator;
 
         pen.setColor(Qt::red);
 
-        for(iterator = controlImage->photometryObservations.begin(); iterator != controlImage->photometryObservations.end(); iterator++)
+        for(auto iterator = controlImage->photometryObservations.begin(); iterator != controlImage->photometryObservations.end(); iterator++)
         {
-          drawPhotometryIndicator(*iterator, pen);
+          drawPhotometryIndicator((*iterator).get(), pen);
           gsImage->addItem((*iterator)->group);
         };
       };

@@ -234,7 +234,7 @@ namespace astroManager
     /// @version 2013-03-28/GGB - Added support for the objectStore.
     /// @version 2012-11-11/GGB - Function created.
 
-    void CPhotometryDockWidget::addNewObject(photometry::PPhotometryObservation newObject)
+    void CPhotometryDockWidget::addNewObject(photometry::CPhotometryObservation *newObject)
     {
         // Add the object to the table view.
 
@@ -257,7 +257,7 @@ namespace astroManager
     /// @throws CCodeError(astroManager)
     /// @version 2012-11-10/GGB - Function created.
 
-    void CPhotometryDockWidget::displayPhotometry(photometry::PPhotometryObservation po)
+    void CPhotometryDockWidget::displayPhotometry(photometry::CPhotometryObservation *po)
     {
       TRACEENTER;
 
@@ -399,7 +399,7 @@ namespace astroManager
     {
       int nRow = tableWidgetPhotometry->currentRow();
 
-      if (nRow != -1 && currentImage)
+      if ( (nRow != -1) && currentImage)
       {
           // Delete the object and annotation from the scene.
 
@@ -411,7 +411,7 @@ namespace astroManager
 
           // Delete the object from the photometry list in the astroFile.
 
-        currentImage->currentPhotometrySelection.reset();   // Remove the selection link.
+        currentImage->currentPhotometrySelection = nullptr;   // Remove the selection link.
 
         currentImage->astroFile->photometryObjectRemove(currentImage->photometryObservations[nRow]->objectName());
         currentImage->photometryObservations.erase(currentImage->photometryObservations.begin() + nRow);
@@ -427,7 +427,9 @@ namespace astroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
+          {
             CODE_ERROR(astroManager);
+          };
 
           iw->updateWindowTitle();
         };
@@ -541,20 +543,21 @@ namespace astroManager
     }
 
     /// @brief Displays the information for the item that has been selected.
-    //
-    // 2013-08-24/GGB - Added code to allow the selected item to hilight.
-    // 2013-03-29/GGB - Function created.
+    /// @param[in] row: The row that has been selected.
+    /// @throws
+    /// @version 2013-08-24/GGB - Added code to allow the selected item to hilight.
+    /// @version 2013-03-29/GGB - Function created.
 
     void CPhotometryDockWidget::eventReferenceSelected(int row, int)
     {
       std::string objectText;
-      photometry::PPhotometryObservation selectedObject;
+      photometry::CPhotometryObservation *selectedObject;
 
       if (!currentImage->photometryObservations.empty())
       {
         objectText = tableWidgetPhotometry->item(row, 0)->text().toStdString();
 
-        selectedObject = currentImage->photometryObservations[row];
+        selectedObject = currentImage->photometryObservations[row].get();
         btnObjectName->setEnabled(true);
       }
       else
@@ -569,13 +572,13 @@ namespace astroManager
     }
 
     /// @brief Inserts a row into the table.
-    /// @param[in] nRow - The row number to insert the new row.
-    /// @param[in] toInsert - The observation to insert.
+    /// @param[in] nRow: The row number to insert the new row.
+    /// @param[in] toInsert: The observation to insert.
     /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2012-11-12/GGB - Function created.
 
-    void CPhotometryDockWidget::insertRow(int nRow, photometry::PPhotometryObservation toInsert)
+    void CPhotometryDockWidget::insertRow(int nRow, photometry::CPhotometryObservation *toInsert)
     {
       ACL::CHDB *currentHDB;
       FP_t zmag;
@@ -603,7 +606,7 @@ namespace astroManager
       else
       {
         zmag = 0;
-      }
+      };
 
       tableWidgetPhotometry->insertRow(nRow);
       tableWidgetPhotometry->setRowHeight(nRow, 16);
@@ -614,15 +617,15 @@ namespace astroManager
     }
 
     /// @brief Redraws all the information in the dock widget. Is called after the photometry image changes.
-    //
-    // 2013-05-12/GGB - Removed support for the editing push button and the export csv pushbutton.
-    // 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
-    // 2012-11-12/GGB - Function created.
+    /// @throws
+    /// @version 2013-05-12/GGB - Removed support for the editing push button and the export csv pushbutton.
+    /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
+    /// @version 2012-11-12/GGB - Function created.
 
     void CPhotometryDockWidget::redraw()
     {
       int nRow;
-      photometry::PPhotometryObservation currentObject;
+      photometry::CPhotometryObservation *currentObject;
 
       if (currentImage)
       {
@@ -664,12 +667,12 @@ namespace astroManager
 
         if (currentImage->astroFile->hasPhotometryHDB())
         {
-          currentObject = std::dynamic_pointer_cast<photometry::CPhotometryObservation>(currentImage->astroFile->photometryObjectFirst());
+          currentObject = dynamic_cast<photometry::CPhotometryObservation *>(currentImage->astroFile->photometryObjectFirst());
 
           while (currentObject)
           {
             insertRow(nRow++, currentObject);
-            currentObject = std::dynamic_pointer_cast<photometry::CPhotometryObservation>(currentImage->astroFile->photometryObjectNext());
+            currentObject = dynamic_cast<photometry::CPhotometryObservation *>(currentImage->astroFile->photometryObjectNext());
           };
         };
       }
@@ -707,20 +710,22 @@ namespace astroManager
       };
     }
 
-    /// Function called by image window when a reference has been completed. \n
+    /// @brief Function called by image window when a reference has been completed. \n
+    /// @param[in] photometryObject: The photometry object completed reference.
+    /// @details
     /// 1. Uncheck the button \n
     /// 2. Ensure that the user selects an object to go with the reference. \n
     /// 3. Add the new item into the astroFile \n
     /// 4. Add the new item to the tableWidget \n
-    //
-    // 2013-08-05/GGB - Moved code into the window objects.
-    // 2013-04-12/GGB - Added code to set the creator and date of a new HDB.
-    // 2013-03-31/GGB - Function created.
+    /// @throws CRuntimeAssert()
+    /// @version 2013-08-05/GGB - Moved code into the window objects.
+    /// @version 2013-04-12/GGB - Added code to set the creator and date of a new HDB.
+    /// @version 2013-03-31/GGB - Function created.
 
-    void CPhotometryDockWidget::referenceCompleted(photometry::PPhotometryObservation photometryObject)
+    void CPhotometryDockWidget::referenceCompleted(photometry::CPhotometryObservation *photometryObject)
     {
-      imaging::CImageWindow *subWindow;
-      mdiframe::CFrameWindow *frameWindow;
+      imaging::CImageWindow *subWindow = nullptr;
+      mdiframe::CFrameWindow *frameWindow = nullptr;
       int nRow = tableWidgetPhotometry->rowCount();
       pushButtonSelect->setChecked(false);
 

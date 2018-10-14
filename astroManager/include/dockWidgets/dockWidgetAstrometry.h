@@ -95,7 +95,7 @@ namespace astroManager
 
     protected:
 
-      void insertRow(int, astrometry::PAstrometryObservation);
+      void insertRow(int, astrometry::CAstrometryObservation *);
 
     public:
       CAstrometryDockWidget(QWidget *, QAction *);
@@ -106,9 +106,9 @@ namespace astroManager
 
       virtual void setEnabled(bool);
 
-      void referenceCompleted(astrometry::PAstrometryObservation);
-      void addNewObject(astrometry::PAstrometryObservation);
-      void displayAstrometry(astrometry::PAstrometryObservation);
+      void referenceCompleted(astrometry::CAstrometryObservation *);
+      void addNewObject(astrometry::CAstrometryObservation *);
+      void displayAstrometry(astrometry::CAstrometryObservation *);
 
     private slots:
       void eventButtonReferenceSelect(bool);

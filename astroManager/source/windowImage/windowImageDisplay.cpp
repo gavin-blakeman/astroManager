@@ -153,18 +153,22 @@ namespace astroManager
     {
     }
 
-    /// @brief Loads the astrometry targets.
+    /// @brief Loads the astrometry targets from a file.
+    /// @throws std::bad_cast
     /// @version 2017-09-23/GGB - Updated to use CAngle
     /// @version 2017-07-03/GGB - Updated to reflect new dockwidget storage method.
 
     void CImageWindow::astrometryLoadTargets()
     {
+        // Note the following could (in theory) throw std::bad_cast. It may be worth catching the bad_cast and
+        // altering it into a more meaninfull error message.
+
       dockwidgets::CAstrometryDockWidget &adw =
           dynamic_cast<dockwidgets::CAstrometryDockWidget &>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
 
-      std::vector<astrometry::PAstrometryObservation> astrometryTargets;
-      std::vector<astrometry::PAstrometryObservation>::iterator targetIterator;
+      std::vector<std::shared_ptr<astrometry::CAstrometryObservation>> astrometryTargets;
+      std::vector<std::shared_ptr<astrometry::CAstrometryObservation>>::iterator targetIterator;
 
         // Check if there is WCS information present in the current image. If there is no WCS information present in the image,
         // then the function should return with an error to the user.
@@ -196,7 +200,7 @@ namespace astroManager
               std::getline(csvFile, szLine);
               if (szLine.size() != 0)
               {
-                astrometry::PAstrometryObservation currentTarget(new astrometry::CAstrometryObservation);
+                astrometryTargets.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
 
                   // Now parse the data.
 
@@ -207,7 +211,7 @@ namespace astroManager
                 comma2 = szLine.find(',', comma1 + 1);
                 comma3 = szLine.find(',', comma2 + 1);
 
-                currentTarget->objectName(szLine.substr(0, comma1));    // Object Name
+               astrometryTargets.back()->objectName(szLine.substr(0, comma1));    // Object Name
 
                 szValue = szLine.substr(comma1 + 1, comma2 - comma1 - 1);     // RA
                 boost::trim(szValue);
@@ -219,9 +223,7 @@ namespace astroManager
 
                 coordinates(MCL::angle_t(RA, MCL::AF_Dd), MCL::angle_t(Dec, MCL::AF_Dd));
 
-                currentTarget->observedCoordinates(coordinates);
-
-                astrometryTargets.push_back(currentTarget);
+                astrometryTargets.back()->observedCoordinates(coordinates);
               };
 
               ++lineNumber;
@@ -253,7 +255,7 @@ namespace astroManager
             };
           }
 
-          // Have all the CCD coordinates, now centroid the coordinates, and add to the photometry list.
+            // Have all the CCD coordinates, now centroid the coordinates, and add to the photometry list.
 
           size_t targetCount = 0;
 
@@ -270,7 +272,7 @@ namespace astroManager
 
             if (centroid)
             {
-              ACL::SPAstrometryObservation existingObject;
+              ACL::CAstrometryObservation *existingObject;
 
                 // Check the list for another target that is close.
 
@@ -294,12 +296,11 @@ namespace astroManager
 
                 try
                 {
-                  astrometry::PAstrometryObservation astrometryObject;
+                  controlImage.astrometryObservations.emplace_back(std::make_unique<astrometry::CAstrometryObservation>());
 
-                  astrometryObject.reset(new astrometry::CAstrometryObservation());
-                  astrometryObject->objectName( (*targetIterator)->objectName());
-                  astrometryObject->CCDCoordinates(*centroid);
-                  astrometryObject->observedCoordinates( *(*targetIterator)->observedCoordinates() );
+                  controlImage.astrometryObservations.back()->objectName( (*targetIterator)->objectName());
+                  controlImage.astrometryObservations.back()->CCDCoordinates(*centroid);
+                  controlImage.astrometryObservations.back()->observedCoordinates( *(*targetIterator)->observedCoordinates() );
 
                     // Add the Astrometry observation to the list.
 
@@ -311,21 +312,20 @@ namespace astroManager
                   };
 
                   ++targetCount;
-                  controlImage.astroFile->astrometryObjectAdd(astrometryObject);
-                  controlImage.astrometryObservations.push_back(astrometryObject);          // Add the objects into the vector.
+                  controlImage.astroFile->astrometryObjectAdd(controlImage.astrometryObservations.back());
 
                     // Now draw the astro indicator
 
-                  changeAstrometrySelection(astrometryObject);
+                  changeAstrometrySelection(controlImage.astrometryObservations.back().get());
 
                     // Update the information in the dockwidget.
 
-                  adw.addNewObject(std::dynamic_pointer_cast<astrometry::CAstrometryObservation>(astrometryObject));
+                  adw.addNewObject(controlImage.astrometryObservations.back().get());
                   //adw->displayAstrometry(boost::dynamic_pointer_cast<dockwidgets::CAstrometryObservation>(astrometryObject));
 
-                  astrometryReferenceAdd(astrometryObject);
+                  astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
 
-                  LOGMESSAGE(info, astrometryObject->objectName() + ": Added to photometry list sucesfully.");
+                  LOGMESSAGE(info, controlImage.astrometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
                 }
                 catch(...)
                 {
@@ -368,13 +368,14 @@ namespace astroManager
     ///   @li If the astrometry HDB is created, then the combo box needs to be updated and a tab needs to be opened to display the
     ///       astrometry information
     ///   @li The astrometry information in the astrometry HDB needs to be updated
+    /// @param[in] astrometryObject:
     /// @version 2017-09-23/GGB - Update to use CAngle
     /// @version 2013-08-16/GGB - Corrected bug with the RA/DEC display (Bug #1213076)
     /// @version 2013-02-05/GGB - Added bAstrometryHDB to determine if the Astrometry HDB exists.
     /// @version 2013-02-03/GGB - Moved code to DockWidgetAstrometry.
     /// @version 2012-01-21/GGB - Function created
 
-    void CImageWindow::astrometryReferenceAdd(astrometry::PAstrometryObservation astrometryObject)
+    void CImageWindow::astrometryReferenceAdd(astrometry::CAstrometryObservation *astrometryObject)
     {
       int nColumn = 0, nRow;
 
@@ -680,11 +681,12 @@ namespace astroManager
     }
 
     /// @brief Called when a new Astrometry object is being selected.
+    /// @param[in] newSelection: The new object selected.
     /// @details Redraws the Astrometry indicator in the new colours.
-    ///
+    /// @throws None.
     /// @version  2013-18-25/GGB - Function created.
 
-    void CImageWindow::changeAstrometrySelection(astrometry::PAstrometryObservation newSelection)
+    void CImageWindow::changeAstrometrySelection(astrometry::CAstrometryObservation *newSelection)
     {
       QPen pen;
       QColor const selectedColour = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_SELECTEDCOLOUR,
@@ -731,12 +733,13 @@ namespace astroManager
     }
 
     /// @brief Called when a new Photometry object is being selected.
+    /// @param[in] newSelection: The new selected object.
     /// @details Redraws the photometry indicator in the new colours.
-    ///
+    /// @throws
     /// @version 2017-06-14/GGB - Updated to Qt5
     /// @version 2010-11-13/GGB - Function created.
 
-    void CImageWindow::changePhotometrySelection(photometry::PPhotometryObservation newSelection)
+    void CImageWindow::changePhotometrySelection(photometry::CPhotometryObservation *newSelection)
     {
       TRACEENTER;
 
@@ -1192,16 +1195,16 @@ namespace astroManager
     {
     }
 
-    /// Function to display the information in the astrometry tab. The existing data is removed, and the most current data is
-    /// re-drawn.
+    /// @brief Function to display the information in the astrometry tab. The existing data is removed, and the most current data is
+    ///        re-drawn.
     /// @version 2017-09-23/GGB - Update to use CAngle
-    // 2013-08-17/GGB - Corrected RA/Dec display (Bug #1213076)
-    // 2013-02-08/GGB - Ensure that the table is cleared before adding rows.
-    // 2012-01-21/GGB - Function created
+    /// @version 2013-08-17/GGB - Corrected RA/Dec display (Bug #1213076)
+    /// @version 2013-02-08/GGB - Ensure that the table is cleared before adding rows.
+    /// @version 2012-01-21/GGB - Function created
 
     void CImageWindow::DisplayAstrometry()
     {
-      ACL::SPAstrometryObservation ao;
+      ACL::CAstrometryObservation *ao;
       int nRow = 0, nColumn;
 
       tableWidgetAstrometry->clearContents();
@@ -1237,21 +1240,23 @@ namespace astroManager
       };
     }
 
-    /// Function to redraw the data in the photometry tab.
-    //
+    /// @brief Function to redraw the data in the photometry tab.
+    /// @throws None.
     /// @version 2017-09-23/GGB - Update to use CAngle
-    // 2013-08-17/GGB - Corrected RA/Dec display (Bug #1213076)
-    // 2013-04-09/GGB - Function created.
+    /// @version 2013-08-17/GGB - Corrected RA/Dec display (Bug #1213076)
+    /// @version 2013-04-09/GGB - Function created.
 
     void CImageWindow::DisplayPhotometry()
     {
-      ACL::SPPhotometryObservation po;
+      ACL::CPhotometryObservation *po;
       int nRow = 0, nColumn;
 
       tableWidgetPhotometry->clearContents();
 
       while (tableWidgetPhotometry->rowCount() != 0)
+      {
         tableWidgetPhotometry->removeRow(0);
+      };
 
       if (controlImage.astroFile->hasPhotometryHDB())
       {
@@ -1642,7 +1647,6 @@ namespace astroManager
     {
       std::ofstream outputFile;
       std::string szDateTime;
-      astrometry::DAstrometryObservationStore::iterator iterator;
 
       ACL::CHDB *currentHDB = controlImage.astroFile->getHDB(0);
 
@@ -1673,7 +1677,7 @@ namespace astroManager
 
         outputFile << "Object Name, RA, Dec, CCD (x), CCD (y), Inst Mag, MagErr" << std::endl;
 
-        for (iterator = controlImage.astrometryObservations.begin(); iterator != controlImage.astrometryObservations.end(); iterator++)
+        for (auto iterator = controlImage.astrometryObservations.begin(); iterator != controlImage.astrometryObservations.end(); iterator++)
         {
           outputFile << (*(*iterator)) << std::endl;
         };
@@ -1684,13 +1688,12 @@ namespace astroManager
     }
 
     /// @brief Exports the data from the photometry HDB as .csv data to a file. This file can then be opened using a spreadsheet program.
-    //
+    /// @throws
     /// @version 2013-05-12/GGB - Function created.
 
     void CImageWindow::exportPhotometryAsCSV()
     {
       std::ofstream outputFile;
-      photometry::DPhotometryObservationStore::iterator iterator;
       ACL::CHDB *currentHDB;
       FP_t zmag = 0;
       std::string filterName;
@@ -1729,7 +1732,6 @@ namespace astroManager
 
       };
 
-
         // Get the name of the file to save.
 
       QString fileName = QFileDialog::getSaveFileName(this, tr("Export Photometry as..."),
@@ -1750,8 +1752,10 @@ namespace astroManager
 
         outputFile << "Object Name, RA, Dec, CCD (x), CCD (y), Inst Mag, MagErr" << std::endl;
 
-        for (iterator = controlImage.photometryObservations.begin(); iterator != controlImage.photometryObservations.end(); iterator++)
+        for (auto iterator = controlImage.photometryObservations.begin(); iterator != controlImage.photometryObservations.end(); iterator++)
+        {
           outputFile << (*(*iterator)) << std::endl;
+        };
 
         outputFile.close();
       };
@@ -2248,8 +2252,8 @@ namespace astroManager
               // Found a centroid.
 
             bool bClose = false;
-            astrometry::PAstrometryObservation astrometryObject;
-            ACL::SPAstrometryObservation existingObject;
+            astrometry::CAstrometryObservation *astrometryObject;
+            ACL::CAstrometryObservation *existingObject;
 
               // Check if the object is already identified.
 
@@ -2269,8 +2273,9 @@ namespace astroManager
 
             if (!bClose)
             {
-              astrometryObject.reset(new astrometry::CAstrometryObservation(elem)); // Associate the target with the element.
-              astrometryObject->CCDCoordinates(*ccdPixel);
+              controlImage.astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(elem));
+
+              controlImage.astrometryObservations.back()->CCDCoordinates(*ccdPixel);
 
                 // Add the astrometry observation to the reference list.
 
@@ -2281,13 +2286,13 @@ namespace astroManager
                 ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
               };
 
-              controlImage.astroFile->astrometryObjectAdd(astrometryObject);
-              controlImage.astrometryObservations.push_back(astrometryObject);          // Add the objects into the vector.
+              controlImage.astroFile->astrometryObjectAdd(controlImage.astrometryObservations.back());
 
-              changeAstrometrySelection(astrometryObject);
 
-              astrometryReferenceAdd(astrometryObject);
-              dw.referenceCompleted(astrometryObject);
+              changeAstrometrySelection(controlImage.astrometryObservations.back().get());
+
+              astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
+              dw.referenceCompleted(controlImage.astrometryObservations.back().get());
 
               controlImage.astroFile->isDirty(true);
               controlImage.astroFile->hasData(true);
@@ -2296,8 +2301,6 @@ namespace astroManager
               targetCount++;
 
               LOGMESSAGE(info, "Added object " + elem->objectName() + " to astrometry list.");
-
-              astrometryObject.reset();
             };
           }
           {
@@ -2374,8 +2377,8 @@ namespace astroManager
           DEBUGMESSAGE("Adding objects to Astrometry list...");
 
           bool bClose = false;
-          astrometry::PAstrometryObservation astrometryObject;
-          ACL::SPAstrometryObservation existingObject;
+          astrometry::CAstrometryObservation *astrometryObject;
+          ACL::CAstrometryObservation *existingObject;
 
           for (auto iter : imageObjectList)
           {
@@ -2393,21 +2396,22 @@ namespace astroManager
 
             if (!bClose)
             {
-              astrometryObject.reset(new astrometry::CAstrometryObservation());
-              astrometryObject->CCDCoordinates(iter->center);
+              controlImage.astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
+
+              controlImage.astrometryObservations.back()->CCDCoordinates(iter->center);
 
               // Get the image coordinates and convert to WCS coordinates.
 
               std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
-                  controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
+                  controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(controlImage.astrometryObservations.back()->CCDCoordinates());
 
               if (WCSCoordinates)
               {
-                astrometryObject->observedCoordinates(*WCSCoordinates);
+                controlImage.astrometryObservations.back()->observedCoordinates(*WCSCoordinates);
               };
 
               QString objectName = QString("A:%1").arg(controlImage.astroFile->astrometryObjectCount() + 1);
-              astrometryObject->objectName(objectName.toStdString());
+              controlImage.astrometryObservations.back()->objectName(objectName.toStdString());
 
                 // Add the astrometry observation to the reference list.
 
@@ -2418,16 +2422,14 @@ namespace astroManager
                 ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
               };
 
-              controlImage.astroFile->astrometryObjectAdd(astrometryObject);
-              controlImage.astrometryObservations.push_back(astrometryObject);          // Add the objects into the vector.
+              controlImage.astroFile->astrometryObjectAdd(controlImage.astrometryObservations.back());
 
-              changeAstrometrySelection(astrometryObject);
+              changeAstrometrySelection(controlImage.astrometryObservations.back().get());
 
-              adw.addNewObject(std::dynamic_pointer_cast<astrometry::CAstrometryObservation>(astrometryObject));
-              adw.displayAstrometry(std::dynamic_pointer_cast<astrometry::CAstrometryObservation>(astrometryObject));
+              adw.addNewObject(controlImage.astrometryObservations.back().get());
+              adw.displayAstrometry(controlImage.astrometryObservations.back().get());
 
-              astrometryReferenceAdd(astrometryObject);
-              astrometryObject.reset();
+              astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
             };
 
             controlImage.astroFile->isDirty(true);
@@ -2443,8 +2445,8 @@ namespace astroManager
           DEBUGMESSAGE("Adding objects to Photometry list...");
 
           bool bClose = false;
-          photometry::PPhotometryObservation photometryObject;
-          ACL::SPPhotometryObservation existingObject;
+          photometry::CPhotometryObservation *photometryObject;
+          ACL::CPhotometryObservation *existingObject;
 
           for (auto iter : imageObjectList)
           {
@@ -2467,25 +2469,25 @@ namespace astroManager
                                                                                                pdw.getRadius2(),
                                                                                                pdw.getRadius3()));
 
-              photometryObject.reset(new photometry::CPhotometryObservation());
-              photometryObject->CCDCoordinates(iter->center);
+              controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
+              controlImage.photometryObservations.back()->CCDCoordinates(iter->center);
 
-              photometryObject->observedCoordinates() =
-                  controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(photometryObject->CCDCoordinates());
+              controlImage.photometryObservations.back()->observedCoordinates() =
+                  controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(controlImage.photometryObservations.back()->CCDCoordinates());
 
-              photometryObject->photometryAperture(photometryAperture);
-              photometryObject->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
-              photometryObject->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
-              photometryObject->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, iter->center));
+              controlImage.photometryObservations.back()->photometryAperture(photometryAperture);
+              controlImage.photometryObservations.back()->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
+              controlImage.photometryObservations.back()->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
+              controlImage.photometryObservations.back()->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, iter->center));
 
               try
               {
-                controlImage.astroFile->pointPhotometry(controlImage.currentHDB, photometryObject);    // Now perform the photometry on the object
+                controlImage.astroFile->pointPhotometry(controlImage.currentHDB, *controlImage.photometryObservations.back());    // Now perform the photometry on the object
 
                   // Give the object a temporary name and add it into the two lists.
 
                 QString objectName = QString("P:%1").arg(controlImage.astroFile->photometryObjectCount() + 1);
-                photometryObject->objectName(objectName.toStdString());
+                controlImage.photometryObservations.back()->objectName(objectName.toStdString());
 
                   // Add the photometry observation to the reference list.
 
@@ -2496,20 +2498,18 @@ namespace astroManager
                   phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                 };
 
-                controlImage.astroFile->photometryObjectAdd(photometryObject);
-
-                controlImage.photometryObservations.push_back(photometryObject);          // Add the objects into the vector.
+                controlImage.astroFile->photometryObjectAdd(controlImage.photometryObservations.back());
 
                   // Now draw the photometry indicator
 
-                changePhotometrySelection(photometryObject);
+                changePhotometrySelection(controlImage.photometryObservations.back().get());
 
                   // Update the information in the dockwidget.
 
-                pdw.addNewObject(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
-                pdw.displayPhotometry(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
+                pdw.addNewObject(controlImage.photometryObservations.back().get());
+                pdw.displayPhotometry(controlImage.photometryObservations.back().get());
 
-                photometryReferenceAdd(photometryObject);
+                photometryReferenceAdd(controlImage.photometryObservations.back().get());
               }
               catch(...)
               {
@@ -2544,14 +2544,13 @@ namespace astroManager
       auto &dw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
       QPointF point;
-      astrometry::PAstrometryObservation astrometryObject(new astrometry::CAstrometryObservation());
       bool bClose;
-      ACL::SPAstrometryObservation existingObject;
+      ACL::CAstrometryObservation *existingObject;
 
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
       if (!astroImage)
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
 
       switch (mouseEvent->button())
@@ -2587,20 +2586,23 @@ namespace astroManager
 
           if (!bClose)
           {
-            astrometryObject->CCDCoordinates(*centroid);
+            controlImage.astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
+            controlImage.astrometryObservations.back()->CCDCoordinates(*centroid);
 
-            // Get the image coordinates and convert to WCS coordinates.
+              // Get the image coordinates and convert to WCS coordinates.
 
             std::optional<ACL::CAstronomicalCoordinates> WCSCoordinates =
-                controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(astrometryObject->CCDCoordinates());
+                controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(controlImage.astrometryObservations.back()->CCDCoordinates());
 
             if (WCSCoordinates)
-              astrometryObject->observedCoordinates(*WCSCoordinates);
+            {
+              controlImage.astrometryObservations.back()->observedCoordinates(*WCSCoordinates);
+            };
 
             QString objectName = QString("A:%1").arg(controlImage.astroFile->astrometryObjectCount() + 1);
-            astrometryObject->objectName(objectName.toStdString());
+            controlImage.astrometryObservations.back()->objectName(objectName.toStdString());
 
-            // Add the astrometry observation to the reference list.
+              // Add the astrometry observation to the reference list.
 
             if ( !controlImage.astroFile->hasAstrometryHDB() )
             {
@@ -2609,17 +2611,15 @@ namespace astroManager
               ahdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
             };
 
-            controlImage.astroFile->astrometryObjectAdd(astrometryObject);
-            controlImage.astrometryObservations.push_back(astrometryObject);          // Add the objects into the vector.
+            controlImage.astroFile->astrometryObjectAdd(controlImage.astrometryObservations.back());
 
-            changeAstrometrySelection(astrometryObject);
-
-            astrometryReferenceAdd(astrometryObject);
+            changeAstrometrySelection(controlImage.astrometryObservations.back().get());
+            astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
 
             controlImage.astroFile->isDirty(true);
             controlImage.astroFile->hasData(true);
             updateWindowTitle();
-            dw.referenceCompleted(astrometryObject);
+            dw.referenceCompleted(controlImage.astrometryObservations.back().get());
           };
         }
         else
@@ -2630,12 +2630,17 @@ namespace astroManager
         };
       };
         break;
-      case Qt::RightButton:
-      case Qt::MidButton:
-      case Qt::NoButton:
-        break;
-      default:
-        CODE_ERROR(astroManager);
+        case Qt::RightButton:
+        case Qt::MidButton:
+        case Qt::NoButton:
+        {
+          break;
+        };
+        default:
+        {
+          CODE_ERROR(astroManager);
+          break;
+        };
       };
     }
 
@@ -2651,8 +2656,7 @@ namespace astroManager
       bool bClose;
       auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
-      photometry::PPhotometryObservation photometryObject;
-      ACL::SPPhotometryObservation existingObject;
+      ACL::CPhotometryObservation *existingObject;
 
       switch (mouseEvent->button())
       {
@@ -2695,23 +2699,23 @@ namespace astroManager
                                                                                                  pw.getRadius2(),
                                                                                                  pw.getRadius3()));
 
-                photometryObject.reset(new photometry::CPhotometryObservation());
-                photometryObject->CCDCoordinates(*centroid);
+                controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
+                controlImage.photometryObservations.back()->CCDCoordinates(*centroid);
 
-                photometryObject->observedCoordinates() =
-                    controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(photometryObject->CCDCoordinates());
+                controlImage.photometryObservations.back()->observedCoordinates() =
+                    controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(controlImage.photometryObservations.back()->CCDCoordinates());
 
-                photometryObject->photometryAperture(photometryAperture);
-                photometryObject->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
-                photometryObject->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
-                photometryObject->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, MCL::TPoint2D<FP_t>(point.x(), point.y())));
+                controlImage.photometryObservations.back()->photometryAperture(photometryAperture);
+                controlImage.photometryObservations.back()->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
+                controlImage.photometryObservations.back()->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
+                controlImage.photometryObservations.back()->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, MCL::TPoint2D<FP_t>(point.x(), point.y())));
 
-                controlImage.astroFile->pointPhotometry(controlImage.currentHDB, photometryObject);    // Now perform the photometry on the object
+                controlImage.astroFile->pointPhotometry(controlImage.currentHDB, *controlImage.photometryObservations.back().get());    // Now perform the photometry on the object
 
                   // Give the object a temporary name and add it into the two lists.
 
                 QString objectName = QString("P:%1").arg(controlImage.astroFile->photometryObjectCount() + 1);
-                photometryObject->objectName(objectName.toStdString());
+                controlImage.photometryObservations.back()->objectName(objectName.toStdString());
 
                   // Add the photometry observation to the reference list.
 
@@ -2722,20 +2726,18 @@ namespace astroManager
                   phdb->keywordWrite(ACL::FITS_DATE, getDate(), ACL::FITS_COMMENT_DATE);
                 };
 
-                controlImage.astroFile->photometryObjectAdd(photometryObject);
-
-                controlImage.photometryObservations.push_back(photometryObject);          // Add the objects into the vector.
+                controlImage.astroFile->photometryObjectAdd(controlImage.photometryObservations.back());
 
                   // Now draw the photometry indicator
 
-                changePhotometrySelection(photometryObject);
+                changePhotometrySelection(controlImage.photometryObservations.back().get());
 
                   // Update the information in the dockwidget.
 
-                pw.addNewObject(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
-                pw.displayPhotometry(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
+                pw.addNewObject(controlImage.photometryObservations.back().get());
+                pw.displayPhotometry(controlImage.photometryObservations.back().get());
 
-                photometryReferenceAdd(photometryObject);
+                photometryReferenceAdd(controlImage.photometryObservations.back().get());
 
                   // Update the image and window characteristics.
 
@@ -2854,8 +2856,7 @@ namespace astroManager
     {
       auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
-      std::vector<photometry::PPhotometryObservation> photometryTargets;
-      std::vector<photometry::PPhotometryObservation>::iterator targetIterator;
+      std::vector<std::shared_ptr<photometry::CPhotometryObservation>> photometryTargets;
 
         // Check if there is WCS information present in the current image. If there is no WCS information present in the image,
         // then the function should return with an error to the user.
@@ -2889,7 +2890,7 @@ namespace astroManager
               {
                 FP_t RA, Dec;
 
-                photometry::PPhotometryObservation currentTarget(new photometry::CPhotometryObservation);
+                photometryTargets.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
 
                   // Now parse the data.
 
@@ -2900,7 +2901,7 @@ namespace astroManager
                 comma2 = szLine.find(',', comma1 + 1);
                 comma3 = szLine.find(',', comma2 + 1);
 
-                currentTarget->objectName(szLine.substr(0, comma1));    // Object Name
+                photometryTargets.back()->objectName(szLine.substr(0, comma1));    // Object Name
 
                 szValue = szLine.substr(comma1 + 1, comma2 - comma1 - 1);     // RA
                 boost::trim(szValue);
@@ -2912,9 +2913,7 @@ namespace astroManager
 
                 coordinates(RA, Dec);
 
-                currentTarget->observedCoordinates(coordinates);
-
-                photometryTargets.push_back(currentTarget);
+                photometryTargets.back()->observedCoordinates(coordinates);
               };
 
               ++lineNumber;
@@ -2929,14 +2928,16 @@ namespace astroManager
             return;
           };
 
-          // Have all the data. Convert the RA/Dec to CCD coordinates
+            // Have all the data. Convert the RA/Dec to CCD coordinates
 
-          for (targetIterator = photometryTargets.begin(); targetIterator != photometryTargets.end(); ++targetIterator)
+          for (auto targetIterator = photometryTargets.begin(); targetIterator != photometryTargets.end(); ++targetIterator)
           {
             std::optional<MCL::TPoint2D<FP_t>> result = controlImage.astroFile->wcs2pix(controlImage.currentHDB,
                                                                                           *(*targetIterator)->observedCoordinates());
             if (result)
+            {
               (*targetIterator)->CCDCoordinates(*result);
+            }
             else
             {
               LOGMESSAGE(warning, (*targetIterator)->objectName() + ": Coordinates not on image. Deleting photometry target.");
@@ -2948,7 +2949,7 @@ namespace astroManager
 
           size_t targetCount = 0;
 
-          for (targetIterator = photometryTargets.begin(); targetIterator != photometryTargets.end(); ++targetIterator)
+          for (auto targetIterator = photometryTargets.begin(); targetIterator != photometryTargets.end(); ++targetIterator)
           {
             MCL::TPoint2D<AXIS_t> point = (*targetIterator)->CCDCoordinates();
 
@@ -2961,7 +2962,7 @@ namespace astroManager
 
             if (centroid)
             {
-              ACL::SPPhotometryObservation existingObject;
+              ACL::CPhotometryObservation *existingObject = nullptr;
 
                 // Check the list for another target that is close.
 
@@ -2985,21 +2986,19 @@ namespace astroManager
 
                 try
                 {
-                  photometry::PPhotometryObservation photometryObject;
-
+                  controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
                   ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw.getRadius1(),
                                                                                                    pw.getRadius2(),
                                                                                                    pw.getRadius3()));
 
-                  photometryObject.reset(new photometry::CPhotometryObservation());
-                  photometryObject->objectName( (*targetIterator)->objectName());
-                  photometryObject->CCDCoordinates(*centroid);
-                  photometryObject->observedCoordinates( *(*targetIterator)->observedCoordinates() );
-                  photometryObject->photometryAperture(photometryAperture);
-                  photometryObject->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
-                  photometryObject->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
-                  photometryObject->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, point));
-                  controlImage.astroFile->pointPhotometry(controlImage.currentHDB, photometryObject);    // Now perform the photometry on the object
+                  controlImage.photometryObservations.back()->objectName( (*targetIterator)->objectName());
+                  controlImage.photometryObservations.back()->CCDCoordinates(*centroid);
+                  controlImage.photometryObservations.back()->observedCoordinates( *(*targetIterator)->observedCoordinates() );
+                  controlImage.photometryObservations.back()->photometryAperture(photometryAperture);
+                  controlImage.photometryObservations.back()->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
+                  controlImage.photometryObservations.back()->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
+                  controlImage.photometryObservations.back()->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, point));
+                  controlImage.astroFile->pointPhotometry(controlImage.currentHDB, *controlImage.photometryObservations.back());    // Now perform the photometry on the object
 
                     // Add the photometry observation to the list.
 
@@ -3011,21 +3010,19 @@ namespace astroManager
                   };
 
                   ++targetCount;
-                  controlImage.astroFile->photometryObjectAdd(photometryObject);
-                  controlImage.photometryObservations.push_back(photometryObject);          // Add the objects into the vector.
+                  controlImage.astroFile->photometryObjectAdd(controlImage.photometryObservations.back());
 
                     // Now draw the photometry indicator
 
-                  changePhotometrySelection(photometryObject);
+                  changePhotometrySelection(controlImage.photometryObservations.back().get());
 
                     // Update the information in the dockwidget.
 
-                  pw.addNewObject(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
-                  pw.displayPhotometry(std::dynamic_pointer_cast<photometry::CPhotometryObservation>(photometryObject));
+                  pw.addNewObject(controlImage.photometryObservations.back().get());
+                  pw.displayPhotometry(controlImage.photometryObservations.back().get());
+                  photometryReferenceAdd(controlImage.photometryObservations.back().get());
 
-                  photometryReferenceAdd(photometryObject);
-
-                  LOGMESSAGE(info, photometryObject->objectName() + ": Added to photometry list sucesfully.");
+                  LOGMESSAGE(info, controlImage.photometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
                 }
                 catch(...)
                 {
@@ -3074,7 +3071,7 @@ namespace astroManager
     /// @version 2013-08-17/GGB - Corrected RA/Dec display (Bug #1213076)
     /// @version 2013-03-30/GGB - Function created
 
-    void CImageWindow::photometryReferenceAdd(photometry::PPhotometryObservation po)
+    void CImageWindow::photometryReferenceAdd(photometry::CPhotometryObservation *po)
     {
       int nColumn = 0, nRow;
 
@@ -3104,6 +3101,7 @@ namespace astroManager
         tableWidgetPhotometry->setItem(nRow, nColumn++, new QTableWidgetItem(QString("--h--'--""")));
         tableWidgetPhotometry->setItem(nRow, nColumn++, new QTableWidgetItem(QString("--" % UTF16_DEGREESIGN % "--'--""")));
       };
+
       tableWidgetPhotometry->setItem(nRow, nColumn++, new QTableWidgetItem(QString("%1").arg(*(po->instrumentMagnitude()))));
       tableWidgetPhotometry->setItem(nRow, nColumn++, new QTableWidgetItem(QString("%1").arg(po->magnitudeError())));
       tableWidgetPhotometry->setItem(nRow, nColumn++, new QTableWidgetItem(QString("%1").arg(po->sourceADU())));
@@ -3197,14 +3195,14 @@ namespace astroManager
     void CImageWindow::repaintAstrometry()
     {
       QPen pen;
-      astrometry::DAstrometryObservationStore::iterator iterator;
 
-      pen.setColor(settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR, QVariant(QColor(Qt::red))).value<QColor>());
+      pen.setColor(settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_COLOUR,
+                                                         QVariant(QColor(Qt::red))).value<QColor>());
 
-      for(iterator = controlImage.astrometryObservations.begin(); iterator != controlImage.astrometryObservations.end(); iterator++)
+      for(auto iterator: controlImage.astrometryObservations)
       {
-        drawCrossIndicator(*iterator, pen);
-        gsImage->addItem((*iterator)->group);
+        drawCrossIndicator(iterator.get(), pen);
+        gsImage->addItem(iterator.get()->group);
       };
     }
 
@@ -3251,14 +3249,13 @@ namespace astroManager
       QPen pen;
       QColor normalColor = settings::astroManagerSettings->value(settings::PHOTOMETRY_INDICATOR_COLOUR,
                                                          QVariant(QColor(Qt::red))).value<QColor>();
-      photometry::DPhotometryObservationStore::iterator iterator;
 
       pen.setColor(normalColor);
 
-      for(iterator = controlImage.photometryObservations.begin(); iterator != controlImage.photometryObservations.end(); iterator++)
+      for(auto iterator: controlImage.photometryObservations)
       {
-        drawPhotometryIndicator(*iterator, pen);
-        gsImage->addItem((*iterator)->group);
+        drawPhotometryIndicator(iterator.get(), pen);
+        gsImage->addItem(iterator.get()->group);
       };
     }
 

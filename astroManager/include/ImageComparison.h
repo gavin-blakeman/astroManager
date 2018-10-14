@@ -151,8 +151,8 @@ namespace astroManager
       void mousePressAstrometry(QMouseEvent *);
       void mousePressPhotometry(QMouseEvent *);
 
-      astrometry::PAstrometryObservation astrometryAdd(imaging::SControlImage *, MCL::TPoint2D<ACL::FP_t> const &, QString const &);
-      photometry::PPhotometryObservation photometryAdd(imaging::SControlImage *, MCL::TPoint2D<ACL::FP_t> const &, QString const &);
+      astrometry::CAstrometryObservation *astrometryAdd(imaging::SControlImage *, MCL::TPoint2D<ACL::FP_t> const &, QString const &);
+      photometry::CPhotometryObservation *photometryAdd(imaging::SControlImage *, MCL::TPoint2D<ACL::FP_t> const &, QString const &);
 
     protected:
       virtual void closeEvent(QCloseEvent *);
@@ -178,11 +178,11 @@ namespace astroManager
 
         // Astrometry functions
 
-      virtual void changeAstrometrySelection(astrometry::PAstrometryObservation) {}
+      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *) override {}
 
         // Photometry functions
 
-      virtual void changePhotometrySelection(photometry::PPhotometryObservation) {}
+      virtual void changePhotometrySelection(photometry::CPhotometryObservation *) {}
 
     private slots:
       void eventButtonAddImages(bool);

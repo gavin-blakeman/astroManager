@@ -40,6 +40,8 @@
   // Standard C++ library header files
 
 #include <memory>
+#include <optional>
+#include <vector>
 
   // astroManager header files.
 
@@ -57,12 +59,15 @@ namespace astroManager
     struct SControlImage final
     {
     private:
-    public:
-      astrometry::DAstrometryObservationStore astrometryObservations;
-      photometry::DPhotometryObservationStore photometryObservations;
+      typedef std::vector<std::shared_ptr<astrometry::CAstrometryObservation>> DAstrometryObservationStore;
+      typedef std::vector<std::shared_ptr<photometry::CPhotometryObservation>> DPhotometryObservationStore;
 
-      astrometry::PAstrometryObservation currentAstrometrySelection;
-      photometry::PPhotometryObservation currentPhotometrySelection;
+    public:
+      DAstrometryObservationStore astrometryObservations;
+      DPhotometryObservationStore photometryObservations;
+
+      astrometry::CAstrometryObservation *currentAstrometrySelection;         // No ownership, only a pointer.
+      photometry::CPhotometryObservation *currentPhotometrySelection;         // No ownership, only a pointer.
 
       imaging::CAstroImageWindow *parent_ = nullptr;
       std::shared_ptr<CAstroFile> astroFile;
@@ -70,8 +75,8 @@ namespace astroManager
       QImage *ScreenImage = nullptr;
       QPixmap *pixmap = new QPixmap();
       ACL::ERenderMode renderMode;                ///< The mode that the image must be rendered to.
-      boost::optional<FP_t> whitePoint;
-      boost::optional<FP_t> blackPoint;
+      std::optional<FP_t> whitePoint;             ///< White point, the clipping point.
+      std::optional<FP_t> blackPoint;
       QString szCoords, szPV;
       QString szRA, szDEC;
       bool isActive = false;                      ///< Indicates if the particular record is Active. Only changed by the dockWidget.

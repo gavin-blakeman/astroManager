@@ -62,7 +62,7 @@ namespace astroManager
   namespace imaging
   {
     /// @brief Constructor for class
-    /// @param[in] parent - Pointer to the parent widget
+    /// @param[in] parent: Pointer to the parent widget
     /// @throws None.
     /// @version 2013-03-01 - Function created.
 
@@ -71,12 +71,12 @@ namespace astroManager
     }
 
     /// @brief Draws the astrometry indicator
-    /// @param[in] astrometryObject - The object to be marked on the image.
-    /// @param[in] pen - The pen to use for the marking.
+    /// @param[in] astrometryObject: The object to be marked on the image.
+    /// @param[in] pen: The pen to use for the marking.
     /// @throws None.
     /// @version 2013-08-25/GGB - Function created.
 
-    void CAstroImageWindow::drawAstrometryIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
+    void CAstroImageWindow::drawAstrometryIndicator(astrometry::CAstrometryObservation *astrometryObject, QPen const &pen)
     {
       int ai = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_TYPE, QVariant(0)).toInt();
 
@@ -101,10 +101,10 @@ namespace astroManager
     }
 
     /// @brief Creates the group for a cross indicator.
-    //
-    // 2011-12-20/GGB - Function created
+    /// @throws None.
+    /// @version 2011-12-20/GGB - Function created
 
-    void CAstroImageWindow::drawCrossIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
+    void CAstroImageWindow::drawCrossIndicator(astrometry::CAstrometryObservation *astrometryObject, QPen const &pen)
     {
       const long space = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_SPACE, QVariant(5)).toInt();
       const long length = settings::astroManagerSettings->value(settings::ASTROMETRY_INDICATOR_LENGTH, QVariant(10)).toInt() + space;
@@ -148,11 +148,13 @@ namespace astroManager
     }
 
     /// @brief Creates the group and text for a photometry indicator.
+    /// @param[in] photometryObject:
+    /// @param[in] pen:
     /// @throws GCL::CCodeError
     /// @version 2013-05-08/GGB - Support for different types of aperture added.
     /// @version 2012-11-09/GGB - Function created
 
-    void CAstroImageWindow::drawPhotometryIndicator(photometry::PPhotometryObservation photometryObject, QPen const &pen)
+    void CAstroImageWindow::drawPhotometryIndicator(photometry::CPhotometryObservation *photometryObject, QPen const &pen)
     {
       QGraphicsEllipseItem *newItem = nullptr;
       ACL::PPhotometryApertureCircular pac =
@@ -198,7 +200,7 @@ namespace astroManager
     /// @throws std::bad_alloc
     /// @version 2011-12-20/GGB - Function created
 
-    void CAstroImageWindow::drawCircleIndicator(astrometry::PAstrometryObservation astrometryObject, QPen const &pen)
+    void CAstroImageWindow::drawCircleIndicator(astrometry::CAstrometryObservation *astrometryObject, QPen const &pen)
     {
       long const radius = settings::astroManagerSettings->value(settings::ASTROMETRY_CIRCLE_RADIUS, QVariant(5)).toInt();
 
@@ -220,7 +222,7 @@ namespace astroManager
     }
 
     /// @brief Function that notifies the relevant dock widgets when an image changes.
-    /// @param[in] newImage - The newImage that needs to be displayed.
+    /// @param[in] newImage: The newImage that needs to be displayed.
     /// @throws GCL::CCodeError
     /// @version 2017-07-03/GGB - Updated to reflect new dock widget storage.
     /// @version 2013-03-10/GGB - Function created.
