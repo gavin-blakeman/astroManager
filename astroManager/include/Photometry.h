@@ -219,7 +219,6 @@ namespace astroManager
     };
 
   }  // namespace photometry
-
 }  // namespace AstroManager
 
-#endif // __PHOTOMETRY_H
+#endif // PHOTOMETRY_H

@@ -42,12 +42,12 @@
 #ifndef IMAGECOMPARISON_H
 #define IMAGECOMPARISON_H
 
-  // Standard C++ Library
+  // Standard C++ Library header files
 
 #include <optional>
 #include <string>
 
-  // astroManager includes
+  // astroManager header files
 
 #include "ACL/astroFile.h"
 #include "astrometry/astrometryObservation.h"
@@ -55,7 +55,7 @@
 #include "windowImage/windowImageStacking.h"
 #include "photometry/photometryObservation.h"
 
-  // Other Headers
+  // Miscellaneous library header files.
 
 #include <ACL>
 #include "boost/filesystem.hpp"
@@ -178,7 +178,7 @@ namespace astroManager
 
         // Astrometry functions
 
-      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *) override {}
+      virtual void changeAstrometrySelection(astrometry::CAstrometryObservation *) {}
 
         // Photometry functions
 

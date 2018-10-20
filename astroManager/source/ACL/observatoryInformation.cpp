@@ -55,8 +55,8 @@ namespace astroManager
   /// @throws std::bad_alloc
   /// @version 2017-09-02/GGB - Function created.
 
-  CObservatory *CObservatory::createCopy() const
+  std::unique_ptr<ACL::CGeographicLocation> CObservatory::createCopy() const
   {
-    return (new CObservatory(*this));
+    return std::make_unique<ACL::CObservatory>(*this);
   }
 }

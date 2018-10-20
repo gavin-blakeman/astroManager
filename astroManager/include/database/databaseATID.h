@@ -44,7 +44,9 @@
 
   // astroManager application header files.
 
+#include "../ACL/targetAstronomy.h"
 #include "../astroManager.h"
+
 
   // Miscellaneous library header files.
 
@@ -116,8 +118,16 @@ namespace astroManager
       void PopulatePhotometryProgramCombo(QComboBox *);
       bool populateStellarObject(QVariant const &, std::shared_ptr<ACL::CTargetStellar>);
 
+        // Queries
+
+      void queryConstellationByName(std::string const &, std::string &);
+
       void queryStellarObjectByNameID(nameID_t, ACL::CTargetStellar *);
       bool queryStellarObjectByName(std::string const &, ACL::CTargetStellar *, EForce = FORCE_NONE);
+
+      void queryStellarObjectIDByName(std::string const &, objectID_t &);
+
+      void queryStellarObjectTypeByName(std::string const &, std::string &);
 
       void GetLatestMagnitude(objectID_t, const long long, float &, float &) const;
 
@@ -125,6 +135,7 @@ namespace astroManager
       bool queryByCoordinates(ACL::CAstronomicalCoordinates const &, ACL::CAstronomicalCoordinates const &, ACL::DTargetAstronomy &);
 
       bool queryNamesFromATID(objectID_t, std::vector<std::string> &);
+
 
         // Functions handling stellarObject information
 
@@ -135,6 +146,6 @@ namespace astroManager
     extern CATID *databaseATID;
 
   }   // namespace database
-}    // namespace AstroManager
+}    // namespace astroManager
 
 #endif // ASTROMANAGER_DATABASEATID_H

@@ -42,7 +42,12 @@
 
   // astroManager application header files
 
+#include "../../include/database/databaseATID.h"
 #include "../../include/error.h"
+
+  // Miscellaneous library header files
+
+#include "boost/algorithm/string.hpp"
 
 namespace astroManager
 {
@@ -120,7 +125,8 @@ namespace astroManager
     {
       case ACL::CTargetAstronomy::TT_STELLAR:
       {
-        columnMap[column_type]->setText("Comet");
+        columnMap[column_type]->setText(QString::fromStdString(
+                                          dynamic_cast<ACL::CTargetStellar *>(targetAstronomy())->stellarType()));
         break;
       };
       case ACL::CTargetAstronomy::TT_MAJORPLANET:
@@ -202,12 +208,21 @@ namespace astroManager
   }
 
   /// @brief Sets the Constellation value into the widget.
-  /// @throws None.
-  /// @version 2018-09-03/GGB - Function created.
+  /// @throws Exceptions from called functions.
+  /// @version 2018-09-29/GGB - Function created.
 
   void CTargetAstronomy::updateColumnConstellation()
   {
+    if (targetAstronomy()->targetType() == ACL::CTargetAstronomy::TT_STELLAR)
+    {
+      std::string constellationName;
+
+      database::databaseATID->queryConstellationByName(targetAstronomy()->objectName(), constellationName);
+
+      columnMap[column_constellation]->setText(QString::fromStdString(constellationName));
+    };
   }
+
   void CTargetAstronomy::updateColumnExtinction()
   {
 

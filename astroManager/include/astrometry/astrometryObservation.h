@@ -67,8 +67,11 @@ namespace astroManager
       friend std::ostream &operator << (std::ostream &, CAstrometryObservation &);
     };
 
+    typedef std::vector<std::shared_ptr<CAstrometryObservation>> DAstrometryObservationStore;
+    typedef std::vector<std::shared_ptr<CAstrometryObservation>> DTaggedObjectsStore;
+
   } // namespace astrometry
-} // namespace astroManager
+} // namespace AstroManager
 
 #endif // ASTROMETRYOBSERVATION
 

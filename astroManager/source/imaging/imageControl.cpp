@@ -80,7 +80,7 @@ namespace astroManager
         blackPoint = astroFile->blackPoint(currentHDB);
       };
 
-        // Create the list of astrometry information.
+      // Create the list of astrometry information.
 
       if ( astroFile->hasAstrometryHDB() )
       {
@@ -90,7 +90,7 @@ namespace astroManager
         {
             // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));    // Add this to the new list.
+          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));
 
           ao = astroFile->astrometryObjectNext();
         };
@@ -99,7 +99,7 @@ namespace astroManager
 
           // Recreate the list.
 
-        DAstrometryObservationStore::const_iterator iterator;
+        astrometry::DAstrometryObservationStore::const_iterator iterator;
 
         for (iterator = astrometryObservations.begin(); iterator != astrometryObservations.end(); ++iterator)
         {
@@ -117,7 +117,7 @@ namespace astroManager
         {
             // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));    // Add this to the new list.
+          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));
 
           po = astroFile->photometryObjectNext();
         };
@@ -126,7 +126,7 @@ namespace astroManager
 
           // Re-create the objects in the astrofile.
 
-        DPhotometryObservationStore::const_iterator iterator;
+        photometry::DPhotometryObservationStore::const_iterator iterator;
 
         for (iterator = photometryObservations.begin(); iterator != photometryObservations.end(); iterator++)
         {
@@ -155,7 +155,7 @@ namespace astroManager
         pixmap->convertFromImage(*ScreenImage);
       };
 
-        // Create the list of astrometry information.
+      // Create the list of astrometry information.
 
       if ( astroFile->hasAstrometryHDB() )
       {
@@ -165,16 +165,16 @@ namespace astroManager
         {
             // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));    // Add this to the new list.
+          astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>(*ao));
 
           ao = astroFile->astrometryObjectNext();
         };
 
         astroFile->astrometryObjectRemoveAll();
 
-          // Recreate the list.
+        // Recreate the list.
 
-        DAstrometryObservationStore::const_iterator iterator;
+        astrometry::DAstrometryObservationStore::const_iterator iterator;
 
         for (iterator = astrometryObservations.begin(); iterator != astrometryObservations.end(); ++iterator)
         {
@@ -183,7 +183,7 @@ namespace astroManager
 
       };
 
-        // Create the list of photometry information
+      // Create the list of photometry information
 
       if ( astroFile->hasPhotometryHDB() )
       {
@@ -193,7 +193,7 @@ namespace astroManager
         {
             // Create the dockwidgets::CPhotometryObservation and copy the libAstroClass::CPhotometryObservation
 
-          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));    // Add this to the new list.
+          photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>(*po));
 
           po = astroFile->photometryObjectNext();
         };
@@ -202,7 +202,7 @@ namespace astroManager
 
           // Re-create the objects in the astrofile.
 
-        DPhotometryObservationStore::const_iterator iterator;
+        photometry::DPhotometryObservationStore::const_iterator iterator;
 
         for (iterator = photometryObservations.begin(); iterator != photometryObservations.end(); iterator++)
         {
@@ -210,7 +210,6 @@ namespace astroManager
         }
 
         astroFile->isDirty(false);    // Make the astro file clean even though the data has changed.
-
       };
     }
 

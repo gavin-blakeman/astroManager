@@ -47,14 +47,14 @@
 
 #include "../include/FrameWindow.h"
 
-  // Standard libraries
+  // Standard C++ library header files
 
 #include <algorithm>
 #include <cstdint>
 #include <ctime>
 #include <utility>
 
-  // astroManager include files
+  // astroManager header files
 
 #include "../include/ACL/astroFile.h"
 #include "../include/Configure.h"
@@ -90,7 +90,7 @@
 #include "../include/windowWeather/windowWeatherHistory.h"
 #include "../include/windowSelectImage.h"
 
-  // Miscellaneous Libraries headers
+  // Miscellaneous Library header files
 
 #include <ACL>
 #include "boost/thread/thread.hpp"
@@ -3313,7 +3313,7 @@ namespace astroManager
     }
 
     /// @brief Performs the action of loading an image.
-    /// @param[in] filePath - The path and filename of the file to load.
+    /// @param[in] filePath: The path and filename of the file to load.
     /// @throws std::bad_alloc
     /// @note Exceptions related to file open errors are caught and closed.
     /// @version 2016-04-17/GGB - Added catch() to catch CFITSException errors

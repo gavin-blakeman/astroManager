@@ -86,20 +86,22 @@ namespace astroManager
     /// @throws None.
     /// @version 2016-05-05/GGB - Function created.
 
-    CPhotometryObservation::CPhotometryObservation(std::shared_ptr<ACL::CTargetAstronomy> ta)
-      : ACL::CPhotometryObservation(ta), group(nullptr), text(nullptr)
+    CPhotometryObservation::CPhotometryObservation(std::unique_ptr<ACL::CTargetAstronomy> ta)
+      : ACL::CPhotometryObservation(std::move(ta)), group(nullptr), text(nullptr)
     {
 
     }
 
-    /// Class destructor. Required to ensure dynamically allocated items are deleted.
-    //
-    // 2015-01-01/GGB - Function created.
+    /// @brief Class destructor. Required to ensure dynamically allocated items are deleted.
+    /// @throws None.
+    /// @version 2015-01-01/GGB - Function created.
 
     CPhotometryObservation::~CPhotometryObservation()
     {
       if (text)
+      {
         text = nullptr;
+      };
       if (group)
       {
         delete group;
@@ -108,8 +110,8 @@ namespace astroManager
     }
 
     /// @brief Friend function to output the object as comma delimited text.
-    /// @param[in] os - The output stream.
-    /// @param[in] po - The photometry observation.
+    /// @param[in] os: The output stream.
+    /// @param[in] po: The photometry observation.
     /// @returns The output stream.
     /// @throws None.
     /// @version 2017-09-23/GGB - Updated to use CAngle

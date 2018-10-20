@@ -489,99 +489,6 @@ namespace astroManager
       return returnValue;
     }
 
-  /*
-    // Runs through the database and calculates the constellation names for all the objects.
-    //
-    // Input:		nAll = 0 - Only rebuild objects without constellations.
-    //					nAll <> 0 - Rebuild all constellation names.
-    //
-    // Revision:		1.00
-    // Written by:	Gavin Blakeman
-    // Date:				25 January 2010
-
-    void RebuildConstellationNames(int nAll)
-    {
-      _RecordsetPtr pRstObjects("ADODB.Recordset");
-      _RecordsetPtr pRstEpoch("ADODB.Recordset");
-      _RecordsetPtr pRstConstellations("ADODB.Recordset");
-      char szSQL[1024];
-      _variant_t vtRA;
-      _variant_t vtDec;
-      _variant_t vtEpochID;
-      _variant_t vtEpoch;
-      _variant_t vtConstellationID;
-      _variant_t vtConstellationName;
-      char szConstellation[10];
-      char szEpoch[20];
-      double dEpoch, dRA, dDec;
-      int nIterations = 0;
-
-      if (nAll)
-        strcpy_s(szSQL, sizeof(szSQL), "SELECT TBL_STELLAROBJECTS.RA, TBL_STELLAROBJECTS.DEC, TBL_STELLAROBJECTS.EpochID, TBL_STELLAROBJECTS.CONSTELLATION_ID FROM TBL_STELLAROBJECTS");
-      else
-        strcpy_s(szSQL, sizeof(szSQL), "SELECT TBL_STELLAROBJECTS.RA, TBL_STELLAROBJECTS.DEC, TBL_STELLAROBJECTS.EpochID, TBL_STELLAROBJECTS.CONSTELLATION_ID FROM TBL_STELLAROBJECTS WHERE TBL_STELLAROBJECTS.Constellation_ID Is Null");
-
-      try
-      {
-        pRstObjects->CursorLocation = adUseServer;
-        pRstObjects->Open(szSQL, _variant_t((IDispatch *)pAstroDBConnection,true), adOpenForwardOnly, adLockOptimistic, adCmdText);
-
-        strcpy_s(szSQL, sizeof(szSQL), "SELECT co.CONSTELLATION_ID, co.Abbreviation FROM TBL_CONSTELLATIONS co");
-        pRstConstellations->CursorLocation = adUseServer;
-        pRstConstellations->Open(szSQL, _variant_t((IDispatch *)pAstroDBConnection, true), adOpenKeyset, adLockReadOnly, adCmdText);
-
-        pRstEpoch->CursorLocation = adUseServer;
-        strcpy_s(szSQL, sizeof(szSQL), "SELECT ep.EPOCHID, ep.EPOCH FROM TBL_EPOCH ep");
-        pRstEpoch->Open(szSQL, _variant_t((IDispatch *)pAstroDBConnection, true), adOpenKeyset, adLockReadOnly, adCmdText);
-
-        while (!pRstObjects->EndOfFile)
-        {
-          vtRA = pRstObjects->Fields->GetItem((long) 0)->GetValue();
-          vtDec = pRstObjects->Fields->GetItem((long) 1)->GetValue();
-          vtEpochID = pRstObjects->Fields->GetItem((long) 2)->GetValue();
-
-          if ( (vtRA.vt != VT_NULL) && (vtDec.vt != VT_NULL) && (vtEpochID.vt != VT_NULL) )
-          {
-
-            pRstEpoch->MoveFirst();
-            sprintf_s(szSQL, sizeof(szSQL), "EPOCHID = %s", (char *) ((_bstr_t)vtEpochID));
-            pRstEpoch->Find(szSQL, 0, adSearchForward);
-            vtEpoch = pRstEpoch->Fields->GetItem((long) 1)->GetValue();
-
-            dRA = (double) vtRA;
-            dDec = (double) vtDec;
-
-            dRA = deg(dRA / 10000) * 15;
-            dDec = deg(dDec / 10000);
-
-            strcpy_s(szEpoch, sizeof(szEpoch), (char *) ((_bstr_t) vtEpoch));
-            dEpoch = atof(szEpoch+1);
-
-            strcpy_s(szConstellation, sizeof(szConstellation), ConstellationName(dRA, dDec, dEpoch));
-            pRstConstellations->MoveFirst();
-            sprintf_s(szSQL, sizeof(szSQL), "Abbreviation = '%s'", szConstellation);
-            pRstConstellations->Find(szSQL, 0, adSearchForward);
-            if (!pRstConstellations->EndOfFile)
-            {
-              vtConstellationID = pRstConstellations->Fields->GetItem((long) 0)->GetValue();
-              pRstObjects->Fields->GetItem((long) 3)->Value = vtConstellationID;
-              pRstObjects->Update();
-              nIterations++;
-            };
-          };
-          pRstObjects->MoveNext();
-        };
-        pRstObjects->Close();
-        pRstConstellations->Close();
-        pRstEpoch->Close();
-      }
-      catch(_com_error &e)
-      {
-        PrintComError(e);
-      };
-
-    }; */
-
     // Gets an object name from the ATID database.
     // The function first checks if the object has a preferred name defined and returns the
     // preferred name if one is defined. Otherwise it looks at the user preferred name order list and
@@ -885,9 +792,48 @@ namespace astroManager
       return returnValue;
     }
 
+    /// @brief Finds the constallation name of the specified object.
+    /// @param[in] objectName: The name of the object
+    /// @param[out] constellationName: The name of the constellation.
+    /// @throws CError: 0x1000 - DATABASE ATID: Unable to find object by name.
+    /// @version 2018-09-29/GGB - Function created.
+
+    void CATID::queryConstellationByName(std::string const &objectName, std::string &constellationName)
+    {
+      objectID_t objectID;
+
+      queryStellarObjectIDByName(objectName, objectID);
+
+      sqlWriter.resetQuery();
+      sqlWriter.select({"TBL_CONSTELLATIONS.NAME"})
+               .from({"TBL_STELLAROBJECTS"})
+               .join({std::make_tuple("TBL_STELLAROBJECTS", "CONSTELLATION_ID",
+                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_CONSTELLATIONS", "CONSTELLATION_ID")})
+               .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      {
+        sqlQuery->first();
+        if (sqlQuery->isValid())
+        {
+          constellationName = sqlQuery->value(0).toString().toStdString();
+        }
+        else
+        {
+          processErrorInformation();
+          ASTROMANAGER_ERROR(0x1000);
+        };
+      }
+      else
+      {
+        processErrorInformation();
+        ASTROMANAGER_ERROR(0x1000);
+      }
+    }
+
     /// @brief Queries the ATID database for the name of the object with an specific OID
-    /// @param[in] OID - The OID to search for.
-    /// @param[out] objectNames - The names of the object.
+    /// @param[in] OID: The OID to search for.
+    /// @param[out] objectNames: The names of the object.
     /// @returns true - Object found.
     /// @returns false - Object not found.
     /// @throws None.
@@ -931,9 +877,9 @@ namespace astroManager
     }
 
     /// @brief Queries a stellar object based on a name.
-    /// @param[in] objectName - The name of the object to query
-    /// @param[out] stellarObject - Pointer to the object to populate with data if succesfull.
-    /// @param[in] forceQuery - Force the query to use a specific source if required.
+    /// @param[in] objectName: The name of the object to query
+    /// @param[out] stellarObject: Pointer to the object to populate with data if succesfull.
+    /// @param[in] forceQuery: Force the query to use a specific source if required.
     /// @returns true - stellarObject updated with data from query
     /// @returns false - Unable to update stellarObject
     /// @throws CCodeError(astroManager)
@@ -1008,6 +954,40 @@ namespace astroManager
       else
       {
         processErrorInformation();
+      };
+    }
+
+    /// @brief Gets the objectID of a stellar object passed by name.
+    /// @param[in] objectName: The name of the object.
+    /// @param[out] objectID: The ID of the target.
+    /// @throws CError: 0x1000 - DATABASE ATID: Unable to find object by name.
+    /// @version 2018-09-29/GGB - Function created.
+
+    void CATID::queryStellarObjectIDByName(std::string const &objectName, objectID_t &objectID)
+    {
+      sqlWriter.resetQuery();
+      sqlWriter.select({"TBL_NAMES.OID" })
+               .from({"TBL_NAMES"})
+               .where({GCL::sqlwriter::parameterTriple(std::string("NAME"), std::string("="), objectName)});
+
+      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      {
+        sqlQuery->first();
+        if (sqlQuery->isValid())
+        {
+          objectID = sqlQuery->value(0).toUInt();
+        }
+        else
+        {
+          processErrorInformation();
+          ASTROMANAGER_ERROR(0x1000);
+        };
+        sqlQuery->finish();
+      }
+      else
+      {
+        processErrorInformation();
+        ASTROMANAGER_ERROR(0x1000);
       };
     }
 
@@ -1129,6 +1109,10 @@ namespace astroManager
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
           sqlQuery->first();
+
+            // Note only valid data is set below. The constructor for the stellar object should ensure the object
+            // is constructed correctly with null-data.
+
           if (sqlQuery->isValid())
           {
             target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
@@ -1136,11 +1120,26 @@ namespace astroManager
             {
               target->setEpoch(sqlQuery->value(2).toString().toStdString());
             };
-            //target->pmRA(sqlQuery->value(3).toDouble());
-            //target->pmDec(sqlQuery->value(4).toDouble());
-            //target->radialVelocity(sqlQuery->value(5).toDouble());
-            //target->parallax(sqlQuery->value(6).toDouble());
-            //target->stellarType(sqlQuery->value(7).toString().toStdString());
+            if (!sqlQuery->value(3).isNull())
+            {
+              target->pmRA(sqlQuery->value(3).toDouble());
+            };
+            if (!sqlQuery->value(4).isNull())
+            {
+              target->pmDec(sqlQuery->value(4).toDouble());
+            };
+            if (!sqlQuery->value(5).isNull())
+            {
+              target->radialVelocity(sqlQuery->value(5).toDouble());
+            };
+            if (!sqlQuery->value(6).isNull())
+            {
+              target->parallax(sqlQuery->value(6).toDouble());
+            };
+            if (!sqlQuery->value(7).isNull())
+            {
+              target->stellarType(sqlQuery->value(7).toString().toStdString());
+            };
           }
           else
           {
@@ -1184,11 +1183,11 @@ namespace astroManager
                                       settings::astroManagerSettings->value(settings::ATID_SQLITE_DATABASENAME, QVariant(QString("Data/ATID.sqlite"))).toString()) );
     }
 
-    bool ValidateObjectName(QString *toValidate)
-    {
-      //QString szSQL = QString("SELECT n.
-      return false;
-    }
+//    bool ValidateObjectName(QString *toValidate)
+//    {
+//      //QString szSQL = QString("SELECT n.
+//      return false;
+//    }
 
     // Gets an object ID when the name is known.
     //
@@ -1348,9 +1347,9 @@ namespace astroManager
       };
     }
 
-    // Populates a combo box with photometry program information
-    //
-    // 2010-11-17/GGB - Function created
+    /// @brief Populates a combo box with photometry program information
+    ///
+    /// @version 2010-11-17/GGB - Function created
 
     void CATID::PopulatePhotometryProgramCombo(QComboBox *combo)
     {

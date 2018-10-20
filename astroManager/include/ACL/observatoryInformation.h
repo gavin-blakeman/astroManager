@@ -61,7 +61,7 @@ namespace astroManager
     CObservatory(CObservatory const &);
     virtual ~CObservatory() {}
 
-    virtual CObservatory *createCopy() const;
+    virtual std::unique_ptr<ACL::CGeographicLocation> createCopy() const override;
 
     void siteID(std::uint32_t siteID) { siteID_ = siteID; }
     void dontDisplay(bool dd) { dontDisplay_ = dd; }
