@@ -69,6 +69,8 @@ namespace astroManager
     public:
       CDockWidgetMessage(QWidget *, QAction *);
       virtual ~CDockWidgetMessage();
+
+      virtual void mdiWindowActivating(CMdiSubWindow *);
     };
 
   }  // namespace dockwidgets

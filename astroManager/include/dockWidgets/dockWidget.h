@@ -56,6 +56,10 @@
 #ifndef DOCKWIDGET
 #define DOCKWIDGET
 
+  // astroManager header files
+
+#include "../qtExtensions/MdiSubWindow.h"
+
   // Miscellaneous library header files
 
 #include <QCL>
@@ -80,11 +84,12 @@ namespace astroManager
     public:
       CDockWidget(QString const &, QWidget *, QAction *, QString const &);
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) = 0;
+
     };
 
   } // namespace dockwidgets
-
-} // namespace AstroManager
+} // namespace astroManager
 
 #endif // DOCKWIDGET
 

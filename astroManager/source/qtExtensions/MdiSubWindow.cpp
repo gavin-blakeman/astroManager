@@ -54,17 +54,17 @@ namespace astroManager
   //*****************************************************************************************************************************
 
   /// @brief Class constructor
+  /// @param[in] parent: The owner of this widget.
   /// @throws None.
   /// @version 2013-07-27/GGB - Removed connecting the aboutToActivate() signal to the windowActivating() slot.
   /// @version 2011-05-29/GGB - Function created.
 
   CMdiSubWindow::CMdiSubWindow(QWidget *parent) : QMdiSubWindow(parent)
   {
-    //connect(this, SIGNAL(aboutToActivate()), this, SLOT(windowActivating()));
   }
 
   /// @brief Ensures that the window name is removed from the list of windows in the frame.
-  /// @param[in] event - The event that is associated with the closeEvent.
+  /// @param[in] event: The event that is associated with the closeEvent.
   /// @throws None.
   /// @version 2011-05-15/GGB - Function created.
 
@@ -72,6 +72,38 @@ namespace astroManager
   {
     dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->childClosing(this);  // Let the parent know.
     QMdiSubWindow::closeEvent(event);		// Close the sub window.
+  }
+
+  /// @brief Function called when a mdi child window is activated.
+  /// @details This function calls all the dockWidget windowActivating functions.
+  /// @throws None.
+  /// @note 1. The subwindow function is called from CFrameWindow. This function must be called by all inheriting classes, unless
+  ///          they specifically replicate the functionality in this function.
+  /// @note 2. This function calls the windowActivating function for all the dockwidgets.
+  /// @version 2018-10-21/GGB - Function created.
+
+  void CMdiSubWindow::windowActivating()
+  {
+    mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
+    RUNTIME_ASSERT(astroManager, frameWindow != nullptr,  "Parent widget cannot be nullptr.");
+
+    if (frameWindow)
+    {
+        // Iterate over all the dockwidgets, but check them for validity before calling.
+        // Note it is not an error of the dockWidget does not exist.
+
+      for (mdiframe::CFrameWindow::dockwidget_t index = mdiframe::IDDW_IMAGECONTROL; index < mdiframe::IDDW_COUNT; index++)
+      {
+        if (frameWindow->getDockWidget(index) != nullptr)
+        {
+          frameWindow->getDockWidget(index)->mdiWindowActivating(this);
+        };
+      };
+    }
+    else
+    {
+      ASTROMANAGER_CODE_ERROR;
+    };
   }
 
 }  // namespace AstroManager

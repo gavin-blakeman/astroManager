@@ -65,6 +65,7 @@ namespace astroManager
       CDockWidgetNavigator(QWidget *, QAction *);
       virtual ~CDockWidgetNavigator();
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override;
       virtual void imageChanged();
       void updateLimits(QRectF const &limits);
 

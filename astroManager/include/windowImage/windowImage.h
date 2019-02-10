@@ -88,14 +88,14 @@ namespace astroManager
       void drawPhotometryIndicator(photometry::CPhotometryObservation *, QPen const &);
       void drawCircleIndicator(astrometry::CAstrometryObservation *, QPen const &);
 
-      //void processAstroFile(ACL::PAstroFile);
-
       virtual void imageChange(SControlImage *);
 
     public:
       CAstroImageWindow(QWidget *parent = 0);
 
       virtual EWindowClass getWindowClass() const { return WC_IMAGE; }
+
+      virtual void windowActivating();
 
       virtual void setMode(EMode) = 0;
 

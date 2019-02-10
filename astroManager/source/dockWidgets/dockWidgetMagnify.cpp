@@ -181,8 +181,8 @@ namespace astroManager
     }
 
     /// @brief Activates the window when the image is activated.
-    //
-    // 2013-05-25/GGB - Function created.
+    /// @throws None.
+    /// @version 2013-05-25/GGB - Function created.
 
     void CDockWidgetMagnify::imageActivating()
     {
@@ -210,13 +210,31 @@ namespace astroManager
     }
 
     /// @brief Disable the widget if the image is deactivated.
-    //
-    // 2013-05-25/GGB - Function created.
+    /// @throws None.
+    /// @version 2013-05-25/GGB - Function created.
 
     void CDockWidgetMagnify::imageDeactivating()
     {
       setEnabled(false);
       imageChanged();
+    }
+
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CDockWidgetMagnify::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        imageChanged();
+      }
+      else
+      {
+          // No active window, or window is not an image window. We can disable the controls.
+      };
     }
 
     /// @brief Handles the mouse press event.

@@ -57,6 +57,8 @@ namespace astroManager
     public:
       CDockWidgetWeatherParameters(QWidget *, QAction *);
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override {}
+
     };
 
   } // namespace dockwidgets

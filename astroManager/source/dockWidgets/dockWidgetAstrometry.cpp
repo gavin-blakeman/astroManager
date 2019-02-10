@@ -409,8 +409,26 @@ namespace astroManager
       tableWidgetAstrometry->setCurrentCell(nRow, 0);
     }
 
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CAstrometryDockWidget::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        redraw();   // Update the list and controls.
+      }
+      else
+      {
+          // No active window, or window is not an image window. We can disable the controls.
+      };
+    }
+
     /// @brief Redraws all the information in the dock widget. Is called after the astrometry image changes.
-    //
+    /// @throws
     /// @version 2013-03-17/GGB - Changed type of object stored to be descendant of SAstrometryObjectInformation
     /// @version 2013-02-06/GGB - Removed all target code and have only one set of object code.
     /// @version 2011-06-29/GGB - Function created.
@@ -425,7 +443,9 @@ namespace astroManager
           // Remove all the lines already in the reference tableWidget
 
         while (tableWidgetAstrometry->rowCount())
+        {
           tableWidgetAstrometry->removeRow(0);
+        };
 
         pushButtonReferenceSelect->setEnabled(true);
         pushButtonReferenceEdit->setEnabled(false);

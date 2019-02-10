@@ -118,6 +118,29 @@ namespace astroManager
       };
     }
 
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CImageControlWidget::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        labelMinimum->setText(QString("%1").arg(currentImage->astroFile->imageMin(currentImage->currentHDB)));
+        labelMaximum->setText(QString("%1").arg(currentImage->astroFile->imageMax(currentImage->currentHDB)));
+        labelMean->setText(QString("%1").arg(currentImage->astroFile->imageMean(currentImage->currentHDB)));
+        labelDimX->setText(QString("%1").arg(currentImage->astroFile->imageWidth(currentImage->currentHDB)));
+        labelDimY->setText(QString("%1").arg(currentImage->astroFile->imageHeight(currentImage->currentHDB)));
+      }
+      else
+      {
+          // Not an active window, or not an image window. Disable the controls.
+      }
+
+    }
+
     /// @brief Sets up the UI and all UI associated variable. Performs all connections.
     /// @throws GCL::CRuntimeAssert(...)
     /// @version 2017-07-10/GGB - Fixed Bug #90.

@@ -1988,11 +1988,12 @@ namespace astroManager
         SIGNAL(clicked(bool)), this, SLOT(eventCalibrateImages(bool)));
     }
 
-    /// @brief Procedure called when the window is activating.
+    /// @brief Procedure called when the window is activating. This is a class specific procedure.
     /// @details Actions are enabled/disabled/hidden etc by this procedure.
-    //
-    // 2013-04-26/GGB - Support for IDA_CALIBRATE_SINGLEIMAGE
-    // 2011-05-15/GGB - Function created.
+    /// @throws None.
+    /// @version 2018-10-30/GGB - Updated for new window activation sequence.
+    /// @version 2013-04-26/GGB - Support for IDA_CALIBRATE_SINGLEIMAGE
+    /// @version 2011-05-15/GGB - Function created.
 
     void CImageCalibrationMultipleWindow::windowActivating()
     {
@@ -2015,6 +2016,8 @@ namespace astroManager
       pw->getAction(mdiframe::IDA_TRANSFORM_FLOAT)->setEnabled(false);
       pw->getAction(mdiframe::IDA_TRANSFORM_CROP)->setEnabled(false);
       pw->getAction(mdiframe::IDA_TRANSFORM_ROTATE)->setEnabled(false);
+
+      CMdiSubWindow::windowActivating();    // Notify the dock widgets.
     }
 
   }  // namespace imageCalibration

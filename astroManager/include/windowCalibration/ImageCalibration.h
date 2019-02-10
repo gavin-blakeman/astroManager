@@ -78,8 +78,9 @@ namespace astroManager
 
       virtual ESubWindowType getWindowType() const {return SWT_MASTERDARKWINDOW;}
 
+      virtual void windowActivating() override;
+
     private slots:
-      virtual void windowActivating();
       void eventSelectDarkFramesClicked(bool);
       void eventBtnRemoveImagesClicked(bool);
 

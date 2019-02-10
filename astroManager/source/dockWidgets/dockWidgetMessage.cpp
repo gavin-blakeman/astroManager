@@ -84,6 +84,25 @@ namespace astroManager
       };
     }
 
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+    /// @todo 1. This can be extended in a way that each mdiWindow has it's own message information. This will then redraw
+    ///          the message information.
+
+    void CDockWidgetMessage::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if (activeSubWindow)
+      {
+      }
+      else
+      {
+          // No active window, or window is not an image window. We can disable the controls.
+      };
+    }
+
     /// @brief Sets up the user interface for the widget.
     /// @throws std::bad_alloc
     /// @version 2013-08-11/GGB - Changed the text edit to read only. (Bug #1210899 )

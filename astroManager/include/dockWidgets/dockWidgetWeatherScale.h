@@ -76,6 +76,8 @@ namespace astroManager
     public:
       CDockWidgetWeatherScale(QWidget *,QAction *);
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override {}
+
     };
 
 

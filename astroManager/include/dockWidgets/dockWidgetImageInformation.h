@@ -73,6 +73,7 @@ namespace astroManager
       void updateMinMaxValues();
       void updateValues();
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override;
       virtual void imageChanged();
       virtual void setEnabled(bool);
     };

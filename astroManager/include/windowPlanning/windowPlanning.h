@@ -101,7 +101,7 @@ namespace astroManager
     public slots:
       void eventTimer1s();
 
-      virtual void windowActivating() {}
+      virtual void windowActivating() override;
       virtual void currentIndexChangedPlans(int);
 
       virtual void radioButtonLTClicked(bool);

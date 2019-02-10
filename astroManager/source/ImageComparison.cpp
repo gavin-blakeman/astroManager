@@ -779,7 +779,7 @@ namespace astroManager
           graphicsSceneImageInput->removeItem((*giIter));
         };
 
-        dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_IMAGECONTROL).setEnabled(false);
+        dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_IMAGECONTROL)->setEnabled(false);
 
         QList<QListWidgetItem *> toRemove = listWidgetImages->selectedItems();
         for (iter = toRemove.begin(); iter != toRemove.end(); ++iter)
@@ -1053,8 +1053,8 @@ namespace astroManager
     void CImageComparisonWindow::mousePressAstrometry(QMouseEvent *mouseEvent)
     {
       QPointF scenePoint;
-      dockwidgets::CAstrometryDockWidget &dwa =
-          dynamic_cast<dockwidgets::CAstrometryDockWidget &>(
+      dockwidgets::CAstrometryDockWidget *dwa =
+          dynamic_cast<dockwidgets::CAstrometryDockWidget *>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
@@ -1191,7 +1191,7 @@ namespace astroManager
     void CImageComparisonWindow::mousePressPhotometry(QMouseEvent *mouseEvent)
     {
       QPointF scenePoint;
-      dockwidgets::CPhotometryDockWidget &dwp = dynamic_cast<dockwidgets::CPhotometryDockWidget &>(
+      dockwidgets::CPhotometryDockWidget *dwp = dynamic_cast<dockwidgets::CPhotometryDockWidget *>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
@@ -1227,8 +1227,8 @@ namespace astroManager
 
             photometry::CPhotometryObservation *photometryObjectOriginal = photometryAdd(&controlBlock->inputImage,
                                                                                          *centroid, objectName);
-            dwp.addNewObject(photometryObjectOriginal);
-            dwp.displayPhotometry(photometryObjectOriginal);
+            dwp->addNewObject(photometryObjectOriginal);
+            dwp->displayPhotometry(photometryObjectOriginal);
 
             graphicsSceneImageInput->addItem(photometryObjectOriginal->group);    // Ownership passes to the scene.
 
@@ -1284,8 +1284,8 @@ namespace astroManager
             photometry::CPhotometryObservation *photometryObjectAligned = photometryAdd(&controlBlock->outputImage,
                                                                                         *centroid, objectName);
 
-            dwp.addNewObject(photometryObjectAligned);
-            dwp.displayPhotometry(photometryObjectAligned);
+            dwp->addNewObject(photometryObjectAligned);
+            dwp->displayPhotometry(photometryObjectAligned);
 
             graphicsSceneImageOutput->addItem(photometryObjectAligned->group);    // Ownership passes to the scene.
 
@@ -1337,13 +1337,13 @@ namespace astroManager
                                                                                               QString const &objectName)
     {
       QPen pen;
-      dockwidgets::CPhotometryDockWidget &pw =
-          dynamic_cast<dockwidgets::CPhotometryDockWidget &>(
+      dockwidgets::CPhotometryDockWidget *pw =
+          dynamic_cast<dockwidgets::CPhotometryDockWidget *>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
 
-      ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw.getRadius1(),
-                                                                                       pw.getRadius2(),
-                                                                                       pw.getRadius3()));
+      ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw->getRadius1(),
+                                                                                       pw->getRadius2(),
+                                                                                       pw->getRadius3()));
 
         // Add the object into the vector.
 

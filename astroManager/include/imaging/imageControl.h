@@ -61,8 +61,8 @@ namespace astroManager
       astrometry::DAstrometryObservationStore astrometryObservations;
       photometry::DPhotometryObservationStore photometryObservations;
 
-      astrometry::CAstrometryObservation *currentAstrometrySelection;
-      photometry::CPhotometryObservation *currentPhotometrySelection;
+      astrometry::CAstrometryObservation *currentAstrometrySelection = nullptr;
+      photometry::CPhotometryObservation *currentPhotometrySelection = nullptr;
 
       imaging::CAstroImageWindow *parent_ = nullptr;
       std::shared_ptr<CAstroFile> astroFile;

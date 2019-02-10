@@ -363,7 +363,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x005F;
+  std::uint16_t const BUILDNUMBER = 0x0096;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

@@ -700,8 +700,7 @@ namespace astroManager
     }
 
     /// @brief Creates all the dock widget windows that are required to be available all the time. They are initially created hidden
-    /// and only shown as required.
-    /// @param None.
+    ///        and only shown as required.
     /// @returns None.
     /// @throws None.
     /// @version 2017-07-03/GGB - Added the weather scale dock widget.
@@ -1089,7 +1088,8 @@ namespace astroManager
 
     void CFrameWindow::enableDockWidgetsImage(bool enabledState)
     {
-      std::for_each(dockWidgets.begin(), dockWidgets.end(), [&] (std::pair<const EDockWidgets, PDockWidget> &dw)
+      std::for_each(dockWidgets.begin(), dockWidgets.end(),
+                    [&] (std::pair<const dockwidget_t, std::unique_ptr<dockwidgets::CDockWidget>> &dw)
         { dw.second->setEnabled(enabledState); });
     }
 
@@ -1886,12 +1886,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -1912,7 +1912,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -1934,7 +1934,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -1955,7 +1955,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -1976,7 +1976,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -2033,7 +2033,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -2161,7 +2161,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -2209,7 +2209,7 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
           };
           break;
         }
@@ -2222,13 +2222,13 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
           };
           break;
         }
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -2257,7 +2257,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
         break;
       }
@@ -2270,13 +2270,15 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
         break;
       }
       default:
-        CODE_ERROR(astroManager);
+        {
+        ASTROMANAGER_CODE_ERROR;
         break;
+        };
       };
     }
 
@@ -2304,21 +2306,21 @@ namespace astroManager
       return returnValue;
     }
 
-    /// brief This function is guaranteed to return a valid value for a dockwidget.
-    /// @returns Pointer to the relevant dock widget
-    /// @throws GCL::CCodeError(astroManager)
+    /// @brief This function is guaranteed to return a valid value for a dockwidget.
+    /// @returns Pointer to the relevant dock widget. nullptr is returned if the dockWidget does not exist.
+    /// @throws None.
     /// @version 2017-07-02/GGB - Updated to use std::map and std::unique_ptr.
     /// @version 2013-05-28/GGB - Function created.
 
-    dockwidgets::CDockWidget &CFrameWindow::getDockWidget(EDockWidgets dockWidget)
+    dockwidgets::CDockWidget *CFrameWindow::getDockWidget(dockwidget_t dockWidget)
     {
       try
       {
-        return *dockWidgets.at(dockWidget);
+        return dockWidgets.at(dockWidget).get();
       }
       catch (std::out_of_range const &)
       {
-        CODE_ERROR(astroManager);
+        return nullptr;
       }
     }
 
@@ -2602,7 +2604,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
 
     }
@@ -2755,7 +2757,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -2968,7 +2970,7 @@ namespace astroManager
         };
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -3036,7 +3038,7 @@ namespace astroManager
         };
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -3059,18 +3061,26 @@ namespace astroManager
       {
         imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(activeChild);
         if (iw)
+        {
           iw->zoomAll();
+        }
         else
-          CODE_ERROR(astroManager);
+        {
+          ASTROMANAGER_CODE_ERROR;
+        };
         break;
       }
       case SWT_STACKIMAGESWINDOW:
       {
         imaging::CStackImagesWindow *siw = dynamic_cast<imaging::CStackImagesWindow *>(activeChild);
         if (siw)
+        {
           siw->zoomAll();
+        }
         else
-          CODE_ERROR(astroManager);
+        {
+          ASTROMANAGER_CODE_ERROR;
+        };
         break;
       }
       default:
@@ -3092,35 +3102,37 @@ namespace astroManager
 
       switch (activeChild->getWindowType())
       {
-      case SWT_IMAGEWINDOW:
-      {
-        imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(activeChild);
-        if (iw)
+        case SWT_IMAGEWINDOW:
         {
-          iw->zoomIn();
-        }
-        else
-        {
-          CODE_ERROR(astroManager);
+          imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(activeChild);
+          if (iw)
+          {
+            iw->zoomIn();
+          }
+          else
+          {
+            ASTROMANAGER_CODE_ERROR;
+          };
+          break;
         };
-        break;
-      };
-      case SWT_STACKIMAGESWINDOW:
-      {
-        imaging::CStackImagesWindow *siw = dynamic_cast<imaging::CStackImagesWindow *>(activeChild);
-        if (siw)
+        case SWT_STACKIMAGESWINDOW:
         {
-          siw->zoomIn();
+          imaging::CStackImagesWindow *siw = dynamic_cast<imaging::CStackImagesWindow *>(activeChild);
+          if (siw)
+          {
+            siw->zoomIn();
+          }
+          else
+          {
+            ASTROMANAGER_CODE_ERROR;
+          };
+          break;
         }
-        else
+        default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
+          break;
         };
-        break;
-      }
-      default:
-        CODE_ERROR(astroManager);
-        break;
       };
     }
 
@@ -3602,7 +3614,7 @@ namespace astroManager
       if (!file.open(QFile::ReadOnly))
       {
         ERRORMESSAGE("Unable to open resource :/forms/windowMDIFrame.ui.");
-        ERROR(astroManager, 0x0001);
+        ASTROMANAGER_ERROR(0x0001);
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -3611,7 +3623,6 @@ namespace astroManager
       RUNTIME_ASSERT(astroManager, formWidget, "Widget not found for the MDU frame.");
 
       setCentralWidget(formWidget);
-
 
         // Create the MDI area and set up the attributes.
 
@@ -3629,22 +3640,22 @@ namespace astroManager
     }
 
     /// @brief Responds to the subWindowActivated signal from the MDIArea.
+    /// @param[in] subWindow: The subWindow that is activating (nullptr is allowed)
     /// @details  The sub window is informed that it is going to activate and then the MDI area is informed that the sub window
     ///           is about to activate. The MDI area signal is connected to this function.<br>
     ///           The function checks the window class of the new child window. If the windows class has changed, then the
     ///           functions to change the dockwidgets, menus and toolbars for the new windows class can be called.
     /// @note 1: subWindow == nullptr implies that there are no active child windows.
-    /// @param[in] subWindow - THe subWindow that is activating (nullptr is allowed)
     /// @throws None.
     /// @version 2017-08-13/GGB - Updated to support window classes.
     /// @version 2013-07-28/GGB - Function created.
 
     void CFrameWindow::subWindowActivated(QMdiSubWindow *subWindow)
     {
-      auto mdiSubWindow = dynamic_cast<CMdiSubWindow *>(subWindow);
-
-      if (mdiSubWindow)
+      if (subWindow)
       {
+        CMdiSubWindow *mdiSubWindow = dynamic_cast<CMdiSubWindow *>(subWindow);
+
         mdiSubWindow->windowActivating();   // Always call.
 
         if (currentWindowClass != mdiSubWindow->getWindowClass())
@@ -3673,7 +3684,7 @@ namespace astroManager
               break;
             default:
             {
-              CODE_ERROR(astroManager);
+              ASTROMANAGER_CODE_ERROR;
               break;
             };
           }

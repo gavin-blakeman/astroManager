@@ -345,5 +345,16 @@ namespace astroManager
       connect(radioButtonST, SIGNAL(clicked(bool)), this, SLOT(radioButtonLSTClicked(bool)));
       connect(pushButtonRealTime, SIGNAL(clicked(bool)), this, SLOT(pushButtonRealTimeClicked(bool)));
     }
-  }
-}
+
+    /// @brief Performs class specific activities when the window is activated.
+    /// @throws None.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CWindowPlanning::windowActivating()
+    {
+      CMdiSubWindow::windowActivating();
+    }
+
+
+  }   // namespace windowPlanning
+}   // namespace astroManager

@@ -111,7 +111,7 @@ namespace astroManager
       QLabel *labelPressure;
       QLabel *labelRH;
 
-      QWidget *imageTab;			// Handle to the tab to display the image and info
+      QWidget *imageTab;                                ///< Handle to the tab to display the image and info
       QWidget *atableTab;
       QWidget *btableTab;
       QWidget *astrometryTab;

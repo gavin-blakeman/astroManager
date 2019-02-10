@@ -195,7 +195,7 @@ namespace astroManager
         nBinNo = static_cast<size_t>(std::floor((astroImage->getValue(lIndex) - std::get<2>(values)) / std::get<3>(values)));
         if ( (nBinNo < 0) || (nBinNo >= HISTOGRAMBINS) )
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
         else
         {
@@ -430,12 +430,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -508,7 +508,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
 
       redrawImage();
@@ -549,12 +549,12 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
           }
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
       };
 
@@ -612,7 +612,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -689,7 +689,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
 
         currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -717,6 +717,44 @@ namespace astroManager
         sbWhite->setEnabled(true);
         histogramPlot->setEnabled(true);
       };
+    }
+
+    /// @brief Function called when a child window is activating.
+    /// @details The histogram needs to be updated with the information from the new MDI window instance.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-21/GGB - Function created.
+
+    void CHistogram::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        bInternalCall = true;   // Do not update the image.
+
+        sbWhite->setMaximum(currentImage->astroFile->imageMax(currentImage->currentHDB));
+        sbWhite->setMinimum(currentImage->astroFile->imageMin(currentImage->currentHDB));
+        sbWhite->setValue(*currentImage->whitePoint);
+
+        sbBlack->setMinimum(currentImage->astroFile->imageMin(currentImage->currentHDB));
+        sbBlack->setMaximum(currentImage->astroFile->imageMax(currentImage->currentHDB));
+        sbBlack->setValue(*currentImage->blackPoint);
+
+        bInternalCall = false;
+
+        DisplayHistogram();
+
+        spanSlider->setEnabled(true);
+        doubleSpinBoxGamma->setEnabled(true);
+        comboBoxTransferFunction->setEnabled(true);
+        checkBoxInvert->setEnabled(true);
+        sbBlack->setEnabled(true);
+        sbWhite->setEnabled(true);
+        histogramPlot->setEnabled(true);
+      }
+      else
+      {
+        // No active window, or not an image... We can disable the controls.
+      }
     }
 
     /// @brief Redraws the image.
@@ -773,7 +811,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
 
         //currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -783,14 +821,14 @@ namespace astroManager
 
         auto frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-        dynamic_cast<dockwidgets::CDockWidgetMagnify &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetNavigator &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)).imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetMagnify *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetNavigator *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR))->imageChanged();
       };
     }
 
     /// @brief Resets the values for the dockWidget
-    /// @param[in] fMin - The minimum value for the scales.
-    /// @param[in] fMax - The maximum value for the scales.
+    /// @param[in] fMin: The minimum value for the scales.
+    /// @param[in] fMax: The maximum value for the scales.
     /// @throws None.
     /// @version 2011-05-29/GGB - Function created.
 

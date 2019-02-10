@@ -82,8 +82,8 @@ namespace astroManager
     //*****************************************************************************************************************************
 
     /// @brief Class constructor.
-    /// @param[in] parent - The parent object
-    /// @param[in] action - The action object.
+    /// @param[in] parent: The parent object
+    /// @param[in] action: The action object.
     /// @throws None.
     /// @version 2017-07-01/GGB - Changed order of parameters and updated hierarchy.
     /// @version 2013-07-27/GGB - Added objectName to support restoreState.
@@ -97,7 +97,7 @@ namespace astroManager
     {
       parentObject = dynamic_cast<mdiframe::CFrameWindow *>(parent);
 
-      // Load the radii from the registry
+        // Load the radii from the registry
 
       uiRadius1 = settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS1, QVariant(5)).toUInt();
       uiRadius2 = settings::astroManagerSettings->value(settings::PHOTOMETRY_RADIUS2, QVariant(7)).toUInt();
@@ -108,7 +108,7 @@ namespace astroManager
     }
 
     /// @brief Function to plot the profile of the selected object.
-    /// @param[in] centroid - The centroid of the object.
+    /// @param[in] centroid: The centroid of the object.
     /// @throws None
     /// @version 2018-09-20/GGB - Converted variable to std::tuple from boost::tuple.
     /// @version 2013-05-18/GGB - Function created.
@@ -289,7 +289,7 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
           };
         }
         else
@@ -340,7 +340,7 @@ namespace astroManager
     }
 
     /// @brief Push button to allow the object name to be selected for the object.
-    /// @param[in] - unused.
+    /// @param[in] :unused.
     /// @throws GCL::CCodeError(astroManager)
     /// @version 2013-08-11/GGB - 1) Added code to initialise the object name. (Bug #1210914)
     /// @version                  2) Added code to allow save and make the image dirty.
@@ -427,14 +427,16 @@ namespace astroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(astroManager);
+          {
+            ASTROMANAGER_CODE_ERROR;
+          };
 
           iw->updateWindowTitle();
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -459,12 +461,12 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
 
       if (!subWindow)
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) ||
@@ -483,7 +485,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);   // Dock widget should be grayed.
+        ASTROMANAGER_CODE_ERROR;    // Dock widget should be grayed.
       }
     }
 
@@ -505,10 +507,11 @@ namespace astroManager
       };
     }
 
-    // Handles the changed event from the Radius 2 check box.
-    //
-    // 2013-05-18/GGB - Saved new value to settings.
-    // 2011-05-29/GGB - Function created.
+    /// @brief Handles the changed event from the Radius 2 check box.
+    /// @param[in] newValue: The new R2 value.
+    /// @throws None.
+    /// @version 2013-05-18/GGB - Saved new value to settings.
+    /// @version 2011-05-29/GGB - Function created.
 
     void CPhotometryDockWidget::eventRadius2Changed(int newValue)
     {
@@ -523,10 +526,11 @@ namespace astroManager
       };
     }
 
-    // Handles the changed event from the Radius 3 check box.
-    //
-    // 2013-05-18/GGB - Save new value to settings.
-    // 2011-05-29/GGB - Function created.
+    /// @brief Handles the changed event from the Radius 3 check box.
+    /// @param[in] newValue: The new R3 value.
+    /// @throws
+    /// @version 2013-05-18/GGB - Save new value to settings.
+    /// @version 2011-05-29/GGB - Function created.
 
     void CPhotometryDockWidget::eventRadius3Changed(int newValue)
     {
@@ -541,7 +545,8 @@ namespace astroManager
     }
 
     /// @brief Displays the information for the item that has been selected.
-    //
+    /// @param[in] row: The selected row.
+    /// @throws None.
     /// @version 2013-08-24/GGB - Added code to allow the selected item to hilight.
     /// @version 2013-03-29/GGB - Function created.
 
@@ -560,7 +565,7 @@ namespace astroManager
       else
       {
         btnObjectName->setEnabled(false);
-      }
+      };
 
       displayPhotometry(selectedObject);
       currentImage->parent_->changePhotometrySelection(selectedObject);
@@ -597,7 +602,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         }
       }
       else
@@ -613,8 +618,26 @@ namespace astroManager
       tableWidgetPhotometry->setCurrentCell(nRow, 0);
     }
 
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CPhotometryDockWidget::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        redraw();   // Update the list and controls.
+      }
+      else
+      {
+          // No active window, or window is not an image window. We can disable the controls.
+      };
+    }
+
     /// @brief Redraws all the information in the dock widget. Is called after the photometry image changes.
-    //
+    /// @throws None.
     /// @version 2013-05-12/GGB - Removed support for the editing push button and the export csv pushbutton.
     /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
     /// @version 2012-11-12/GGB - Function created.
@@ -712,7 +735,7 @@ namespace astroManager
     /// 2. Ensure that the user selects an object to go with the reference. \n
     /// 3. Add the new item into the astroFile \n
     /// 4. Add the new item to the tableWidget \n
-    //
+    /// @throws GCL::CRuntimeAssert()
     // 2013-08-05/GGB - Moved code into the window objects.
     // 2013-04-12/GGB - Added code to set the creator and date of a new HDB.
     // 2013-03-31/GGB - Function created.
@@ -738,7 +761,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);   // Dock widget should be grayed.
+        ASTROMANAGER_CODE_ERROR;    // Dock widget should be grayed.
       }
 
       tableWidgetPhotometry->insertRow(nRow);
@@ -809,7 +832,9 @@ namespace astroManager
           tlVariable = formWidget->findChild<QLabel *>("tlVariable");
 
       if (!btnObjectName || !tlObjectName || !labelRA || !labelDec || !tlVariable)
-        CODE_ERROR(astroManager);
+      {
+        ASTROMANAGER_CODE_ERROR;
+      };
 
         tabCounts = infoTab->widget(++nIndex);
           tlADUAperture = formWidget->findChild<QLabel *>("tlADUAperture");
@@ -841,7 +866,7 @@ namespace astroManager
 
       if (!tlStar || !tlSky || !tlStarSky || !tlMagnitude || !labelMagnitudeError || !labelFWHM)
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
 
       infoTab->setEnabled(false);		// Must not be useable until an object is chosen.

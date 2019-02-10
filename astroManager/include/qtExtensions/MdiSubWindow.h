@@ -100,12 +100,11 @@ namespace astroManager
     virtual ESubWindowType getWindowType() const = 0;
     virtual EWindowClass getWindowClass() const { return WC_NULL; }
 
+    virtual void windowActivating();
+
     virtual bool save() {}
     virtual bool saveAs() {}
     virtual void clipboardCopy() {}
-
-  public slots:
-    virtual void windowActivating() = 0;
   };
 }
 

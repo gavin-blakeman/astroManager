@@ -72,7 +72,7 @@ namespace astroManager
     }
 
     /// @brief Class constuctor. Must null the group and text.
-    /// @param[in] po - The photometry observation to copy
+    /// @param[in] po: The photometry observation to copy
     /// @throws None.
     /// @version 2013-08-25/GGB - Function created.
 
@@ -86,8 +86,8 @@ namespace astroManager
     /// @throws None.
     /// @version 2016-05-05/GGB - Function created.
 
-    CPhotometryObservation::CPhotometryObservation(std::unique_ptr<ACL::CTargetAstronomy> ta)
-      : ACL::CPhotometryObservation(std::move(ta)), group(nullptr), text(nullptr)
+    CPhotometryObservation::CPhotometryObservation(std::shared_ptr<ACL::CTargetAstronomy> ta)
+      : ACL::CPhotometryObservation(ta), group(nullptr), text(nullptr)
     {
 
     }

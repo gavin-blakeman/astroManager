@@ -76,6 +76,7 @@ namespace astroManager
       CDockWidgetMagnify(QWidget *, QAction *);
       virtual ~CDockWidgetMagnify();
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override;
       virtual void imageActivating();
       virtual void imageDeactivating();
       virtual void imageChanged();

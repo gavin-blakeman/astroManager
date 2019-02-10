@@ -104,6 +104,8 @@ namespace astroManager
       void imageDeactivating();
       virtual void imageChanged();
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override;
+
       virtual void setEnabled(bool);
 
       void referenceCompleted(astrometry::CAstrometryObservation *);

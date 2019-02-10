@@ -43,9 +43,9 @@ namespace astroManager
 {
   namespace dialogs
   {
-    /// Class constructor
-    //
-    // 2014-02-02/GGB - Function created.
+    /// @brief Class constructor
+    /// @throws None.
+    /// @version 2014-02-02/GGB - Function created.
 
     CDialogFindStars::CDialogFindStars(SDialogFindStars &nsp) : CDialog(":/forms/dialogFindStars.ui"),
       sourceParameters(nsp)
@@ -53,9 +53,9 @@ namespace astroManager
       setupUI();
     }
 
-    /// Function to respond to the extract button.
-    //
-    // 2014-02-16/GGB - Function created.
+    /// @brief Function to respond to the extract button.
+    /// @throws
+    /// @version 2014-02-16/GGB - Function created.
 
     void CDialogFindStars::eventButtonExtract(bool)
     {
@@ -104,11 +104,10 @@ namespace astroManager
       dlg->done(DialogExtract);
     }
 
-    /// Sets up all the data for the dialog.
-    /// EXCEPTIONS: CODE_ERROR
-    //
-    // 2014-12-29/GGB - Added code to control the minimum border width. (Bug #1406196)
-    // 2013-02-09/GGB - Function created.
+    /// @brief Sets up all the data for the dialog.
+    /// @throws GCL::CCodeError(astroManager)
+    /// @version 2014-12-29/GGB - Added code to control the minimum border width. (Bug #1406196)
+    /// @version 2013-02-09/GGB - Function created.
 
     void CDialogFindStars::setupUI()
     {

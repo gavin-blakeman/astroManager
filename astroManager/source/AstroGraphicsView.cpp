@@ -41,7 +41,7 @@
 
 #include <cmath>
 
-  // astroManager
+  // astroManager header files.
 
 #include "../include/dockWidgets/dockWidgetImageInformation.h"
 #include "../include/dockWidgets/dockWidgetMagnify.h"
@@ -64,14 +64,16 @@ namespace astroManager
     //******************************************************************************************************************************
 
     /// @brief Constructor for the CAstrographicsView class.
-    ///
+    /// @param[in] parent: The owner of this instance.
     /// @version 2013-06-19/GGB - Added different definitions for windows and other.
-    // 2013-05-25/GGB - Added support for the navigator widget.
-    // 2011-06-03/GGB - 1) Make use of controlImage rather than having a pointer to the astroFile.
-    //                  2) Integrate functionallity with the dock widgets for information.
-    // 2011-03-03/GGB - 1) removed libAstroImages::CastroFile from the header
-    //							    2) astroFile is set to NULL
-    // 2010-10-30/GGB - Function created.
+    /// @version 2013-05-25/GGB - Added support for the navigator widget.
+    /// @version 2011-06-03/GGB
+    ///           @li 1) Make use of controlImage rather than having a pointer to the astroFile.
+    ///           @li 2) Integrate functionallity with the dock widgets for information.
+    /// @version 2011-03-03/GGB
+    ///           @li 1) removed libAstroImages::CastroFile from the header
+    ///           @li 2) astroFile is set to NULL
+    /// @version 2010-10-30/GGB - Function created.
 
 #ifdef _WIN32
     CAstroGraphicsView::CAstroGraphicsView(QWidget *parent) : QGraphicsView(parent), mode(M_SCROLL), zoomFactor(1),
@@ -101,7 +103,7 @@ namespace astroManager
     }
 
     /// @brief Handles the mouse event.
-    /// @param[in] mouseEvent - The mouseEvent to be processed.
+    /// @param[in] mouseEvent: The mouseEvent to be processed.
     /// @details Used to display the image coordinates as well as the pixel value.
     /// @version 2017-08-27/GGB - Change PV display to not include decimal places. (Bug #34)
     /// @version 2017-08-25/GGB - Update WCS values to correct system.
@@ -136,7 +138,7 @@ namespace astroManager
             parentObject->getControlImage()->szPV = QString("");
             parentObject->getControlImage()->szRA = QString("");
             parentObject->getControlImage()->szDEC = QString("");
-            dynamic_cast<dockwidgets::CImageControlWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)).updateValues();
+            dynamic_cast<dockwidgets::CImageControlWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL))->updateValues();
           }
           else
           {
@@ -149,19 +151,16 @@ namespace astroManager
 
             if (wcsCoords)
             {
-              parentObject->getControlImage()->szRA =
-                  QString::fromStdString((*wcsCoords).RA().A2SHMS());
-
-              parentObject->getControlImage()->szDEC =
-                  QString::fromStdString((*wcsCoords).DEC().A2SDMS());
+              parentObject->getControlImage()->szRA = QString::fromStdString((*wcsCoords).RA().A2SHMS());
+              parentObject->getControlImage()->szDEC = QString::fromStdString((*wcsCoords).DEC().A2SDMS());
             }
             else
             {
               parentObject->getControlImage()->szRA = QString("--h--'--\"");
               parentObject->getControlImage()->szDEC = QString(UTF16_PLUSMINUSSIGN % "--" % UTF16_DEGREESIGN % "--'--\"");
             }
-            dynamic_cast<dockwidgets::CImageControlWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)).updateValues();
-            dynamic_cast<dockwidgets::CDockWidgetMagnify &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY)).updateCenter(point);
+            dynamic_cast<dockwidgets::CImageControlWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL))->updateValues();
+            dynamic_cast<dockwidgets::CDockWidgetMagnify *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY))->updateCenter(point);
           };
         }
         else
@@ -170,7 +169,7 @@ namespace astroManager
           parentObject->getControlImage()->szPV = QString("");
           parentObject->getControlImage()->szRA = QString("");
           parentObject->getControlImage()->szDEC = QString("");
-          dynamic_cast<dockwidgets::CImageControlWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)).updateValues();
+          dynamic_cast<dockwidgets::CImageControlWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL))->updateValues();
         };
       };
     }
@@ -190,11 +189,11 @@ namespace astroManager
       long y = static_cast<long>(std::floor(point.y()));
       SControlImage *controlImage = parentObject->getControlImage();
 
-      if (controlImage)
+      if (controlImage)     // Note, not an error if there is no control image.
       {
         if ( (x >= 0) && (y >= 0) &&
-          (x < controlImage->astroFile->getAstroImage(controlImage->currentHDB)->width()) &&
-          (y < controlImage->astroFile->getAstroImage(controlImage->currentHDB)->height()) )
+             (x < controlImage->astroFile->getAstroImage(controlImage->currentHDB)->width()) &&
+             (y < controlImage->astroFile->getAstroImage(controlImage->currentHDB)->height()) )
         {
             // Handle the mouse event if it is inside the image.
 
@@ -228,21 +227,19 @@ namespace astroManager
       };
     }
 
-    /// Captures the resize event to ensure smooth zooming.
-    //
-    // 2013-05-25/GGB - Added support for the View | Navigator window.
-    // 2013-01-22/GGB - Function created.
+    /// @brief Captures the resize event to ensure smooth zooming.
+    /// @param[in] event: The event that has been captured.
+    /// @throws None.
+    /// @version 2013-05-25/GGB - Added support for the View | Navigator window.
+    /// @version 2013-01-22/GGB - Function created.
 
-    void CAstroGraphicsView::resizeEvent ( QResizeEvent * event )
+    void CAstroGraphicsView::resizeEvent (QResizeEvent *event)
     {
       QGraphicsView::resizeEvent(event);
 
       setMinZoom();
 
-      if (zoomFactor < minZoomFactor)
-      {
-        zoomFactor = minZoomFactor;
-      };
+      zoomFactor = std::max(zoomFactor, minZoomFactor);
 
       resetTransform();
       scale(zoomFactor, zoomFactor);
@@ -272,10 +269,11 @@ namespace astroManager
       zoomFactor = std::max(zoomFactor, minZoomFactor);
     }
 
-    /// Sets the mode.
-    /// Selects the correct cursor to use depending on the mode that has been chosen.
-    //
-    // 2011-06-26/GGB - Function created
+    /// @brief Sets the mode.
+    /// @param[in] newMode: The new mode to select.
+    /// @details Selects the correct cursor to use depending on the mode that has been chosen.
+    /// @throws GCL::CCodeError(astroManager)
+    /// @version 2011-06-26/GGB - Function created
 
     void CAstroGraphicsView::setMode(E_Mode newMode)
     {
@@ -283,24 +281,26 @@ namespace astroManager
 
       switch (mode)
       {
-      case M_NONE:
-        setCursor(Qt::CrossCursor);
-        break;
-      case M_ZOOMDYNAMIC:
-      case M_ZOOMSELECTION:
-      case M_ZOOMIN:
-      case M_ZOOMOUT:
-      case M_SCROLL:
-        break;
-      case M_ASTROMETRY:
-        setCursor(cursorAstrometry);
-        break;
-      case M_PHOTOMETRY:
-        setCursor(cursorPhotometry);
-        break;
-      default:
-        CODE_ERROR(astroManager);
-        break;
+        case M_NONE:
+          setCursor(Qt::CrossCursor);
+          break;
+        case M_ZOOMDYNAMIC:
+        case M_ZOOMSELECTION:
+        case M_ZOOMIN:
+        case M_ZOOMOUT:
+        case M_SCROLL:
+          break;
+        case M_ASTROMETRY:
+          setCursor(cursorAstrometry);
+          break;
+        case M_PHOTOMETRY:
+          setCursor(cursorPhotometry);
+          break;
+        default:
+        {
+          ASTROMANAGER_CODE_ERROR;
+          break;
+        };
       };
     }
 
@@ -321,45 +321,38 @@ namespace astroManager
 
       mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      dynamic_cast<dockwidgets::CDockWidgetNavigator &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)).updateLimits(limits);
+      dynamic_cast<dockwidgets::CDockWidgetNavigator *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR))->updateLimits(limits);
     }
 
-    /// Manage the wheel event. The image is automatically zoomed.
-    //
-    // 2013-08-03/GGB - Added suport to zoom on the mouse position. (Bug #1102931)
-    // 2013-07-20/GGB - Added suport to center on the mouse position. (Bug #1102931)
-    // 2013-05-25/GGB - Added support for the View | Navigator window.
-    // 2013-01-22/GGB - Added the minZoomFactor and maxZoomFactor class members.
-    // 2012-12-03/GGB - Removed the zoom mode
-    // 2011-06-02/GGB - Function created.
+    /// @brief Manage the wheel event. The image is automatically zoomed.
+    /// @param[in] event: The event to manage.
+    /// @throws None.
+    /// @version 2013-08-03/GGB - Added suport to zoom on the mouse position. (Bug #1102931)
+    /// @version 2013-07-20/GGB - Added suport to center on the mouse position. (Bug #1102931)
+    /// @version 2013-05-25/GGB - Added support for the View | Navigator window.
+    /// @version 2013-01-22/GGB - Added the minZoomFactor and maxZoomFactor class members.
+    /// @version 2012-12-03/GGB - Removed the zoom mode
+    /// @version 2011-06-02/GGB - Function created.
 
     void CAstroGraphicsView::wheelEvent(QWheelEvent *event)
     {
       QPointF scenePos = mapToScene(event->pos());
-
       int numSteps = event->delta() / 120;
-
       double prevZoomFactor = zoomFactor;
 
       setMinZoom();
 
       if (numSteps < 0)
       {
-        zoomFactor *= pow(1/ZOOM_FACTOR, abs(numSteps));
+        zoomFactor *= std::pow(1/ZOOM_FACTOR, std::abs(numSteps));
       }
       else
       {
-        zoomFactor *= pow(ZOOM_FACTOR, abs(numSteps));
+        zoomFactor *= std::pow(ZOOM_FACTOR, std::abs(numSteps));
       };
 
-      if (zoomFactor < minZoomFactor)
-      {
-        zoomFactor = minZoomFactor;
-      }
-      else if (zoomFactor > maxZoomFactor)
-      {
-        zoomFactor = maxZoomFactor;
-      };
+      zoomFactor = std::max(zoomFactor, minZoomFactor);
+      zoomFactor = std::min(zoomFactor, maxZoomFactor);
 
       if (zoomFactor != prevZoomFactor)
       {
@@ -404,8 +397,7 @@ namespace astroManager
       updateNavigator();
     }
 
-    /// @brief Change the cursor to the zoom cursor.
-    /// @details When the cursor is changed, the mode must be changed to the zoom mode.
+    /// @brief Zoom in by one step.
     /// @throws None.
     /// @version 2013-07-14/GGB - Removed the zoom mode and added the ZOOMFACTOR (Bug # 1201088)
     /// @version 2011-06-02/GGB - Function created.
@@ -416,14 +408,9 @@ namespace astroManager
 
       zoomFactor *= ZOOM_FACTOR;
 
-      if (zoomFactor < minZoomFactor)
-      {
-        zoomFactor = minZoomFactor;
-      }
-      else if (zoomFactor > maxZoomFactor)
-      {
-        zoomFactor = maxZoomFactor;
-      }
+
+      zoomFactor = std::max(zoomFactor, minZoomFactor);
+      zoomFactor = std::min(zoomFactor, maxZoomFactor);
 
       if (zoomFactor != prevZoomFactor)
       {
@@ -434,11 +421,10 @@ namespace astroManager
       updateNavigator();
     }
 
-    // Change the cursor to the zoom cursor.
-    // When the cursor is changed, the mode must be changed to the zoom mode.
-    //
-    // 2013-07-14/GGB - Removed the zoom mode and added the ZOOMFACTOR (Bug #1201088)
-    // 2011-06-02/GGB - Function created.
+    /// @brief Zoom out by one step.
+    /// @throws None.
+    /// @version 2013-07-14/GGB - Removed the zoom mode and added the ZOOMFACTOR (Bug #1201088)
+    /// @version 2011-06-02/GGB - Function created.
 
     void CAstroGraphicsView::zoomOut()
     {
@@ -446,10 +432,8 @@ namespace astroManager
 
       zoomFactor /= ZOOM_FACTOR;
 
-      if (zoomFactor < minZoomFactor)
-        zoomFactor = minZoomFactor;
-      else if (zoomFactor > maxZoomFactor)
-        zoomFactor = maxZoomFactor;
+      zoomFactor = std::max(zoomFactor, minZoomFactor);
+      zoomFactor = std::min(zoomFactor, maxZoomFactor);
 
       if (zoomFactor != prevZoomFactor)
       {

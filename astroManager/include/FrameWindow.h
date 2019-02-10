@@ -177,7 +177,7 @@ namespace astroManager
 
     enum EDockWidgets
     {
-      IDDW_IMAGECONTROL,
+      IDDW_IMAGECONTROL = 0,
       IDDW_INSTRUMENTINFORMATION,
       IDDW_ASTROMETRYCONTROL,
       IDDW_PHOTOMETRYCONTROL,
@@ -187,6 +187,7 @@ namespace astroManager
       IDDW_VIEW_NAVIGATOR,
       IDDW_WEATHER_SCALE,
       IDDW_WEATHER_PARAMETERS,
+      IDDW_COUNT,
     };
 
     enum EToolBars
@@ -230,6 +231,9 @@ namespace astroManager
     {
       Q_OBJECT
 
+    public:
+      typedef std::uint_fast8_t dockwidget_t;
+
     private:
       CMdiSubWindow::EWindowClass currentWindowClass;
 
@@ -237,8 +241,7 @@ namespace astroManager
       QMdiArea *mdiArea = nullptr;
       QSignalMapper *windowMapper = nullptr;
 
-      typedef std::unique_ptr<dockwidgets::CDockWidget> PDockWidget;
-      std::map<EDockWidgets, PDockWidget> dockWidgets;
+      std::map<dockwidget_t, std::unique_ptr<dockwidgets::CDockWidget>> dockWidgets;
 
       typedef std::unique_ptr<QAction> PAction;
       std::map<EActionItems, PAction> menuActions;
@@ -302,7 +305,7 @@ namespace astroManager
       virtual ~CFrameWindow();
 
       QAction *getAction(EActionItems) const;
-      dockwidgets::CDockWidget &getDockWidget(EDockWidgets);
+      dockwidgets::CDockWidget *getDockWidget(dockwidget_t);
 
         // Management function
 

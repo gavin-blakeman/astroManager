@@ -127,6 +127,7 @@ namespace astroManager
     public:
       CPhotometryDockWidget(QWidget *, QAction *);
 
+      virtual void mdiWindowActivating(CMdiSubWindow *) override;
       void imageActivating();
       void imageDeactivating();
       virtual void imageChanged();

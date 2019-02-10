@@ -162,37 +162,40 @@ namespace astroManager
 
       switch (photometryObject->photometryAperture()->apertureType())
       {
-      case ACL::PAT_CIRCULAR:
-        photometryObject->group = new QGraphicsItemGroup();
+        case ACL::PAT_CIRCULAR:
+          photometryObject->group = new QGraphicsItemGroup();
 
-        newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x() - pac->radius1(),
-                                           photometryObject->CCDCoordinates().y() - pac->radius1(),
-                                           2*pac->radius1(), 2*pac->radius1());
-        newItem->setPen(pen);
-        photometryObject->group->addToGroup(newItem);
+          newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x() - pac->radius1(),
+                                             photometryObject->CCDCoordinates().y() - pac->radius1(),
+                                             2*pac->radius1(), 2*pac->radius1());
+          newItem->setPen(pen);
+          photometryObject->group->addToGroup(newItem);
 
-        newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x()-pac->radius2(),
-                                           photometryObject->CCDCoordinates().y()-pac->radius2(),
-                                           2*pac->radius2(), 2*pac->radius2());
-        newItem->setPen(pen);
-        photometryObject->group->addToGroup(newItem);
+          newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x()-pac->radius2(),
+                                             photometryObject->CCDCoordinates().y()-pac->radius2(),
+                                             2*pac->radius2(), 2*pac->radius2());
+          newItem->setPen(pen);
+          photometryObject->group->addToGroup(newItem);
 
-        newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x()-pac->radius3(),
-                                           photometryObject->CCDCoordinates().y()-pac->radius3(),
-                                           2*pac->radius3(), 2*pac->radius3());
-        newItem->setPen(pen);
-        photometryObject->group->addToGroup(newItem);
+          newItem = new QGraphicsEllipseItem(photometryObject->CCDCoordinates().x()-pac->radius3(),
+                                             photometryObject->CCDCoordinates().y()-pac->radius3(),
+                                             2*pac->radius3(), 2*pac->radius3());
+          newItem->setPen(pen);
+          photometryObject->group->addToGroup(newItem);
 
-        photometryObject->text =  new QGraphicsSimpleTextItem(QString::fromStdString(photometryObject->objectName()) );
-        photometryObject->text->setPos(photometryObject->CCDCoordinates().x(), photometryObject->CCDCoordinates().y() + pac->radius3() + 1);
-        photometryObject->text->setPen(pen);
+          photometryObject->text =  new QGraphicsSimpleTextItem(QString::fromStdString(photometryObject->objectName()) );
+          photometryObject->text->setPos(photometryObject->CCDCoordinates().x(), photometryObject->CCDCoordinates().y() + pac->radius3() + 1);
+          photometryObject->text->setPen(pen);
 
-        photometryObject->group->addToGroup(photometryObject->text);
-        break;
-      case ACL::PAT_ELLIPSE:
-        break;
-      default:
-        CODE_ERROR(astroManager);
+          photometryObject->group->addToGroup(photometryObject->text);
+          break;
+        case ACL::PAT_ELLIPSE:
+          break;
+        default:
+        {
+          ASTROMANAGER_CODE_ERROR;
+          break;
+        };
       };
     }
 
@@ -235,17 +238,29 @@ namespace astroManager
 
       if (frameWindow)
       {
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL)).imageChanged();
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL)).imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL))->imageChanged();
+        dynamic_cast<dockwidgets::CDockWidgetImage *>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL))->imageChanged();
       }
       else
       {
         ASTROMANAGER_CODE_ERROR;
       };
+    }
+
+    /// @brief Called when the window is activating. This function performs actions that are unique to the imageWindow classes.
+    /// @throws None.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CAstroImageWindow::windowActivating()
+    {
+      dockwidgets::CDockWidgetImage::setCurrentImage(getControlImage());     // Static function... no problem
+
+      CMdiSubWindow::windowActivating();    // Last thing before exiting as the dockwidgets need to be informed that the current
+                                            // image has changed.
     }
 
   }  // namespace imaging

@@ -129,6 +129,24 @@ namespace astroManager
       };
     }
 
+    /// @brief Called when the window is activated. This allows menus etc to be updated.
+    /// @param[in] activeSubWindow: The active sub window.
+    /// @throws None.
+    /// @pre 1. The currentImage member must have been updated before calling this function.
+    /// @version 2018-10-30/GGB - Function created.
+
+    void CDockWidgetNavigator::mdiWindowActivating(CMdiSubWindow *activeSubWindow)
+    {
+      if ( (activeSubWindow) && (activeSubWindow->getWindowClass() == CMdiSubWindow::WC_IMAGE))
+      {
+        imageChanged();
+      }
+      else
+      {
+          // No active window, or window is not an image window. We can disable the controls.
+      };
+    }
+
     /// @brief Deactivates the window if the image deactivates.
     /// @param[in] enabledValue
     /// @throws None.

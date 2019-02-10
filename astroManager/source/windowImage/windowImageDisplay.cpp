@@ -75,6 +75,7 @@
 #include "../../include/dockWidgets/dockWidgetMagnify.h"
 #include "../../include/dockWidgets/dockWidgetNavigator.h"
 #include "../../include/dockWidgets/dockWidgetPhotometry.h"
+#include "../../include/error.h"
 #include "../../include/settings.h"
 #include "../../include/astroManager.h"
 
@@ -154,17 +155,14 @@ namespace astroManager
     }
 
     /// @brief Loads the astrometry targets from a file.
-    /// @throws std::bad_cast
+    /// @throws
     /// @version 2017-09-23/GGB - Updated to use CAngle
     /// @version 2017-07-03/GGB - Updated to reflect new dockwidget storage method.
 
     void CImageWindow::astrometryLoadTargets()
     {
-        // Note the following could (in theory) throw std::bad_cast. It may be worth catching the bad_cast and
-        // altering it into a more meaninfull error message.
-
-      dockwidgets::CAstrometryDockWidget &adw =
-          dynamic_cast<dockwidgets::CAstrometryDockWidget &>(
+      dockwidgets::CAstrometryDockWidget *adw =
+          dynamic_cast<dockwidgets::CAstrometryDockWidget *>(
             dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
 
       std::vector<std::shared_ptr<astrometry::CAstrometryObservation>> astrometryTargets;
@@ -320,7 +318,7 @@ namespace astroManager
 
                     // Update the information in the dockwidget.
 
-                  adw.addNewObject(controlImage.astrometryObservations.back().get());
+                  adw->addNewObject(controlImage.astrometryObservations.back().get());
                   //adw->displayAstrometry(boost::dynamic_pointer_cast<dockwidgets::CAstrometryObservation>(astrometryObject));
 
                   astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
@@ -563,13 +561,12 @@ namespace astroManager
       };
     }
 
-    // Called when the binary table tab is activating.
-    // Ensures that all menu actions are set up correctly.
-    //
+    /// @brief Called when the binary table tab is activating. Ensures that all menu actions are set up correctly.
+    /// @throws GCL::CRuntimeAssert(astroManager)
     /// @version  2016-04-25/GGB - Added action for IDA_ANALYSIS_LOADOBJECTS
-    // 2015-01-04/GGB - Corrected incorrect enabled values for the File Menu.
-    // 2013-05-12/GGB - Added the EXPORT CSV option.
-    // 2011-06-26/GGB - Function created.
+    /// @version 2015-01-04/GGB - Corrected incorrect enabled values for the File Menu.
+    /// @version 2013-05-12/GGB - Added the EXPORT CSV option.
+    /// @version 2011-06-26/GGB - Function created.
 
     void CImageWindow::btableTabActivating()
     {
@@ -821,19 +818,19 @@ namespace astroManager
 
         auto frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-        dynamic_cast<dockwidgets::CDockWidgetImage &>(frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)).setEnabled(false);
+        frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)->setEnabled(false);
 
-        dockwidgets::CAstrometryDockWidget &adw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
-        adw.setEnabled(false);
-        adw.imageDeactivating();
+        dockwidgets::CAstrometryDockWidget *adw = dynamic_cast<dockwidgets::CAstrometryDockWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
+        adw->setEnabled(false);
+        adw->imageDeactivating();
 
-        dockwidgets::CPhotometryDockWidget &pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
-        pdw.setEnabled(false);
-        pdw.imageDeactivating();
+        dockwidgets::CPhotometryDockWidget *pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
+        pdw->setEnabled(false);
+        pdw->imageDeactivating();
 
-        dynamic_cast<dockwidgets::CHistogram &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM)).setEnabled(false);
-        dynamic_cast<dockwidgets::CDockWidgetMagnify &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY)).imageDeactivating();
-        dynamic_cast<dockwidgets::CDockWidgetNavigator &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)).setEnabled(false);
+        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM)->setEnabled(false);
+        dynamic_cast<dockwidgets::CDockWidgetMagnify *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY))->imageDeactivating();
+        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)->setEnabled(false);
 
         frameWindow->childClosing(this);  // Let the parent know.
 
@@ -942,7 +939,7 @@ namespace astroManager
     }
 
     /// @brief Called to display the data for an HDU.
-    /// @param[in] nHDU = number of the HDU to display information for. 0 = Primary.
+    /// @param[in] nHDU: number of the HDU to display information for. 0 = Primary.
     /// @details All the keywords are read from the HDU file. All the standard keywords are also shown, even if there is no value
     ///          associated with them.
     /// @throws None.
@@ -1166,7 +1163,7 @@ namespace astroManager
         case ACL::BT_NONE:
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -1361,9 +1358,13 @@ namespace astroManager
         catch (GCL::CError &err)
         {
           if (err.errorCode() == 0x1100)
+          {
             labelTemperature->setText("");
+          }
           else
+          {
             throw;
+          };
         };
         try
         {
@@ -1372,9 +1373,13 @@ namespace astroManager
         catch (GCL::CError &err)
         {
           if (err.errorCode() == 0x1101)
+          {
             labelPressure->setText("");
+          }
           else
+          {
             throw;
+          };
         };
         try
         {
@@ -1383,9 +1388,13 @@ namespace astroManager
         catch (GCL::CError &err)
         {
           if (err.errorCode() == 0x1102)
+          {
             labelRH->setText("");
+          }
           else
+          {
             throw;
+          };
         };
       };
     }
@@ -1495,8 +1504,10 @@ namespace astroManager
               case CImageWindow::M_NONE:
                 break;
               default:
-                CODE_ERROR(astroManager);
+              {
+                ASTROMANAGER_CODE_ERROR;
                 break;
+              };
             };
             break;
           };
@@ -1510,14 +1521,14 @@ namespace astroManager
             break;
           default:
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
             break;
           };
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       }
     }
 
@@ -1536,7 +1547,10 @@ namespace astroManager
         case ACL::BT_ATABLE:
         case ACL::BT_BTABLE:
         case ACL::BT_IMAGE:
-          CODE_ERROR(astroManager);
+        {
+          ASTROMANAGER_CODE_ERROR;
+          break;
+        };
         case ACL::HDB_ASTROMETRY:
           exportAstrometryAsCSV();
           break;
@@ -1544,7 +1558,10 @@ namespace astroManager
           exportPhotometryAsCSV();
           break;
         default:
-          CODE_ERROR(astroManager);
+        {
+          ASTROMANAGER_CODE_ERROR;
+          break;
+        };
       };
     }
 
@@ -1587,9 +1604,13 @@ namespace astroManager
           scenePainter.end();
 
           if (sceneImage.save(QString::fromStdString(JPEGpath.string()), "JPG", quality))
+          {
             LOGMESSAGE(info, JPEGpath.string() + " saved.");
+          }
           else
+          {
             LOGMESSAGE(warning, "Failed to save " + JPEGpath.string() + ".");
+          };
         };
       };
     }
@@ -1628,9 +1649,13 @@ namespace astroManager
          gsImage->render(&scenePainter);   // Render the scene to the image.
          scenePainter.end();
          if (sceneImage.save(QString::fromStdString(PNGpath.string()), "PNG", quality))
+         {
            LOGMESSAGE(info, PNGpath.string() + " saved.");
+         }
          else
+         {
            LOGMESSAGE(warning, "Failed to save " + PNGpath.string());
+         };
        };
      };
     }
@@ -1775,14 +1800,13 @@ namespace astroManager
       pen.setColor(current);
       std::list<QGraphicsEllipseItem *> markers;
       std::list<QGraphicsEllipseItem *>::iterator markersIterator;
-      ACL::TImageSourceContainer::const_iterator sourceIterator;
       QGraphicsEllipseItem *graphicsItem;
 
-      auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
+      dockwidgets::CPhotometryDockWidget *pw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
 
       dialogs::SDialogFindStars sourceParameters;
-      sourceParameters.minBorder = pw.getRadius3();
+      sourceParameters.minBorder = pw->getRadius3();
       dialogs::CDialogFindStars dialogFindStars(sourceParameters);
 
       int dialogReturn;
@@ -1810,8 +1834,7 @@ namespace astroManager
 
         TRACEMESSAGE("Drawing items...");
 
-        std::for_each(sourceContainer.begin(), sourceContainer.end(),
-                      [&] (ACL::PImageSource pis)
+        std::for_each(sourceContainer.begin(), sourceContainer.end(), [&] (ACL::PImageSource pis)
         {
           graphicsItem = new QGraphicsEllipseItem( pis->center.x() - pis->radius, pis->center.y() - pis->radius,
                                                    pis->radius * 2, pis->radius * 2);
@@ -1821,7 +1844,6 @@ namespace astroManager
           markers.push_back(graphicsItem);
           graphicsItem = nullptr;
         });
-
 
         TRACEMESSAGE("Finished drawing items.");
       };
@@ -1926,7 +1948,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -1989,11 +2011,13 @@ namespace astroManager
         zoomAll();
 
         if (controlImage.astroFile->isDirty())
+        {
           updateWindowTitle();
+        };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -2011,29 +2035,33 @@ namespace astroManager
       {
         switch( controlImage.astroFile->HDBType(hdbName) )
         {
-        case ACL::BT_NONE:
-        case ACL::BT_IMAGE:
-          imageTabActivating();
-          break;
-        case ACL::BT_ATABLE:
-          atableTabActivating();
-          break;
-        case ACL::BT_BTABLE:
-          btableTabActivating();
-          break;
-        case ACL::HDB_ASTROMETRY:
-          astrometryTabActivating();
-          break;
-        case ACL::HDB_PHOTOMETRY:
-          photometryTabActivating();
-          break;
-        default:
-          CODE_ERROR(astroManager);
-          break;
+          case ACL::BT_NONE:
+          case ACL::BT_IMAGE:
+            imageTabActivating();
+            break;
+          case ACL::BT_ATABLE:
+            atableTabActivating();
+            break;
+          case ACL::BT_BTABLE:
+            btableTabActivating();
+            break;
+          case ACL::HDB_ASTROMETRY:
+            astrometryTabActivating();
+            break;
+          case ACL::HDB_PHOTOMETRY:
+            photometryTabActivating();
+            break;
+          default:
+          {
+            ASTROMANAGER_CODE_ERROR;
+            break;
+          };
         };
       }
       else
+      {
         infoTabActivating();
+      };
     }
 
     /// @brief Returns the astroFile associated with the window.
@@ -2047,9 +2075,9 @@ namespace astroManager
       return controlImage.astroFile.get();
     }
 
-    /// Updates the history being displayed.
-    //
-    // 2013-06-28/GGB - Function created.
+    /// @brief Updates the history being displayed.
+    /// @throws None.
+    /// @version 2013-06-28/GGB - Function created.
 
     void CImageWindow::historyUpdate()
     {
@@ -2107,7 +2135,7 @@ namespace astroManager
       else
       {
         pw->getAction(mdiframe::IDA_ANALYSIS_LOADOBJECTS)->setEnabled(false);
-      }
+      };
 
       pw->getAction(mdiframe::IDA_PHOTOMETRY_LOADTARGETLIST)->setEnabled(true);
 
@@ -2194,8 +2222,9 @@ namespace astroManager
 
     void CImageWindow::loadObjects()
     {
-      auto &dw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>
+      dockwidgets::CAstrometryDockWidget *dw = dynamic_cast<dockwidgets::CAstrometryDockWidget *>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
+
       std::optional<ACL::CAstronomicalCoordinates> tl, br;
       ACL::DTargetAstronomy targetList;       // Will be destructed when it goes out of scope.
       int targetCount = 0, targetOutside = 0, targetCentroid = 0;
@@ -2292,7 +2321,7 @@ namespace astroManager
               changeAstrometrySelection(controlImage.astrometryObservations.back().get());
 
               astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
-              dw.referenceCompleted(controlImage.astrometryObservations.back().get());
+              dw->referenceCompleted(controlImage.astrometryObservations.back().get());
 
               controlImage.astroFile->isDirty(true);
               controlImage.astroFile->hasData(true);
@@ -2339,8 +2368,8 @@ namespace astroManager
 
       auto frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      auto &adw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
-      auto &pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
+      auto *adw = dynamic_cast<dockwidgets::CAstrometryDockWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
+      auto *pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
 
       RUNTIME_ASSERT(astroManager, astroImage != nullptr, "The astro image should not be a nullptr.");
@@ -2365,7 +2394,7 @@ namespace astroManager
         };
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       };    // End of switch(algorithm) statement
 
@@ -2377,7 +2406,6 @@ namespace astroManager
           DEBUGMESSAGE("Adding objects to Astrometry list...");
 
           bool bClose = false;
-          astrometry::CAstrometryObservation *astrometryObject;
           ACL::CAstrometryObservation *existingObject;
 
           for (auto iter : imageObjectList)
@@ -2396,7 +2424,8 @@ namespace astroManager
 
             if (!bClose)
             {
-              controlImage.astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
+              controlImage.astrometryObservations.emplace_back(
+                    std::make_shared<astrometry::CAstrometryObservation>(std::make_shared<ACL::CTargetStellar>()));
 
               controlImage.astrometryObservations.back()->CCDCoordinates(iter->center);
 
@@ -2426,8 +2455,8 @@ namespace astroManager
 
               changeAstrometrySelection(controlImage.astrometryObservations.back().get());
 
-              adw.addNewObject(controlImage.astrometryObservations.back().get());
-              adw.displayAstrometry(controlImage.astrometryObservations.back().get());
+              adw->addNewObject(controlImage.astrometryObservations.back().get());
+              adw->displayAstrometry(controlImage.astrometryObservations.back().get());
 
               astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
             };
@@ -2445,7 +2474,6 @@ namespace astroManager
           DEBUGMESSAGE("Adding objects to Photometry list...");
 
           bool bClose = false;
-          photometry::CPhotometryObservation *photometryObject;
           ACL::CPhotometryObservation *existingObject;
 
           for (auto iter : imageObjectList)
@@ -2456,7 +2484,7 @@ namespace astroManager
 
               while ( (existingObject) && !bClose)
               {
-                bClose = existingObject->isClose(iter->center, pdw.getRadius2());
+                bClose = existingObject->isClose(iter->center, pdw->getRadius2());
                 existingObject = controlImage.astroFile->photometryObjectNext();
               };
             };
@@ -2465,11 +2493,12 @@ namespace astroManager
             {
                 // Object not already in the list. Add object to the list.
 
-              ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pdw.getRadius1(),
-                                                                                               pdw.getRadius2(),
-                                                                                               pdw.getRadius3()));
+              ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pdw->getRadius1(),
+                                                                                               pdw->getRadius2(),
+                                                                                               pdw->getRadius3()));
 
-              controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
+              controlImage.photometryObservations.emplace_back(
+                    std::make_shared<photometry::CPhotometryObservation>(std::make_shared<ACL::CTargetStellar>()));
               controlImage.photometryObservations.back()->CCDCoordinates(iter->center);
 
               controlImage.photometryObservations.back()->observedCoordinates() =
@@ -2506,8 +2535,8 @@ namespace astroManager
 
                   // Update the information in the dockwidget.
 
-                pdw.addNewObject(controlImage.photometryObservations.back().get());
-                pdw.displayPhotometry(controlImage.photometryObservations.back().get());
+                pdw->addNewObject(controlImage.photometryObservations.back().get());
+                pdw->displayPhotometry(controlImage.photometryObservations.back().get());
 
                 photometryReferenceAdd(controlImage.photometryObservations.back().get());
               }
@@ -2541,7 +2570,7 @@ namespace astroManager
 
     void CImageWindow::mousePressAstrometry(QMouseEvent *mouseEvent)
     {
-      auto &dw = dynamic_cast<dockwidgets::CAstrometryDockWidget &>
+      dockwidgets::CAstrometryDockWidget *dw = dynamic_cast<dockwidgets::CAstrometryDockWidget *>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_ASTROMETRYCONTROL));
       QPointF point;
       bool bClose;
@@ -2551,7 +2580,7 @@ namespace astroManager
       if (!astroImage)
       {
         ASTROMANAGER_CODE_ERROR;
-      }
+      };
 
       switch (mouseEvent->button())
       {
@@ -2586,7 +2615,9 @@ namespace astroManager
 
           if (!bClose)
           {
-            controlImage.astrometryObservations.emplace_back(std::make_shared<astrometry::CAstrometryObservation>());
+            controlImage.astrometryObservations.
+                emplace_back(std::make_shared<astrometry::CAstrometryObservation>(
+                               std::make_shared<ACL::CTargetStellar>()));
             controlImage.astrometryObservations.back()->CCDCoordinates(*centroid);
 
               // Get the image coordinates and convert to WCS coordinates.
@@ -2619,7 +2650,7 @@ namespace astroManager
             controlImage.astroFile->isDirty(true);
             controlImage.astroFile->hasData(true);
             updateWindowTitle();
-            dw.referenceCompleted(controlImage.astrometryObservations.back().get());
+            dw->referenceCompleted(controlImage.astrometryObservations.back().get());
           };
         }
         else
@@ -2638,7 +2669,7 @@ namespace astroManager
         };
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
@@ -2654,7 +2685,7 @@ namespace astroManager
     {
       QPointF point;
       bool bClose;
-      auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
+      dockwidgets::CPhotometryDockWidget *pw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       ACL::CPhotometryObservation *existingObject;
 
@@ -2685,7 +2716,7 @@ namespace astroManager
 
                 while ( (existingObject) && !bClose)
                 {
-                  bClose = existingObject->isClose(MCL::TPoint2D<FP_t>(point.x(), point.y()), pw.getRadius2());
+                  bClose = existingObject->isClose(MCL::TPoint2D<FP_t>(point.x(), point.y()), pw->getRadius2());
                   existingObject = controlImage.astroFile->photometryObjectNext();
                 };
               };
@@ -2695,11 +2726,13 @@ namespace astroManager
                 // Object not already in the list.
                 // Add object to the list.
 
-                ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw.getRadius1(),
-                                                                                                 pw.getRadius2(),
-                                                                                                 pw.getRadius3()));
+                ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw->getRadius1(),
+                                                                                                 pw->getRadius2(),
+                                                                                                 pw->getRadius3()));
 
-                controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
+                controlImage.photometryObservations.
+                    emplace_back(std::make_shared<photometry::CPhotometryObservation>(
+                                   std::make_shared<ACL::CTargetStellar>()));
                 controlImage.photometryObservations.back()->CCDCoordinates(*centroid);
 
                 controlImage.photometryObservations.back()->observedCoordinates() =
@@ -2707,7 +2740,14 @@ namespace astroManager
 
                 controlImage.photometryObservations.back()->photometryAperture(photometryAperture);
                 controlImage.photometryObservations.back()->exposure() = controlImage.astroFile->getHDB(controlImage.currentHDB)->EXPOSURE();
-                controlImage.photometryObservations.back()->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
+                if (controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordExists(ACL::SBIG_EGAIN))
+                {
+                  controlImage.photometryObservations.back()->gain(static_cast<FP_t>(controlImage.astroFile->getHDB(controlImage.currentHDB)->keywordData(ACL::SBIG_EGAIN)));
+                }
+                else
+                {
+                  controlImage.photometryObservations.back()->gain(0);
+                };
                 controlImage.photometryObservations.back()->FWHM(controlImage.astroFile->FWHM(controlImage.currentHDB, MCL::TPoint2D<FP_t>(point.x(), point.y())));
 
                 controlImage.astroFile->pointPhotometry(controlImage.currentHDB, *controlImage.photometryObservations.back().get());    // Now perform the photometry on the object
@@ -2734,8 +2774,8 @@ namespace astroManager
 
                   // Update the information in the dockwidget.
 
-                pw.addNewObject(controlImage.photometryObservations.back().get());
-                pw.displayPhotometry(controlImage.photometryObservations.back().get());
+                pw->addNewObject(controlImage.photometryObservations.back().get());
+                pw->displayPhotometry(controlImage.photometryObservations.back().get());
 
                 photometryReferenceAdd(controlImage.photometryObservations.back().get());
 
@@ -2787,7 +2827,7 @@ namespace astroManager
         };
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       };
     }
@@ -2854,7 +2894,7 @@ namespace astroManager
 
     void CImageWindow::photometryLoadTargets()
     {
-      auto &pw = dynamic_cast<dockwidgets::CPhotometryDockWidget &>
+      dockwidgets::CPhotometryDockWidget *pw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>
           (dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       std::vector<std::shared_ptr<photometry::CPhotometryObservation>> photometryTargets;
 
@@ -2974,7 +3014,7 @@ namespace astroManager
 
                 while ( (existingObject) && !bClose)
                 {
-                  bClose = existingObject->isClose(point, pw.getRadius2());
+                  bClose = existingObject->isClose(point, pw->getRadius2());
                   existingObject = controlImage.astroFile->photometryObjectNext();
                 };
               };
@@ -2987,9 +3027,9 @@ namespace astroManager
                 try
                 {
                   controlImage.photometryObservations.emplace_back(std::make_shared<photometry::CPhotometryObservation>());
-                  ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw.getRadius1(),
-                                                                                                   pw.getRadius2(),
-                                                                                                   pw.getRadius3()));
+                  ACL::PPhotometryAperture photometryAperture(new ACL::CPhotometryApertureCircular(pw->getRadius1(),
+                                                                                                   pw->getRadius2(),
+                                                                                                   pw->getRadius3()));
 
                   controlImage.photometryObservations.back()->objectName( (*targetIterator)->objectName());
                   controlImage.photometryObservations.back()->CCDCoordinates(*centroid);
@@ -3018,8 +3058,8 @@ namespace astroManager
 
                     // Update the information in the dockwidget.
 
-                  pw.addNewObject(controlImage.photometryObservations.back().get());
-                  pw.displayPhotometry(controlImage.photometryObservations.back().get());
+                  pw->addNewObject(controlImage.photometryObservations.back().get());
+                  pw->displayPhotometry(controlImage.photometryObservations.back().get());
                   photometryReferenceAdd(controlImage.photometryObservations.back().get());
 
                   LOGMESSAGE(info, controlImage.photometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
@@ -3058,7 +3098,7 @@ namespace astroManager
     }
 
     /// @brief Function called when the dockwidget needs to add a new reference to the image window.
-    /// @param[in] po - The photometry object to add to the HDU.
+    /// @param[in] po: The photometry object to add to the HDU.
     /// @throws None.
     /// @details  Using this function as the entry point allows the FITS headers and information to be updated without having to
     /// add special calls back to the CImageWidow.
@@ -3318,9 +3358,13 @@ namespace astroManager
             if (twHDU->item(row, 0)->text() == QString::fromStdString(ACL::FITS_BITPIX) )
             {
               if (controlImage.astroFile->keywordData(controlImage.currentHDB, ACL::FITS_BITPIX, szValue, szComment) )
+              {
                 twHDU->item(row, 1)->setText(QString::fromStdString(szValue));
+              }
               else
-                CODE_ERROR(astroManager);
+              {
+                ASTROMANAGER_CODE_ERROR;
+              };
             };
           };
         };
@@ -3429,7 +3473,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       }
       else
@@ -3452,7 +3496,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       }
       else if (mode == M_PHOTOMETRY)
@@ -3463,7 +3507,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       }
       else if (mode == M_NONE)
@@ -3474,7 +3518,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       };
     }
@@ -3622,7 +3666,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -3642,15 +3686,17 @@ namespace astroManager
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
       RUNTIME_ASSERT(astroManager, pw != nullptr,  "Parent widget cannot be nullptr.");
 
+      CAstroImageWindow::windowActivating();      // Must be called first. Handles the dockWidget notifications.
+
       std::string hdbName = cbHDU->currentText().toStdString();
 
       switch (controlImage.astroFile->HDBType(hdbName))
       {
         case ACL::BT_IMAGE:
         {
-          imageChange(&controlImage);  // Will not update dockwidgets when changing windows if missing!
+          //imageChange(&controlImage);  // Will not update dockwidgets when changing windows if missing!
 
-          // The following calls enable the dock widgets.
+            // The following calls enable the dock widgets.
 
           dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->enableDockWidgetsImage(true);
 
@@ -3659,27 +3705,27 @@ namespace astroManager
         };
         case ACL::HDB_ASTROMETRY:
         {
-          imageChange(nullptr);  // Will not update dockwidgets when changing windows if missing!
+          //imageChange(nullptr);  // Will not update dockwidgets when changing windows if missing!
           astrometryTabActivating();
           break;
         };
         case ACL::HDB_PHOTOMETRY:
         {
-          imageChange(nullptr);  // Will not update dockwidgets when changing windows if missing!
+          //imageChange(nullptr);  // Will not update dockwidgets when changing windows if missing!
           photometryTabActivating();
           break;
         };
         case ACL::BT_NONE:
         default:
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
           break;
         };
       };
 
-      // Common Actions
+        // Common Actions
 
-      // File Menu
+        // File Menu
 
       if (isWindowModified())
       {
@@ -3707,7 +3753,7 @@ namespace astroManager
     }
 
     /// @brief Menu function View | Zoom All
-    /// @throws CCodeError
+    /// @throws GCL::CCodeError(astroManager)
     /// @version 2011-06-02/GGB - Function created.
 
     void CImageWindow::zoomAll()

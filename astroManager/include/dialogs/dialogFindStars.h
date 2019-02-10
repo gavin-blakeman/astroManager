@@ -74,6 +74,7 @@ namespace astroManager
     protected:
     public:
       CDialogFindStars(SDialogFindStars &nsp);
+
     public slots:
       void eventButtonExtract(bool);
     };

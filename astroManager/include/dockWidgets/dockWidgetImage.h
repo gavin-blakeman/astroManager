@@ -72,14 +72,10 @@ namespace astroManager
       static void setCurrentImage(imaging::SControlImage *);
 
       virtual void imageChanged() = 0;
-      virtual void imageActivating() {}
-      virtual void imageDeactivating() {}
-
     };
 
   } // namespace dockwidgets
-
-} // namespace AstroManager
+} // namespace astroManager
 
 #endif // DOCKWIDGETIMAGE
 

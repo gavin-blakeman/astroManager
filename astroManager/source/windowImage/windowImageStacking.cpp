@@ -942,12 +942,12 @@ namespace astroManager
       {
         mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-        frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL).setEnabled(false);
-        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM).setEnabled(false);
+        frameWindow->getDockWidget(mdiframe::IDDW_IMAGECONTROL)->setEnabled(false);
+        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_HISTOGRAM)->setEnabled(false);
 
-        dynamic_cast<dockwidgets::CDockWidgetMagnify &>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY)).imageDeactivating();
+        dynamic_cast<dockwidgets::CDockWidgetMagnify *>(frameWindow->getDockWidget(mdiframe::IDDW_VIEW_MAGNIFY))->imageDeactivating();
 
-        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR).setEnabled(false);
+        frameWindow->getDockWidget(mdiframe::IDDW_VIEW_NAVIGATOR)->setEnabled(false);
 
         frameWindow->imageCreateWindow(outputControlImage.astroFile);
 
@@ -960,7 +960,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
@@ -1001,7 +1001,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
 
     }
@@ -1464,7 +1464,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          ASTROMANAGER_CODE_ERROR;
         };
       }
       catch (...)
@@ -1518,7 +1518,7 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            ASTROMANAGER_CODE_ERROR;
           };
         };
       };
@@ -1724,7 +1724,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        ASTROMANAGER_CODE_ERROR;
       };
     }
 
