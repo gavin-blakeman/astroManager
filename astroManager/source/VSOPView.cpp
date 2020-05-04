@@ -55,7 +55,7 @@ namespace astroManager
 {
 
   /// @brief Constructor for the class.
-  /// @param[in] parent - The parent that owns this instance.
+  /// @param[in] parent: The parent that owns this instance.
   /// @throws None.
   /// @version 2009-10-25/GGB - Function created.
 

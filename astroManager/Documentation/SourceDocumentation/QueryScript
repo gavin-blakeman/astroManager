@@ -1,0 +1,10 @@
+output console=off script=off
+format object "%OTYPE(S); " +
+              "%IDLIST(1); " +
+		          "%COO(A); %COO(D); " +
+		          "%8.3PM(A); %8.3PM(D); " +
+		          "%PLX(V); " +
+		          "%RV(V);"
+
+query sample region(box,10 30 +60 10, 3d 10m) & maintypes=star
+

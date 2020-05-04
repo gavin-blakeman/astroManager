@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2018 Gavin Blakeman.
+//                      Copyright 2012-2019 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -2138,7 +2138,7 @@ namespace astroManager
     }
 
     /// @brief Returns the latest version number for the spedified image. (Latest == highest version number)
-    /// @param[in] imageID - The ID of the image to get the version number.
+    /// @param[in] imageID: The ID of the image to get the version number.
     /// @returns The latest imageVersion.
     /// @throws None.
     /// @version 2017-08-12/GGB - Function created.
@@ -2154,7 +2154,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGE_VERSION"}).from({"TBL_IMAGESTORAGE"})
             .where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
-            .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::CSQLWriter::DESC)});
+            .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::DESC)});
 
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {
