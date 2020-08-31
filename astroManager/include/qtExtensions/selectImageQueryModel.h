@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -71,7 +71,7 @@ namespace astroManager
 
     private:
       CSelectImageQueryModel(CSelectImageQueryModel const &) = delete;
-      GCL::sqlwriter::CSQLWriter sqlWriter_;
+      GCL::sqlWriter sqlWriter_;
 
     protected:
     public:
@@ -81,7 +81,7 @@ namespace astroManager
       virtual QVariant data(QModelIndex const &item, int role = Qt::DisplayRole) const;
       virtual void resetQuery();
 
-      virtual GCL::sqlwriter::CSQLWriter &sqlWriter() { return sqlWriter_; }
+      virtual GCL::sqlWriter &sqlWriter() { return sqlWriter_; }
     };
 
   } // namespace QTE

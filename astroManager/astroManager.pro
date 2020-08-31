@@ -10,7 +10,7 @@
 # AUTHOR:							Gavin Blakeman.
 # LICENSE:            GPLv2
 #
-#                     Copyright 2013-2019 Gavin Blakeman.
+#                     Copyright 2013-2020 Gavin Blakeman.
 #                     This file is part of the AstroManager software.
 #
 #                     AstroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -62,7 +62,7 @@ INCLUDEPATH += \
   "../ACL" \
   "../astrometry" \
   "../GCL" \
-  #"../../Library/LibRaw" \
+  "../LibRaw" \
   "../libWCS/wcstools-3.8.7/libwcs" \
   "../MCL" \
   "../QCL" \

@@ -239,7 +239,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"TBL_SITE.ID", "TBL_SITE.DESCRIPTION"}).from({"TBL_SITE"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("DONOTUSE"), std::string("="), "false"),
+                    GCL::sqlWriter::parameterTriple(std::string("DONOTUSE"), std::string("="), "false"),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))

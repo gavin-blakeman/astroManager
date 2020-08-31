@@ -62,6 +62,7 @@ namespace astroManager
 
   /// @brief Event handler to ensure that unhandled exceptions are caught and handled.
   /// @throws None.
+  /// @version 2020-08-31/GGB - Remove code that logged to std::clog. This would repeat the message logging.
   /// @version 2017-07-10/GGB - Fixed Bug #38 - Use of GCL rather than library name.
   /// @version 2017-06-20/GGB - Updating to use GCL error handling. (Bug #70)
   /// @version 2017-06-18/GGB - Removed dead code (Bug #38)
@@ -78,16 +79,13 @@ namespace astroManager
     {
       QMessageBox msgBox;
 
-      msgBox.setText(QString::fromStdString("Code Error in " + codeError.library() + " Library"));
+      msgBox.setText(QString::fromStdString("Code Error"));
       msgBox.setStandardButtons(QMessageBox::Abort);
       msgBox.setDefaultButton(QMessageBox::Abort);
       msgBox.setIcon(QMessageBox::Critical);
-      msgBox.setInformativeText(QString::fromStdString(codeError.errorMessage()));
+      msgBox.setInformativeText(QString::fromStdString(codeError.what()));
 
       msgBox.exec();
-
-      std::clog << codeError.library() << " Code Error" << std::endl;
-      std::clog << codeError.errorMessage();
 
       exit(-1);
     }
@@ -100,7 +98,7 @@ namespace astroManager
     }
     catch (GCL::CRuntimeAssert &error)
     {
-      std::clog << "Runtime assertion in library " << error.library() << std::endl;
+      std::clog << error.what() << std::endl;
 
       exit(-1);
     }

@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2019 Gavin Blakeman.
+//                      Copyright 2012-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -228,8 +228,8 @@ namespace astroManager
 
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGE_DATA"}).from({"TBL_IMAGESTORAGE"}).
-            where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
-                   GCL::sqlwriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), imageVersion)});
+            where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
+                   GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), imageVersion)});
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {
           query.first();
@@ -291,8 +291,8 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlString = sqlWriter.select({"SITE_ID", "SHORTTEXT", "LATITUDE, LONGITUDE, ALTITUDE, TIMEZONE, IAUCODE"})
                              .from({"TBL_SITES"})
-                             .where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"),
-                                      GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), lastFound)
+                             .where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"),
+                                      GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), lastFound)
                                      }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -342,7 +342,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlString = sqlWriter.select({"SITE_ID", "SHORTTEXT", "LATITUDE, LONGITUDE, ALTITUDE, TIMEZONE, IAUCODE"})
                              .from({"TBL_SITES"})
-                             .where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"), })
+                             .where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"), })
                              .string();
 
         std::cout << sqlString << std::endl;
@@ -420,8 +420,8 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TELESCOPE_ID", "MANUFACTURER", "MODEL", "APERTURE", "FOCALLENGTH", "OBSTRUCTION"})
           .from({"TBL_TELESCOPES"})
-          .where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"),
-                   GCL::sqlwriter::parameterTriple(std::string("SHORTTEXT"), std::string("="), telescope->telescopeName()) });
+          .where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"),
+                   GCL::sqlWriter::parameterTriple(std::string("SHORTTEXT"), std::string("="), telescope->telescopeName()) });
 
       sqlQuery->clear();
 
@@ -474,7 +474,7 @@ namespace astroManager
       {
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGENAME"}).from({"TBL_IMAGES"}).
-            where({ GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID) });
+            where({ GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID) });
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -523,7 +523,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlWriter.select({"SHORTTEXT", "LATITUDE", "LONGITUDE", "ALTITUDE", "TIMEZONE", "DONTDISPLAY", "IAUCODE", "DAYLIGHTSAVING"}).
             from({"TBL_SITES"}).
-            where({ GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
+            where({ GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -584,7 +584,7 @@ namespace astroManager
 
         sqlWriter.select({"TimeZone"}).
             from({"TBL_SITES"}).
-            where({ GCL::sqlwriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
+            where({ GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -749,7 +749,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -795,7 +795,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"IMAGE_UUID"}).from({"TBL_IMAGES"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -842,7 +842,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -886,7 +886,7 @@ namespace astroManager
 
       sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
           where({
-                  GCL::sqlwriter::parameterTriple(std::string("IMAGE_UUID"), std::string("="), UUID.toString().toStdString()),
+                  GCL::sqlWriter::parameterTriple(std::string("IMAGE_UUID"), std::string("="), UUID.toString().toStdString()),
                 });
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -934,7 +934,7 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"FILTER_ID", "SHORTTEXT", "DESCRIPTION"}).from({"TBL_FILTERS"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("OBSOLETE"), std::string("="), "false"),
+                    GCL::sqlWriter::parameterTriple(std::string("OBSOLETE"), std::string("="), "false"),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -1010,9 +1010,9 @@ namespace astroManager
                         "TBL_SITES.SHORTTEXT", "TBL_TELESCOPES.SHORTTEXT", "TBL_IMAGES.IMAGEDATE", "TBL_IMAGES.IMAGETIME",
                         "TBL_IMAGES.RA", "TBL_IMAGES.DECLINATION", "TBL_IMAGES.QUALITY", "TBL_IMAGES.SYNTHETIC",
                         "TBL_IMAGES.ASTROMETRIC", "TBL_IMAGES.PHOTOMETRIC", "TBL_IMAGES.IMAGE_ID", "COMMENTS"}).from("TBL_IMAGES")
-          .join({std::make_tuple("TBL_IMAGES", "FILTER_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_FILTERS", "FILTER_ID"),
-                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
-                 std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")})
+          .join({std::make_tuple("TBL_IMAGES", "FILTER_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_FILTERS", "FILTER_ID"),
+                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
+                 std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")})
           .where("TBL_IMAGES.IMAGE_ID", "=", dialog->imageID_);
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1091,8 +1091,8 @@ namespace astroManager
         sqlWriter.resetQuery();
         std::string sqlString = sqlWriter.select({"ID"}).from({"TBL_IMAGESTORAGE"}).
             where({
-                    GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
-                    GCL::sqlwriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), 0),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), 0),
                   }).string();
 
         if (query.exec(QString::fromStdString(sqlString)))
@@ -1257,7 +1257,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1297,7 +1297,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1336,7 +1336,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1373,7 +1373,7 @@ namespace astroManager
         sqlWriter.resetQuery();
 
         sqlWriter.select({"SHORTTEXT", "PLAN_ID"}).from({"TBL_PLANS"}).
-            where({GCL::sqlwriter::parameterTriple(std::string("COMPLETE"), std::string("<>"), true)});;
+            where({GCL::sqlWriter::parameterTriple(std::string("COMPLETE"), std::string("<>"), true)});;
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -1426,7 +1426,7 @@ namespace astroManager
         sqlWriter.resetQuery();
 
         sqlWriter.select({"SHORTTEXT", "SITE_ID"}).from({"TBL_SITES"}).
-            where({GCL::sqlwriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});;
+            where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});;
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -1570,7 +1570,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID", "TARGET_NAME"})
                .from({"TBL_TARGETS"})
-               .where({GCL::sqlwriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
+               .where({GCL::sqlWriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -1722,11 +1722,11 @@ namespace astroManager
                          astroFile->fileNameValid() ? astroFile->getFileName().parent_path().string() : boost::filesystem::path(),
                          astroFile->getObservationTime().UTC().decompose().first,
                          astroFile->getObservationTime().UTC().decompose().second, siteID, telescopeID,
-                         astroFile->getObservationTarget(), GCL::sqlwriter::bindValue(":ra"), GCL::sqlwriter::bindValue(":dec"),
-                         filterID, hasWCSData, GCL::sqlwriter::bindValue(":c1ra"), GCL::sqlwriter::bindValue(":c1dec"),
-                         GCL::sqlwriter::bindValue(":c2ra"), GCL::sqlwriter::bindValue(":c2dec"),
-                         GCL::sqlwriter::bindValue(":c3ra"), GCL::sqlwriter::bindValue(":c3dec"),
-                         GCL::sqlwriter::bindValue(":c4ra"), GCL::sqlwriter::bindValue(":c4dec"),
+                         astroFile->getObservationTarget(), GCL::sqlWriter::bindValue(":ra"), GCL::sqlWriter::bindValue(":dec"),
+                         filterID, hasWCSData, GCL::sqlWriter::bindValue(":c1ra"), GCL::sqlWriter::bindValue(":c1dec"),
+                         GCL::sqlWriter::bindValue(":c2ra"), GCL::sqlWriter::bindValue(":c2dec"),
+                         GCL::sqlWriter::bindValue(":c3ra"), GCL::sqlWriter::bindValue(":c3dec"),
+                         GCL::sqlWriter::bindValue(":c4ra"), GCL::sqlWriter::bindValue(":c4dec"),
                          astroFile->syntheticImage()
                        }});
 
@@ -1949,7 +1949,7 @@ namespace astroManager
       }
       else
       {
-        sqlWriter.set("COMMENTS", GCL::sqlwriter::bindValue(":comments"));
+        sqlWriter.set("COMMENTS", GCL::sqlWriter::bindValue(":comments"));
         sqlQuery->prepare(QString::fromStdString(sqlWriter.string()));
         sqlQuery->bindValue(":comments", imageComments, QSql::In);
       };
@@ -2036,8 +2036,8 @@ namespace astroManager
       sqlWriter.resetQuery();
       std::string sqlString = sqlWriter.insertInto("TBL_IMAGESTORAGE", {"IMAGE_ID", "IMAGE_VERSION", "IMAGE_DATA",
                                                                         "DATETIME", "COMMENT"})
-          .values({ {imageID, imageVersion, GCL::sqlwriter::bindValue(":image"), GCL::sqlwriter::bindValue(":datetime"),
-                     GCL::sqlwriter::bindValue(":comment")}}).string();
+          .values({ {imageID, imageVersion, GCL::sqlWriter::bindValue(":image"), GCL::sqlWriter::bindValue(":datetime"),
+                     GCL::sqlWriter::bindValue(":comment")}}).string();
 
       sqlQuery->clear();
       sqlQuery->prepare(QString::fromStdString(sqlString));
@@ -2073,8 +2073,8 @@ namespace astroManager
 
       sqlWriter.resetQuery();
       sqlWriter.insertInto("TBL_IMAGESTORAGE", {"IMAGE_ID", "IMAGE_VERSION", "IMAGE_DATA", "DATETIME", "COMMENT"})
-          .values({ {imageID, imageVersion, GCL::sqlwriter::bindValue(":image"), GCL::sqlwriter::bindValue(":datetime"),
-                     GCL::sqlwriter::bindValue(":comment")}});
+          .values({ {imageID, imageVersion, GCL::sqlWriter::bindValue(":image"), GCL::sqlWriter::bindValue(":datetime"),
+                     GCL::sqlWriter::bindValue(":comment")}});
 
       sqlQuery->clear();
       sqlQuery->prepare(QString::fromStdString(sqlWriter.string()));
@@ -2111,7 +2111,7 @@ namespace astroManager
 
         sqlWriter.resetQuery();
         sqlWriter.select({}).count("*").from({"TBL_IMAGESTORAGE"}).
-            where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)});
+            where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)});
 
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -2153,8 +2153,8 @@ namespace astroManager
 
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGE_VERSION"}).from({"TBL_IMAGESTORAGE"})
-            .where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
-            .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::DESC)});
+            .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
+            .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
 
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {

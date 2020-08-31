@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2018, 2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -86,13 +86,13 @@ namespace astroManager
 
     void CDialogSelectImages::populateFilters()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"TBL_FILTERS.FILTER_ID", "TBL_FILTERS.SHORTTEXT", "TBL_FILTERS.DESCRIPTION"})
           .distinct()
           .from({"TBL_FILTERS"})
-          .join({std::make_tuple("TBL_FILTERS", "FILTER_ID", GCL::sqlwriter::CSQLWriter::JOIN_INNER, "TBL_IMAGES", "FILTER_ID")})
-          .orderBy({std::make_pair("TBL_FILTERS.SHORTTEXT", GCL::sqlwriter::CSQLWriter::ASC)});
+          .join({std::make_tuple("TBL_FILTERS", "FILTER_ID", GCL::sqlWriter::JOIN_INNER, "TBL_IMAGES", "FILTER_ID")})
+          .orderBy({std::make_pair("TBL_FILTERS.SHORTTEXT", GCL::sqlWriter::ASC)});
 
       QSqlQuery sqlQuery(database::databaseARID->database());
 
@@ -120,13 +120,13 @@ namespace astroManager
 
     void CDialogSelectImages::populateSites()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"TBL_SITES.SITE_ID", "TBL_SITES.SHORTTEXT"})
           .distinct()
           .from({"TBL_SITES"})
-          .join({std::make_tuple("TBL_SITES", "SITE_ID", GCL::sqlwriter::CSQLWriter::JOIN_INNER, "TBL_IMAGES", "SITE_ID")})
-          .orderBy({std::make_pair("TBL_SITES.SHORTTEXT", GCL::sqlwriter::CSQLWriter::ASC)});
+          .join({std::make_tuple("TBL_SITES", "SITE_ID", GCL::sqlWriter::JOIN_INNER, "TBL_IMAGES", "SITE_ID")})
+          .orderBy({std::make_pair("TBL_SITES.SHORTTEXT", GCL::sqlWriter::ASC)});
 
       QSqlQuery sqlQuery(database::databaseARID->database());
 
@@ -154,12 +154,12 @@ namespace astroManager
 
     void CDialogSelectImages::populateTargets()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"TARGET"})
           .distinct()
           .from({"TBL_IMAGES"})
-          .orderBy({std::make_pair("TARGET", GCL::sqlwriter::CSQLWriter::ASC)});
+          .orderBy({std::make_pair("TARGET", GCL::sqlWriter::ASC)});
 
       QSqlQuery sqlQuery(database::databaseARID->database());
 
@@ -187,13 +187,13 @@ namespace astroManager
 
     void CDialogSelectImages::populateTelescopes()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"TBL_TELESCOPES.TELESCOPE_ID", "TBL_TELESCOPES.SHORTTEXT"})
           .distinct()
           .from({"TBL_TELESCOPES"})
-          .join({std::make_tuple("TBL_TELESCOPES", "TELESCOPE_ID", GCL::sqlwriter::CSQLWriter::JOIN_INNER, "TBL_IMAGES", "TELESCOPE_ID")})
-          .orderBy({std::make_pair("TBL_TELESCOPES.SHORTTEXT", GCL::sqlwriter::CSQLWriter::ASC)});
+          .join({std::make_tuple("TBL_TELESCOPES", "TELESCOPE_ID", GCL::sqlWriter::JOIN_INNER, "TBL_IMAGES", "TELESCOPE_ID")})
+          .orderBy({std::make_pair("TBL_TELESCOPES.SHORTTEXT", GCL::sqlWriter::ASC)});
 
       QSqlQuery sqlQuery(database::databaseARID->database());
 
@@ -221,7 +221,7 @@ namespace astroManager
 
     void CDialogSelectImages::setDates()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select()
           .max("IMAGEDATE")
@@ -325,30 +325,31 @@ namespace astroManager
 
     void CDialogSelectImages::eventUpdateFilterString(int)
     {
-      GCL::sqlwriter::CSQLWriter &sqlWriter = queryModel.sqlWriter();
+      GCL::sqlWriter &sqlWriter = queryModel.sqlWriter();
 
       sqlWriter.resetWhere();
 
       if (groupBoxTarget->isChecked())
       {
-        sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("TBL_IMAGES.TARGET"), std::string("="), comboBoxTarget->currentText().toStdString())});
+        sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("TBL_IMAGES.TARGET"), std::string("="),
+                         comboBoxTarget->currentText().toStdString())});
       };
 
       if (groupBoxFilter->isChecked())
       {
-        sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("TBL_IMAGES.FILTER_ID"), std::string("="),
+        sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("TBL_IMAGES.FILTER_ID"), std::string("="),
                          comboBoxFilter->itemData(comboBoxFilter->currentIndex()).toUInt())});
       };
 
       if (groupBoxObservingSite->isChecked())
       {
-        sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("TBL_IMAGES.SITE_ID"), std::string("="),
+        sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("TBL_IMAGES.SITE_ID"), std::string("="),
                          comboBoxObservingSite->itemData(comboBoxObservingSite->currentIndex()).toUInt())});
       };
 
       if (groupBoxTelescope->isChecked())
       {
-        sqlWriter.where({GCL::sqlwriter::parameterTriple(std::string("TBL_IMAGES.TELESCOPE_ID"), std::string("="),
+        sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("TBL_IMAGES.TELESCOPE_ID"), std::string("="),
                          comboBoxTelescope->itemData(comboBoxTelescope->currentIndex()).toUInt())});
       };
 

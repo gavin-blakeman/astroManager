@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,10 +36,10 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/qtExtensions/selectImageQueryModel.h"
+#include "include/qtExtensions/selectImageQueryModel.h"
 
-#include "../../include/database/databaseARID.h"
-#include "../../include/error.h"
+#include "include/database/databaseARID.h"
+#include "include/error.h"
 
   // Miscellanous libraries
 
@@ -61,9 +61,9 @@ namespace astroManager
                          "TBL_TELESCOPES.SHORTTEXT", "TBL_IMAGES.IMAGEDATE", "TBL_IMAGES.IMAGETIME", "TBL_IMAGES.RA",
                          "TBL_IMAGES.DECLINATION", "TBL_IMAGES.QUALITY", "TBL_IMAGES.COMMENTS", "TBL_IMAGES.IMAGE_ID"})
           .from({"TBL_IMAGES"})
-          .join({std::make_tuple("TBL_IMAGES", "FILTER_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_FILTERS", "FILTER_ID"),
-                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
-                 std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")});
+          .join({std::make_tuple("TBL_IMAGES", "FILTER_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_FILTERS", "FILTER_ID"),
+                 std::make_tuple("TBL_IMAGES", "SITE_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_SITES", "SITE_ID"),
+                 std::make_tuple("TBL_IMAGES", "TELESCOPE_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_TELESCOPES", "TELESCOPE_ID")});
 
       setQuery(QString::fromStdString(sqlWriter_.string()), database::databaseARID->database());
 

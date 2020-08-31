@@ -57,7 +57,7 @@
 
   // Qxt Library
 
-#include <QxtGui/QxtSpanSlider>
+#include "../Qxt/include/QxtGui/QxtSpanSlider"
 
   // Qwt Library
 

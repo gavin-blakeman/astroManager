@@ -3286,8 +3286,8 @@ namespace astroManager
           }
           else
           {
-            LOGMESSAGE(warning, "Error opening file");
-            LOGMESSAGE(warning, std::to_string(err.errorCode()) + " - " + err.errorMessage());
+            WARNINGMESSAGE("Error opening file");
+            WARNINGMESSAGE(std::to_string(err.errorCode()) + " - " + err.errorMessage());
 
             msgBox.setText(tr("Error Opening file."));
             msgBox.setInformativeText(tr("There was an error opening the file."));
@@ -3319,7 +3319,7 @@ namespace astroManager
 
         catch(...)
         {
-          LOGMESSAGE(warning, "Unknown exception while opening file.");
+          WARNINGMESSAGE("Unknown exception while opening file.");
         };
       }
     }
@@ -3379,8 +3379,8 @@ namespace astroManager
         }
         else
         {
-          LOGMESSAGE(warning, "Error opening file");
-          LOGMESSAGE(warning, std::to_string(err.errorCode()) + " - " + err.errorMessage());
+          WARNINGMESSAGE("Error opening file");
+          WARNINGMESSAGE(std::to_string(err.errorCode()) + " - " + err.errorMessage());
 
           msgBox.setText(tr("Error Opening file."));
           msgBox.setInformativeText(tr("There was an error opening the file."));
@@ -3412,7 +3412,7 @@ namespace astroManager
 
       catch(...)
       {
-        LOGMESSAGE(warning, "Unknown exception while opening file.");
+        WARNINGMESSAGE("Unknown exception while opening file.");
       };
     }
 

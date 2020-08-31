@@ -315,15 +315,13 @@ int main(int argc, char *argv[])
   }
   catch(GCL::CCodeError &codeError)
   {
-    codeError.logErrorMessage();
-
     QMessageBox msgBox;
 
-    msgBox.setText(QString::fromStdString("Code Error in " + codeError.library() + " Library"));
+    msgBox.setText(QString::fromStdString("Code Error"));
     msgBox.setStandardButtons(QMessageBox::Abort);
     msgBox.setDefaultButton(QMessageBox::Abort);
     msgBox.setIcon(QMessageBox::Critical);
-    msgBox.setInformativeText(QString::fromStdString(codeError.errorMessage()));
+    msgBox.setInformativeText(QString::fromStdString(codeError.what()));
     msgBox.exec();
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::notice,
@@ -342,8 +340,7 @@ int main(int argc, char *argv[])
   }
   catch (GCL::CRuntimeAssert &error)
   {
-    GCL::logger::defaultLogger().logMessage(GCL::logger::error,
-                                            "Application terminated for a runtime assert in library" + error.library());
+    ERRORMESSAGE(error.what());
     GCL::logger::defaultLogger().shutDown();
     GCL::logger::defaultLogger().shutDown();    // Attempt to shutdown the logger.
     return (-1);
@@ -363,7 +360,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x0096;
+  std::uint16_t const BUILDNUMBER = 0x009E;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -45,9 +45,9 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowImage/windowImageDisplay.h"
+#include "include/windowImage/windowImageDisplay.h"
 
-  // Standard library
+  // Standard C++ library header files
 
 #include <list>
 
@@ -57,27 +57,27 @@
 
   // astroManager include files
 
-#include "../../include/database/databaseARID.h"
-#include "../../include/database/databaseATID.h"
-#include "../../include/dialogs/dialogBinPixels.h"
-#include "../../include/dialogs/dialogExportAsJPEG.h"
-#include "../../include/dialogs/dialogExportAsPNG.h"
-#include "../../include/dialogs/dialogFindStars.h"
-#include "../../include/dialogs/dialogImageCalibration.h"
-#include "../../include/dialogs/dialogImageCrop.h"
-#include "../../include/dialogs/dialogImageDetails.h"
-#include "../../include/dialogs/dialogImageFloat.h"
-#include "../../include/dialogs/dialogImageResample.h"
-#include "../../include/dialogs/dialogWeatherEdit.h"
-#include "../../include/dockWidgets/dockWidgetAstrometry.h"
-#include "../../include/dockWidgets/dockWidgetHistogram.h"
-#include "../../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../../include/dockWidgets/dockWidgetMagnify.h"
-#include "../../include/dockWidgets/dockWidgetNavigator.h"
-#include "../../include/dockWidgets/dockWidgetPhotometry.h"
-#include "../../include/error.h"
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+#include "include/dialogs/dialogBinPixels.h"
+#include "include/dialogs/dialogExportAsJPEG.h"
+#include "include/dialogs/dialogExportAsPNG.h"
+#include "include/dialogs/dialogFindStars.h"
+#include "include/dialogs/dialogImageCalibration.h"
+#include "include/dialogs/dialogImageCrop.h"
+#include "include/dialogs/dialogImageDetails.h"
+#include "include/dialogs/dialogImageFloat.h"
+#include "include/dialogs/dialogImageResample.h"
+#include "include/dialogs/dialogWeatherEdit.h"
+#include "include/dockWidgets/dockWidgetAstrometry.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/dockWidgets/dockWidgetPhotometry.h"
+#include "include/error.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
   // Miscellaneous library header files.
 
@@ -171,7 +171,7 @@ namespace astroManager
         // Check if there is WCS information present in the current image. If there is no WCS information present in the image,
         // then the function should return with an error to the user.
 
-      LOGMESSAGE(info, "Starting Load Astrometry Targets...");
+      LOGMESSAGE(GCL::logger::info, "Starting Load Astrometry Targets...");
 
       if (controlImage.astroFile->hasWCSData(controlImage.currentHDB))
       {
@@ -232,7 +232,7 @@ namespace astroManager
             QMessageBox::information(this, tr("Error while processing file."),
                                      tr("Error while processing the file."),
                                      QMessageBox::Ok, QMessageBox::Ok);
-            LOGMESSAGE(warning, "Error while loading photometry targets in line: " + std::to_string(lineNumber) + ".");
+            LOGMESSAGE(GCL::logger::warning, "Error while loading photometry targets in line: " + std::to_string(lineNumber) + ".");
             return;
           };
 
@@ -248,7 +248,7 @@ namespace astroManager
             }
             else
             {
-              LOGMESSAGE(warning, (*targetIterator)->objectName() + ": Coordinates not on image. Deleting Astrometry target.");
+              LOGMESSAGE(GCL::logger::warning, (*targetIterator)->objectName() + ": Coordinates not on image. Deleting Astrometry target.");
               targetIterator = astrometryTargets.erase(targetIterator);
             };
           }
@@ -323,24 +323,24 @@ namespace astroManager
 
                   astrometryReferenceAdd(controlImage.astrometryObservations.back().get());
 
-                  LOGMESSAGE(info, controlImage.astrometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
+                  INFOMESSAGE(controlImage.astrometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
                 }
                 catch(...)
                 {
-                  LOGMESSAGE(warning, "Unable to add " + (*targetIterator)->objectName() + ". Error while performing astrometry.");
+                  WARNINGMESSAGE("Unable to add " + (*targetIterator)->objectName() + ". Error while performing astrometry.");
                 };
               };
             }
             else
             {
-              LOGMESSAGE(warning, "Unable to add " + (*targetIterator)->objectName() + ". Could not find centroid.");
+              WARNINGMESSAGE("Unable to add " + (*targetIterator)->objectName() + ". Could not find centroid.");
             };
           };
 
             // Indicate the number of points applied sucesfully.
 
-          LOGMESSAGE(info, "Added " + std::to_string(targetCount) + " astrometry targets to image.");
-          LOGMESSAGE(info, "Load Astrometry targets completed.");
+          INFOMESSAGE("Added " + std::to_string(targetCount) + " astrometry targets to image.");
+          INFOMESSAGE("Load Astrometry targets completed.");
 
             // Update the image and window characteristics.
 
@@ -354,7 +354,7 @@ namespace astroManager
         QMessageBox::information(this, tr("There is no WCS information for this image."),
                                  tr("Without WCS information, it is not possible to load and apply a list of astrometry targets."),
                                  QMessageBox::Ok, QMessageBox::Ok);
-        LOGMESSAGE(warning, "Load Astrometry Targets Error: No WCS information for image.");
+        WARNINGMESSAGE("Load Astrometry Targets Error: No WCS information for image.");
       };
     }
 
@@ -544,9 +544,9 @@ namespace astroManager
         controlImage.blackPoint = controlImage.astroFile->blackPoint();
         controlImage.whitePoint = controlImage.astroFile->whitePoint();
 
-        LOGMESSAGE(info, "Binned Image: " + controlImage.astroFile->getImageName() + ". Original Size: " + std::to_string(ox) +
-                   " x " + std::to_string(oy) + ". New Size: " + std::to_string(controlImage.astroFile->imageWidth()) +
-                   " x " + std::to_string(controlImage.astroFile->imageHeight()) + ".");
+        INFOMESSAGE("Binned Image: " + controlImage.astroFile->getImageName() + ". Original Size: " + std::to_string(ox) +
+                    " x " + std::to_string(oy) + ". New Size: " + std::to_string(controlImage.astroFile->imageWidth()) +
+                    " x " + std::to_string(controlImage.astroFile->imageHeight()) + ".");
 
         historyUpdate();
 
@@ -896,7 +896,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Image: " + controlImage.astroFile->getImageName() + ". Cropped: Origin: (" + std::to_string( origin.x()) +
+        INFOMESSAGE("Image: " + controlImage.astroFile->getImageName() + ". Cropped: Origin: (" + std::to_string( origin.x()) +
                    ", " + std::to_string(origin.y()) + ") " + " Dimensions: (" + std::to_string(dims.x()) + ", " +
                    std::to_string(dims.y()) + ").");
 
@@ -1605,11 +1605,11 @@ namespace astroManager
 
           if (sceneImage.save(QString::fromStdString(JPEGpath.string()), "JPG", quality))
           {
-            LOGMESSAGE(info, JPEGpath.string() + " saved.");
+            INFOMESSAGE(JPEGpath.string() + " saved.");
           }
           else
           {
-            LOGMESSAGE(warning, "Failed to save " + JPEGpath.string() + ".");
+            WARNINGMESSAGE("Failed to save " + JPEGpath.string() + ".");
           };
         };
       };
@@ -1650,11 +1650,11 @@ namespace astroManager
          scenePainter.end();
          if (sceneImage.save(QString::fromStdString(PNGpath.string()), "PNG", quality))
          {
-           LOGMESSAGE(info, PNGpath.string() + " saved.");
+           INFOMESSAGE(PNGpath.string() + " saved.");
          }
          else
          {
-           LOGMESSAGE(warning, "Failed to save " + PNGpath.string());
+           WARNINGMESSAGE("Failed to save " + PNGpath.string());
          };
        };
      };
@@ -1862,7 +1862,7 @@ namespace astroManager
         markers.clear();
       };
 
-      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourceContainer.size()));
+      INFOMESSAGE("Number of objects identified: " + std::to_string(sourceContainer.size()));
 
       return (dialogReturn == QDialog::Accepted);
     }
@@ -1914,7 +1914,7 @@ namespace astroManager
         graphicsItem = nullptr;
       }
 
-      LOGMESSAGE(info, "Number of objects identified: " + std::to_string(sourceContainer.size()));
+      INFOMESSAGE("Number of objects identified: " + std::to_string(sourceContainer.size()));
       return false;
     }
 
@@ -1934,7 +1934,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Image: " + controlImage.astroFile->getImageName() + ". Mirrored horizontal.");
+        INFOMESSAGE("Image: " + controlImage.astroFile->getImageName() + ". Mirrored horizontal.");
 
           // Update the screen image.
 
@@ -1972,7 +1972,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Image: " + controlImage.astroFile->getImageName() + ". Floated: (" + std::to_string(dlg.getWidth()) +
+        INFOMESSAGE("Image: " + controlImage.astroFile->getImageName() + ". Floated: (" + std::to_string(dlg.getWidth()) +
                    ", " + std::to_string(dlg.getHeight()) +  ").");
 
         redrawImage();
@@ -1986,7 +1986,7 @@ namespace astroManager
 
     /// @brief Handles the flip event from the menu.
     /// @details Call the astroFile flip event.
-    //
+    ///
     // 2014-12-30/GGB - Use GCL::logger rather than std::clog for messaging.
     // 2013-06-29/GGB - Bug #1195952 fixed.
     // 2013-06-28/GGB - Added historyUpdate()
@@ -2003,7 +2003,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Image: " + controlImage.astroFile->getImageName() + ". Mirrored vertical.");
+        INFOMESSAGE("Image: " + controlImage.astroFile->getImageName() + ". Mirrored vertical.");
 
           // Now update the screen view.
 
@@ -2250,7 +2250,7 @@ namespace astroManager
 
       database::databaseATID->queryByCoordinates(*tl, *br, targetList);
 
-      LOGMESSAGE(info, "Adding to target list...");
+      INFOMESSAGE("Adding to target list...");
 
         // Add the targets to the target list.
         // For each target, we need to convert the RA/DEC to a pixel pair.
@@ -2329,14 +2329,14 @@ namespace astroManager
 
               targetCount++;
 
-              LOGMESSAGE(info, "Added object " + elem->objectName() + " to astrometry list.");
+              INFOMESSAGE("Added object " + elem->objectName() + " to astrometry list.");
             };
           }
           {
               // No centroid found. Note this in the debug log.
 
             targetCentroid++;
-            LOGMESSAGE(debug, "Object " + elem->objectName() + " could not find centroid. Not added to image.");
+            DEBUGMESSAGE("Object " + elem->objectName() + " could not find centroid. Not added to image.");
           }
         }
         else
@@ -2344,13 +2344,13 @@ namespace astroManager
             // Pixel falls outside of the image.  Note it in the debug log.
 
           targetOutside++;
-          LOGMESSAGE(debug, "Object " + elem->objectName() + " falls outside the image.");
+          DEBUGMESSAGE("Object " + elem->objectName() + " falls outside the image.");
         }
       };
-      LOGMESSAGE(info, "Added " + std::to_string(targetCount) + " objects to image.");
-      LOGMESSAGE(debug, "Failed to add " + std::to_string(targetCentroid) + " objects for \"Centroid not found\".");
-      LOGMESSAGE(debug, "Failed to add " + std::to_string(targetOutside) + " objects for \"Object falls Outside the image boundaries\".");
-      LOGMESSAGE(info, "Completed adding objects to Astrometry list.");
+      INFOMESSAGE("Added " + std::to_string(targetCount) + " objects to image.");
+      DEBUGMESSAGE("Failed to add " + std::to_string(targetCentroid) + " objects for \"Centroid not found\".");
+      DEBUGMESSAGE("Failed to add " + std::to_string(targetOutside) + " objects for \"Object falls Outside the image boundaries\".");
+      INFOMESSAGE("Completed adding objects to Astrometry list.");
     }
 
     /// @brief Function to extract all the objects in the image.
@@ -2374,7 +2374,7 @@ namespace astroManager
 
       RUNTIME_ASSERT(astroManager, astroImage != nullptr, "The astro image should not be a nullptr.");
 
-      LOGMESSAGE(info, "Starting function Source Extraction.");
+      INFOMESSAGE("Starting function Source Extraction.");
 
         // Determine the objects automatically
 
@@ -2901,7 +2901,7 @@ namespace astroManager
         // Check if there is WCS information present in the current image. If there is no WCS information present in the image,
         // then the function should return with an error to the user.
 
-      LOGMESSAGE(info, "Starting Load Photometry Targets...");
+      INFOMESSAGE("Starting Load Photometry Targets...");
 
       std::optional<ACL::CAstronomicalCoordinates> wcsCoords = controlImage.astroFile->getHDB(controlImage.currentHDB)->pix2wcs(MCL::TPoint2D<FP_t>(0, 0));
 
@@ -2964,7 +2964,7 @@ namespace astroManager
             QMessageBox::information(this, tr("Error while processing file."),
                                      tr("Error while processing the file."),
                                      QMessageBox::Ok, QMessageBox::Ok);
-            LOGMESSAGE(warning, "Error while loading photometry targets in line: " + std::to_string(lineNumber) + ".");
+            WARNINGMESSAGE("Error while loading photometry targets in line: " + std::to_string(lineNumber) + ".");
             return;
           };
 
@@ -2980,12 +2980,12 @@ namespace astroManager
             }
             else
             {
-              LOGMESSAGE(warning, (*targetIterator)->objectName() + ": Coordinates not on image. Deleting photometry target.");
+              WARNINGMESSAGE((*targetIterator)->objectName() + ": Coordinates not on image. Deleting photometry target.");
               targetIterator = photometryTargets.erase(targetIterator);
             };
           }
 
-          // Have all the CCD coordinates, now centroid the coordinates, and add to the photometry list.
+            // Have all the CCD coordinates, now centroid the coordinates, and add to the photometry list.
 
           size_t targetCount = 0;
 
@@ -3062,24 +3062,24 @@ namespace astroManager
                   pw->displayPhotometry(controlImage.photometryObservations.back().get());
                   photometryReferenceAdd(controlImage.photometryObservations.back().get());
 
-                  LOGMESSAGE(info, controlImage.photometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
+                  INFOMESSAGE(controlImage.photometryObservations.back()->objectName() + ": Added to photometry list sucesfully.");
                 }
                 catch(...)
                 {
-                  LOGMESSAGE(warning, "Unable to add " + (*targetIterator)->objectName() + ". Error while performing photometry.");
+                  WARNINGMESSAGE("Unable to add " + (*targetIterator)->objectName() + ". Error while performing photometry.");
                 };
               };
             }
             else
             {
-              LOGMESSAGE(warning, "Unable to add " + (*targetIterator)->objectName() + ". Could not find centroid.");
+              WARNINGMESSAGE("Unable to add " + (*targetIterator)->objectName() + ". Could not find centroid.");
             };
           };
 
             // Indicate the number of points applied sucesfully.
 
-          LOGMESSAGE(info, "Added " + std::to_string(targetCount) + " photometry targets to image.");
-          LOGMESSAGE(info, "Load Photometry targets completed.");
+          INFOMESSAGE("Added " + std::to_string(targetCount) + " photometry targets to image.");
+          INFOMESSAGE("Load Photometry targets completed.");
 
             // Update the image and window characteristics.
 
@@ -3093,7 +3093,7 @@ namespace astroManager
         QMessageBox::information(this, tr("There is no WCS information for this image."),
                                  tr("Without WCS information, it is not possible to load and apply a list of photometry targets."),
                                  QMessageBox::Ok, QMessageBox::Ok);
-        LOGMESSAGE(warning, "Load Photometry Targets Error: No WCS information for image.");
+        WARNINGMESSAGE("Load Photometry Targets Error: No WCS information for image.");
       };
     }
 
@@ -3335,7 +3335,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Resampled Image: " + controlImage.astroFile->getImageName() + ". Original Size: " + std::to_string(ox) +
+        INFOMESSAGE("Resampled Image: " + controlImage.astroFile->getImageName() + ". Original Size: " + std::to_string(ox) +
                    " x " + std::to_string(oy) + ". New Size: " + std::to_string(dlg.getWidth()) + " x " +
                    std::to_string(dlg.getHeight()) + ".");
 
@@ -3346,7 +3346,7 @@ namespace astroManager
           szComment += ACL::Bitpix2String(oldBitpix);
           szComment += ". New BITPIX = ";
           szComment += ACL::Bitpix2String(newBitpix);
-          LOGMESSAGE(info, szComment);
+          INFOMESSAGE(szComment);
           szComment.clear();
 
             // Update the table widget item.
@@ -3403,7 +3403,7 @@ namespace astroManager
 
         historyUpdate();
 
-        LOGMESSAGE(info, "Image: " + controlImage.astroFile->getImageName() + ". Rotated: " +
+        INFOMESSAGE("Image: " + controlImage.astroFile->getImageName() + ". Rotated: " +
                    boost::str(boost::format("%.2f") % angle) + "degrees.");
 
           // Update the screen image.

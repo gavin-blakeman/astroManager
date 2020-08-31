@@ -61,7 +61,7 @@
 
   // Qxt Library
 
-#include <QxtGui/QxtConfirmationMessage>
+#include "QxtGui/QxtConfirmationMessage"
 
   // Other libraries
 

@@ -9,7 +9,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2018 Gavin Blakeman.
+//                      Copyright 2012-2018, 2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,10 +42,11 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/database/databaseATID.h"
+#include "include/database/databaseATID.h"
 
   // Standard C++ library header files
 
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -416,13 +417,14 @@ namespace astroManager
     /// @brief Adds the filters into the specified list widget.
     /// @param[in] lw:
     /// @param[in] icon:
+    /// @version 2020-08-31/GGB - Changer auto_ptr to std::unique_ptr
     /// @version 2011-06-18/GGB - Function Created
 
     void CATID::PopulateFiltersList(QListWidget *lw, QIcon &icon)
     {
       QListWidgetItem *lwi;
       QString szSQL;
-      std::auto_ptr<QSqlQuery> query(new QSqlQuery(*dBase));
+      std::unique_ptr<QSqlQuery> query(new QSqlQuery(*dBase));
 
       szSQL = QString("SELECT f.FILTER_ID, f.SHORTTEXT FROM TBL_FILTERS f");
 
@@ -721,7 +723,7 @@ namespace astroManager
       QEventLoop q;
       QTimer tT;
 
-      LOGMESSAGE(info, "Querying SIMBAD for objects.");
+      LOGMESSAGE(GCL::logger::info, "Querying SIMBAD for objects.");
 
       left = tl.RA().degrees();
       right = br.RA().degrees();
@@ -775,7 +777,7 @@ namespace astroManager
 
         returnValue = parseSIMBADReply(simbadReply.toStdString(), targetList);
 
-        LOGMESSAGE(info, std::to_string(targetList.size()) + " objects loaded from SIMBAD.");
+        INFOMESSAGE(std::to_string(targetList.size()) + " objects loaded from SIMBAD.");
       }
       else
       {
@@ -787,7 +789,7 @@ namespace astroManager
         msgBox.setStandardButtons(QMessageBox::Ok);
 
         msgBox.exec();
-        LOGMESSAGE(info, "Failed to connect to the SIMBAD server. Request timed out.");
+        INFOMESSAGE("Failed to connect to the SIMBAD server. Request timed out.");
       }
       return returnValue;
     }
@@ -808,8 +810,8 @@ namespace astroManager
       sqlWriter.select({"TBL_CONSTELLATIONS.NAME"})
                .from({"TBL_STELLAROBJECTS"})
                .join({std::make_tuple("TBL_STELLAROBJECTS", "CONSTELLATION_ID",
-                      GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_CONSTELLATIONS", "CONSTELLATION_ID")})
-               .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+                      GCL::sqlWriter::JOIN_LEFT, "TBL_CONSTELLATIONS", "CONSTELLATION_ID")})
+               .where({GCL::sqlWriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -846,7 +848,7 @@ namespace astroManager
       sqlQuery->setForwardOnly(true);
       sqlWriter.resetQuery();
 
-      sqlWriter.select({"TBL_NAMES.Name"}).from({"TBL_NAMES"}).where({ GCL::sqlwriter::parameterTriple("OID", "=", OID) });
+      sqlWriter.select({"TBL_NAMES.Name"}).from({"TBL_NAMES"}).where({ GCL::sqlWriter::parameterTriple("OID", "=", OID) });
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -935,7 +937,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TBL_NAMES.OID" })
                .from({"TBL_NAMES"})
-               .where({GCL::sqlwriter::parameterTriple(std::string("NAME_ID"), std::string("="), nameID)});
+               .where({GCL::sqlWriter::parameterTriple(std::string("NAME_ID"), std::string("="), nameID)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -968,7 +970,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TBL_NAMES.OID" })
                .from({"TBL_NAMES"})
-               .where({GCL::sqlwriter::parameterTriple(std::string("NAME"), std::string("="), objectName)});
+               .where({GCL::sqlWriter::parameterTriple(std::string("NAME"), std::string("="), objectName)});
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -1103,8 +1105,8 @@ namespace astroManager
                           "TBL_OBJECTTYPES.OBJECTTYPE"})
                  .from({"TBL_STELLAROBJECTS"})
                  .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
-                        GCL::sqlwriter::CSQLWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
-                 .where({GCL::sqlwriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+                        GCL::sqlWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
+                 .where({GCL::sqlWriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {

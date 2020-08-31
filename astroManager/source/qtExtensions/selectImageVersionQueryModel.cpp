@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,10 +36,10 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/qtExtensions/selectImageVersionQueryModel.h"
+#include "include/qtExtensions/selectImageVersionQueryModel.h"
 
-#include "../../include/error.h"
-#include "../../include/database/databaseARID.h"
+#include "include/error.h"
+#include "include/database/databaseARID.h"
 
   // Standard C++ libraries
 
@@ -62,11 +62,11 @@ namespace astroManager
     CSelectImageVersionQueryModel::CSelectImageVersionQueryModel(imageID_t imageID, QObject *parent) : CSQLQueryModel(parent),
       imageID_(imageID)
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
-          .where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
-          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::CSQLWriter::DESC)});
+          .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
+          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
 
       setQuery(QString::fromStdString(sqlWriter.string()), database::databaseARID->database());
 
@@ -148,11 +148,11 @@ namespace astroManager
 
     void CSelectImageVersionQueryModel::resetQuery()
     {
-      GCL::sqlwriter::CSQLWriter sqlWriter;
+      GCL::sqlWriter sqlWriter;
 
       sqlWriter.select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
-          .where({GCL::sqlwriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID_)})
-          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlwriter::CSQLWriter::DESC)});
+          .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID_)})
+          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
 
       setQuery(QString::fromStdString(sqlWriter.string()), database::databaseARID->database());
 
