@@ -763,7 +763,7 @@ namespace astroManager
         lwItems = lwFilters->findItems(QString(query->value(1).toString()), Qt::MatchCaseSensitive | Qt::MatchFixedString);
         if (lwItems.size() > 1)
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
         else
         {

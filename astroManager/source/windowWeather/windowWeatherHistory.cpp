@@ -99,7 +99,7 @@ namespace astroManager
 
 //      if (!gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout()))
 //      {
-//        CODE_ERROR(astroManager);
+//        CODE_ERROR;
 //      };
 
 //        // Set the end time to the time now.

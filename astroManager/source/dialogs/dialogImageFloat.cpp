@@ -109,7 +109,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
 
       saveUI();
@@ -156,7 +156,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
 
       settings::astroManagerSettings->setValue(settings::DIALOG_IMAGEFLOAT_BACKGROUND, QVariant(bgnd));
@@ -194,7 +194,7 @@ namespace astroManager
           QVariant(0)).toInt());
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
 

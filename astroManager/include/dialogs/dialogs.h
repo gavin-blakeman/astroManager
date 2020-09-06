@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -75,7 +75,7 @@ namespace astroManager
     T findChild(const QString &childName)
     {
       T returnValue = dlg->findChild<T>(childName);
-      RUNTIME_ASSERT(astroManager, returnValue != nullptr, "Control " + childName.toStdString() + " not found." );
+      RUNTIME_ASSERT(returnValue != nullptr, "Control " + childName.toStdString() + " not found." );
 
       return returnValue;
     }

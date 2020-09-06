@@ -124,7 +124,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 

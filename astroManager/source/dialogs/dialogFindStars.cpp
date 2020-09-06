@@ -126,7 +126,7 @@ namespace astroManager
       if (!spinBoxBorder || !spinBoxRNOISE || !doubleSpinBoxMinimumPeak || !doubleSpinBoxStarSigma || !spinBoxISTATPIX ||
           !spinBoxNSTATPIX || !spinBoxMaxWalk || !doubleSpinBoxBurnedOut || !spinBoxMinSep || !spinBoxMaxRad || !spinBoxMinRad)
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
       spinBoxBorder->setMinimum(sourceParameters.minBorder);

@@ -186,7 +186,7 @@ namespace astroManager
             imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
             if (!iw)
             {
-              CODE_ERROR(astroManager);
+              CODE_ERROR;
             }
 
             iw->repaintImage();
@@ -198,13 +198,13 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);   // Dock widget should be grayed.
+            CODE_ERROR;   // Dock widget should be grayed.
           }
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -250,13 +250,13 @@ namespace astroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
 
           iw->updateWindowTitle();
         };
       }
       else
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
     }
 
     /// @briefFunction called when the user wishes to reference an object on an image.
@@ -289,7 +289,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);   // Dock widget should be grayed.
+          CODE_ERROR;   // Dock widget should be grayed.
         }
       }
       else
@@ -304,7 +304,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);   // Dock widget should be grayed.
+          CODE_ERROR;   // Dock widget should be grayed.
         };
       };
     }
@@ -596,7 +596,7 @@ namespace astroManager
       if (!tableWidgetAstrometry || !pushButtonReferenceSelect || !pushButtonReferenceEdit || !pushButtonReferenceDelete ||
           !pushButtonObjectInformation || !pushButtonPlateConstants || !labelObjectName || !labelCCDCoordinates || !labelObjectRA ||
           !labelObjectDec || !labelObjectType)
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
 
       connect(pushButtonReferenceSelect, SIGNAL(clicked(bool)), this, SLOT(eventButtonReferenceSelect(bool)));
       connect(pushButtonReferenceDelete, SIGNAL(clicked(bool)), this, SLOT(eventButtonReferenceDelete(bool)));

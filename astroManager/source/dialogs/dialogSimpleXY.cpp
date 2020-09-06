@@ -91,7 +91,7 @@ namespace astroManager
       if (!doubleSpinBoxDPSF || !doubleSpinBoxPLIM || !doubleSpinBoxDLIM || !doubleSpinBoxSaddle || !spinBoxMaxper ||
           !horizontalSliderMaxPeaks || !spinBoxMaxSize || !spinBoxHalfBox || !doubleSpinBoxSigma)
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
       doubleSpinBoxDPSF->setValue(settings::astroManagerSettings->value(settings::SOURCE_EXTRACTION_SIMPLEXY_DPSF,

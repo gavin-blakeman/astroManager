@@ -89,7 +89,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(ACL);
+        CODE_ERROR;
       };
 
       saveUI();
@@ -113,7 +113,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(ACL);
+        CODE_ERROR;
       }
     }
 
@@ -132,7 +132,7 @@ namespace astroManager
         findChild<QRadioButton *>("radioButton3x3")->setChecked(true);
         break;
       default:
-        CODE_ERROR(ACL);
+        CODE_ERROR;
         break;
       };
 

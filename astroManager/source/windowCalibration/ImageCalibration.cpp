@@ -129,7 +129,7 @@ namespace astroManager
           if ( (useBiasFrames = (widget()->findChild<QGroupBox *>("groupBoxBiasFramesSelection")->isChecked())) )
             saveMasterBiasFrame = widget()->findChild<QGroupBox *>("groupBoxMasterBiasSaveAs")->isChecked();
           else
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
         };
       };
 
@@ -242,7 +242,7 @@ namespace astroManager
               msgBox.exec();
               break;
             default:
-              CODE_ERROR(astroManager);
+              CODE_ERROR;
             };  // switch
           }; // catch
           if (saveMasterBiasFrame)
@@ -314,7 +314,7 @@ namespace astroManager
               };
               default:
               {
-                CODE_ERROR(astroManager);
+                CODE_ERROR;
               };
             };  // switch
           };  // if
@@ -939,7 +939,7 @@ namespace astroManager
                   };
                   default:
                   {
-                    CODE_ERROR(astroManager);
+                    CODE_ERROR;
                   };
                 };  // switch
               };  // if
@@ -1012,7 +1012,7 @@ namespace astroManager
               };
               default:
               {
-                CODE_ERROR(astroManager);
+                CODE_ERROR;
               };
             };  // switch
           };  // if
@@ -1480,7 +1480,7 @@ namespace astroManager
               };
               default:
               {
-                CODE_ERROR(astroManager);
+                CODE_ERROR;
               };
             };  // switch
           };  // if

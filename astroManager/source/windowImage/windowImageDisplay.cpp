@@ -417,7 +417,7 @@ namespace astroManager
     void CImageWindow::astrometryTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -476,7 +476,7 @@ namespace astroManager
     void CImageWindow::atableTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -571,7 +571,7 @@ namespace astroManager
     void CImageWindow::btableTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(pw,  "Parent widget cannot be nullptr.");
 
         // File Menu
 
@@ -674,7 +674,7 @@ namespace astroManager
         };
       }
       else
-        CODE_ERROR(astroManager);  // Should not be able to get here. The windows should be disabling the item to prevent gettign here.
+        CODE_ERROR;  // Should not be able to get here. The windows should be disabling the item to prevent gettign here.
     }
 
     /// @brief Called when a new Astrometry object is being selected.
@@ -1163,7 +1163,7 @@ namespace astroManager
         case ACL::BT_NONE:
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1505,7 +1505,7 @@ namespace astroManager
                 break;
               default:
               {
-                ASTROMANAGER_CODE_ERROR;
+                CODE_ERROR;
                 break;
               };
             };
@@ -1521,14 +1521,14 @@ namespace astroManager
             break;
           default:
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
             break;
           };
         };
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -1548,7 +1548,7 @@ namespace astroManager
         case ACL::BT_BTABLE:
         case ACL::BT_IMAGE:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
         case ACL::HDB_ASTROMETRY:
@@ -1559,7 +1559,7 @@ namespace astroManager
           break;
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1948,7 +1948,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -2017,7 +2017,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -2053,7 +2053,7 @@ namespace astroManager
             break;
           default:
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
             break;
           };
         };
@@ -2100,7 +2100,7 @@ namespace astroManager
     void CImageWindow::imageTabActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -2176,7 +2176,7 @@ namespace astroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -2372,7 +2372,7 @@ namespace astroManager
       auto *pdw = dynamic_cast<dockwidgets::CPhotometryDockWidget *>(frameWindow->getDockWidget(mdiframe::IDDW_PHOTOMETRYCONTROL));
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
 
-      RUNTIME_ASSERT(astroManager, astroImage != nullptr, "The astro image should not be a nullptr.");
+      RUNTIME_ASSERT(astroImage != nullptr, "The astro image should not be a nullptr.");
 
       INFOMESSAGE("Starting function Source Extraction.");
 
@@ -2394,7 +2394,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       };    // End of switch(algorithm) statement
 
@@ -2579,7 +2579,7 @@ namespace astroManager
       ACL::CAstroImage *astroImage = controlImage.astroFile->getAstroImage(controlImage.currentHDB);
       if (!astroImage)
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       switch (mouseEvent->button())
@@ -2669,7 +2669,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -2827,7 +2827,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       };
     }
@@ -2843,7 +2843,7 @@ namespace astroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget should exist.")
+      RUNTIME_ASSERT(pw != nullptr, "The parent widget should exist.")
 
         // File Menu
 
@@ -3255,7 +3255,7 @@ namespace astroManager
     void CImageWindow::repaintImage()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not == nullptr");
+      RUNTIME_ASSERT(pw, "Parent Widget should not == nullptr");
 
         // This is the code that updates the screen when the image needs updating.
 
@@ -3363,7 +3363,7 @@ namespace astroManager
               }
               else
               {
-                ASTROMANAGER_CODE_ERROR;
+                CODE_ERROR;
               };
             };
           };
@@ -3473,7 +3473,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       }
       else
@@ -3496,7 +3496,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       }
       else if (mode == M_PHOTOMETRY)
@@ -3507,7 +3507,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       }
       else if (mode == M_NONE)
@@ -3518,7 +3518,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       };
     }
@@ -3588,13 +3588,13 @@ namespace astroManager
         photometryTab = tabWidget->widget(5);
           tableWidgetPhotometry = formWidget->findChild<QTableWidget *>("tableWidgetPhotometry");
 
-      RUNTIME_ASSERT(astroManager, imageTab != nullptr, "Control imageTab not found.");
-      RUNTIME_ASSERT(astroManager, atableTab != nullptr, "Control atableTab not found.");
-      RUNTIME_ASSERT(astroManager, btableTab, "Control btableTab not found.");
-      RUNTIME_ASSERT(astroManager, astrometryTab, "Control astrometryTab not found.");
-      RUNTIME_ASSERT(astroManager, photometryTab, "Control photometryTab not found.");
-      RUNTIME_ASSERT(astroManager, tableWidgetAstrometry, "Control tableWidgetAstrometry not found");
-      RUNTIME_ASSERT(astroManager, tableWidgetPhotometry, "Control tableWidgetPhotometry not found");
+      RUNTIME_ASSERT(imageTab != nullptr, "Control imageTab not found.");
+      RUNTIME_ASSERT(atableTab != nullptr, "Control atableTab not found.");
+      RUNTIME_ASSERT(btableTab, "Control btableTab not found.");
+      RUNTIME_ASSERT(astrometryTab, "Control astrometryTab not found.");
+      RUNTIME_ASSERT(photometryTab, "Control photometryTab not found.");
+      RUNTIME_ASSERT(tableWidgetAstrometry, "Control tableWidgetAstrometry not found");
+      RUNTIME_ASSERT(tableWidgetPhotometry, "Control tableWidgetPhotometry not found");
 
         // Remove unused tabs from the tab view.
 
@@ -3647,7 +3647,7 @@ namespace astroManager
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
 
-      RUNTIME_ASSERT(astroManager, pw != nullptr, "The parent widget must exist.");
+      RUNTIME_ASSERT(pw != nullptr, "The parent widget must exist.");
 
         // View Menu
 
@@ -3666,7 +3666,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -3684,7 +3684,7 @@ namespace astroManager
     void CImageWindow::windowActivating()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw != nullptr,  "Parent widget cannot be nullptr.");
+      RUNTIME_ASSERT(pw != nullptr,  "Parent widget cannot be nullptr.");
 
       CAstroImageWindow::windowActivating();      // Must be called first. Handles the dockWidget notifications.
 
@@ -3718,7 +3718,7 @@ namespace astroManager
         case ACL::BT_NONE:
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -3747,7 +3747,7 @@ namespace astroManager
 
     void CImageWindow::zoom11()
     {
-      RUNTIME_ASSERT(astroManager, gvImage, "gvImage == nullptr.");
+      RUNTIME_ASSERT(gvImage, "gvImage == nullptr.");
 
       gvImage->zoom11();
     }
@@ -3758,7 +3758,7 @@ namespace astroManager
 
     void CImageWindow::zoomAll()
     {
-      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomAll();
     }
@@ -3769,7 +3769,7 @@ namespace astroManager
 
     void CImageWindow::zoomIn()
     {
-      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomIn();
     }
@@ -3780,7 +3780,7 @@ namespace astroManager
 
     void CImageWindow::zoomOut()
     {
-      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomOut();
     }
@@ -3791,7 +3791,7 @@ namespace astroManager
 
     void CImageWindow::zoomSelection()
     {
-      RUNTIME_ASSERT(astroManager, gvImage != nullptr, "gvImage should not be null");
+      RUNTIME_ASSERT(gvImage != nullptr, "gvImage should not be null");
 
       gvImage->zoomSelection();
     }

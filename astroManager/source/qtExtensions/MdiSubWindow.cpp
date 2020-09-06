@@ -85,7 +85,7 @@ namespace astroManager
   void CMdiSubWindow::windowActivating()
   {
     mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-    RUNTIME_ASSERT(astroManager, frameWindow != nullptr,  "Parent widget cannot be nullptr.");
+    RUNTIME_ASSERT(frameWindow != nullptr,  "Parent widget cannot be nullptr.");
 
     if (frameWindow)
     {
@@ -102,7 +102,7 @@ namespace astroManager
     }
     else
     {
-      ASTROMANAGER_CODE_ERROR;
+      CODE_ERROR;
     };
   }
 

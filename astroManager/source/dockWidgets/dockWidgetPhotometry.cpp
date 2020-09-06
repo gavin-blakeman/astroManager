@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -46,7 +46,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dockWidgets/dockWidgetPhotometry.h"
+#include "include/dockWidgets/dockWidgetPhotometry.h"
 
   // Standard C++ library header files
 
@@ -55,12 +55,12 @@
 
   // astroManager application header files.
 
-#include "../../include/database/databaseATID.h"
-#include "../../include/dialogs/dialogSelectObject.h"
-#include "../../include/ImageComparison.h"
-#include "../../include/windowImage/windowImageDisplay.h"
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+#include "include/database/databaseATID.h"
+#include "include/dialogs/dialogSelectObject.h"
+#include "include/ImageComparison.h"
+#include "include/windowImage/windowImageDisplay.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
   // Miscellaneous library header files
 
@@ -289,7 +289,7 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
         }
         else
@@ -373,7 +373,7 @@ namespace astroManager
         {
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
 
           iw->repaintImage();
           iw->updateWindowTitle();
@@ -384,7 +384,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);   // Dock widget should be grayed.
+          CODE_ERROR;   // Dock widget should be grayed.
         };
       };
     }
@@ -428,7 +428,7 @@ namespace astroManager
           imaging::CImageWindow *iw = dynamic_cast<imaging::CImageWindow *>(currentImage->parent_);
           if (!iw)
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
 
           iw->updateWindowTitle();
@@ -436,7 +436,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -461,12 +461,12 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       if (!subWindow)
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) ||
@@ -485,7 +485,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;    // Dock widget should be grayed.
+        CODE_ERROR;    // Dock widget should be grayed.
       }
     }
 
@@ -602,7 +602,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
       }
       else
@@ -750,10 +750,10 @@ namespace astroManager
          // Let the image know that it has finished referencing.
 
       frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(parentObject);
-      RUNTIME_ASSERT(astroManager, frameWindow != nullptr, "frameWindow dynamic_cast to nullptr");
+      RUNTIME_ASSERT(frameWindow != nullptr, "frameWindow dynamic_cast to nullptr");
 
       subWindow = dynamic_cast<imaging::CImageWindow *>(frameWindow->activeMdiChild());
-      RUNTIME_ASSERT(astroManager, subWindow != nullptr, "subWindow dynamic_cast to nullptr");
+      RUNTIME_ASSERT(subWindow != nullptr, "subWindow dynamic_cast to nullptr");
 
       if ( (subWindow->getWindowType() == SWT_IMAGEWINDOW) || (subWindow->getWindowType() == SWT_IMAGE_COMPARE) )
       {
@@ -761,7 +761,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;    // Dock widget should be grayed.
+        CODE_ERROR;    // Dock widget should be grayed.
       }
 
       tableWidgetPhotometry->insertRow(nRow);
@@ -833,7 +833,7 @@ namespace astroManager
 
       if (!btnObjectName || !tlObjectName || !labelRA || !labelDec || !tlVariable)
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
         tabCounts = infoTab->widget(++nIndex);
@@ -866,7 +866,7 @@ namespace astroManager
 
       if (!tlStar || !tlSky || !tlStarSky || !tlMagnitude || !labelMagnitudeError || !labelFWHM)
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       infoTab->setEnabled(false);		// Must not be useable until an object is chosen.

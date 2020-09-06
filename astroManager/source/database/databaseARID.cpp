@@ -263,7 +263,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       return returnValue;
@@ -413,7 +413,7 @@ namespace astroManager
 
     bool CARID::findTelescope(CTelescope *telescope)
     {
-      RUNTIME_ASSERT(astroManager, !telescope->telescopeName().empty(), "Telscope Name cannot be empty string." );
+      RUNTIME_ASSERT(!telescope->telescopeName().empty(), "Telscope Name cannot be empty string." );
 
       bool returnValue = false;
 
@@ -574,7 +574,7 @@ namespace astroManager
 
     bool CARID::getTimeZoneOffset(std::uint32_t siteID, std::int_least32_t *offset)
     {
-      RUNTIME_ASSERT("astroManager", offset != nullptr, "parameter offset cannot be nullptr.");
+      RUNTIME_ASSERT(offset != nullptr, "parameter offset cannot be nullptr.");
 
       bool returnValue = false;
 
@@ -1247,7 +1247,7 @@ namespace astroManager
 
     void CARID::populateListInstrumentNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT("AstroManager", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1287,7 +1287,7 @@ namespace astroManager
 
     void CARID::populateListSiteNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT("astroManager", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1326,7 +1326,7 @@ namespace astroManager
 
     void CARID::populateListTelescopeNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT("astroManager", listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1366,7 +1366,7 @@ namespace astroManager
 
     void CARID::populateComboObservingPlans(QComboBox *comboBox, bool selectDefault)
     {
-      RUNTIME_ASSERT("astroManager", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
+      RUNTIME_ASSERT(comboBox != nullptr, "parameter comboBox cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1419,7 +1419,7 @@ namespace astroManager
 
     void CARID::populateComboSite(QComboBox *comboBox, bool bSelect)
     {
-      RUNTIME_ASSERT("astroManager", comboBox != nullptr, "parameter comboBox cannot be nullptr.");
+      RUNTIME_ASSERT(comboBox != nullptr, "parameter comboBox cannot be nullptr.");
 
       if (!ARIDdisabled_)
       {
@@ -1620,7 +1620,7 @@ namespace astroManager
             };
             default:
             {
-              ASTROMANAGER_CODE_ERROR;
+              CODE_ERROR;
               break;
             };
           };
@@ -2012,9 +2012,9 @@ namespace astroManager
 
     void CARID::uploadImage(QString const &fileName, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(astroManager, fileName.size() != 0, "Parameter filename must have length > 0");
-      RUNTIME_ASSERT(astroManager, imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(astroManager, comment.size() != 0, "Parameter comment cannot have zero length.");
+      RUNTIME_ASSERT(fileName.size() != 0, "Parameter filename must have length > 0");
+      RUNTIME_ASSERT(imageID != 0, "Parameter imageID cannot be zero.");
+      RUNTIME_ASSERT(comment.size() != 0, "Parameter comment cannot have zero length.");
 
       ACL::TJD JD;
 
@@ -2064,8 +2064,8 @@ namespace astroManager
 
     void CARID::uploadImage(QByteArray const &imageArray, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(astroManager, imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(astroManager, imageVersion != 0, "Parameter imageVersion cannot be zero.");
+      RUNTIME_ASSERT(imageID != 0, "Parameter imageID cannot be zero.");
+      RUNTIME_ASSERT(imageVersion != 0, "Parameter imageVersion cannot be zero.");
 
       ACL::TJD JD;
 
@@ -2132,7 +2132,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
       return returnValue;
     }
@@ -2176,7 +2176,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
       return returnValue;
     }

@@ -130,7 +130,7 @@ namespace astroManager
         selectRecent();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -531,7 +531,7 @@ namespace astroManager
       buttonBox = dlg->findChild<QDialogButtonBox *>("buttonBox");
       if (!buttonBox)
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
 
       connect(buttonBox, SIGNAL(accepted()), this, SLOT(eventButtonSelectClicked()));

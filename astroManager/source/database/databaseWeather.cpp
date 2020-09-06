@@ -230,7 +230,7 @@ namespace astroManager
 
     void CDatabaseWeather::populateComboBoxWeatherStations(QComboBox *comboBox)
     {
-      RUNTIME_ASSERT(WCL, comboBox != nullptr, "parameter comboBox cannot be nullptr");
+      RUNTIME_ASSERT(comboBox != nullptr, "parameter comboBox cannot be nullptr");
 
       if (!WDdisabled_)
       {

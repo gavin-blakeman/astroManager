@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2005-2018 Gavin Blakeman.
+//                      Copyright 2005-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -45,7 +45,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/FrameWindow.h"
+#include "include/FrameWindow.h"
 
   // Standard C++ library header files
 
@@ -56,39 +56,39 @@
 
   // astroManager header files
 
-#include "../include/ACL/astroFile.h"
-#include "../include/Configure.h"
-#include "../include/database/databaseARID.h"
-#include "../include/database/databaseATID.h"
-#include "../include/database/databaseWeather.h"
-#include "../include/dialogs/dialogOptions.h"
-#include "../include/dialogs/dialogSelectImageVersion.h"
-#include "../include/dialogs/dialogEditResources.h"
-#include "../include/dockWidgets/dockWidgetAstrometry.h"
-#include "../include/dockWidgets/dockWidgetHistogram.h"
-#include "../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../include/dockWidgets/dockWidgetMagnify.h"
-#include "../include/dockWidgets/dockWidgetMessage.h"
-#include "../include/dockWidgets/dockWidgetNavigator.h"
-#include "../include/dockWidgets/dockWidgetPhotometry.h"
-#include "../include/dockWidgets/dockWidgetWeatherParameters.h"
-#include "../include/dockWidgets/dockWidgetWeatherScale.h"
-#include "../include/FileBatchConvert.h"
-#include "../include/windowCalibration/ImageCalibration.h"
-#include "../include/ImageComparison.h"
-#include "../include/windowImage/windowImageDisplay.h"
-#include "../include/windowImage/windowImageStacking.h"
-#include "../include/settings.h"
-#include "../include/TextEditorFITS.h"
-#include "../include/Photometry.h"
-#include "../include/Utilities.h"
-#include "../include/windowCalculation/gregorian2JD.h"
-#include "../include/windowCalculation/JD2Gregorian.h"
-#include "../include/astroManagerHelp.h"
-#include "../include/VSOPView.h"
-#include "../include/windowPlanning/windowPlanning.h"
-#include "../include/windowWeather/windowWeatherHistory.h"
-#include "../include/windowSelectImage.h"
+#include "include/ACL/astroFile.h"
+#include "include/Configure.h"
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+#include "include/database/databaseWeather.h"
+#include "include/dialogs/dialogOptions.h"
+#include "include/dialogs/dialogSelectImageVersion.h"
+#include "include/dialogs/dialogEditResources.h"
+#include "include/dockWidgets/dockWidgetAstrometry.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetMessage.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/dockWidgets/dockWidgetPhotometry.h"
+#include "include/dockWidgets/dockWidgetWeatherParameters.h"
+#include "include/dockWidgets/dockWidgetWeatherScale.h"
+#include "include/FileBatchConvert.h"
+#include "include/windowCalibration/ImageCalibration.h"
+#include "include/ImageComparison.h"
+#include "include/windowImage/windowImageDisplay.h"
+#include "include/windowImage/windowImageStacking.h"
+#include "include/settings.h"
+#include "include/TextEditorFITS.h"
+#include "include/Photometry.h"
+#include "include/Utilities.h"
+#include "include/windowCalculation/gregorian2JD.h"
+#include "include/windowCalculation/JD2Gregorian.h"
+#include "include/astroManagerHelp.h"
+#include "include/VSOPView.h"
+#include "include/windowPlanning/windowPlanning.h"
+#include "include/windowWeather/windowWeatherHistory.h"
+#include "include/windowSelectImage.h"
 
   // Miscellaneous Library header files
 
@@ -1110,12 +1110,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1135,12 +1135,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
 
 
@@ -1163,12 +1163,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1211,12 +1211,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1281,12 +1281,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1344,12 +1344,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1420,12 +1420,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1467,12 +1467,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1492,12 +1492,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1519,17 +1519,17 @@ namespace astroManager
             iw->exportAsJPEG();
           else
           {
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
           };
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         };
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1551,17 +1551,17 @@ namespace astroManager
             iw->exportAsPNG();
           else
           {
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
           }
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
     }
 
@@ -1581,12 +1581,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1756,12 +1756,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1782,12 +1782,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1809,12 +1809,12 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
     }
 
@@ -1886,12 +1886,12 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -1904,7 +1904,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1912,7 +1912,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -1926,7 +1926,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1934,7 +1934,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -1947,7 +1947,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1955,7 +1955,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -1968,7 +1968,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -1976,7 +1976,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -2023,7 +2023,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       settings::astroManagerSettings->setValue(settings::ASTROMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_ASTROMETRY]->isChecked()));
 
@@ -2033,7 +2033,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -2151,7 +2151,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       settings::astroManagerSettings->setValue(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_PHOTOMETRY]->isChecked()));
 
@@ -2161,7 +2161,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -2196,7 +2196,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2209,7 +2209,7 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
           break;
         }
@@ -2222,13 +2222,13 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
           break;
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -2244,7 +2244,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2257,7 +2257,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
         break;
       }
@@ -2270,13 +2270,13 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
         break;
       }
       default:
         {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
         break;
         };
       };
@@ -2596,7 +2596,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2604,7 +2604,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
 
     }
@@ -2683,7 +2683,7 @@ namespace astroManager
 
       if (!file.open(QIODevice::ReadOnly))
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
       else
       {
@@ -2749,7 +2749,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       if (activeChild->getWindowType() == SWT_IMAGEWINDOW)
       {
@@ -2757,7 +2757,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -2959,7 +2959,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -2970,7 +2970,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -3027,7 +3027,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3038,7 +3038,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -3053,7 +3053,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3066,7 +3066,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
         break;
       }
@@ -3079,12 +3079,12 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
         break;
       }
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }
@@ -3098,7 +3098,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3111,7 +3111,7 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
           break;
         };
@@ -3124,13 +3124,13 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
           break;
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -3144,7 +3144,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(astroManager, activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
 
       switch (activeChild->getWindowType())
       {
@@ -3152,7 +3152,7 @@ namespace astroManager
         dynamic_cast<imaging::CImageWindow *>(activeChild)->zoomSelection();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }
@@ -3620,7 +3620,7 @@ namespace astroManager
       QWidget *formWidget = loader.load(&file, this);
       file.close();
 
-      RUNTIME_ASSERT(astroManager, formWidget, "Widget not found for the MDU frame.");
+      RUNTIME_ASSERT(formWidget, "Widget not found for the MDU frame.");
 
       setCentralWidget(formWidget);
 
@@ -3684,7 +3684,7 @@ namespace astroManager
               break;
             default:
             {
-              ASTROMANAGER_CODE_ERROR;
+              CODE_ERROR;
               break;
             };
           }

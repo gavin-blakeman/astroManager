@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -48,7 +48,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogs.h"
+#include "include/dialogs/dialogs.h"
 
   // Standard C++ library header files
 
@@ -57,10 +57,10 @@
 
   // astroManager application header files
 
-#include "../../include/database/databaseARID.h"
-#include "../../include/database/databaseATID.h"
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
   // Miscellaneous library header files.
 
@@ -115,7 +115,7 @@ namespace astroManager
 
       dlg = static_cast<QDialog *>(loader.load(&file));
 
-      RUNTIME_ASSERT(astroManager, dlg != nullptr, "The dialog template could not be loaded.")
+      RUNTIME_ASSERT(dlg != nullptr, "The dialog template could not be loaded.")
 
       file.close();
     }

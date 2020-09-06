@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -41,19 +41,19 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/ImageComparison.h"
+#include "include/ImageComparison.h"
 
   // astroManager header files
 
-#include "../include/AstroGraphicsView.h"
-#include "../include/dialogs/dialogSaveAligned.h"
-#include "../include/dockWidgets/dockWidgetAstrometry.h"
-#include "../include/dockWidgets/dockWidgetHistogram.h"
-#include "../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../include/dockWidgets/dockWidgetMagnify.h"
-#include "../include/dockWidgets/dockWidgetNavigator.h"
-#include "../include/dockWidgets/dockWidgetPhotometry.h"
-#include "../include/settings.h"
+#include "include/AstroGraphicsView.h"
+#include "include/dialogs/dialogSaveAligned.h"
+#include "include/dockWidgets/dockWidgetAstrometry.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/dockWidgets/dockWidgetPhotometry.h"
+#include "include/settings.h"
 
   // Qt Framework
 
@@ -969,7 +969,7 @@ namespace astroManager
       QListWidgetItem *lwi;
       SControlBlock *controlBlock;
 
-      RUNTIME_ASSERT(astroManager, index <= 1, "Invalid Tab Index.");
+      RUNTIME_ASSERT(index <= 1, "Invalid Tab Index.");
 
       if (index == 0)
       {
@@ -1069,7 +1069,7 @@ namespace astroManager
           scenePoint = graphicsViewImageInput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->currentItem();
 
-          RUNTIME_ASSERT(astroManager, lwi != nullptr, "List widget should have a relevant item.");
+          RUNTIME_ASSERT(lwi != nullptr, "List widget should have a relevant item.");
 
             // Astrometry on the input image. Need to also mark up the output image (If there is one)
             // The original image is the currentImage in the dockwidgets.
@@ -1122,7 +1122,7 @@ namespace astroManager
           scenePoint = graphicsViewImageOutput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->item(imageNumber);
 
-          RUNTIME_ASSERT(astroManager, lwi, "There should be a corresponding list widget item.");
+          RUNTIME_ASSERT(lwi, "There should be a corresponding list widget item.");
 
             // Astrometry on the output image. Need to also markup the input image.
 
@@ -1167,7 +1167,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
         break;
       };
@@ -1206,7 +1206,7 @@ namespace astroManager
           scenePoint = graphicsViewImageInput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->currentItem();
 
-          RUNTIME_ASSERT(astroManager, lwi != nullptr, "There should be a valid list widget item.");
+          RUNTIME_ASSERT(lwi != nullptr, "There should be a valid list widget item.");
 
             // Photometry on the input image. Need to also mark up the output image (If there is one)
             // The original image is the currentImage in the dockwidgets.
@@ -1263,7 +1263,7 @@ namespace astroManager
           scenePoint = graphicsViewImageOutput->mapToScene(mouseEvent->pos());		// Get the image coordinates
           lwi = listWidgetImages->item(imageNumber);
 
-          RUNTIME_ASSERT(astroManager, lwi != nullptr, "There should be a valid list widget item.");
+          RUNTIME_ASSERT(lwi != nullptr, "There should be a valid list widget item.");
 
             // Photometry on the output image. Need to also markup the input image.
 
@@ -1312,7 +1312,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
         break;
       };
@@ -1404,7 +1404,7 @@ namespace astroManager
       QGraphicsScene *gsImage = nullptr;
       QListWidgetItem *lwi;
 
-      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not be equal to nullptr.");
+      RUNTIME_ASSERT(pw, "Parent Widget should not be equal to nullptr.");
 
 
       if (tabWidget->currentIndex() == 0)
@@ -1425,7 +1425,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
       repaintImage();
@@ -1498,7 +1498,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
       gsImage->clear();         // This invalidates the pixmapItem as the scene owns the pixmapItem.
@@ -1611,7 +1611,7 @@ namespace astroManager
            !spinBoxInterval || !pushButtonAdd || !pushButtonRemove || !pushButtonRemoveAll || !pushButtonManual ||
            !pushButtonAutomatic || !pushButtonAlign1 || !pushButtonAlign2 || !pushButtonPrepare || !labelAlign1 || !labelAlign2 ||
            !inputTabWidget || !outputTabWidget || !labelCurrentFile)
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
 
       glImage = (QGridLayout *) inputTabWidget->layout();
 
@@ -1645,7 +1645,7 @@ namespace astroManager
         spinBoxInterval->setEnabled(false);
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
 
@@ -1910,7 +1910,7 @@ namespace astroManager
         graphicsViewImageOutput->zoom11();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }
@@ -1931,7 +1931,7 @@ namespace astroManager
         graphicsViewImageOutput->zoomAll();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }
@@ -1952,7 +1952,7 @@ namespace astroManager
         graphicsViewImageOutput->zoomIn();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }
@@ -1993,7 +1993,7 @@ namespace astroManager
         graphicsViewImageOutput->zoomSelection();
         break;
       default:
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
         break;
       };
     }

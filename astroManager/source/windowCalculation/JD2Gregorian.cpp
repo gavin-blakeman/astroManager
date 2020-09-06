@@ -88,7 +88,7 @@ namespace astroManager
       }
       else
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
 
       labelGregorianDate->setText(QString::fromStdString(JD.gregorianDate()));

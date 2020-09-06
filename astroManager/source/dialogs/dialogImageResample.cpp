@@ -127,7 +127,7 @@ namespace astroManager
         lHeight = findChild<QSpinBox *>("spinBoxHeight")->value();
         break;
       default:
-        CODE_ERROR(astroManager);   // Should not be able to get here.
+        CODE_ERROR;   // Should not be able to get here.
         break;
       };
 

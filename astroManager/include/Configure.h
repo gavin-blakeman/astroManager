@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software(astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -85,8 +85,8 @@ namespace astroManager
       QPushButton *pushButtonMoveUp;
       QPushButton *pushButtonMoveDown;
 
-      inline virtual bool save() {CODE_ERROR(astroManager); }
-      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
+      inline virtual bool save() {CODE_ERROR; }
+      inline virtual bool saveAs() {CODE_ERROR; }
 
       void setupUI();
 
@@ -110,8 +110,8 @@ namespace astroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(astroManager);}
-      inline virtual bool saveAs() {CODE_ERROR(astroManager);}
+      inline virtual bool save() {CODE_ERROR;}
+      inline virtual bool saveAs() {CODE_ERROR;}
 
       virtual void closeEvent(QCloseEvent *);
 
@@ -140,8 +140,8 @@ namespace astroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(astroManager); }
-      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
+      inline virtual bool save() {CODE_ERROR; }
+      inline virtual bool saveAs() {CODE_ERROR; }
 
       virtual void closeEvent(QCloseEvent *);
 
@@ -172,8 +172,8 @@ namespace astroManager
 
       void setupUI();
 
-      inline virtual bool save() {CODE_ERROR(astroManager); }
-      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
+      inline virtual bool save() {CODE_ERROR; }
+      inline virtual bool saveAs() {CODE_ERROR; }
 
       void insertRow(int, QSqlQuery &);
 
@@ -201,8 +201,8 @@ namespace astroManager
     private:
       QTableWidget *tableWidget;
 
-      inline virtual bool save() {CODE_ERROR(astroManager); }
-      inline virtual bool saveAs() {CODE_ERROR(astroManager); }
+      inline virtual bool save() {CODE_ERROR; }
+      inline virtual bool saveAs() {CODE_ERROR; }
 
       virtual void closeEvent(QCloseEvent *);
 

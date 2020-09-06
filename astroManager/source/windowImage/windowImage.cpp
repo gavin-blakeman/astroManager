@@ -193,7 +193,7 @@ namespace astroManager
           break;
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -247,7 +247,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 

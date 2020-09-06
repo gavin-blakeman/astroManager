@@ -918,7 +918,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         }
       }
@@ -1156,7 +1156,7 @@ namespace astroManager
       else
       {
         ERRORMESSAGE(boost::format("Object with ID: %u not found.") % objectID);
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 

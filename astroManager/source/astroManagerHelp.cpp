@@ -275,7 +275,7 @@ namespace astroManager
 
       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       }
       else
       {

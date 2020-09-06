@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2018 Gavin Blakeman.
+//                      Copyright 2013-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -43,14 +43,14 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
 
   // astroManager includes
 
-#include "../../include/windowImage/windowImage.h"
-#include "../../include/dockWidgets/dockWidgetMagnify.h"
-#include "../../include/dockWidgets/dockWidgetNavigator.h"
-#include "../../include/settings.h"
+#include "include/windowImage/windowImage.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/settings.h"
 
   // QWT Library
 
@@ -195,7 +195,7 @@ namespace astroManager
         nBinNo = static_cast<size_t>(std::floor((astroImage->getValue(lIndex) - std::get<2>(values)) / std::get<3>(values)));
         if ( (nBinNo < 0) || (nBinNo >= HISTOGRAMBINS) )
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
         else
         {
@@ -368,12 +368,12 @@ namespace astroManager
           }
           else
           {
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
           }
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       };
 
@@ -399,7 +399,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -430,12 +430,12 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -508,7 +508,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
       redrawImage();
@@ -549,12 +549,12 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           }
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
       };
 
@@ -580,7 +580,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       }
     }
 
@@ -595,7 +595,7 @@ namespace astroManager
 
     void CHistogram::eventWhiteSliderChanged(int newVal)
     {
-      RUNTIME_ASSERT(astroManager, currentImage, "CurrentImage should not be null.");
+      RUNTIME_ASSERT(currentImage, "CurrentImage should not be null.");
 
       ACL::CAstroImage *astroImage = nullptr;
 
@@ -612,7 +612,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -689,7 +689,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
 
         currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -811,7 +811,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
 
         //currentImage->pixmap->convertFromImage(*currentImage->ScreenImage, Qt::MonoOnly);
@@ -883,7 +883,7 @@ namespace astroManager
 
       if (!(gridLayout = dynamic_cast<QGridLayout *>(groupBox->layout())))
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
         // Create and add the double slider to the layout.
@@ -925,7 +925,7 @@ namespace astroManager
 
       if (!(gridLayout = dynamic_cast<QGridLayout *>(formWidget->layout())))
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
         // Create the Histogram Widget

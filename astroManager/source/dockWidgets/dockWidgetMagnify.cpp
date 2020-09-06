@@ -259,7 +259,7 @@ namespace astroManager
           break;
         default:
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
           break;
         };
       };

@@ -166,7 +166,7 @@ namespace astroManager
       buttonBox = dlg->findChild<QDialogButtonBox *>("buttonBox");
 
       if (!checkBoxAspectRatio || !spinBoxImageWidth || !spinBoxImageHeight || !spinBoxImageQuality || !buttonBox)
-        CODE_ERROR(ACL);
+        CODE_ERROR;
 
       checkBoxAspectRatio->setChecked(true);
 

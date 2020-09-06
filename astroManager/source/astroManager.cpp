@@ -279,7 +279,7 @@ int main(int argc, char *argv[])
 
       if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
       {
-        CODE_ERROR(astroManager);
+        CODE_ERROR;
       };
 
       QTextStream data(&file);
@@ -360,7 +360,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x009E;
+  std::uint16_t const BUILDNUMBER = 0x009F;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },
@@ -374,7 +374,7 @@ namespace astroManager
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-      CODE_ERROR(astroManager);
+      CODE_ERROR;
     }
     else
     {
@@ -396,7 +396,7 @@ namespace astroManager
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-      CODE_ERROR(astroManager);
+      CODE_ERROR;
     }
     else
     {

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -37,10 +37,14 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogConfigureSite.h"
+#include "include/dialogs/dialogConfigureSite.h"
 
-#include "../../include/error.h"
-#include "../../include/astroManager.h"
+  // Miscellaneous library header files
+
+#include <GCL>
+
+#include "include/error.h"
+#include "include/astroManager.h"
 
 #include <cmath>
 
@@ -58,7 +62,7 @@ namespace astroManager
     CDialogConfigureSite::CDialogConfigureSite(CObservatory *observatory) : CDialog(":/forms/dialogConfigureSite.ui"),
       observatory_(observatory)
     {
-      RUNTIME_ASSERT("astroManager", observatory != nullptr, "parameter observatory cannot be nullptr.");
+      RUNTIME_ASSERT(observatory != nullptr, "parameter observatory cannot be nullptr.");
       setupUI();
     }
 

@@ -147,7 +147,7 @@ namespace astroManager
       case ACL::CTargetAstronomy::TT_NONE:
       default:
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
         break;
       };
     };

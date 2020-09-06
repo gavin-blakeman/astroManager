@@ -510,7 +510,7 @@ namespace astroManager
             }
             else
             {
-              ASTROMANAGER_CODE_ERROR;
+              CODE_ERROR;
             }
           }
           else if (noWCSAction == NOWCS_IGNORE)
@@ -960,7 +960,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -1001,7 +1001,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
 
     }
@@ -1040,7 +1040,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         }
       };
@@ -1087,7 +1087,7 @@ namespace astroManager
           };
           default:
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
             break;
           };
         };
@@ -1155,7 +1155,7 @@ namespace astroManager
     void CStackImagesWindow::repaintImage()
     {
       mdiframe::CFrameWindow *pw = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-      RUNTIME_ASSERT(astroManager, pw, "Parent Widget should not == nullptr");
+      RUNTIME_ASSERT(pw, "Parent Widget should not == nullptr");
 
       switch (tabWidget->currentIndex())
       {
@@ -1191,7 +1191,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         }
       };
@@ -1464,7 +1464,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         };
       }
       catch (...)
@@ -1518,7 +1518,7 @@ namespace astroManager
           }
           else
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
           };
         };
       };
@@ -1724,7 +1724,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
 
@@ -1750,7 +1750,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1778,7 +1778,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1806,7 +1806,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1834,7 +1834,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };
@@ -1862,7 +1862,7 @@ namespace astroManager
         };
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         };
       };

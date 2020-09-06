@@ -207,7 +207,7 @@ namespace astroManager
     }
     else
     {
-      ASTROMANAGER_CODE_ERROR;
+      CODE_ERROR;
     }
   }
 
@@ -241,7 +241,7 @@ namespace astroManager
     }
     else
     {
-      ACL_CODE_ERROR;
+      CODE_ERROR;
     }
     postLoadActions();
   }
@@ -270,7 +270,7 @@ namespace astroManager
     }
     else
     {
-      ASTROMANAGER_CODE_ERROR;
+      CODE_ERROR;
     };
   }
 
@@ -407,7 +407,7 @@ namespace astroManager
       };
       default:
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
         break;
       };
     };
@@ -449,7 +449,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_CODE_ERROR;
+        CODE_ERROR;
       };
     }
     else

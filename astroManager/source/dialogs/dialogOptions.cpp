@@ -175,7 +175,7 @@ namespace astroManager
         }
         default:
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
           break;
         }
       };
@@ -304,7 +304,7 @@ namespace astroManager
         }
         default:
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
           break;
         }
       };
@@ -678,7 +678,7 @@ namespace astroManager
         }
         default:
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
           break;
         }
       };
@@ -829,7 +829,7 @@ namespace astroManager
           }
           default:
           {
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
             break;
           }
         };
@@ -886,7 +886,7 @@ namespace astroManager
           }
           default:
           {
-            ASTROMANAGER_CODE_ERROR;
+            CODE_ERROR;
             break;
           }
         };
@@ -1041,7 +1041,7 @@ namespace astroManager
           }
           default:
           {
-            CODE_ERROR(astroManager);
+            CODE_ERROR;
             break;
           }
         };
@@ -1153,7 +1153,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
       }
       else
@@ -1261,7 +1261,7 @@ namespace astroManager
         }
         else
         {
-          ASTROMANAGER_CODE_ERROR;
+          CODE_ERROR;
         }
       }
       else
@@ -1657,7 +1657,7 @@ namespace astroManager
         }
         else
         {
-          CODE_ERROR(astroManager);
+          CODE_ERROR;
         }
 
         if (!driverValid)
