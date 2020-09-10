@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2010 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,20 +36,20 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/ACL/astroFile.h"
-
-  // astroManager application header files
-
-#include "../../include/database/databaseARID.h"
-#include "../../include/error.h"
-#include "../../include/ACL/FITSMemoryFileArray.h"
-#include "../../include/ACL/observatoryInformation.h"
-#include "../../include/ACL/telescope.h"
-#include "../../include/settings.h"
+#include "include/ACL/astroFile.h"
 
   // Miscellaneous library header files.
 
 #include <QCL>
+
+  // astroManager application header files
+
+#include "include/database/databaseARID.h"
+#include "include/error.h"
+#include "include/ACL/FITSMemoryFileArray.h"
+#include "include/ACL/observatoryInformation.h"
+#include "include/ACL/telescope.h"
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -223,10 +223,10 @@ namespace astroManager
     imageIDValid_ = true;
   }
 
-  /// @brief Overloaded load() function to load the file contents.
-  /// @details Calls preLoadActions() and postLoadAction() to allow additional actions to take place automatically.
-  /// @throws GCL::CCodeError(astroManager)
-  /// @version 2017-07-26/GGB - Function created.
+  /// @brief        Overloaded load() function to load the file contents.
+  /// @details      Calls preLoadActions() and postLoadAction() to allow additional actions to take place automatically.
+  /// @throws       GCL::CCodeError
+  /// @version      2017-07-26/GGB - Function created.
 
   void CAstroFile::load()
   {

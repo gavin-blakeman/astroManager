@@ -61,8 +61,6 @@ namespace astroManager
     std::vector<std::pair<GCL::TErrorCode, std::string>> errors =
     {
       {0x0001, std::string("Resource Failed to Load.")},
-      {0x0002, std::string("")},
-      {0x0003, std::string("")},
       {0x0004, std::string("ARID DATABASE: Database Driver not recognised.")},
       {0x0005, std::string("Invalid image plane")},
       {0x0006, std::string("Unable to open file, or file does not exist.")},
@@ -70,8 +68,6 @@ namespace astroManager
       {0x0008, std::string("")},   //
       {0x0009, std::string("DATABASE: Weather Database settings not complete.")},
       {0x000A, std::string("ARID DATABASE: Database Driver not recognised.")},
-      {0x000B, std::string("Array index out of array bounds.")},
-      {0x000C, std::string("FITS keyword type unknown.")},
       {0x000D, std::string("Unable to open file type selected.")},
       {0x000E, std::string("Error while opening file.")},
       {0x000F, std::string("cfitsio: cfitsioError")},

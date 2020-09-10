@@ -293,6 +293,7 @@ else:unix:CONFIG(debug, debug|release) {
   LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/system/build/gcc-7/release/link-static/threading-multi" -lboost_system
   LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/thread/build/gcc-7/release/link-static/threading-multi" -lboost_thread
   LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/chrono/build/gcc-7/release/link-static/threading-multi" -lboost_chrono
+  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/chrono/build/gcc-7/release/link-static/threading-multi" -lboost_locale
   LIBS += -L../SOFA -lSOFA
   LIBS += -L../../Library/Library -lQxt
   LIBS += -L../GeographicLib-1.48 -lGeographicLib

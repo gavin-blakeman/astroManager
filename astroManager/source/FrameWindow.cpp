@@ -54,6 +54,14 @@
 #include <ctime>
 #include <utility>
 
+  // Miscellaneous Library header files
+
+#include <ACL>
+#include "boost/locale.hpp"
+#include "boost/format.hpp"
+#include "boost/thread/thread.hpp"
+#include <GCL>
+
   // astroManager header files
 
 #include "include/ACL/astroFile.h"
@@ -89,13 +97,6 @@
 #include "include/windowPlanning/windowPlanning.h"
 #include "include/windowWeather/windowWeatherHistory.h"
 #include "include/windowSelectImage.h"
-
-  // Miscellaneous Library header files
-
-#include <ACL>
-#include "boost/thread/thread.hpp"
-#include "boost/format.hpp"
-#include <GCL>
 
 namespace astroManager
 {
@@ -168,14 +169,14 @@ namespace astroManager
       timer1s->start(1000);
     }
 
-    /// @brief Destructor for the CFrameWindow class.
+    /// @brief    Destructor for the CFrameWindow class.
     /// @details  Destroys all windows created elements (Timers etc). Destroys all dynamically created elements.
-    /// @throws None.
-    /// @version 2017-07-14/GGB - Set menuBar to nullptr before exit. All menuBars deleted as unique_ptr.
-    /// @version 2013-01-22/GGB - Added support for recent files.
-    /// @version 2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
-    /// @version 2010-05-27/GGB - Modified to use Qt API.
-    /// @version 2009-09-04/GGB - Function created.
+    /// @throws   None.
+    /// @version  2017-07-14/GGB - Set menuBar to nullptr before exit. All menuBars deleted as unique_ptr.
+    /// @version  2013-01-22/GGB - Added support for recent files.
+    /// @version  2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
+    /// @version  2010-05-27/GGB - Modified to use Qt API.
+    /// @version  2009-09-04/GGB - Function created.
 
     CFrameWindow::~CFrameWindow()
     {
@@ -192,7 +193,7 @@ namespace astroManager
         timer1s = nullptr;
       };
 
-      // Destroy all dynamically allocated recent file information.
+        // Destroy all dynamically allocated recent file information.
 
       for (nIndex = 0; nIndex < recentFileActions.size(); nIndex++)
       {
@@ -204,9 +205,9 @@ namespace astroManager
       };
     }
 
-    /// @brief Sets up the menu when a Image window is activated.
-    /// @throws None.
-    /// @version 2017-07-16/GGB - Function created.
+    /// @brief    Sets up the menu when a Image window is activated.
+    /// @throws   None.
+    /// @version  2017-07-16/GGB - Function created.
 
     void CFrameWindow::activateWindowClassImage()
     {
@@ -225,10 +226,10 @@ namespace astroManager
       menuBar()->addMenu(&*subMenus[IDSM_HELP]);
     }
 
-    /// @brief Sets up the menu when a Null window is activated.
-    /// @throws None.
-    /// @version 2017-07-21/GGB - Added calibration menu (Bug #93)
-    /// @version 2017-07-16/GGB - Function created.
+    /// @brief    Sets up the menu when a Null window is activated.
+    /// @throws   None.
+    /// @version  2017-07-21/GGB - Added calibration menu (Bug #93)
+    /// @version  2017-07-16/GGB - Function created.
 
     void CFrameWindow::activateWindowClassNull()
     {
@@ -242,10 +243,10 @@ namespace astroManager
       menuBar()->addMenu(&*subMenus[IDSM_HELP]);
     }
 
-    /// @brief Function called when a child window associated with weather is activated.
-    /// @details Displays the toolbars and menus for weather.
-    /// @version 2017-07-21/GGB - Added calibration menu (Bug #93)
-    /// @version 2017-07-13/GGB - Function created.
+    /// @brief    Function called when a child window associated with weather is activated.
+    /// @details  Displays the toolbars and menus for weather.
+    /// @version  2017-07-21/GGB - Added calibration menu (Bug #93)
+    /// @version  2017-07-13/GGB - Function created.
 
     void CFrameWindow::activateWindowClassWeather()
     {
@@ -259,11 +260,11 @@ namespace astroManager
       menuBar()->addMenu(&*subMenus[IDSM_HELP]);
     }
 
-    /// @brief Returns the active MDI child window. This is converted to a CMdiSubWindow.
-    /// @returns The currently active MDI child window.
-    /// @returns nullptr on failure.
-    /// @throws None.
-    /// @version 2011-03-06/GGB - Function created.
+    /// @brief    Returns the active MDI child window. This is converted to a CMdiSubWindow.
+    /// @returns  The currently active MDI child window.
+    /// @returns  nullptr on failure.
+    /// @throws   None.
+    /// @version  2011-03-06/GGB - Function created.
 
     CMdiSubWindow *CFrameWindow::activeMdiChild() const
     {
@@ -1136,20 +1137,18 @@ namespace astroManager
         else
         {
           CODE_ERROR;
-        }
+        };
       }
       else
       {
         CODE_ERROR;
-      }
-
-
+      };
     }
 
-    /// @brief Loads a target list from file and applies it to the current image.
-    /// @throws GCL::CCodeError(astroManager)
+    /// @brief    Loads a target list from file and applies it to the current image.
+    /// @throws   GCL::CCodeError(astroManager)
     //
-    // 2015-01-04/GGB - Function created.
+    /// @version  2015-01-04/GGB - Function created.
 
     void CFrameWindow::eventAstrometryLoadTargets()
     {
@@ -1164,12 +1163,12 @@ namespace astroManager
         else
         {
           CODE_ERROR;
-        }
+        };
       }
       else
       {
         CODE_ERROR;
-      }
+      };
     }
 
     /// @brief Converts a colour image to a grayscale image.
@@ -1533,10 +1532,9 @@ namespace astroManager
       }
     }
 
-    /// @brief Function to export the current image as a PNG
-    /// @throws CCodeError(astroManager)
-    //
-    // 2013-04-26/GGB - Function created.
+    /// @brief    Function to export the current image as a PNG
+    /// @throws   CCodeError(astroManager)
+    /// @version  2013-04-26/GGB - Function created.
 
     void CFrameWindow::eventExportAsPNG()
     {
@@ -1552,7 +1550,7 @@ namespace astroManager
           else
           {
             CODE_ERROR;
-          }
+          };
         }
         else
         {
@@ -1695,7 +1693,7 @@ namespace astroManager
       else
       {
         statusBar()->showMessage(tr("Error while saving file!"), 2000);
-      }
+      };
     }
 
     /// @brief Handles the Save As action from the menu/buttons
@@ -3324,13 +3322,13 @@ namespace astroManager
       }
     }
 
-    /// @brief Performs the action of loading an image.
-    /// @param[in] filePath: The path and filename of the file to load.
-    /// @throws std::bad_alloc
-    /// @note Exceptions related to file open errors are caught and closed.
-    /// @version 2016-04-17/GGB - Added catch() to catch CFITSException errors
-    /// @version 2013-06-23/GGB - Added code to propogate code errors.
-    /// @version 2013-01-21/GGB - Code taken from eventImageOpen()
+    /// @brief      Performs the action of loading an image.
+    /// @param[in]  filePath: The path and filename of the file to load.
+    /// @throws     std::bad_alloc
+    /// @note       Exceptions related to file open errors are caught and closed.
+    /// @version    2016-04-17/GGB - Added catch() to catch CFITSException errors
+    /// @version    2013-06-23/GGB - Added code to propogate code errors.
+    /// @version    2013-01-21/GGB - Code taken from eventImageOpen()
 
     void CFrameWindow::loadFromFile(boost::filesystem::path &filePath)
     {
@@ -3370,8 +3368,8 @@ namespace astroManager
       {
         if (err.errorCode() == 0x000D)
         {
-          msgBox.setText(tr("File Format Error."));
-          msgBox.setInformativeText(tr("The file format chosen is unknown."));
+          msgBox.setText(QString::fromStdString(boost::locale::translate("File Format Error.")));
+          msgBox.setInformativeText(QString::fromStdString(boost::locale::translate("The file format chosen is unknown.")));
           msgBox.setIcon(QMessageBox::Critical);
           msgBox.setStandardButtons(QMessageBox::Ok);
           msgBox.setDefaultButton(QMessageBox::Ok);
@@ -3382,8 +3380,8 @@ namespace astroManager
           WARNINGMESSAGE("Error opening file");
           WARNINGMESSAGE(std::to_string(err.errorCode()) + " - " + err.errorMessage());
 
-          msgBox.setText(tr("Error Opening file."));
-          msgBox.setInformativeText(tr("There was an error opening the file."));
+          msgBox.setText(QString::fromStdString(boost::locale::translate("Error Opening file.")));
+          msgBox.setInformativeText(QString::fromStdString(boost::locale::translate("There was an error opening the file.")));
           msgBox.setIcon(QMessageBox::Critical);
           msgBox.setStandardButtons(QMessageBox::Ok);
           msgBox.setDefaultButton(QMessageBox::Ok);

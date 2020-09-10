@@ -39,29 +39,32 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/database/databaseARID.h"
+#include "include/database/databaseARID.h"
 
   // Standard C++ library header files
 
 #include <cstdint>
 #include <limits>
 
-  // astroManager application headerfiles
-
-#include "../../include/database/databaseATID.h"
-#include "../../include/dialogs/dialogConfigureSite.h"
-#include "../../include/dialogs/dialogConfigureTelescope.h"
-#include "../../include/dialogs/dialogImageDetails.h"
-#include "../../include/error.h"
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
-
   // Miscellaneous library header files
 
 #include <ACL>
+#include <boost/locale.hpp>
 #include "GeographicLib/Geodesic.hpp"
 #include "GeographicLib/Math.hpp"
 #include <QCL>
+
+  // astroManager application header files
+
+#include "include/database/databaseATID.h"
+#include "include/dialogs/dialogConfigureSite.h"
+#include "include/dialogs/dialogConfigureTelescope.h"
+#include "include/dialogs/dialogImageDetails.h"
+#include "include/error.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
+
+
 
 namespace astroManager
 {
@@ -76,14 +79,14 @@ namespace astroManager
     //
     //*****************************************************************************************************************************
 
-    /// @brief Constructor for the class.
-    /// @throws std::bad_alloc
-    /// @version 2017-06-21/GGB - Added sqlWriter information.
-    /// @version 2017-06-20/GGB - Updated to match changes to CDatabase. (Bug #69)
-    /// @version 2013-05-15/GGB - Added code to check if the database is disabled. (Will be disabled by default!)
-    /// @version 2013-01-26/GGB - Body of code moved to function connectToDatabase.
-    /// @version 2013-01-25/GGB - Added SQLite support
-    /// @version 2012-01-01/GGB - Function created
+    /// @brief    Constructor for the class.
+    /// @throws   std::bad_alloc
+    /// @version  2017-06-21/GGB - Added sqlWriter information.
+    /// @version  2017-06-20/GGB - Updated to match changes to CDatabase. (Bug #69)
+    /// @version  2013-05-15/GGB - Added code to check if the database is disabled. (Will be disabled by default!)
+    /// @version  2013-01-26/GGB - Body of code moved to function connectToDatabase.
+    /// @version  2013-01-25/GGB - Added SQLite support
+    /// @version  2012-01-01/GGB - Function created
 
     CARID::CARID() : CDatabase("ARID"), ARIDdisabled_(false)
     {
@@ -152,10 +155,10 @@ namespace astroManager
         sqlWriter.createColumn("TBL_IMAGES", "Declination");
     }
 
-    /// @brief Destructor for the class. Ensures that the database connection is removed.
-    /// @throws None.
-    /// @version 2013-05-15/GGB - Conditional removal of the database.
-    /// @version 2010-11-28/GGB - Function created.
+    /// @brief    Destructor for the class. Ensures that the database connection is removed.
+    /// @throws   None.
+    /// @version  2013-05-15/GGB - Conditional removal of the database.
+    /// @version  2010-11-28/GGB - Function created.
 
     CARID::~CARID()
     {
@@ -168,16 +171,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Connects to the database.
-    /// @details In addition to creating the connection, the sqlQuery member is also initialised.
-    /// @throws std::bad_alloc
-    /// @version 2017-08-13/GGB - Create the sqlQuery instance.
-    /// @version 2017-07-09/GGB - Updated logic to reflect new CDatabase functions.
-    /// @version 2017-06-20/GGB - Correcting error handling. (Bug #70)
-    /// @version 2015-06-14/GGB - Corected bug found with SQLite entry being created everytime.
-    /// @version 2013-05-15/GGB - Conditional connection to database if not disabled.
-    /// @version 2013-04-25/GGB - Function simplified and will create registry settings if none exist.
-    /// @version 2013-01-26/GGB - Function created
+    /// @brief    Connects to the database.
+    /// @details  In addition to creating the connection, the sqlQuery member is also initialised.
+    /// @throws   std::bad_alloc
+    /// @version  2017-08-13/GGB - Create the sqlQuery instance.
+    /// @version  2017-07-09/GGB - Updated logic to reflect new CDatabase functions.
+    /// @version  2017-06-20/GGB - Correcting error handling. (Bug #70)
+    /// @version  2015-06-14/GGB - Corected bug found with SQLite entry being created everytime.
+    /// @version  2013-05-15/GGB - Conditional connection to database if not disabled.
+    /// @version  2013-04-25/GGB - Function simplified and will create registry settings if none exist.
+    /// @version  2013-01-26/GGB - Function created
 
     void CARID::connectToDatabase()
     {
@@ -192,7 +195,7 @@ namespace astroManager
 
           if (!CDatabase::connectToDatabase(szDatabase))
           {
-            INFOMESSAGE("Unable to connect to ARID database. Disabling ARID database.");
+            INFOMESSAGE(boost::locale::translate("Unable to connect to ARID database. Disabling ARID database."));
             ARIDdisabled_ = true;
           }
           else
@@ -203,18 +206,18 @@ namespace astroManager
         else
         {
           WARNINGMESSAGE("Setting " + settings::ARID_DATABASE_DBMS.toStdString() + "not found.");
-          INFOMESSAGE("Unable to connect to ARID database. Disabling ARID database.");
+          INFOMESSAGE(boost::locale::translate("Unable to connect to ARID database. Disabling ARID database."));
           ARIDdisabled_ = true;
         };
       };
     }
 
-    /// @brief Downloads an image from the database.
-    /// @param[in] imageID: The ID of the image to download.
-    /// @param[in] imageVersion: The version of the image to download.
+    /// @brief      Downloads an image from the database.
+    /// @param[in]  imageID: The ID of the image to download.
+    /// @param[in]  imageVersion: The version of the image to download.
     /// @param[out] byteArray: The QByteArray to receive the downloaded image.
-    /// @throws None.
-    /// @version 2017-08-12/GGB - Function created.
+    /// @throws     None.
+    /// @version    2017-08-12/GGB - Function created.
 
     bool CARID::downLoadImage(imageID_t imageID, imageVersion_t imageVersion, QByteArray &byteArray)
     {
@@ -227,9 +230,9 @@ namespace astroManager
         byteArray.clear();    // Ensure the byteArray is empty.
 
         sqlWriter.resetQuery();
-        sqlWriter.select({"IMAGE_DATA"}).from({"TBL_IMAGESTORAGE"}).
-            where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
-                   GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), imageVersion)});
+        sqlWriter.select({"IMAGE_DATA"}).from({"TBL_IMAGESTORAGE"})
+            .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
+                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), imageVersion)});
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {
           query.first();
@@ -281,7 +284,6 @@ namespace astroManager
       static std::uint32_t lastFound = 0;     // Stores the last found observatory. This is a convenient place to start searching.
 
       bool returnValue = false;
-      QSqlQuery query(*dBase);
       std::string sqlString;
       GeographicLib::Math::real distance;
       GeographicLib::Geodesic geodesic(GeographicLib::Constants::WGS84_a(), GeographicLib::Constants::WGS84_f());
@@ -295,32 +297,32 @@ namespace astroManager
                                       GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), lastFound)
                                      }).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
             // Check the first value. (There should only be one).
 
-          query.next();   // Move to first valid record.
+          sqlQuery->next();   // Move to first valid record.
 
-          geodesic.Inverse(query.value(2).toDouble(), query.value(3).toDouble(),
+          geodesic.Inverse(sqlQuery->value(2).toDouble(), sqlQuery->value(3).toDouble(),
                            observatory->latitude(), observatory->longitude(), distance);
 
           if (distance <= settings::astroManagerSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
           {
             INFOMESSAGE("Succesfully found site from coordinates...");
-            INFOMESSAGE("Site Identified: " + query.value(1).toString().toStdString());
+            INFOMESSAGE("Site Identified: " + sqlQuery->value(1).toString().toStdString());
 
-            observatory->siteID(query.value(0).toUInt());
-            observatory->siteName(query.value(1).toString().toStdString());
-            if (!query.value(6).isNull())
+            observatory->siteID(sqlQuery->value(0).toUInt());
+            observatory->siteName(sqlQuery->value(1).toString().toStdString());
+            if (!sqlQuery->value(6).isNull())
             {
-              observatory->IAUCode(query.value(6).toString().toStdString());
+              observatory->IAUCode(sqlQuery->value(6).toString().toStdString());
             }
             else
             {
               observatory->IAUCode("");
             };
-            observatory->altitude(query.value(4).toInt());
-            observatory->timeZone(query.value(5).toInt());
+            observatory->altitude(sqlQuery->value(4).toInt());
+            observatory->timeZone(sqlQuery->value(5).toInt());
 
             INFOMESSAGE("Succesfully found site from coordinates...");
             INFOMESSAGE("Site Identified: " + observatory->siteName());
@@ -342,16 +344,16 @@ namespace astroManager
         sqlWriter.resetQuery();
         sqlString = sqlWriter.select({"SITE_ID", "SHORTTEXT", "LATITUDE, LONGITUDE, ALTITUDE, TIMEZONE, IAUCODE"})
                              .from({"TBL_SITES"})
-                             .where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"), })
+                             .where("RETIRED", "=", false)
                              .string();
 
         std::cout << sqlString << std::endl;
 
-         if (query.exec(QString::fromStdString(sqlString)))
+         if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
-          while (query.next())
+          while (sqlQuery->next())
           {
-            geodesic.Inverse(query.value(2).toDouble(), query.value(3).toDouble(),
+            geodesic.Inverse(sqlQuery->value(2).toDouble(), sqlQuery->value(3).toDouble(),
                              observatory->latitude(), observatory->longitude(), distance);
 
             if (distance <= settings::astroManagerSettings->value(settings::SETTINGS_SITE_SAMEDISTANCE, QVariant(500)).toDouble())
@@ -362,20 +364,20 @@ namespace astroManager
               {
                 possibleFound = true;
                 closestDistance = distance;
-                closestSite.siteID(query.value(0).toUInt());
-                closestSite.siteName(query.value(1).toString().toStdString());
-                if (!query.value(6).isNull())
+                closestSite.siteID(sqlQuery->value(0).toUInt());
+                closestSite.siteName(sqlQuery->value(1).toString().toStdString());
+                if (!sqlQuery->value(6).isNull())
                 {
-                  closestSite.IAUCode(query.value(6).toString().toStdString());
+                  closestSite.IAUCode(sqlQuery->value(6).toString().toStdString());
                 }
                 else
                 {
                   closestSite.IAUCode("");
                 };
-                closestSite.latitude(query.value(2).toDouble());
-                closestSite.longitude(query.value(3).toDouble());
-                closestSite.altitude(query.value(4).toInt());
-                closestSite.timeZone(query.value(5).toInt());
+                closestSite.latitude(sqlQuery->value(2).toDouble());
+                closestSite.longitude(sqlQuery->value(3).toDouble());
+                closestSite.altitude(sqlQuery->value(4).toInt());
+                closestSite.timeZone(sqlQuery->value(5).toInt());
               };
             };
           };
@@ -387,9 +389,9 @@ namespace astroManager
 
               *observatory = closestSite;     // Automatically generated copy operator.
 
-              INFOMESSAGE("Succesfully found site from coordinates...");
-              INFOMESSAGE("Site Identified: " + observatory->siteName());
-              INFOMESSAGE("Distance from Observation to Site: " + std::to_string(closestDistance) + "m");
+              INFOMESSAGE(boost::locale::translate("Succesfully found site from coordinates..."));
+              INFOMESSAGE(boost::locale::translate("Site Identified: ").str() + observatory->siteName());
+              INFOMESSAGE(boost::locale::translate("Distance from Observation to Site: ").str() + std::to_string(closestDistance) + "m");
 
               returnValue = true;
             };
@@ -404,24 +406,24 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Searches the database to find the details of a telescope that is defined in telescope.
-    /// @param[in/out] telescope: Structure with data that will be filled with database data.
-    /// @returns true - telescope found
-    /// @returns false - telescope not found.
-    /// @throws GCL::CRuntimeAssert(...)
-    /// @versio 2017-08-05/GGB - Function created.
+    /// @brief          Searches the database to find the details of a telescope that is defined in telescope.
+    /// @param[in/out]  telescope: Structure with data that will be filled with database data.
+    /// @returns        true - telescope found
+    /// @returns        false - telescope not found.
+    /// @throws         GCL::CRuntimeAssert(...)
+    /// @version        2017-08-05/GGB - Function created.
 
     bool CARID::findTelescope(CTelescope *telescope)
     {
-      RUNTIME_ASSERT(!telescope->telescopeName().empty(), "Telscope Name cannot be empty string." );
+      RUNTIME_ASSERT(!telescope->telescopeName().empty(), boost::locale::translate("Telescope Name cannot be empty string."));
 
       bool returnValue = false;
 
       sqlWriter.resetQuery();
       sqlWriter.select({"TELESCOPE_ID", "MANUFACTURER", "MODEL", "APERTURE", "FOCALLENGTH", "OBSTRUCTION"})
           .from({"TBL_TELESCOPES"})
-          .where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), "false"),
-                   GCL::sqlWriter::parameterTriple(std::string("SHORTTEXT"), std::string("="), telescope->telescopeName()) });
+          .where({ {"RETIRED", "=", false},
+                   {"SHORTTEXT", "=", telescope->telescopeName()} });
 
       sqlQuery->clear();
 
@@ -445,26 +447,32 @@ namespace astroManager
         }
         else
         {
-          ERRORMESSAGE("Unable to find telescope.");
-          processErrorInformation();
+          if (sqlQuery->lastError().isValid())
+          {
+            processErrorInformation();
+          }
+          else
+          {
+            ERRORMESSAGE(boost::locale::translate("Unable to find telescope."));
+          };
         }
       }
       else
       {
-        ERRORMESSAGE("Unable to find telescope.");
+        ERRORMESSAGE(boost::locale::translate("Unable to find telescope."));
         processErrorInformation();
       };
 
       return returnValue;
     }
 
-    /// @brief Retrieves an imageName from the database.
-    /// @param[in] imageID: The ID of the image to get the name.
+    /// @brief      Retrieves an imageName from the database.
+    /// @param[in]  imageID: The ID of the image to get the name.
     /// @param[out] imageName: The retrieved name of the image.
-    /// @returns true - image found and imageName valid.
-    /// @returns false - image not found. imageName invalid.
-    /// @throws None.
-    /// @version 2017-08-13/GGB - Function created.
+    /// @returns    true - image found and imageName valid.
+    /// @returns    false - image not found. imageName invalid.
+    /// @throws     None.
+    /// @version    2017-08-13/GGB - Function created.
 
     bool CARID::getImageName(imageID_t imageID, std::string &imageName)
     {
@@ -473,8 +481,7 @@ namespace astroManager
       if (!ARIDdisabled_)
       {
         sqlWriter.resetQuery();
-        sqlWriter.select({"IMAGENAME"}).from({"TBL_IMAGES"}).
-            where({ GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID) });
+        sqlWriter.select({"IMAGENAME"}).from({"TBL_IMAGES"}).where("IMAGE_ID", "=", imageID);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -500,19 +507,19 @@ namespace astroManager
       }
       else
       {
-        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disabled."));
       };
 
       return returnValue;
     }
 
-    /// @brief Gets information on a specified observing site (if available).
-    /// @param[in] siteID: The ID of the site to retrieve information for.
+    /// @brief      Gets information on a specified observing site (if available).
+    /// @param[in]  siteID: The ID of the site to retrieve information for.
     /// @param[out] site: The object to store the information in.
-    /// @returns true - Success
-    /// @returns false - The object was not found.
-    /// @throws None.
-    /// @version 2018-02-02/GGB - Function created.
+    /// @returns    true - Success
+    /// @returns    false - The object was not found.
+    /// @throws     None.
+    /// @version    2018-02-02/GGB - Function created.
 
     bool CARID::getObservingSite(std::uint32_t siteID, CObservatory *site)
     {
@@ -521,9 +528,9 @@ namespace astroManager
       if (!ARIDdisabled_)
       {
         sqlWriter.resetQuery();
-        sqlWriter.select({"SHORTTEXT", "LATITUDE", "LONGITUDE", "ALTITUDE", "TIMEZONE", "DONTDISPLAY", "IAUCODE", "DAYLIGHTSAVING"}).
-            from({"TBL_SITES"}).
-            where({ GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
+        sqlWriter.select({"SHORTTEXT", "LATITUDE", "LONGITUDE", "ALTITUDE", "TIMEZONE", "DONTDISPLAY", "IAUCODE", "DAYLIGHTSAVING"})
+            .from({"TBL_SITES"})
+            .where("SITE_ID", "=", siteID);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -558,23 +565,24 @@ namespace astroManager
       }
       else
       {
-        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disabled."));
       };
 
       return returnValue;
     }
 
-    /// @brief Gets the timezone offset from the database.
-    /// @param[in] siteID: The site ID to use.
+    /// @brief      Gets the timezone offset from the database.
+    /// @param[in]  siteID: The site ID to use.
     /// @param[out] offset: The offset value from the site ID.
-    /// @returns true - Success
-    /// @returns false - Unable to find site.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @returns    true - Success
+    /// @returns    false - Unable to find site.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
+    /// @todo       Change to std::optional return value and dump the second parameter.
 
     bool CARID::getTimeZoneOffset(std::uint32_t siteID, std::int_least32_t *offset)
     {
-      RUNTIME_ASSERT(offset != nullptr, "parameter offset cannot be nullptr.");
+      RUNTIME_ASSERT(offset != nullptr, boost::locale::translate("parameter offset cannot be nullptr."));
 
       bool returnValue = false;
 
@@ -582,9 +590,7 @@ namespace astroManager
       {
         sqlWriter.resetQuery();
 
-        sqlWriter.select({"TimeZone"}).
-            from({"TBL_SITES"}).
-            where({ GCL::sqlWriter::parameterTriple(std::string("SITE_ID"), std::string("="), siteID) });
+        sqlWriter.select({"TimeZone"}).from({"TBL_SITES"}).where("SITE_ID", "=", siteID);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -654,7 +660,7 @@ namespace astroManager
       }
       else
       {
-        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disabled."));
       };
 
       return returnValue;
@@ -690,7 +696,7 @@ namespace astroManager
       }
       else
       {
-        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disabled."));
       };
 
       return returnValue;
@@ -731,12 +737,13 @@ namespace astroManager
     }
 
 
-    /// @brief Checks if an image is registered.
-    /// @param[in] fileName: The filename to check
-    /// @returns true - The image is registered
-    /// @returns false - The image is not registered.
-    /// @throws 0x4000:
-    /// @version 2017-08-05/GGB - Function created.
+    /// @brief      Checks if an image is registered.
+    /// @param[in]  fileName: The filename to check
+    /// @returns    true - The image is registered
+    /// @returns    false - The image is not registered.
+    /// @throws
+    /// @version    2020-09-09/GGB - Convert to simpler form of where clause.
+    /// @version    2017-08-05/GGB - Function created.
 
     bool CARID::isImageNameRegistered(std::string const &imageName)
     {
@@ -744,18 +751,13 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
-        std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
-            where({
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
-                  }).string();
+        std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).where("IMAGENAME", "=", imageName).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
-          query.first();
-          if (query.isValid())
+          sqlQuery->first();
+          if (sqlQuery->isValid())
           {
               // Image found.
 
@@ -765,24 +767,24 @@ namespace astroManager
         else
         {
           processErrorInformation();
-          ASTROMANAGER_ERROR(0x4000);
-        }
+        };
       }
       else
       {
-        DEBUGMESSAGE(QObject::tr("ARID Database is disabled.").toStdString());
-      }
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disabled."));
+      };
 
       return returnValue;
     }
 
-    /// @brief Checks if an image has been registered with the same file name.
-    /// @param[in] fileName: The file name to check.
+    /// @brief      Checks if an image has been registered with the same file name.
+    /// @param[in]  fileName: The file name to check.
     /// @param[out] uuid: The UUID of the image if the image has been registered. Undefined if the image has not been registered.
-    /// @returns true - The file name is already registered.
-    /// @returns false - The file name is not registered
+    /// @returns    true - The file name is already registered.
+    /// @returns    false - The file name is not registered
     /// @throws
-    /// @version 2017-07-23/GGB - Function created
+    /// @version    2020-09-09/GGB - Convert to simpler form of where clause.
+    /// @version    2017-07-23/GGB - Function created
 
     bool CARID::isImageNameRegistered(std::string const &imageName, QString &uuid)
     {
@@ -790,46 +792,41 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
-        std::string sqlString = sqlWriter.select({"IMAGE_UUID"}).from({"TBL_IMAGES"}).
-            where({
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
-                  }).string();
+        std::string sqlString = sqlWriter.select({"IMAGE_UUID"}).from({"TBL_IMAGES"}).where("IMAGENAME", "=", imageName).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
-          query.first();
-          if (query.isValid())
+          sqlQuery->first();
+          if (sqlQuery->isValid())
           {
               // Image found.
 
-            uuid = query.value(0).toString();
+            uuid = sqlQuery->value(0).toString();
             returnValue = true;
           };
         }
         else
         {
           processErrorInformation();
-          ASTROMANAGER_ERROR(0x4000);
         }
       }
       else
       {
-        DEBUGMESSAGE("ARID Database is disbled.");
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disbled."));
       }
 
       return returnValue;
     }
 
-    /// @brief Checks if an image has been registered with the same file name.
-    /// @param[in] fileName: The file name to check.
+    /// @brief      Checks if an image has been registered with the same file name.
+    /// @param[in]  fileName: The file name to check.
     /// @param[out] imageId: The ID f the image if the image has been registered. Undefined if the image has not been registered.
-    /// @returns true - The file name is already registered.
-    /// @returns false - The file name is not registered
-    /// @throws GCL::CError(astroManager, 0x4000)
-    /// @version 2017-07-26/GGB - Function created
+    /// @returns    true - The file name is already registered.
+    /// @returns    false - The file name is not registered
+    /// @throws     GCL::CError
+    /// @version    2020-09-09/GGB - Changed where clause to use simpler version.
+    /// @version    2017-07-26/GGB - Function created
 
     bool CARID::isImageNameRegistered(std::string const &imageName, uint32_t &imageId)
     {
@@ -837,35 +834,36 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
-        std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
-            where({
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGENAME"), std::string("="), imageName),
-                  }).string();
+        std::string sqlString = sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).where("IMAGENAME", "=", imageName).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
-          query.first();
-          if (query.isValid())
+          sqlQuery->first();
+          if (sqlQuery->isValid())
           {
               // Image found.
 
-            imageId = query.value(0).toUInt();
+            imageId = sqlQuery->value(0).toUInt();
             returnValue = true;
           };
         }
         else
         {
-          processErrorInformation();
-          ASTROMANAGER_ERROR(0x4000);
-        }
+          if (sqlQuery->lastError().isValid())
+          {
+            processErrorInformation();
+          }
+          else
+          {
+            DEBUGMESSAGE(boost::locale::translate("Image not registered."));
+          }
+        };
       }
       else
       {
-        DEBUGMESSAGE("ARID Database is disbled.");
-      }
+        DEBUGMESSAGE(boost::locale::translate("ARID Database is disbled."));
+      };
 
       return returnValue;
     }
@@ -884,10 +882,7 @@ namespace astroManager
 
       sqlWriter.resetQuery();
 
-      sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).
-          where({
-                  GCL::sqlWriter::parameterTriple(std::string("IMAGE_UUID"), std::string("="), UUID.toString().toStdString()),
-                });
+      sqlWriter.select({"IMAGE_ID"}).from({"TBL_IMAGES"}).where("IMAGE_UUID", "=", UUID.toString().toStdString());
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -910,54 +905,50 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Loads default data into internal data structures.
-    /// @details This includes
-    ///   @li Photometry Filter Data
+    /// @brief    Loads default data into internal data structures.
+    /// @details  This includes
+    ///         @li Photometry Filter Data
     /// @throws
-    /// @version 2017-07-23/GGB - Function created.
+    /// @version  2017-07-23/GGB - Function created.
 
     void CARID::loadDefaultData()
     {
       loadPhotometryFilterData();
     }
 
-    /// @brief Loads the photometry filter data.
+    /// @brief    Loads the photometry filter data.
     /// @throws
-    /// @version 2017-07-23/GGB - Function created.
+    /// @version  2017-07-23/GGB - Function created.
 
     void CARID::loadPhotometryFilterData()
     {
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
-        std::string sqlString = sqlWriter.select({"FILTER_ID", "SHORTTEXT", "DESCRIPTION"}).from({"TBL_FILTERS"}).
-            where({
-                    GCL::sqlWriter::parameterTriple(std::string("OBSOLETE"), std::string("="), "false"),
-                  }).string();
+        std::string sqlString = sqlWriter.select({"FILTER_ID", "SHORTTEXT", "DESCRIPTION"}).from({"TBL_FILTERS"})
+                                .where("OBSOLETE", "=", false).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
           // Iterate all the returned values and add process witht he Photometry filter connection.
 
-          while (query.next())
+          while (sqlQuery->next())
           {
-            ACL::CPhotometryFilterCollection::processDatabaseEntry(query.value(0).toUInt(),
-                                                                   query.value(1).toString().toStdString(),
-                                                                   query.value(2).toString().toStdString());
+            ACL::CPhotometryFilterCollection::processDatabaseEntry(sqlQuery->value(0).toUInt(),
+                                                                   sqlQuery->value(1).toString().toStdString(),
+                                                                   sqlQuery->value(2).toString().toStdString());
           }
           DEBUGMESSAGE("loadPhotometryFilterData: Sucessfully processed Photometry Filter Data.");
         }
         else
         {
           processErrorInformation();
-        }
+        };
       }
       else
       {
         DEBUGMESSAGE("loadPhotometryFilterData: ARID Database is disbled.");
-      }
+      };
     }
 
     /// @brief Function for connecting to a MySQL database.
@@ -1051,15 +1042,15 @@ namespace astroManager
 
     }
 
-    /// @brief Function to save the original image.
-    /// @param[in] astroFile: Pointer to the astroFile that needs to be saved.
-    /// @note 1. When an original image is saved, it is always saved as version 0. Any other image saves will only save from
-    ///          revision 1.
-    /// @note 2. While the astroFile contains the information to be saved, the actual information that will be written is on the
-    ///          disk and pointed to by the filename in the astroFile.
-    /// @note 3. This function can be called before the astroFile has been loaded.
-    /// @throws GCL::CError(astroManager, 0x4001)
-    /// @version 2017-07-25/GGB - Function created.
+    /// @brief      Function to save the original image.
+    /// @param[in]  astroFile: Pointer to the astroFile that needs to be saved.
+    /// @note       1. When an original image is saved, it is always saved as version 0. Any other image saves will only save from
+    ///               revision 1.
+    /// @note       2. While the astroFile contains the information to be saved, the actual information that will be written is on
+    ///               the disk and pointed to by the filename in the astroFile.
+    /// @note       3. This function can be called before the astroFile has been loaded.
+    /// @throws     GCL::CError(astroManager, 0x4001)
+    /// @version    2017-07-25/GGB - Function created.
 
     void CARID::saveOriginalImage(CAstroFile *astroFile)
     {
@@ -1067,9 +1058,7 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
-        INFOMESSAGE("Beginning saving original image...");
+        INFOMESSAGE(boost::locale::translate("Beginning saving original image..."));
 
           // Save the TBL_IMAGE data. IE register the image. In this case we do not have complete data as the file has not been
           // opened yet.
@@ -1082,7 +1071,7 @@ namespace astroManager
         }
         else
         {
-          INFOMESSAGE("The image is already registered!");
+          INFOMESSAGE(boost::locale::translate("The image is already registered!"));
         };
 
           // We now have the imageID.
@@ -1095,11 +1084,11 @@ namespace astroManager
                     GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), 0),
                   }).string();
 
-        if (query.exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
-          query.first();
+          sqlQuery->first();
 
-          if (!query.isValid())
+          if (!sqlQuery->isValid())
           {
               // Image not in database.
 
@@ -1373,7 +1362,7 @@ namespace astroManager
         sqlWriter.resetQuery();
 
         sqlWriter.select({"SHORTTEXT", "PLAN_ID"}).from({"TBL_PLANS"}).
-            where({GCL::sqlWriter::parameterTriple(std::string("COMPLETE"), std::string("<>"), true)});;
+            where("COMPLETE", "<>", true);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -1425,8 +1414,7 @@ namespace astroManager
       {
         sqlWriter.resetQuery();
 
-        sqlWriter.select({"SHORTTEXT", "SITE_ID"}).from({"TBL_SITES"}).
-            where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});;
+        sqlWriter.select({"SHORTTEXT", "SITE_ID"}).from({"TBL_SITES"}).where("RETIRED", "=", false);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -1570,7 +1558,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID", "TARGET_NAME"})
                .from({"TBL_TARGETS"})
-               .where({GCL::sqlWriter::parameterTriple(std::string("PLAN_ID"), std::string("="), planID)});
+               .where("PLAN_ID", "=", planID);
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -1632,16 +1620,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Adds an image record to the images table.
-    /// @details This is the step of linking the UUID that has been saved into the FITS
-    ///          file with the image name and some other parameters to allow a search of the images to find information. The UUID is
-    ///          used to synchronise the data between the FITS file and the database. It also allows the user to (theoretically)
-    ///          change the file path without losing the linkage.
-    /// @pre 1. The astroFile must have been loaded.
-    /// @version 2017-09-23/GGB - Update to use CAngle
-    /// @version 2017-09-02/GGB - Changed fileName to imageName.
-    /// @version 2013-05-18/GGB - Added check if ARID disabled.
-    /// @version 2013-05-15/GGB - Function created.
+    /// @brief      Adds an image record to the images table.
+    /// @details    This is the step of linking the UUID that has been saved into the FITS file with the image name and some other
+    ///             parameters to allow a search of the images to find information. The UUID is used to synchronise the data between
+    ///             the FITS file and the database. It also allows the user to (theoretically) change the file path without losing
+    ///             the linkage.
+    /// @pre        1. The astroFile must have been loaded.
+    /// @version    2017-09-23/GGB - Update to use CAngle
+    /// @version    2017-09-02/GGB - Changed fileName to imageName.
+    /// @version    2013-05-18/GGB - Added check if ARID disabled.
+    /// @version    2013-05-15/GGB - Function created.
 
     bool CARID::registerImage(CAstroFile *astroFile)
     {
@@ -1665,27 +1653,27 @@ namespace astroManager
           {
             siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation())->siteID();
           }
-          else if (registerObservingSite(dynamic_cast<CObservatory *>(&*astroFile->getObservationLocation())))
+          else if (registerObservingSite(dynamic_cast<CObservatory *>(astroFile->getObservationLocation())))
           {
             siteID = dynamic_cast<CObservatory *>(astroFile->getObservationLocation())->siteID();
           }
           else
           {
-            ERRORMESSAGE("Unable to register observing site.");
+            ERRORMESSAGE(boost::locale::translate("Unable to register observing site."));
             siteID = 0;
           };
 
-          if (findTelescope(dynamic_cast<CTelescope *>(&*astroFile->getObservationTelescope())))
+          if (findTelescope(dynamic_cast<CTelescope *>(astroFile->getObservationTelescope())))
           {
-            telescopeID = dynamic_cast<CTelescope *>(&*astroFile->getObservationTelescope())->telescopeID();
+            telescopeID = dynamic_cast<CTelescope *>(astroFile->getObservationTelescope())->telescopeID();
           }
-          else if (registerTelescope(dynamic_cast<CTelescope *>(&*astroFile->getObservationTelescope())))
+          else if (registerTelescope(dynamic_cast<CTelescope *>(astroFile->getObservationTelescope())))
           {
-            telescopeID = dynamic_cast<CTelescope *>(&*astroFile->getObservationTelescope())->telescopeID();
+            telescopeID = dynamic_cast<CTelescope *>(astroFile->getObservationTelescope())->telescopeID();
           }
           else
           {
-            ERRORMESSAGE("Unable to register telescope.");
+            ERRORMESSAGE(boost::locale::translate("Unable to register telescope."));
             telescopeID = 0;
           }
 
@@ -1761,7 +1749,7 @@ namespace astroManager
           {
             astroFile->imageID(sqlQuery->lastInsertId().toUInt());
             returnValue = true;
-            INFOMESSAGE("Image Registered.");
+            INFOMESSAGE(boost::locale::translate("Image Registered."));
           }
           else
           {
@@ -1775,17 +1763,16 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Registers an observing site based on the existing CObservatory parameters passed to the function.
-    /// @param[in] newSite: The new site to register.
-    /// @returns true = success
-    /// @returns false = fail
-    /// @throws None
-    /// @version 2017-08-04/GGB - Function created.
+    /// @brief      Registers an observing site based on the existing CObservatory parameters passed to the function.
+    /// @param[in]  newSite: The new site to register.
+    /// @returns    true = success
+    /// @returns    false = fail
+    /// @throws     None
+    /// @version    2017-08-04/GGB - Function created.
 
     bool CARID::registerObservingSite(CObservatory *observatory)
     {
       bool returnValue = false;
-      QSqlQuery query(*dBase);
 
       dialogs::CDialogConfigureSite dialogConfigureSite(observatory);
 
@@ -1798,9 +1785,9 @@ namespace astroManager
                        observatory->timeZone(), observatory->dontDisplay(), observatory->IAUCode(),
                        observatory->daylightSaving() }});
 
-        if (query.exec(QString::fromStdString(sqlWriter.string())))
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
-          observatory->siteID() = query.lastInsertId().toUInt();
+          observatory->siteID() = sqlQuery->lastInsertId().toUInt();
           returnValue = true;
           INFOMESSAGE("Observatory Registered. SiteId: " + observatory->siteID());
         }
@@ -1829,7 +1816,6 @@ namespace astroManager
     bool CARID::registerTelescope(CTelescope *telescope)
     {
       bool returnValue = false;
-      QSqlQuery query(*dBase);
 
       dialogs::CDialogConfigureTelescope dialogConfigureTelescope(telescope);
 
@@ -1840,9 +1826,9 @@ namespace astroManager
             .values({{ telescope->telescopeName(), telescope->manufacturer(), telescope->model(), telescope->aperture(),
                        telescope->focalLength(), telescope->obstruction() }});
 
-        if (query.exec(QString::fromStdString(sqlWriter.string())))
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
-          telescope->telescopeID() = query.lastInsertId().toUInt();
+          telescope->telescopeID() = sqlQuery->lastInsertId().toUInt();
           returnValue = true;
           INFOMESSAGE("Telescope Registered. TelescopeId: " + telescope->telescopeID());
         }
@@ -1939,8 +1925,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlQuery->clear();
 
-      sqlWriter.update("TBL_IMAGES")
-          .where("IMAGE_ID", "=", imageID);
+      sqlWriter.update("TBL_IMAGES").where("IMAGE_ID", "=", imageID);
 
       if (imageComments.isEmpty())
       {
@@ -2003,12 +1988,12 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Saves an image into the image storage table.
-    /// @param[in] fileName: The filename of the image to save.
-    /// @param[in] imageID: The ID to associate with the imaged.
-    /// @param[in] imageVersion: The version number to associate with the image.
-    /// @throws None.
-    /// @version 2017-07-28/GGB - Function created.
+    /// @brief      Saves an image into the image storage table.
+    /// @param[in]  fileName: The filename of the image to save.
+    /// @param[in]  imageID: The ID to associate with the imaged.
+    /// @param[in]  imageVersion: The version number to associate with the image.
+    /// @throws     None.
+    /// @version    2017-07-28/GGB - Function created.
 
     void CARID::uploadImage(QString const &fileName, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
@@ -2030,7 +2015,7 @@ namespace astroManager
       }
       else
       {
-        ASTROMANAGER_ERROR(0x4002);
+        RUNTIME_ERROR(boost::locale::translate("Unable to open image file."));
       }
 
       sqlWriter.resetQuery();
@@ -2107,18 +2092,16 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
         sqlWriter.select({}).count("*").from({"TBL_IMAGESTORAGE"}).
             where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)});
 
-        if (query.exec(QString::fromStdString(sqlWriter.string())))
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
-          query.first();
-          if (query.isValid())
+          sqlQuery->first();
+          if (sqlQuery->isValid())
           {
-            returnValue = query.value(0).toUInt();
+            returnValue = sqlQuery->value(0).toUInt();
           }
           else
           {
@@ -2149,23 +2132,22 @@ namespace astroManager
 
       if (!ARIDdisabled_)
       {
-        QSqlQuery query(*dBase);
-
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGE_VERSION"}).from({"TBL_IMAGESTORAGE"})
-            .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
+            .where("IMAGE_ID", "=", imageID)
             .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
 
-        if (query.exec(QString::fromStdString(sqlWriter.string())))
+        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
-          query.first();
-          if (query.isValid())
+          sqlQuery->first();
+          if (sqlQuery->isValid())
           {
-            imageVersion = query.value(0).toUInt();
+            imageVersion = sqlQuery->value(0).toUInt();
             returnValue = true;
           }
           else
           {
+
             processErrorInformation();
           }
         }

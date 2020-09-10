@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2009-2018 Gavin Blakeman.
+//                      Copyright 2009-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -46,17 +46,7 @@
 #include <iostream>
 #include <sstream>
 
-  // astroManager application header files
-
-#include "../include/qtExtensions/application.h"
-#include "../include/database/databaseARID.h"
-#include "../include/database/databaseATID.h"
-#include "../include/database/databaseWeather.h"
-#include "../include/error.h"
-#include "../include/FrameWindow.h"
-#include "../include/settings.h"
-
-    // Miscellaneous include files
+  // Miscellaneous library header files
 
 #include <ACL>
 #include "boost/lexical_cast.hpp"
@@ -65,6 +55,17 @@
 #include <GCL>
 #include <QCL>
 #include <QxtGui/QxtConfirmationMessage>
+
+  // astroManager application header files
+
+#include "include/qtExtensions/application.h"
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+#include "include/database/databaseWeather.h"
+#include "include/error.h"
+#include "include/FrameWindow.h"
+#include "include/settings.h"
+
 
   // These do not need to be defined in C++
 
@@ -360,7 +361,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x009F;
+  std::uint16_t const BUILDNUMBER = 0x00DF;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

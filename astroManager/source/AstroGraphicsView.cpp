@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -35,7 +35,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/AstroGraphicsView.h"
+#include "include/AstroGraphicsView.h"
 
   // Standard C++ header files
 
@@ -43,10 +43,10 @@
 
   // astroManager header files.
 
-#include "../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../include/dockWidgets/dockWidgetMagnify.h"
-#include "../include/dockWidgets/dockWidgetNavigator.h"
-#include "../include/FrameWindow.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/FrameWindow.h"
 
 namespace astroManager
 {

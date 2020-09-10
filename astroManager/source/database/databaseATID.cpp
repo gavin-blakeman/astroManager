@@ -50,17 +50,18 @@
 #include <sstream>
 #include <string>
 
-  // astroManager application header files
-
-#include "../../include/astroManager.h"
-#include "../../include/error.h"
-#include "../../include/settings.h"
-
   // Miscellaneous library header files
 
 #include "boost/lexical_cast.hpp"
+#include "boost/locale.hpp"
 #include "boost/algorithm/string.hpp"
 #include <QCL>
+
+  // astroManager application header files
+
+#include "include/astroManager.h"
+#include "include/error.h"
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -174,7 +175,7 @@ namespace astroManager
 
           if (!CDatabase::connectToDatabase(szDatabase))
           {
-            INFOMESSAGE("Unable to connect to ATID database. Disabling ATID database.");
+            INFOMESSAGE(boost::locale::translate("Unable to connect to ATID database. Disabling ATID database."));
             useSIMBAD = true;
           }
           else
@@ -187,7 +188,7 @@ namespace astroManager
           useSIMBAD = true;
 
           WARNINGMESSAGE("Setting " + settings::ATID_DATABASE_DBMS.toStdString() + "not found.");
-          INFOMESSAGE("Unable to connect to ATID database. Disabling ATID database.");
+          INFOMESSAGE(boost::locale::translate("Unable to connect to ATID database. Disabling ATID database."));
         };
       };
     }
@@ -410,7 +411,7 @@ namespace astroManager
         lwi = new QListWidgetItem(QString(query->value(1).toString()));
         lwi->setData(ROLE_FILTERID, query->value(0));
         lw->addItem(lwi);
-        lwi = NULL;
+        lwi = nullptr;
       };
     }
 
@@ -424,33 +425,31 @@ namespace astroManager
     {
       QListWidgetItem *lwi;
       QString szSQL;
-      std::unique_ptr<QSqlQuery> query(new QSqlQuery(*dBase));
 
       szSQL = QString("SELECT f.FILTER_ID, f.SHORTTEXT FROM TBL_FILTERS f");
 
-      query->exec(szSQL);
+      sqlQuery->exec(szSQL);
 
-      while ( query->next() )
+      while ( sqlQuery->next() )
       {
-        lwi = new QListWidgetItem(icon, QString(query->value(1).toString()));
-        lwi->setData(ROLE_FILTERID, query->value(0));
+        lwi = new QListWidgetItem(icon, QString(sqlQuery->value(1).toString()));
+        lwi->setData(ROLE_FILTERID, sqlQuery->value(0));
         lw->addItem(lwi);
         lwi = nullptr;
       };
     }
 
-    /// @brief Function to read stellar object information from the database and write/copy it into the stellar object
-    /// @param[in] vNameID: The name of the object to read.
-    /// @param[in] stellarObject: The stellar object to populate.
-    /// @returns true - object found
-    /// @returns false - object not found.
-    /// @throws None.
-    /// @version 2011-07-10/GGB - Function created.
+    /// @brief      Function to read stellar object information from the database and write/copy it into the stellar object
+    /// @param[in]  vNameID: The name of the object to read.
+    /// @param[in]  stellarObject: The stellar object to populate.
+    /// @returns    true - object found
+    /// @returns    false - object not found.
+    /// @throws     None.
+    /// @version    2011-07-10/GGB - Function created.
 
     bool CATID::populateStellarObject(QVariant const &vNameID,
                                       std::shared_ptr<ACL::CTargetStellar> stellarObject)
     {
-      QSqlQuery query(*dBase);
       QString szSQL;
       bool returnValue = false;
 
@@ -459,18 +458,18 @@ namespace astroManager
         "FROM TBL_NAMES n INNER JOIN (TBL_STELLAROBJECTS o INNER JOIN TBL_EPOCH e ON o.EPOCH_ID = e.EPOCH_ID) ON n.STELLAROBJECT_ID = o.OBJECT_ID "
         "WHERE n.NAME_ID = %1").arg(vNameID.toString());
 
-      query.exec(szSQL);
+      sqlQuery->exec(szSQL);
 
-      QSqlError lastError = query.lastError();
+      QSqlError lastError = sqlQuery->lastError();
 
-      if (query.first())
+      if (sqlQuery->first())
       {
-        szSQL = query.value(0).toString();
+        szSQL = sqlQuery->value(0).toString();
 
         stellarObject->objectName(szSQL.toStdString());
 
-        stellarObject->catalogueCoordinates(ACL::CAstronomicalCoordinates(MCL::CAngle(query.value(1).toDouble(), MCL::AF_HMSs),
-                                                                          MCL::CAngle(query.value(2).toDouble(), MCL::AF_DMSs)));
+        stellarObject->catalogueCoordinates(ACL::CAstronomicalCoordinates(MCL::CAngle(sqlQuery->value(1).toDouble(), MCL::AF_HMSs),
+                                                                          MCL::CAngle(sqlQuery->value(2).toDouble(), MCL::AF_DMSs)));
 
         //if (query.value(8).toBool())
 //          stellarObject->setReferenceSystem(ACL::CStellarObject::RS_FK4);
@@ -503,24 +502,24 @@ namespace astroManager
     const QString GetNameFromObject(QVariant *vObject)
     {
       QString szSQL;
-      QSqlQuery query(databaseATID->database());
       QSqlQuery nameQuery(databaseATID->database());
+      QSqlQuery sqlQuery(databaseATID->database());
 
       szSQL = QString("SELECT o.PREFERREDNAME FROM TBL_STELLAROBJECTS o WHERE o.OBJECT_ID = %1").arg(vObject->toString());
-      query.exec(* new QString(szSQL));
-      query.first();
-      if (query.value(0).isNull())
+      sqlQuery.exec(szSQL);
+      sqlQuery.first();
+      if (sqlQuery.value(0).isNull())
       {
         szSQL = QString("SELECT TBL_NAMES.Name " \
                         "FROM TBL_NAMES INNER JOIN TBL_CATALOGUEORDER ON TBL_NAMES.CATALOGUE_ID = TBL_CATALOGUEORDER.CATALOGUE_ID " \
                         "WHERE (((TBL_NAMES.STELLAROBJECT_ID)=%1) AND ((TBL_CATALOGUEORDER.OBSERVER_ID)=%2)) " \
                         "ORDER BY TBL_CATALOGUEORDER.SORTORDER").arg(vObject->toString()).arg(settings::astroManagerSettings->value("Observer", QVariant(0)).toString());
-        nameQuery.exec(*new QString(szSQL));
+        nameQuery.exec(szSQL);
       }
       else
       {
-        szSQL = QString("SELECT n.Name FROM TBL_NAMES n WHERE n.NAME_ID = %1").arg(query.value(0).toString());
-        nameQuery.exec(*new QString(szSQL));
+        szSQL = QString("SELECT n.Name FROM TBL_NAMES n WHERE n.NAME_ID = %1").arg(sqlQuery.value(0).toString());
+        nameQuery.exec(szSQL);
       };
       nameQuery.first();
 
