@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2018 Gavin Blakeman.
+//                      Copyright 2012-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,16 +42,15 @@
 #ifndef ASTROMANAGER_DATABASEATID_H
 #define ASTROMANAGER_DATABASEATID_H
 
-  // astroManager application header files.
-
-#include "../ACL/targetAstronomy.h"
-#include "../astroManager.h"
-
-
   // Miscellaneous library header files.
 
 #include <ACL>
 #include <QCL>
+
+  // astroManager application header files.
+
+#include "../ACL/targetAstronomy.h"
+#include "../astroManager.h"
 
 namespace astroManager
 {

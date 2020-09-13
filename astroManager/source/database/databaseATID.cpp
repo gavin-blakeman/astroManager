@@ -9,7 +9,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012-2018, 2020 Gavin Blakeman.
+//                      Copyright 2012-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -76,17 +76,17 @@ namespace astroManager
     //
     //*****************************************************************************************************************************
 
-    /// @brief Constructor for the CATID class.
-    /// @details The class reads the database keys and calls the relevant setup routine.
-    /// @throws None.
-    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_ and use member useSIMBAD for ATID use.
-    /// @version 2017-06-20/GGB - Updated to reflect changes to CDatabase. (Bug #69)
-    /// @version 2013-05-15/GGB - Added setting for disabling the database by default.
-    /// @version 2013-01-26/GGB - connectToDatabase function created and body of code moved.
-    /// @version 2013-01-25/GGB - Added SQLite support
-    /// @version 2011-02-26/GGB - Added code to capture that the registry may not be set up and to throw an exception when this is
-    ///                           found.
-    /// @version 2010-11-23/GGB - Function created
+    /// @brief      Constructor for the CATID class.
+    /// @details    The class reads the database keys and calls the relevant setup routine.
+    /// @throws     None.
+    /// @version    2018-09-27/GGB - Removed member ATIDdisabled_ and use member useSIMBAD for ATID use.
+    /// @version    2017-06-20/GGB - Updated to reflect changes to CDatabase. (Bug #69)
+    /// @version    2013-05-15/GGB - Added setting for disabling the database by default.
+    /// @version    2013-01-26/GGB - connectToDatabase function created and body of code moved.
+    /// @version    2013-01-25/GGB - Added SQLite support
+    /// @version    2011-02-26/GGB - Added code to capture that the registry may not be set up and to throw an exception when this
+    ///                               is found.
+    /// @version    2010-11-23/GGB - Function created
 
     CATID::CATID(): CDatabase("ATID"), useSIMBAD(true)
     {
@@ -193,13 +193,13 @@ namespace astroManager
       };
     }
 
-    /// @brief Gets the most current magnitude and mag error values for the given filter number.
-    /// @param[in] OBJECT_ID:
-    /// @param[in] FILTER_ID:
-    /// @param[in] Mag:
-    /// @param[in] Mag_err:
+    /// @brief      Gets the most current magnitude and mag error values for the given filter number.
+    /// @param[in]  OBJECT_ID:
+    /// @param[in]  FILTER_ID:
+    /// @param[in]  Mag:
+    /// @param[in]  Mag_err:
     /// @throws
-    /// @version 2010-11-28/GGB - Function created
+    /// @version    2010-11-28/GGB - Function created
 
     void CATID::GetLatestMagnitude(objectID_t OBJECT_ID, const long long FILTER_ID, float &Mag, float &Mag_err) const
     {
@@ -214,7 +214,8 @@ namespace astroManager
 
       if (!query.value(0).isValid())
       {
-        ASTROMANAGER_ERROR(0x0100);
+        RUNTIME_ERROR(boost::locale::translate("ARID DATABASE: Magnitude not found."), E_ATID_MAGNITUDENOTFOUND,
+                      settings::APPL_NAME.toStdString());
       }
       else
       {
@@ -223,14 +224,14 @@ namespace astroManager
       };
     }
 
-    /// @brief Function for connecting to a MySQL database.
-    /// @details Reads the information from the settings and then creates the database connection.
-    /// @returns true - Connection created.
-    /// @returns false - Connection not created.
-    /// @version 2017-07-01/GGB - Return type changed from void to bool.
-    /// @version 2017-06-20/GGB - Updated to reflect changes to CDatabase (Bug #69)
-    /// @version 2015-06-13/GGB - Use databaseDrivers static member for driver names.
-    /// @version 2011-06-06/GGB - Function created
+    /// @brief      Function for connecting to a MySQL database.
+    /// @details    Reads the information from the settings and then creates the database connection.
+    /// @returns    true - Connection created.
+    /// @returns    false - Connection not created.
+    /// @version    2017-07-01/GGB - Return type changed from void to bool.
+    /// @version    2017-06-20/GGB - Updated to reflect changes to CDatabase (Bug #69)
+    /// @version    2015-06-13/GGB - Use databaseDrivers static member for driver names.
+    /// @version    2011-06-06/GGB - Function created
 
     bool CATID::MySQL()
     {
@@ -242,14 +243,14 @@ namespace astroManager
                                 settings::astroManagerSettings->value(settings::ATID_MYSQL_PASSWORD, QVariant(QString("ATID"))).toString()) );
     }
 
-    /// @brief Function for opening an ODBC database.
-    /// @details Reads information from the settings and then creates the database connection.
-    /// @returns true - Connection created.
-    /// @returns false - Connection not created.
-    /// @throws None.
-    /// @version 2017-07-01/GGB - Return type changed from void to bool.
-    /// @version 2017-06-20/GGB - Updated to reflect changes to CDatabase (Bug #69)
-    /// @version 2010-12-09/GGB - Function created
+    /// @brief      Function for opening an ODBC database.
+    /// @details    Reads information from the settings and then creates the database connection.
+    /// @returns    true - Connection created.
+    /// @returns    false - Connection not created.
+    /// @throws     None.
+    /// @version    2017-07-01/GGB - Return type changed from void to bool.
+    /// @version    2017-06-20/GGB - Updated to reflect changes to CDatabase (Bug #69)
+    /// @version    2010-12-09/GGB - Function created
 
     bool CATID::ODBC()
     {
@@ -284,13 +285,13 @@ namespace astroManager
 
     }
 
-    /// @brief Parse a returned reply from SIMBAD.
-    /// @param[in] replyString: The SIMBAD reply.
-    /// @param[in] targetStore: Vector containing the returned objects.
-    /// @returns true - Returned string is a valid return from SIMBAD
-    /// @returns false - Returned string is not a valid return from SIMBAD.
-    /// @throws Nome.
-    /// @version 2016-04-26/GGB - Function created.
+    /// @brief      Parse a returned reply from SIMBAD.
+    /// @param[in]  replyString: The SIMBAD reply.
+    /// @param[in]  targetStore: Vector containing the returned objects.
+    /// @returns    true - Returned string is a valid return from SIMBAD
+    /// @returns    false - Returned string is not a valid return from SIMBAD.
+    /// @throws     None.
+    /// @version    2016-04-26/GGB - Function created.
 
     bool CATID::parseSIMBADReply(std::string const &replyString, ACL::DTargetAstronomy &targetStore)
     {
@@ -392,9 +393,9 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Adds the filters into the specified list widget.
-    /// @param[in] lw:
-    /// @version 2011-06-18/GGB - Initial creation of function
+    /// @brief      Adds the filters into the specified list widget.
+    /// @param[in]  lw:
+    /// @version    2011-06-18/GGB - Initial creation of function
 
     void CATID::PopulateFiltersList(QListWidget *lw)
     {
@@ -415,11 +416,11 @@ namespace astroManager
       };
     }
 
-    /// @brief Adds the filters into the specified list widget.
-    /// @param[in] lw:
-    /// @param[in] icon:
-    /// @version 2020-08-31/GGB - Changer auto_ptr to std::unique_ptr
-    /// @version 2011-06-18/GGB - Function Created
+    /// @brief      Adds the filters into the specified list widget.
+    /// @param[in]  lw:
+    /// @param[in]  icon:
+    /// @version    2020-08-31/GGB - Changer auto_ptr to std::unique_ptr
+    /// @version    2011-06-18/GGB - Function Created
 
     void CATID::PopulateFiltersList(QListWidget *lw, QIcon &icon)
     {
@@ -526,11 +527,11 @@ namespace astroManager
       return (nameQuery.value(0).toString());
     }
 
-    /// @brief Function to populate a combo box with object type information. The data is the index of the record.
-    /// @param[in] combo: The combo box to populate.
-    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
-    /// @version 2013-07-29/GGB - Added check if the ATID database is disabled.
-    /// @version 2010-11-14/GGB - Function created
+    /// @brief      Function to populate a combo box with object type information. The data is the index of the record.
+    /// @param[in]  combo: The combo box to populate.
+    /// @version    2018-09-27/GGB - Removed member ATIDdisabled_.
+    /// @version    2013-07-29/GGB - Added check if the ATID database is disabled.
+    /// @version    2010-11-14/GGB - Function created
 
     void CATID::PopulateObjectTypeCombo(QComboBox *combo)
     {
@@ -793,15 +794,16 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Finds the constallation name of the specified object.
-    /// @param[in] objectName: The name of the object
+    /// @brief      Finds the constallation name of the specified object.
+    /// @param[in]  objectName: The name of the object
     /// @param[out] constellationName: The name of the constellation.
-    /// @throws CError: 0x1000 - DATABASE ATID: Unable to find object by name.
-    /// @version 2018-09-29/GGB - Function created.
+    /// @throws     CError: 0x1000 - DATABASE ATID: Unable to find object by name.
+    /// @version    2018-09-29/GGB - Function created.
 
     void CATID::queryConstellationByName(std::string const &objectName, std::string &constellationName)
     {
       objectID_t objectID;
+      QSqlQuery sqlQuery(*dBase);
 
       queryStellarObjectIDByName(objectName, objectID);
 
@@ -810,59 +812,62 @@ namespace astroManager
                .from({"TBL_STELLAROBJECTS"})
                .join({std::make_tuple("TBL_STELLAROBJECTS", "CONSTELLATION_ID",
                       GCL::sqlWriter::JOIN_LEFT, "TBL_CONSTELLATIONS", "CONSTELLATION_ID")})
-               .where({GCL::sqlWriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+               .where("OBJECT_ID", "=", objectID);
 
-      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
       {
-        sqlQuery->first();
-        if (sqlQuery->isValid())
+        sqlQuery.first();
+        if (sqlQuery.isValid())
         {
-          constellationName = sqlQuery->value(0).toString().toStdString();
+          constellationName = sqlQuery.value(0).toString().toStdString();
         }
         else
         {
           processErrorInformation();
-          ASTROMANAGER_ERROR(0x1000);
+          //ASTROMANAGER_ERROR(0x1000);
         };
       }
       else
       {
         processErrorInformation();
-        ASTROMANAGER_ERROR(0x1000);
+        //ASTROMANAGER_ERROR(0x1000);
       }
     }
 
-    /// @brief Queries the ATID database for the name of the object with an specific OID
-    /// @param[in] OID: The OID to search for.
+    /// @brief      Queries the ATID database for the name of the object with an specific OID
+    /// @param[in]  OID: The OID to search for.
     /// @param[out] objectNames: The names of the object.
-    /// @returns true - Object found.
-    /// @returns false - Object not found.
-    /// @throws None.
-    /// @version 2016-05-07/GGB - Function created.
+    /// @returns    true - Object found.
+    /// @returns    false - Object not found.
+    /// @throws     None.
+    /// @version    2016-05-07/GGB - Function created.
 
     bool CATID::queryNamesFromATID(objectID_t OID, std::vector<std::string> &objectNames)
     {
       bool returnValue = false;
+      QSqlQuery sqlQuery(*dBase);
 
-      sqlQuery->setForwardOnly(true);
+      sqlQuery.setForwardOnly(true);
       sqlWriter.resetQuery();
 
-      sqlWriter.select({"TBL_NAMES.Name"}).from({"TBL_NAMES"}).where({ GCL::sqlWriter::parameterTriple("OID", "=", OID) });
+      sqlWriter.select({"TBL_NAMES.Name"})
+               .from({"TBL_NAMES"})
+               .where("OID", "=", OID);
 
-      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
       {
-        sqlQuery->first();
-        if (sqlQuery->isValid())
+        sqlQuery.first();
+        if (sqlQuery.isValid())
         {
           do
           {
-            if (sqlQuery->value(0).isValid())
+            if (sqlQuery.value(0).isValid())
             {
-              objectNames.push_back(sqlQuery->value(0).toString().toStdString());
+              objectNames.push_back(sqlQuery.value(0).toString().toStdString());
               returnValue = true;
             }
           }
-          while (sqlQuery->next());
+          while (sqlQuery.next());
         }
         else
         {
@@ -925,26 +930,28 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Queries and populates a stellar object by name ID.
-    /// @param[in] nameID: The nameID to query.
+    /// @brief      Queries and populates a stellar object by name ID.
+    /// @param[in]  nameID: The nameID to query.
     /// @param[out] targetStellar: The class to populate.
     /// @throws
-    /// @version 2018-09-28/GGB - Function created.
+    /// @version    2018-09-28/GGB - Function created.
 
     void CATID::queryStellarObjectByNameID(nameID_t nameID, ACL::CTargetStellar *targetStellar)
     {
-      sqlWriter.resetQuery();
-      sqlWriter.select({"TBL_NAMES.OID" })
-               .from({"TBL_NAMES"})
-               .where({GCL::sqlWriter::parameterTriple(std::string("NAME_ID"), std::string("="), nameID)});
+      QSqlQuery sqlQuery(*dBase);
 
-      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      sqlWriter.resetQuery();
+      sqlWriter.select({"TBL_NAMES.OID"})
+               .from({"TBL_NAMES"})
+               .where("NAME_ID", "=", nameID);
+
+      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
       {
-        sqlQuery->first();
-        if (sqlQuery->isValid())
+        sqlQuery.first();
+        if (sqlQuery.isValid())
         {
-          objectID_t OID = sqlQuery->value(0).toUInt();
-          sqlQuery->finish();
+          objectID_t OID = sqlQuery.value(0).toUInt();
+          sqlQuery.finish();
           readStellarObjectInformation(OID, targetStellar);
         }
         else
@@ -969,7 +976,7 @@ namespace astroManager
       sqlWriter.resetQuery();
       sqlWriter.select({"TBL_NAMES.OID" })
                .from({"TBL_NAMES"})
-               .where({GCL::sqlWriter::parameterTriple(std::string("NAME"), std::string("="), objectName)});
+               .where("NAME", "=", objectName);
 
       if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
       {
@@ -981,14 +988,14 @@ namespace astroManager
         else
         {
           processErrorInformation();
-          ASTROMANAGER_ERROR(0x1000);
+          //ASTROMANAGER_ERROR(0x1000);
         };
         sqlQuery->finish();
       }
       else
       {
         processErrorInformation();
-        ASTROMANAGER_ERROR(0x1000);
+        //ASTROMANAGER_ERROR(0x1000);
       };
     }
 
@@ -1065,12 +1072,12 @@ namespace astroManager
       return returnValue;
     }
 
-    /// @brief Reads the stellar object information for the specified stellar object.
-    /// @param[in] objectID: The ID of the object to query.
-    /// @param[in] target: The stellar target to write the information to.
+    /// @brief      Reads the stellar object information for the specified stellar object.
+    /// @param[in]  objectID: The ID of the object to query.
+    /// @param[in]  target: The stellar target to write the information to.
     /// @throws
-    /// @version 2018-09-27/GGB - Removed member ATIDdisabled_.
-    /// @version 2018-09-02/GGB - Function created.
+    /// @version    2018-09-27/GGB - Removed member ATIDdisabled_.
+    /// @version    2018-09-02/GGB - Function created.
 
     void CATID::readStellarObjectInformation(objectID_t objectID, ACL::CTargetStellar *target)
     {
@@ -1084,15 +1091,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Reads the stellar object information for the specified stellar object.
-    /// @param[in] objectID: The ID of the object to query.
-    /// @param[in] target: The stellar target to write the information to.
+    /// @brief      Reads the stellar object information for the specified stellar object.
+    /// @param[in]  objectID: The ID of the object to query.
+    /// @param[in]  target: The stellar target to write the information to.
     /// @throws
-    /// @version 2018-09-02/GGB - Function created.
+    /// @version    2018-09-02/GGB - Function created.
 
     void CATID::readStellarObjectInformation_ATID(objectID_t objectID, ACL::CTargetStellar *target)
     {
       std::vector<std::string> objectNames;
+      QSqlQuery sqlQuery(*dBase);
 
       if (queryNamesFromATID(objectID, objectNames))
       {
@@ -1105,41 +1113,42 @@ namespace astroManager
                  .from({"TBL_STELLAROBJECTS"})
                  .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
                         GCL::sqlWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
-                 .where({GCL::sqlWriter::parameterTriple(std::string("OBJECT_ID"), std::string("="), objectID)});
+                 .where("OBJECT_ID", "=", objectID);
 
-        if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+        if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
         {
-          sqlQuery->first();
+          sqlQuery.first();
 
             // Note only valid data is set below. The constructor for the stellar object should ensure the object
             // is constructed correctly with null-data.
 
-          if (sqlQuery->isValid())
+          if (sqlQuery.isValid())
           {
-            target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery->value(0).toDouble(), sqlQuery->value(1).toDouble()));
-            if (!sqlQuery->value(2).isNull())
+            target->catalogueCoordinates(ACL::CAstronomicalCoordinates(sqlQuery.value(0).toDouble(),
+                                                                       sqlQuery.value(1).toDouble()));
+            if (!sqlQuery.value(2).isNull())
             {
-              target->setEpoch(sqlQuery->value(2).toString().toStdString());
+              target->setEpoch(sqlQuery.value(2).toString().toStdString());
             };
-            if (!sqlQuery->value(3).isNull())
+            if (!sqlQuery.value(3).isNull())
             {
-              target->pmRA(sqlQuery->value(3).toDouble());
+              target->pmRA(sqlQuery.value(3).toDouble());
             };
-            if (!sqlQuery->value(4).isNull())
+            if (!sqlQuery.value(4).isNull())
             {
-              target->pmDec(sqlQuery->value(4).toDouble());
+              target->pmDec(sqlQuery.value(4).toDouble());
             };
-            if (!sqlQuery->value(5).isNull())
+            if (!sqlQuery.value(5).isNull())
             {
-              target->radialVelocity(sqlQuery->value(5).toDouble());
+              target->radialVelocity(sqlQuery.value(5).toDouble());
             };
-            if (!sqlQuery->value(6).isNull())
+            if (!sqlQuery.value(6).isNull())
             {
-              target->parallax(sqlQuery->value(6).toDouble());
+              target->parallax(sqlQuery.value(6).toDouble());
             };
-            if (!sqlQuery->value(7).isNull())
+            if (!sqlQuery.value(7).isNull())
             {
-              target->stellarType(sqlQuery->value(7).toString().toStdString());
+              target->stellarType(sqlQuery.value(7).toString().toStdString());
             };
           }
           else
@@ -1159,11 +1168,11 @@ namespace astroManager
       };
     }
 
-    /// @brief Reads the stellar object information for the specified stellar object.
-    /// @param[in] objectID: The ID of the object to query.
-    /// @param[in] target: The stellar target to write the information to.
+    /// @brief      Reads the stellar object information for the specified stellar object.
+    /// @param[in]  objectID: The ID of the object to query.
+    /// @param[in]  target: The stellar target to write the information to.
     /// @throws
-    /// @version 2018-09-02/GGB - Function created.
+    /// @version    2018-09-02/GGB - Function created.
 
     void CATID::readStellarObjectInformation_SIMBAD(objectID_t, ACL::CTargetStellar *)
     {

@@ -1545,14 +1545,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Reads the plan targets in from the database.
-    /// @param[in] planID: The ID of the plan to read.
+    /// @brief      Reads the plan targets in from the database.
+    /// @param[in]  planID: The ID of the plan to read.
     /// @param[out] targetList: The vector to write the targets to.
     /// @throws
-    /// @version 2018-09-01/GGB - Function created.
+    /// @version    2018-09-01/GGB - Function created.
 
     void CARID::readObservingPlanTargets(planID_t planID, std::vector<std::unique_ptr<CTargetAstronomy>> &targetList)
     {
+      QSqlQuery sqlQuery(*dBase);
+
         // Create the query.
 
       sqlWriter.resetQuery();
@@ -1560,19 +1562,19 @@ namespace astroManager
                .from({"TBL_TARGETS"})
                .where("PLAN_ID", "=", planID);
 
-      if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
+      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
       {
-        while (sqlQuery->next())
+        while (sqlQuery.next())
         {
             // Check the type and create the object.
 
-          switch(sqlQuery->value(2).toUInt())
+          switch(sqlQuery.value(2).toUInt())
           {
             case MAJORPLANET:
             {
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery->value(3).toUInt()))));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
+                                        std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery.value(3).toUInt()))));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
               break;
             };
             case MINORPLANET:
@@ -1581,8 +1583,8 @@ namespace astroManager
                                       std::make_unique<ACL::CTargetMinorPlanet>(
                                           settings::astroManagerSettings->value(settings::FILE_MPCORB,
                                                                                 "Data/MPCORB.DAT").toString().toStdString(),
-                                          sqlQuery->value(4).toString().toStdString())));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
+                                          sqlQuery.value(4).toString().toStdString())));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
               break;
             };
             case COMET:
@@ -1591,8 +1593,8 @@ namespace astroManager
                                         std::make_unique<ACL::CTargetComet>(
                                             settings::astroManagerSettings->value(settings::FILE_COMETELS,
                                                                                   "Data/CometEls.txt").toString().toStdString(),
-                                            sqlQuery->value(4).toString().toStdString())));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery->value(4).toString().toStdString());
+                                            sqlQuery.value(4).toString().toStdString())));
+              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
               break;
             };
             case STELLAR:
@@ -1601,7 +1603,7 @@ namespace astroManager
 
               targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
 
-              databaseATID->queryStellarObjectByNameID(sqlQuery->value(3).toULongLong(),
+              databaseATID->queryStellarObjectByNameID(sqlQuery.value(3).toULongLong(),
                                                          dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
 
               break;

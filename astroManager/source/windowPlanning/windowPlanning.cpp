@@ -10,7 +10,7 @@
 // AUTHOR:              Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2018 Gavin Blakeman.
+//                      Copyright 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -35,12 +35,17 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowPlanning/windowPlanning.h"
+#include "include/windowPlanning/windowPlanning.h"
+
+  // Miscellaneous library header files
+
+#include "boost/locale.hpp"
 
   // astroManager header files.
 
-#include "../../include/database/databaseARID.h"
-#include "../../include/settings.h"
+#include "include/database/databaseARID.h"
+#include "include/error.h"
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -50,10 +55,10 @@ namespace astroManager
     std::uint_least8_t const TIME_UT = 1;
     std::uint_least8_t const TIME_LST = 2;
 
-    /// @brief Constructor for the class.
-    /// @param[in] parent - The window that owns this instance.
-    /// @throws std::bad_alloc
-    /// @version 2017-06-20/GGB - Function created.
+    /// @brief      Constructor for the class.
+    /// @param[in]  parent: The window that owns this instance.
+    /// @throws     std::bad_alloc
+    /// @version    2017-06-20/GGB - Function created.
 
     CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent), targetList()
     {
@@ -66,15 +71,15 @@ namespace astroManager
 
       setupUI();
 
-      setWindowTitle(tr("Observation Planning"));
+      setWindowTitle(QString::fromStdString(boost::locale::translate("Observation Planning").str()));
 
       loadPlanData();
     }
 
-    /// @brief Responds when the observing site is changed.
-    /// @param[in] index - The new current index.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Responds when the observing site is changed.
+    /// @param[in]  index: The new current index.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::comboBoxSiteCurrentIndexChanged(int)
     {
@@ -82,12 +87,13 @@ namespace astroManager
 
       database::databaseARID->getTimeZoneOffset(comboBoxSites->currentData().toInt(), &timeZoneOffset);
       timeZoneOffset *= 60 * 60;  // Convert to seconds.
+      eventTimer1s();
     }
 
-    /// @brief Function called when a different Observing Plan is selected.
-    /// @param[in] currentIndex: The new items index. (Zero based)
-    /// @throws None.
-    /// @version 2018-02-13/GGB - Function created.
+    /// @brief      Function called when a different Observing Plan is selected.
+    /// @param[in]  currentIndex: The new items index. (Zero based)
+    /// @throws     None.
+    /// @version    2018-02-13/GGB - Function created.
 
     void CWindowPlanning::currentIndexChangedPlans(int)
     {
@@ -100,9 +106,9 @@ namespace astroManager
       loadPlanData();
     }
 
-    /// @brief Responds to the 1s timer when triggered to update the time in the window and any other information required.
-    /// @throws GCL::CCodeError(astroManager)
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Responds to the 1s timer when triggered to update the time in the window and any other information required.
+    /// @throws     GCL::CCodeError
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::eventTimer1s()
     {
@@ -128,9 +134,9 @@ namespace astroManager
       };
     }
 
-    /// @brief Loads and displays the data for the plan.
+    /// @brief      Loads and displays the data for the plan.
     /// @throws
-    /// @version 2018-09-01/GGB - Function created.
+    /// @version    2018-09-01/GGB - Function created.
 
     void CWindowPlanning::loadPlanData()
     {
@@ -151,10 +157,10 @@ namespace astroManager
 
     }
 
-    /// @brief Responds to the Real Time push button being clicked.
-    /// @param[in] checked - Checked state of the button.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Responds to the Real Time push button being clicked.
+    /// @param[in]  checked: Checked state of the button.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::pushButtonRealTimeClicked(bool checked)
     {
@@ -186,48 +192,51 @@ namespace astroManager
       }
     }
 
-    /// @brief Respond to the LT Radio button being pressed.
-    /// @param[in] checked: Is the button in the checked state.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Respond to the LT Radio button being pressed.
+    /// @param[in]  checked: Is the button in the checked state.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::radioButtonLTClicked(bool checked)
     {
       if (checked)
       {
         settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_TIMESCALE, TIME_LT);
-      }
+        eventTimer1s();
+      };
     }
 
-    /// @brief Respond to the UT Radio button being pressed.
-    /// @param[in] checked: Is the button in the checked state.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Respond to the UT Radio button being pressed.
+    /// @param[in]  checked: Is the button in the checked state.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::radioButtonUTClicked(bool checked)
     {
       if (checked)
       {
         settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_TIMESCALE, TIME_UT);
-      }
+        eventTimer1s();
+      };
     }
 
-    /// @brief Respond to the LST Radio button being pressed.
-    /// @param[in] checked: Is the button in the checked state.
-    /// @throws None.
-    /// @version 2018-04-15/GGB - Function created.
+    /// @brief      Respond to the LST Radio button being pressed.
+    /// @param[in]  checked: Is the button in the checked state.
+    /// @throws     None.
+    /// @version    2018-04-15/GGB - Function created.
 
     void CWindowPlanning::radioButtonLSTClicked(bool checked)
     {
       if (checked)
       {
         settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_TIMESCALE, TIME_LST);
+        eventTimer1s();
       }
     }
 
-    /// @brief Sets up the user interface for the class.
-    /// @throws GCL::CRuntimeError(AstroManager, 0001)
-    /// @version 2018-02-03/GGB - Function created.
+    /// @brief      Sets up the user interface for the class.
+    /// @throws     GCL::CRuntimeError(AstroManager, 0001)
+    /// @version    2018-02-03/GGB - Function created.
 
     void CWindowPlanning::setupUI()
     {
@@ -240,8 +249,8 @@ namespace astroManager
 
       if (!file.open(QFile::ReadOnly))
       {
-        ERRORMESSAGE("Unable to open resource :/windows/windowPlanning.ui.");
-        ERROR(AstroPlanner, 0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Unable to open resource :/windows/windowPlanning.ui."),
+                      E_UNABLELOADRESOURCE, settings::APPL_NAME.toStdString());
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -346,9 +355,9 @@ namespace astroManager
       connect(pushButtonRealTime, SIGNAL(clicked(bool)), this, SLOT(pushButtonRealTimeClicked(bool)));
     }
 
-    /// @brief Performs class specific activities when the window is activated.
-    /// @throws None.
-    /// @version 2018-10-30/GGB - Function created.
+    /// @brief      Performs class specific activities when the window is activated.
+    /// @throws     None.
+    /// @version    2018-10-30/GGB - Function created.
 
     void CWindowPlanning::windowActivating()
     {

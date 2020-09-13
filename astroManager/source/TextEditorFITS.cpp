@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2017-2018 Gavin Blakeman.
+//                      Copyright 2015, 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,22 +40,32 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/TextEditorFITS.h"
+#include "include/TextEditorFITS.h"
 
-  // Standard C++ libraries
+  // Standard C++ library header files
 
 #include <algorithm>
+
+  // Miscellaneous library header files
+
+#include "boost/locale.hpp"
+#include <GCL>
+
+  // Astromanager header files
+
+#include "include/error.h"
+#include "include/settings.h"
 
 namespace astroManager
 {
   namespace texteditor
   {
 
-    /// @brief Class constructor.
-    /// @param[in] parent - The parent object.
-    /// @param[in] np - The new file path.
-    /// @throws None.
-    /// @version 2015-08-04/GGB - Function created.
+    /// @brief      Class constructor.
+    /// @param[in]  parent: The parent object.
+    /// @param[in]  np: The new file path.
+    /// @throws     None.
+    /// @version    2015-08-04/GGB - Function created.
 
     CTextEditorFITS::CTextEditorFITS(QWidget *parent, boost::filesystem::path &np) : CTextEditorWindow(parent), filePath(np),
       inspector(np)
@@ -135,8 +145,8 @@ namespace astroManager
 
       if (!file.open(QFile::ReadOnly))
       {
-        ERRORMESSAGE("Unable to open resource :/forms/frameFITSInspect.ui.");
-        ERROR(astroManager, 0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Unable to open resource :/forms/frameFITSInspect.ui."),
+                      E_UNABLELOADRESOURCE, settings::APPL_NAME.toStdString());
       }
 
       QWidget *formWidget = loader.load(&file, this);

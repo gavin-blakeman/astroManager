@@ -43,9 +43,20 @@
 
 #include "include/ImageComparison.h"
 
+  // Miscellaneous library header files
+
+#include "boost/locale.hpp"
+#include <GCL>
+
+  // Qt Framework header files
+
+#include <QtUiTools/QtUiTools>
+#include "QxtGui/QxtConfirmationMessage"
+
   // astroManager header files
 
 #include "include/AstroGraphicsView.h"
+#include "include/error.h"
 #include "include/dialogs/dialogSaveAligned.h"
 #include "include/dockWidgets/dockWidgetAstrometry.h"
 #include "include/dockWidgets/dockWidgetHistogram.h"
@@ -54,18 +65,6 @@
 #include "include/dockWidgets/dockWidgetNavigator.h"
 #include "include/dockWidgets/dockWidgetPhotometry.h"
 #include "include/settings.h"
-
-  // Qt Framework
-
-#include <QtUiTools/QtUiTools>
-
-  // Qxt Library
-
-#include "QxtGui/QxtConfirmationMessage"
-
-  // Other libraries
-
-#include <GCL>
 
 namespace astroManager
 {
@@ -1553,15 +1552,15 @@ namespace astroManager
       };
     }
 
-    /// @brief Sets up the user interface.
-    /// @throws CRuntimeAssert
-    /// @throws GCL::CError(astroManager, 0x0001)
-    /// @version 2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
-    /// @version 2016-04-17/GGB - Added code to update the "Remove Images" and "Remove All Images" buttons.
-    /// @version 2013-08-01/GGB - Added object tagging functionality.
-    /// @version 2013-07-01/GGB - Added button remove all.
-    /// @version 2013-06-02/GGB - Members created for all controls.
-    /// @version 2011-06-12/GGB - Function created.
+    /// @brief      Sets up the user interface.
+    /// @throws     GCL::CRuntimeAssert
+    /// @throws     GCL::CRuntimeError(0x0001)
+    /// @version    2017-07-10/GGB - Bug #90 checking for resource opening succesfully.
+    /// @version    2016-04-17/GGB - Added code to update the "Remove Images" and "Remove All Images" buttons.
+    /// @version    2013-08-01/GGB - Added object tagging functionality.
+    /// @version    2013-07-01/GGB - Added button remove all.
+    /// @version    2013-06-02/GGB - Members created for all controls.
+    /// @version    2011-06-12/GGB - Function created.
 
     void CImageComparisonWindow::setupUI()
     {
@@ -1576,8 +1575,8 @@ namespace astroManager
 
       if (!file.open(QFile::ReadOnly))
       {
-        ERRORMESSAGE("Unable to open resource :/forms/windowCompareImages.ui.");
-        ERROR(astroManager, 0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Unable to open resource :/forms/windowCompareImages.ui."), E_UNABLELOADRESOURCE,
+                      settings::APPL_NAME.toStdString());
       }
 
       QWidget *formWidget = loader.load(&file, this);
@@ -1585,7 +1584,7 @@ namespace astroManager
 
       setWidget(formWidget);
 
-      tabWidget = formWidget->findChild<QTabWidget *>("tabWidget");
+      ASSOCIATE_CONTROL(tabWidget, formWidget, "tabWidget", QTabWidget);
       listWidgetImages = formWidget->findChild<QListWidget *>("listWidgetImages");
       radioButtonBlink = formWidget->findChild<QRadioButton *>("radioButtonBlink");
       radioButtonSubtract = formWidget->findChild<QRadioButton *>("radioButtonSubtract");
@@ -1611,7 +1610,9 @@ namespace astroManager
            !spinBoxInterval || !pushButtonAdd || !pushButtonRemove || !pushButtonRemoveAll || !pushButtonManual ||
            !pushButtonAutomatic || !pushButtonAlign1 || !pushButtonAlign2 || !pushButtonPrepare || !labelAlign1 || !labelAlign2 ||
            !inputTabWidget || !outputTabWidget || !labelCurrentFile)
+      {
         CODE_ERROR;
+      };
 
       glImage = (QGridLayout *) inputTabWidget->layout();
 
@@ -1645,8 +1646,10 @@ namespace astroManager
         spinBoxInterval->setEnabled(false);
         break;
       default:
-        CODE_ERROR;
-        break;
+        {
+          CODE_ERROR;
+          break;
+        };
       };
 
       pushButtonManual->setEnabled(false);

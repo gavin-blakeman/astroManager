@@ -53,9 +53,11 @@
 namespace astroManager
 {
 
-  void loadErrorMessages();
+  using errorCode_t = GCL::TErrorCode;
 
-#define ASTROMANAGER_ERROR(ERR) (ERROR(astroManager, ERR))
+  errorCode_t const E_UNABLELOADRESOURCE      = 0x0001;
+
+  errorCode_t const E_ATID_MAGNITUDENOTFOUND  = 0x0100;
 
 } // namespace AstroManager
 

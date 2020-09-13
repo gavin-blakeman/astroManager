@@ -47,6 +47,13 @@
 #include <optional>
 #include <string>
 
+  // Miscellaneous library header files.
+
+#include <ACL>
+#include "boost/filesystem.hpp"
+#include <MCL>
+#include <QCL>
+
   // astroManager header files
 
 #include "ACL/astroFile.h"
@@ -54,13 +61,6 @@
 #include "FrameWindow.h"
 #include "windowImage/windowImageStacking.h"
 #include "photometry/photometryObservation.h"
-
-  // Miscellaneous library header files.
-
-#include <ACL>
-#include "boost/filesystem.hpp"
-#include <MCL>
-#include <QCL>
 
 namespace astroManager
 {

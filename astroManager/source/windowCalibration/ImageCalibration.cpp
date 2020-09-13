@@ -34,18 +34,17 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowCalibration/ImageCalibration.h"
+#include "include/windowCalibration/ImageCalibration.h"
 
-
-#include "../../include/FrameWindow.h"
-
-//#include <QtUiTools/QtUiTools>
-
-#include "../../include/settings.h"
-
-#include "boost/filesystem.hpp"
+  // Miscellaneous library header files.
 
 #include <ACL>
+#include "boost/filesystem.hpp"
+
+  // astroManager header files
+
+#include "include/FrameWindow.h"
+#include "include/settings.h"
 
 namespace astroManager
 {

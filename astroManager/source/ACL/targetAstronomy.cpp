@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2018 Gavin Blakeman.
+//                      Copyright 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -34,20 +34,20 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/ACL/targetAstronomy.h"
+#include "include/ACL/targetAstronomy.h"
 
   // Standard C++ library header files
 
 #include <utility>
 
-  // astroManager application header files
-
-#include "../../include/database/databaseATID.h"
-#include "../../include/error.h"
-
   // Miscellaneous library header files
 
 #include "boost/algorithm/string.hpp"
+
+  // astroManager application header files
+
+#include "include/database/databaseATID.h"
+#include "include/error.h"
 
 namespace astroManager
 {

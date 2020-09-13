@@ -3611,8 +3611,8 @@ namespace astroManager
 
       if (!file.open(QFile::ReadOnly))
       {
-        ERRORMESSAGE("Unable to open resource :/forms/windowMDIFrame.ui.");
-        ASTROMANAGER_ERROR(0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Unable to open resource :/forms/windowMDIFrame.ui."),
+                      E_UNABLELOADRESOURCE, settings::APPL_NAME.toStdString());
       }
 
       QWidget *formWidget = loader.load(&file, this);

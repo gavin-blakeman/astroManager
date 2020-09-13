@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2018 Gavin Blakeman.
+//                      Copyright 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -43,17 +43,21 @@
 #include <memory>
 #include <vector>
 
-  // astroManager application header files
-
-#include "../astroManager.h"
-
-  // Miscellaneous library header files
+// Miscellaneous library header files
 
 #include <ACL>
 #include <QCL>
 
+  // astroManager application header files
+
+#include "../astroManager.h"
+
 namespace astroManager
 {
+  /* Note this is not derived from ACL::CTargetAstronomy as it needs to be able to work with any of the types of
+   * astronomy targets. If we derived this, then there would need to be three or four classes.
+   */
+
   class CTargetAstronomy final
   {
   public:
