@@ -55,18 +55,19 @@
 #include <cfloat>
 #include <cmath>
 
-  // astroManager application header files
+  // Miscellaneous library header files.
+
+#include "boost/filesystem.hpp"
+#include "boost/locale.hpp"
+#include <GCL>
+#include <QCL>
+
+// astroManager application header files
 
 #include "include/database/databaseARID.h"
 #include "include/database/databaseATID.h"
 #include "include/settings.h"
 #include "include/astroManager.h"
-
-  // Miscellaneous library header files.
-
-#include "boost/filesystem.hpp"
-#include <GCL>
-#include <QCL>
 
 namespace astroManager
 {
@@ -103,19 +104,17 @@ namespace astroManager
 
       if (!QFile::exists(szDialog))
       {
-        ERRORMESSAGE("Resource does not exist: " + szDialog.toStdString());
-        ERROR(astroManager, 0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Resource does not exist: ").str() + szDialog.toStdString());
       }
 
       if (!file.open(QFile::ReadOnly))
       {
-        ERRORMESSAGE("Could not open the resource: " + szDialog.toStdString());
-        ERROR(astroManager, 0x0001);
+        RUNTIME_ERROR(boost::locale::translate("Could not open the resource: ").str() + szDialog.toStdString());
       };
 
       dlg = static_cast<QDialog *>(loader.load(&file));
 
-      RUNTIME_ASSERT(dlg != nullptr, "The dialog template could not be loaded.")
+      RUNTIME_ASSERT(dlg != nullptr, boost::locale::translate("The dialog template could not be loaded."));
 
       file.close();
     }

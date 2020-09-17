@@ -62,15 +62,15 @@
 
 #include "include/Configure.h"
 
-  // astroManager application header files.
-
-#include "include/database/databaseATID.h"
-#include "include/settings.h"
-
   // Miscellaneous library header files.
 
 #include <ACL>
 #include <QCL>
+
+  // astroManager application header files.
+
+#include "include/database/databaseATID.h"
+#include "include/settings.h"
 
 namespace astroManager
 {

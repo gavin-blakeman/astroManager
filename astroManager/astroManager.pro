@@ -156,7 +156,8 @@ SOURCES += \
     source/astroManagerHelp.cpp \
     source/ACL/targetAstronomy.cpp \
     source/error.cpp \
-    source/settings.cpp
+    source/settings.cpp \
+    source/models/planningModel.cpp
 
 HEADERS  += \
     include/FrameWindow.h \
@@ -244,7 +245,8 @@ HEADERS  += \
     include/astroManagerHelp.h \
     include/ACL/targetAstronomy.h \
     include/error.h \
-    include/settings.h
+    include/settings.h \
+    include/models/planningModel.h
 
 
 RESOURCES += \

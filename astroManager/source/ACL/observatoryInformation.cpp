@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -37,23 +37,23 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/ACL/observatoryInformation.h"
+#include "include/ACL/observatoryInformation.h"
 
 namespace astroManager
 {
-  /// @brief Copy constructor.
-  /// @throws None.
-  /// @version 2017-09-02/GGB - Function created.
+  /// @brief      Copy constructor.
+  /// @throws     None.
+  /// @version    2017-09-02/GGB - Function created.
 
   CObservatory::CObservatory(CObservatory const &toCopy) : ACL::CObservatory(toCopy), siteID_(toCopy.siteID_),
     dontDisplay_(toCopy.dontDisplay_)
   {
   }
 
-  /// @brief Returns a copy of this.
-  /// @returns A copy of this.
-  /// @throws std::bad_alloc
-  /// @version 2017-09-02/GGB - Function created.
+  /// @brief      Returns a copy of this.
+  /// @returns    A copy of this.
+  /// @throws     std::bad_alloc
+  /// @version    2017-09-02/GGB - Function created.
 
   std::unique_ptr<ACL::CGeographicLocation> CObservatory::createCopy() const
   {

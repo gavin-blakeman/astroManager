@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -48,11 +48,16 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogBinPixels.h"
-#include "../../include/error.h"
-#include "../../include/settings.h"
+#include "include/dialogs/dialogBinPixels.h"
+
+  // Miscellaneous library header files
 
 #include <GCL>
+
+  // astroManager header files
+
+#include "include/error.h"
+#include "include/settings.h"
 
 namespace astroManager
 {

@@ -64,8 +64,6 @@
 #include "include/settings.h"
 #include "include/astroManager.h"
 
-
-
 namespace astroManager
 {
   namespace database
@@ -349,7 +347,7 @@ namespace astroManager
 
         std::cout << sqlString << std::endl;
 
-         if (sqlQuery->exec(QString::fromStdString(sqlString)))
+        if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
           while (sqlQuery->next())
           {
@@ -399,7 +397,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       };
 
@@ -449,7 +447,7 @@ namespace astroManager
         {
           if (sqlQuery->lastError().isValid())
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           }
           else
           {
@@ -460,7 +458,7 @@ namespace astroManager
       else
       {
         ERRORMESSAGE(boost::locale::translate("Unable to find telescope."));
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
 
       return returnValue;
@@ -495,12 +493,12 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           };
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -553,12 +551,12 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           };
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -605,12 +603,12 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           };
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -650,12 +648,12 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           };
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -691,7 +689,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -725,7 +723,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -766,7 +764,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -808,7 +806,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         }
       }
       else
@@ -852,7 +850,7 @@ namespace astroManager
         {
           if (sqlQuery->lastError().isValid())
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           }
           else
           {
@@ -894,12 +892,12 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
 
       return returnValue;
@@ -942,7 +940,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -1032,12 +1030,12 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
 
     }
@@ -1103,7 +1101,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
       }
       else
@@ -1167,7 +1165,7 @@ namespace astroManager
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
     }
 
@@ -1246,7 +1244,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where("RETIRED", "=", false);
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1261,7 +1259,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -1301,7 +1299,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -1340,7 +1338,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -1373,7 +1371,8 @@ namespace astroManager
 
           if (selectDefault)
           {
-            std::uint_least32_t siteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID, QVariant(0)).toULongLong();
+            std::uint_least32_t siteID = settings::astroManagerSettings->value(settings::SETTINGS_SITE_DEFAULTID,
+                                                                               QVariant(0)).toULongLong();
 
             std::uint_fast32_t index;
 
@@ -1389,7 +1388,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -1441,7 +1440,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         };
 
         sqlQuery->finish();
@@ -1503,7 +1502,7 @@ namespace astroManager
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
     }
 
@@ -1553,73 +1552,73 @@ namespace astroManager
 
     void CARID::readObservingPlanTargets(planID_t planID, std::vector<std::unique_ptr<CTargetAstronomy>> &targetList)
     {
-      QSqlQuery sqlQuery(*dBase);
+//      QSqlQuery sqlQuery(*dBase);
 
-        // Create the query.
+//        // Create the query.
 
-      sqlWriter.resetQuery();
-      sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID", "TARGET_NAME"})
-               .from({"TBL_TARGETS"})
-               .where("PLAN_ID", "=", planID);
+//      sqlWriter.resetQuery();
+//      sqlWriter.select({"TARGET_ID", "RANK", "TARGETTYPE_ID", "NAME_ID", "TARGET_NAME"})
+//               .from({"TBL_TARGETS"})
+//               .where("PLAN_ID", "=", planID);
 
-      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
-      {
-        while (sqlQuery.next())
-        {
-            // Check the type and create the object.
+//      if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
+//      {
+//        while (sqlQuery.next())
+//        {
+//            // Check the type and create the object.
 
-          switch(sqlQuery.value(2).toUInt())
-          {
-            case MAJORPLANET:
-            {
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery.value(3).toUInt()))));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
-              break;
-            };
-            case MINORPLANET:
-            {
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                      std::make_unique<ACL::CTargetMinorPlanet>(
-                                          settings::astroManagerSettings->value(settings::FILE_MPCORB,
-                                                                                "Data/MPCORB.DAT").toString().toStdString(),
-                                          sqlQuery.value(4).toString().toStdString())));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
-              break;
-            };
-            case COMET:
-            {
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
-                                        std::make_unique<ACL::CTargetComet>(
-                                            settings::astroManagerSettings->value(settings::FILE_COMETELS,
-                                                                                  "Data/CometEls.txt").toString().toStdString(),
-                                            sqlQuery.value(4).toString().toStdString())));
-              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
-              break;
-            };
-            case STELLAR:
-            {
-                // Need to load the information needed form the ATID database.
+//          switch(sqlQuery.value(2).toUInt())
+//          {
+//            case MAJORPLANET:
+//            {
+//              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+//                                        std::make_unique<ACL::CTargetMajorPlanet>(static_cast<ACL::CTargetMajorPlanet::EPlanets>(sqlQuery.value(3).toUInt()))));
+//              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
+//              break;
+//            };
+//            case MINORPLANET:
+//            {
+//              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+//                                      std::make_unique<ACL::CTargetMinorPlanet>(
+//                                          settings::astroManagerSettings->value(settings::FILE_MPCORB,
+//                                                                                "Data/MPCORB.DAT").toString().toStdString(),
+//                                          sqlQuery.value(4).toString().toStdString())));
+//              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
+//              break;
+//            };
+//            case COMET:
+//            {
+//              targetList.emplace_back(std::make_unique<CTargetAstronomy>(
+//                                        std::make_unique<ACL::CTargetComet>(
+//                                            settings::astroManagerSettings->value(settings::FILE_COMETELS,
+//                                                                                  "Data/CometEls.txt").toString().toStdString(),
+//                                            sqlQuery.value(4).toString().toStdString())));
+//              targetList.back()->targetAstronomy()->objectName(sqlQuery.value(4).toString().toStdString());
+//              break;
+//            };
+//            case STELLAR:
+//            {
+//                // Need to load the information needed form the ATID database.
 
-              targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
+//              targetList.emplace_back(std::make_unique<CTargetAstronomy>(std::make_unique<ACL::CTargetStellar>()));
 
-              databaseATID->queryStellarObjectByNameID(sqlQuery.value(3).toULongLong(),
-                                                         dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
+//              databaseATID->queryStellarObjectByNameID(sqlQuery.value(3).toULongLong(),
+//                                                         dynamic_cast<ACL::CTargetStellar *>(targetList.back()->targetAstronomy()));
 
-              break;
-            };
-            default:
-            {
-              CODE_ERROR;
-              break;
-            };
-          };
-        };
-      }
-      else
-      {
-        processErrorInformation();
-      };
+//              break;
+//            };
+//            default:
+//            {
+//              CODE_ERROR;
+//              break;
+//            };
+//          };
+//        };
+//      }
+//      else
+//      {
+//        processErrorInformation();
+//      };
     }
 
     /// @brief      Adds an image record to the images table.
@@ -1755,7 +1754,7 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
 
             INFOMESSAGE("Image not registered.");
           }
@@ -1795,7 +1794,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
 
           INFOMESSAGE("Observatory not registered.");
         };
@@ -1836,7 +1835,7 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
 
           INFOMESSAGE("Telescope not registered.");
         };
@@ -1904,7 +1903,7 @@ namespace astroManager
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
 
         DEBUGMESSAGE("Image Flags not Updated.");
       };
@@ -1948,7 +1947,7 @@ namespace astroManager
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
 
         DEBUGMESSAGE("Comments not Updated.");
       };
@@ -1982,7 +1981,7 @@ namespace astroManager
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
 
         DEBUGMESSAGE("Quality not Updated.");
       };
@@ -2039,20 +2038,22 @@ namespace astroManager
       else
       {
         INFOMESSAGE("Image not saved.");
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
       };
     }
 
-    /// @brief Uploads an image to database.
-    /// @param[in] imageArray - The byteArray containing the image.
-    /// @param[in] imageID - The ID of the image to save.
-    /// @param[in] imageVersion - The version of the image to save.
-    /// @param[in] comment - The comment to associate with the version.
+    /// @brief      Uploads an image to database.
+    /// @param[in]  imageArray: The byteArray containing the image.
+    /// @param[in]  imageID: The ID of the image to save.
+    /// @param[in]  imageVersion: The version of the image to save.
+    /// @param[in]  comment: The comment to associate with the version.
+    /// @throws
+    /// @version    2020-09-16/GGB - Added locale and translation.
 
     void CARID::uploadImage(QByteArray const &imageArray, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(imageVersion != 0, "Parameter imageVersion cannot be zero.");
+      RUNTIME_ASSERT(imageID != 0, boost::locale::translate("Parameter imageID cannot be zero."));
+      RUNTIME_ASSERT(imageVersion != 0, boost::locale::translate("Parameter imageVersion cannot be zero."));
 
       ACL::TJD JD;
 
@@ -2071,22 +2072,22 @@ namespace astroManager
 
       if (sqlQuery->exec())
       {
-        INFOMESSAGE("Image saved in database.");
+        INFOMESSAGE(boost::locale::translate("Image saved in database."));
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
 
-        INFOMESSAGE("Image not saved.");
+        INFOMESSAGE(boost::locale::translate("Image not saved."));
       };
       sqlQuery->finish();
     }
 
-    /// @brief Counts the number of versions associated with the image.
-    /// @param[in] imageID - The ID of the image to count.
-    /// @returns The number of versions.
-    /// @throws GCL::CCodeError(astroManager)
-    /// @version 2017-08-12/GGB - Function created.
+    /// @brief      Counts the number of versions associated with the image.
+    /// @param[in]  imageID: The ID of the image to count.
+    /// @returns    The number of versions.
+    /// @throws     GCL::CCodeError(astroManager)
+    /// @version    2017-08-12/GGB - Function created.
 
     imageVersion_t CARID::versionCount(imageID_t imageID)
     {
@@ -2095,8 +2096,7 @@ namespace astroManager
       if (!ARIDdisabled_)
       {
         sqlWriter.resetQuery();
-        sqlWriter.select({}).count("*").from({"TBL_IMAGESTORAGE"}).
-            where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)});
+        sqlWriter.select({}).count("*").from({"TBL_IMAGESTORAGE"}).where("IMAGE_ID", "=", imageID);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -2107,13 +2107,13 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           }
         }
         else
         {
-          processErrorInformation();
-        }
+          processErrorInformation(*sqlQuery);
+        };
       }
       else
       {
@@ -2150,12 +2150,12 @@ namespace astroManager
           else
           {
 
-            processErrorInformation();
+            processErrorInformation(*sqlQuery);
           }
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
         }
       }
       else

@@ -823,13 +823,13 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(sqlQuery);
           //ASTROMANAGER_ERROR(0x1000);
         };
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(sqlQuery);
         //ASTROMANAGER_ERROR(0x1000);
       }
     }
@@ -871,12 +871,12 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(sqlQuery);
         };
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(sqlQuery);
       };
 
       return returnValue;
@@ -956,12 +956,12 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(sqlQuery);
         }
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(sqlQuery);
       };
     }
 
@@ -987,14 +987,14 @@ namespace astroManager
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(*sqlQuery);
           //ASTROMANAGER_ERROR(0x1000);
         };
         sqlQuery->finish();
       }
       else
       {
-        processErrorInformation();
+        processErrorInformation(*sqlQuery);
         //ASTROMANAGER_ERROR(0x1000);
       };
     }
@@ -1153,12 +1153,12 @@ namespace astroManager
           }
           else
           {
-            processErrorInformation();
+            processErrorInformation(sqlQuery);
           };
         }
         else
         {
-          processErrorInformation();
+          processErrorInformation(sqlQuery);
         };
       }
       else
@@ -1373,7 +1373,7 @@ namespace astroManager
       query->setForwardOnly(true);		// ForwardOnly only needed
       program = new QString(szSQL);
       query->exec(*program);
-      program = NULL;
+      program = nullptr;
 
       while (	query->next() )
       {

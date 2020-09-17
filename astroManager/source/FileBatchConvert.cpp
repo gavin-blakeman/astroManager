@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -43,15 +43,15 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/FileBatchConvert.h"
+#include "include/FileBatchConvert.h"
+
+  // Miscellaneous library header files
+
+#include "boost/filesystem.hpp"
 
   // astroManager include files
 
-#include "../include/settings.h"
-
-  // Boost library
-
-#include "boost/filesystem.hpp"
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -182,36 +182,36 @@ namespace astroManager
           lwi = new QListWidgetItem(filePath.filename().string().c_str());
           lwi->setData(ROLE_PATH , QVariant(*constIterator) );		// Add the complete path as user data.
           listWidgetFiles->addItem(lwi);
-          lwi = NULL;
+          lwi = nullptr;
         };
-    };
+    }
 
-    /// Function to handle the clicked message for the radio button.
+    /// @brief Function to handle the clicked message for the radio button.
     //
-    // R/D/A: 1.00/2012-02-12/GGB
+    // @version 2012-02-12/GGB - Function created.
 
     void CFileBatchConvertDialog::radioButtonObserverDefaultClicked(bool)
     {
       pushButtonObserverSelect->setEnabled(false);
-    };
+    }
 
     /// Function to handle the clicked message for the radio button.
     //
-    // R/D/A: 1.00/2012-02-12/GGB
+    /// @version    2012-02-12/GGB - Function created.
 
     void CFileBatchConvertDialog::radioButtonObserverManualClicked(bool)
     {
       pushButtonObserverSelect->setEnabled(true);
-    };
+    }
 
     /// Function to handle the clicked message for the radio button.
     //
-    // R/D/A: 1.00/2012-02-12/GGB
+    /// @version    2012-02-12/GGB - Function created.
 
     void CFileBatchConvertDialog::radioButtonSiteDefaultClicked(bool)
     {
       pushButtonEnterSite->setEnabled(false);
-    };
+    }
 
     /// Function to handle the clicked message for the radio button.
     //
@@ -240,7 +240,7 @@ namespace astroManager
       pushButtonWeatherEnter->setEnabled(true);
     }
 
-    /// Function to setup the user interface elements.
+    /// @brief Function to setup the user interface elements.
     /// @version 2017-06-14/GGB - Update to Qt5
     /// @version 2015-01-04/GGB - Changed macro constants to C++ contants.
     /// @version 2012-02-02/GGB - Function created.

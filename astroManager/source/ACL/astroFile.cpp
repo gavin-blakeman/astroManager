@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2010 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,6 +40,7 @@
 
   // Miscellaneous library header files.
 
+#include "boost/locale.hpp"
 #include <QCL>
 
   // astroManager application header files
@@ -430,10 +431,10 @@ namespace astroManager
 
       QMessageBox messageBox;
 
-      messageBox.setWindowTitle(QObject::tr("Save File As..."));
-      messageBox.setText(QObject::tr("Save the image to file or database."));
-      QPushButton *fileButton = messageBox.addButton(QObject::tr("File"), QMessageBox::AcceptRole);
-      QPushButton *databaseButton = messageBox.addButton(QObject::tr("Database"), QMessageBox::AcceptRole);
+      messageBox.setWindowTitle(QString::fromStdString(boost::locale::translate("Save File As...")));
+      messageBox.setText(QString::fromStdString(boost::locale::translate("Save the image to file or database.")));
+      QPushButton *fileButton = messageBox.addButton(QString::fromStdString(boost::locale::translate(("File"))), QMessageBox::AcceptRole);
+      QPushButton *databaseButton = messageBox.addButton(QString::fromStdString(boost::locale::translate("Database")), QMessageBox::AcceptRole);
       messageBox.exec();
 
       if (messageBox.clickedButton() == fileButton)

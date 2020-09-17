@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2013, 2018 Gavin Blakeman.
+//                      Copyright 2011-2013, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -23,7 +23,6 @@
 //
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
-//
 //
 // OVERVIEW:
 //
@@ -40,11 +39,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/CInstrumentDockwidget.h"
-
-  // Include files for astroManager
-
-#include "../include/database/databaseARID.h"
+#include "include/CInstrumentDockwidget.h"
 
   // Miscellaneous library header files.
 
@@ -52,11 +47,14 @@
 #include <GCL>
 #include <QCL>
 
+  // Include files for astroManager
+
+#include "include/database/databaseARID.h"
+
 namespace astroManager
 {
   namespace dockwidgets
   {
-
 
     //*****************************************************************************************************************************
     //

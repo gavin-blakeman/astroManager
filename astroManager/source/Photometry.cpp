@@ -8,7 +8,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -35,28 +35,30 @@
 //
 //*************************************************************************************************
 
-#include "../include/Photometry.h"
+#include "include/Photometry.h"
+
+  // Miscellaneous library header files
+
+#include <ACL>
+#include "boost/scoped_ptr.hpp"
+#include <GCL>
+
+  // Qt library header files
 
 #include <Qt>
 #include <QtUiTools/QtUiTools>
 #include <QtCore/QtCore>
-
 #include "qwt_legend.h"
 #include "qwt_plot_marker.h"
 #include "qwt_symbol.h"
 
-#include "boost/scoped_ptr.hpp"
+  // astroManager header files
 
-#include <ACL>
-#include <GCL>
-
-#include "../include/astroManager.h"
-#include "../include/database/databaseARID.h"
-#include "../include/database/databaseATID.h"
-#include "../include/FrameWindow.h"
-#include "../include/settings.h"
-
-#include "float.h"
+#include "include/astroManager.h"
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+#include "include/FrameWindow.h"
+#include "include/settings.h"
 
 namespace astroManager
 {

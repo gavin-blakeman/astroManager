@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2012, 2018 Gavin Blakeman.
+//                      Copyright 2012, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -34,10 +34,12 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/astrometry/astrometryObservation.h"
+#include "include/astrometry/astrometryObservation.h"
 
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+  // astroManager header files
+
+#include "include/settings.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {
@@ -58,30 +60,30 @@ namespace astroManager
     {
     }
 
-    /// @brief Constructor taking an object name.
-    /// @param[in] name - The name of the object being observed.
-    /// @throws None.
-    /// @version 2013-08-25/GGB - Function created.
+    /// @brief      Constructor taking an object name.
+    /// @param[in]  name: The name of the object being observed.
+    /// @throws     None.
+    /// @version    2013-08-25/GGB - Function created.
 
     CAstrometryObservation::CAstrometryObservation(std::string const &name) : ACL::CAstrometryObservation(name), group(nullptr),
       text(nullptr)
     {
     }
 
-    /// @brief Class constructor. Must null text and group.
-    /// @param[in] ao - Astrometry observation to create this instance from.
-    /// @throws None.
-    /// @version 2013-08-25/GGB - Function created.
+    /// @brief      Class constructor. Must null text and group.
+    /// @param[in]  ao: Astrometry observation to create this instance from.
+    /// @throws     None.
+    /// @version    2013-08-25/GGB - Function created.
 
     CAstrometryObservation::CAstrometryObservation(ACL::CAstrometryObservation const &ao) :
       ACL::CAstrometryObservation(ao), group(nullptr), text(nullptr)
     {
     }
 
-    /// @brief Constructor taking an astronomy target.
-    /// @param[in] ta - The astronomy target object.
-    /// @throws None.
-    /// @version 2016-05-04/GGB - Function created.
+    /// @brief      Constructor taking an astronomy target.
+    /// @param[in]  ta: The astronomy target object.
+    /// @throws     None.
+    /// @version    2016-05-04/GGB - Function created.
 
     CAstrometryObservation::CAstrometryObservation(std::shared_ptr<ACL::CTargetAstronomy> ta)
       : ACL::CAstrometryObservation(ta), group(nullptr), text(nullptr)
@@ -108,15 +110,15 @@ namespace astroManager
       }
     }
 
-    /// @brief Friend function to output the object as comma delimited text.
-    /// @param[in] os - The output stream to write the observation to
-    /// @param[in] ao - The object to write to the stream.
-    /// @returns The output stream.
-    /// @throws None.
-    /// @version 2017-09-23/GGB - Updated to use CAngle.
-    /// @version 2013-08-22/GGB - Added degrees output to the function.
-    /// @version 2013-08-18/GGB - Added the RA/Dec if available to the output.
-    /// @version 2012-11-16/GGB - Function created.
+    /// @brief      Friend function to output the object as comma delimited text.
+    /// @param[in]  os: The output stream to write the observation to
+    /// @param[in]  ao: The object to write to the stream.
+    /// @returns    The output stream.
+    /// @throws     None.
+    /// @version    2017-09-23/GGB - Updated to use CAngle.
+    /// @version    2013-08-22/GGB - Added degrees output to the function.
+    /// @version    2013-08-18/GGB - Added the RA/Dec if available to the output.
+    /// @version    2012-11-16/GGB - Function created.
 
     std::ostream &operator << (std::ostream &os, CAstrometryObservation &ao)
     {

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,43 +36,43 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/ACL/FITSMemoryFileArray.h"
+#include "include/ACL/FITSMemoryFileArray.h"
 
 namespace astroManager
 {
 
-  /// @brief Default constructor for the class.
-  /// @throws std::bad_alloc
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Default constructor for the class.
+  /// @throws     std::bad_alloc
+  /// @version    2017-08-13/GGB - Function created.
 
   CFITSMemoryFileArray::CFITSMemoryFileArray() : ACL::CFITSMemoryFile(), byteArray_()
   {
   }
 
-  /// @brief Constructor from a file.
-  /// @param[in] filePath - The path and filename
-  /// @throws std::bad_alloc
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Constructor from a file.
+  /// @param[in]  filePath: The path and filename
+  /// @throws     std::bad_alloc
+  /// @version    2017-08-13/GGB - Function created.
 
   CFITSMemoryFileArray::CFITSMemoryFileArray(boost::filesystem::path const &filePath) : ACL::CFITSMemoryFile(), byteArray_()
   {
     readFromFile(filePath);
   }
 
-  /// @brief Constructor for preallocated size.
-  /// @param[in] memorySize - The size of the memory to allocate.
-  /// @throws std::bad_alloc
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Constructor for preallocated size.
+  /// @param[in]  memorySize: The size of the memory to allocate.
+  /// @throws     std::bad_alloc
+  /// @version    2017-08-13/GGB - Function created.
 
   CFITSMemoryFileArray::CFITSMemoryFileArray(std::size_t memorySize) : ACL::CFITSMemoryFile(), byteArray_()
   {
     memory_allocate(memorySize);
   }
 
-  /// @brief Function to allocate memory.
-  /// @param[in] newMemorySize - The number of bytes to allocate.
-  /// @throws std::bad_alloc
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Function to allocate memory.
+  /// @param[in]  newMemorySize: The number of bytes to allocate.
+  /// @throws     std::bad_alloc
+  /// @version    2017-08-13/GGB - Function created.
 
   void CFITSMemoryFileArray::memory_allocate(std::size_t newMemorySize)
   {
@@ -81,9 +81,9 @@ namespace astroManager
     memoryPointer(byteArray_.data());
   }
 
-  /// @brief Frees the allocated memory
-  /// @throws None.
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Frees the allocated memory
+  /// @throws     None.
+  /// @version    2017-08-13/GGB - Function created.
 
   void CFITSMemoryFileArray::memory_free()
   {
@@ -92,10 +92,10 @@ namespace astroManager
     memoryPointer(byteArray_.data());
   }
 
-  /// @brief Reallocates memory
-  /// @param[in] newMemorySize - Number of bytes to allocate.
-  /// @throws std::bad_alloc
-  /// @version 2017-08-13/GGB - Function created.
+  /// @brief      Reallocates memory
+  /// @param[in]  newMemorySize: Number of bytes to allocate.
+  /// @throws     std::bad_alloc
+  /// @version    2017-08-13/GGB - Function created.
 
   void CFITSMemoryFileArray::memory_reallocate(std::size_t newMemorySize)
   {
@@ -103,4 +103,5 @@ namespace astroManager
     memorySize(byteArray_.size());
     memoryPointer(byteArray_.data());
   }
+
 }

@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2018 Gavin Blakeman.
+//                      Copyright 2015, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,13 +40,13 @@
 
   // Standard C++ library headers
 
+#include <optional>
 #include <string>
 #include <vector>
 
   // Miscellaneous libraries
 
 #include <ACL>
-#include "boost/optional.hpp"
 #include <MCL>
 
 namespace astroManager
@@ -63,10 +63,10 @@ namespace astroManager
 
     std::string objectID_;
     ACL::CAstronomicalCoordinates ICRS;
-    boost::optional<MCL::TPoint2D<ACL::FP_t>> properMotion_;
-    boost::optional<ACL::FP_t> parallax_;
-    boost::optional<ACL::FP_t> radialVelocity_;
-    boost::optional<ACL::FP_t> redShift_;
+    std::optional<MCL::TPoint2D<ACL::FP_t>> properMotion_;
+    std::optional<ACL::FP_t> parallax_;
+    std::optional<ACL::FP_t> radialVelocity_;
+    std::optional<ACL::FP_t> redShift_;
     std::vector<std::string> identifiers_;
     std::string spectralType_;
 

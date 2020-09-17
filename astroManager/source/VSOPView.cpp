@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2009-2018 Gavin Blakeman.
+//                      Copyright 2009-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,15 +40,16 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/VSOPView.h"
+#include "include/VSOPView.h"
 
   // astroManager files
 
-#include "../include/database/databaseATID.h"
+#include "include/database/databaseATID.h"
 
   // Miscellaneous header files
 
 #include <ACL>
+#include "boost/locale.hpp"
 #include <QCL>
 
 namespace astroManager
@@ -125,7 +126,7 @@ namespace astroManager
 
     ClearFields();
 
-    setWindowTitle(tr("View Target Information"));
+    setWindowTitle(QString::fromStdString(boost::locale::translate("View Target Information")));
     //setWindowIcon(QIcon(":/icons/iconDarknessHours.png"));
   }
 

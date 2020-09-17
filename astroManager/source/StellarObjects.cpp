@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2018 Gavin Blakeman.
+//                      Copyright 2015, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,40 +36,41 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/StellarObjects.h"
+#include "include/StellarObjects.h"
 
 namespace astroManager
 {
 
   bool CStellarObjects::disableATID_;
 
-  /// Constructor for the class.
-  /// @param[in] oid - The object ID to associate with the class.
-  /// @throws None.
-  /// @version 2015-09-24/GGB - Function created.
+  /// @brief        Constructor for the class.
+  /// @param[in]    oid: The object ID to associate with the class.
+  /// @throws       None.
+  /// @version      2015-09-24/GGB - Function created.
 
   CStellarObjects::CStellarObjects(std::string const &oid) : objectID_(oid)
   {
 
   }
 
-  /// @brief Function to allow configuration of the underlying (static) parameters for the class.
-  /// @param[in] da - Diable ATID
-  /// @version 2015-09-24/GGB - Function created.
+  /// @brief        Function to allow configuration of the underlying (static) parameters for the class.
+  /// @param[in]    da: Disable ATID
+  /// @version      2015-09-24/GGB - Function created.
 
   void CStellarObjects::configure(bool da)
   {
     disableATID_ = da;
   }
 
-  /// Searches for the object associated with the class.
-  /// @returns true - The object was found
-  /// @returns false - The object was not found.
-  /// @throws None.
-  /// @details Searches for the object with the ID associated with the class. If the ATID database is enabled, the search is first
-  /// made in the ATID database. If the search is not sucessfull, or the ATID database is disabled, then the search is made on
-  /// SIMBAD. Once the object is found the data is parsed or loaded into the class for later retrieval by the application.
-  /// @version 2015-09-24/GGB - Function created.
+  /// @brief        Searches for the object associated with the class.
+  /// @returns      true - The object was found
+  /// @returns      false - The object was not found.
+  /// @throws       None.
+  /// @details      Searches for the object with the ID associated with the class. If the ATID database is enabled, the search is
+  ///               first made in the ATID database. If the search is not sucessfull, or the ATID database is disabled, then the
+  ///               search is made on SIMBAD. Once the object is found the data is parsed or loaded into the class for later
+  ///               retrieval by the application.
+  /// @version      2015-09-24/GGB - Function created.
 
   bool CStellarObjects::objectFind()
   {

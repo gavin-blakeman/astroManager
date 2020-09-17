@@ -45,9 +45,8 @@
 
   // astroManager header files.
 
-#include "../ACL/targetAstronomy.h"
-#include "../ACL/telescope.h"
-#include "../qtExtensions/MdiSubWindow.h"
+#include "include/ACL/telescope.h"
+#include "include/qtExtensions/MdiSubWindow.h"
 
   // Miscellaneous library header files.
 
@@ -63,7 +62,6 @@ namespace astroManager
       Q_OBJECT
 
     private:
-      std::vector<std::unique_ptr<CTargetAstronomy>> targetList;
       QComboBox *comboBoxPlans = nullptr;
       QComboBox *comboBoxSites = nullptr;
       QDateEdit *dateEditSelectedDate = nullptr;

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -24,7 +24,6 @@
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
 //
-//
 // OVERVIEW:
 //
 // CLASSES INCLUDED:    CTextEditorWindow
@@ -36,7 +35,7 @@
 //
 //*************************************************************************************************
 
-#include "../include/TextEditor.h"
+#include "include/TextEditor.h"
 
 /*!
  * @brief The CTextEditorWindow class is used to view and edit text files.

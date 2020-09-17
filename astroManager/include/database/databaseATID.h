@@ -42,6 +42,10 @@
 #ifndef ASTROMANAGER_DATABASEATID_H
 #define ASTROMANAGER_DATABASEATID_H
 
+  // Standard C++ library header files
+
+#include <cstdint>
+
   // Miscellaneous library header files.
 
 #include <ACL>

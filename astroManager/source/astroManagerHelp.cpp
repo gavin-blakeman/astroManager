@@ -9,7 +9,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2009-2018 Gavin Blakeman.
+//                      Copyright 2009-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,21 +42,21 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/astroManagerHelp.h"
+#include "include/astroManagerHelp.h"
 
   // Standard C++ library header files
 
 #include <cstdio>
 
-  // astroManager application header files
-
-#include "../include/database/databaseATID.h"
-#include "../include/astroManager.h"
-
   // Miscellaneous library header files.
 
 #include <GCL>
 #include <QCL>
+
+  // astroManager application header files
+
+#include "include/database/databaseATID.h"
+#include "include/astroManager.h"
 
   // The following are defined in cfitsio and need to be undefined to be able to include libraw (winnt.h).
   // As cfitsio is never accessed directly by the code in this library, this will not be a concern.
@@ -143,7 +143,8 @@ namespace astroManager
       QSqlQuery query(database::databaseATID->database());
       QTableWidgetItem *newItem;
 
-      query.exec(*new QString("SELECT vi.REVISION, vi.STATUS, vi.PUBLISHDATE, vi.TARGETCOUNT, vi.IDENTIFIERCOUNT FROM TBL_VERSIONINFO vi ORDER BY vi.REVISION DESC"));
+      query.exec(*new QString("SELECT vi.REVISION, vi.STATUS, vi.PUBLISHDATE, vi.TARGETCOUNT, vi.IDENTIFIERCOUNT "
+                              "FROM TBL_VERSIONINFO vi ORDER BY vi.REVISION DESC"));
 
       query.next();			// Move to first row of query
 

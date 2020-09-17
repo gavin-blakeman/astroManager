@@ -60,7 +60,7 @@ namespace astroManager
     /// @throws     std::bad_alloc
     /// @version    2017-06-20/GGB - Function created.
 
-    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent), targetList()
+    CWindowPlanning::CWindowPlanning(QWidget *parent) : CMdiSubWindow(parent)
     {
       setAttribute(Qt::WA_DeleteOnClose);
 
@@ -142,18 +142,18 @@ namespace astroManager
     {
         // Clear the current data.
 
-      targetList.clear();
+//      targetList.clear();
 
-        // Load the list of items from the current plan.
+//        // Load the list of items from the current plan.
 
-      database::databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
+//      database::databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
 
-        // Now need to setup all the listWidgetItems for the columns.
+//        // Now need to setup all the listWidgetItems for the columns.
 
-      for (std::unique_ptr<CTargetAstronomy> const &target: targetList)
-      {
-        target->setColumnWidgets(tableWidgetPlanning);
-      };
+//      for (std::unique_ptr<CTargetAstronomy> const &target: targetList)
+//      {
+//        target->setColumnWidgets(tableWidgetPlanning);
+//      };
 
     }
 
@@ -275,9 +275,9 @@ namespace astroManager
       ASSOCIATE_PUSHBUTTON(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus");
       ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
 
-      tableWidgetPlanning->setColumnCount(CTargetAstronomy::column_end);
-      tableWidgetPlanning->setSortingEnabled(true);
-      tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      //tableWidgetPlanning->setColumnCount(CTargetAstronomy::column_end);
+      //tableWidgetPlanning->setSortingEnabled(true);
+      //tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
         // Populate combo boxes and select the last values selected.
 

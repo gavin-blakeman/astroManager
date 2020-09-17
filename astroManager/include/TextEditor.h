@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -36,8 +36,8 @@
 //
 //*************************************************************************************************
 
-#ifndef TEXTEDITOR_H
-#define TEXTEDITOR_H
+#ifndef ASTOMANAGER_TEXTEDITOR_H
+#define ASTOMANAGER_TEXTEDITOR_H
 
 #include <QtGui/QtGui>
 
@@ -71,4 +71,4 @@ namespace astroManager
   }  // namespace texteditor
 }  // namespace AstroManager
 
-#endif  // TEXTEDITOR_H
+#endif  // ASTOMANAGER_TEXTEDITOR_H

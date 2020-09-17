@@ -86,6 +86,7 @@ namespace astroManager
   typedef std::uint32_t planID_t;                                       ///< The planID. Base type for observing plans.
   typedef std::uint32_t objectID_t;                                     ///< The type to use with object types.
   typedef std::uint32_t nameID_t;                                       ///< The type for name IDs.
+  using indexDatabase_t = std::uint32_t;                                ///< Type to use for database index types
 
   QString const EXTENSION_CSV                 ("Comma Delimited (*.csv)");
 

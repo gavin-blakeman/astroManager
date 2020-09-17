@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,27 +40,24 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/Utilities.h"
+#include "include/Utilities.h"
 
-  // astroManager include files
-
-#include "../include/database/databaseATID.h"
-
-  // Other Libraries
-
-#include <ACL>
-#include <PCL>
-
-  // Standard libraries
+  // Standard C++ library header files
 
 #include <iostream>
 #include <sstream>
 
   // Miscellaneous library headers
 
+#include <ACL>
+#include <PCL>
 #include "boost/algorithm/string.hpp"
 #include "boost/filesystem.hpp"
 #include <QCL>
+
+  // astroManager header files
+
+#include "include/database/databaseATID.h"
 
 namespace astroManager
 {
@@ -97,9 +94,9 @@ namespace astroManager
 
       QMessageBox msgBox;
 
-      msgBox.setWindowTitle(tr("Changes to dAT (TAI-UTC)"));
-      msgBox.setText(tr("Are you sure that you wish to add the entry?"));
-      msgBox.setInformativeText(tr("Data should only be added to this table when the IERS indicates that a leap second will occur. Are you sure  that you wish to add the entry into the dAT (TAI-UTC) table?"));
+      msgBox.setWindowTitle(QString::fromStdString(boost::locale::translate("Changes to dAT (TAI-UTC)")));
+      msgBox.setText(QString::fromStdString(boost::locale::translate("Are you sure that you wish to add the entry?")));
+      msgBox.setInformativeText(QString::fromStdString(boost::locale::translate("Data should only be added to this table when the IERS indicates that a leap second will occur. Are you sure  that you wish to add the entry into the dAT (TAI-UTC) table?")));
       msgBox.setIcon(QMessageBox::Question);
       msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
       msgBox.setDefaultButton(QMessageBox::No);

@@ -7,7 +7,7 @@
 // AUTHOR:              Gavin BLakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2015, 2018 Gavin Blakeman.
+//                      Copyright 2015, 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -33,7 +33,7 @@
 //
 //*********************************************************************************************************************************
 
-#include "../include/SIMBAD.h"
+#include "include/SIMBAD.h"
 
 namespace astroManager
 {

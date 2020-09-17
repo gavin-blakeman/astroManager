@@ -50,76 +50,52 @@
 
   // astroManager application header files
 
-#include "../astroManager.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {
   /* Note this is not derived from ACL::CTargetAstronomy as it needs to be able to work with any of the types of
    * astronomy targets. If we derived this, then there would need to be three or four classes.
+   *
+   * This class is used as an aggragator class and to manage position update etc for the Planning window. This automates the
+   * updating of position etc, and allows the calling classes to abstract position calculation into calls for position etc.
    */
 
   class CTargetAstronomy final
   {
-  public:
-    enum
-    {
-      column_start = 0,
-      column_rank = 0,
-      column_name,
-      column_type,
-      column_ra,
-      column_dec,
-      column_altitude,
-      column_azimuth,
-      column_airmass,
-      column_appMag,
-      column_constellation,
-      column_extinction,
-      column_hourAngle,
-      column_magnitude,
-      column_observationCount,
-      column_opposition,
-      column_riseTime,
-      column_setTime,
-      column_transitTime,
-      column_transitAltitude,
-      column_angularSize,
-      column_catalogue,
-      column_end,              // Always leave this one at the end as it contains the total column count.
-    };
   private:
-    std::vector<QTableWidgetItem *> columnMap;
     std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy_;
+    ACL::CAstroTime const &currentTime_;            // Updated externally
+    ACL::CGeographicLocation const &observerLocation;
+    ACL::CWeather const &observerWeather;
+    double deltaTime;
 
     CTargetAstronomy() = delete;
-
-  protected:
-    void updateColumnName();
-    void updateColumnType();
-    void updateColumnRA();
-    void updateColumnDEC();
-    void updateColumnAltitude();
-    void updateColumnAzimuth();
-    void updateColumnAirmass();
-    void updateColumnApparentMagnitude();
-    void updateColumnConstellation();
-    void updateColumnExtinction();
-    void updateColumnHourAngle();
-    void updateColumnMagnitude();
-    void updateColumnObservationCount();
-    void updateColumnRiseTime();
-    void updateColumnSetTime();
-    void updateColumnTransitTime();
-    void updateColumnTransitAltitude();
-    void updateColumnAngularCatalogue();
+    CTargetAstronomy(CTargetAstronomy &&) = delete;
 
   public:
-    CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>);
+    CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
     ACL::CTargetAstronomy *targetAstronomy() const;
 
-    void setColumnWidgets(QTableWidget *);
-    void updateAllColumnValues();
+    QString name();
+    QString type();
+    QString RA();
+    QString DEC();
+    QString Altitude();
+    QString Azimuth();
+    QString Airmass();
+    QString ApparentMagnitude();
+    QString Constellation();
+    QString Extinction();
+    QString HourAngle();
+    QString Magnitude();
+    QString ObservationCount();
+    QString RiseTime();
+    QString SetTime();
+    QString TransitTime();
+    QString TransitAltitude();
+    QString Catalogue();
   };
 
 } // namespace astroManager

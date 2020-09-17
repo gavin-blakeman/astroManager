@@ -58,44 +58,11 @@ namespace astroManager
   /// @throws std::bad_alloc
   /// @version 2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget)
-    : columnMap(column_end), targetAstronomy_(std::move(newTarget))
+  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget, ACL::CAstroTime const &ct,
+                                     ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
+    : targetAstronomy_(std::move(newTarget)), currentTime_(ct), observerLocation(gl), observerWeather(wt)
   {
 
-  }
-
-  /// @brief Creates and sets the widgets for the item.
-  /// @param[in] tableWidget: The table widget to populate.
-  /// @throws None.
-  /// @version 2018-08-31/GGB - Function created.
-
-  void CTargetAstronomy::setColumnWidgets(QTableWidget *tableWidget)
-  {
-    columnMap.clear();
-    int row = tableWidget->rowCount();
-
-    tableWidget->insertRow(row);
-
-    for (int index = column_start; index != column_end; index++)
-    {
-      switch (index)
-      {
-        case column_rank:
-        {
-          columnMap.push_back(new QTableWidgetItem(QString("%1").arg(row)));
-          break;
-        };
-        default:
-        {
-          columnMap.push_back(new QTableWidgetItem("Test"));
-          break;
-        };
-      };
-
-      tableWidget->setItem(row, index, columnMap.back());
-    };
-
-    updateAllColumnValues();
   }
 
   /// @brief Returns a pointer to the managed object
@@ -108,40 +75,43 @@ namespace astroManager
 
   /// @brief Updates the widget with the object name.
   /// @throws None.
+  /// @version      2020-09-16/GGB - Changed return type to QString().
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnName()
+  QString CTargetAstronomy::name()
   {
-    columnMap[column_name]->setText(QString::fromStdString(targetAstronomy_->objectName()));
+    return QString::fromStdString(targetAstronomy_->objectName());
   }
 
-  /// @brief Updates the widget with the type of the object.
-  /// @throws None.
-  /// @version 2018-09-03/GGB - Function created.
+  /// @brief        Updates the widget with the type of the object.
+  /// @throws       None.
+  /// @version      2020-09-16/GGB - Changed return type to QString().
+  /// @version      2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnType()
+  QString CTargetAstronomy::type()
   {
+    QString returnValue;
+
     switch (targetAstronomy_->targetType())
     {
       case ACL::CTargetAstronomy::TT_STELLAR:
       {
-        columnMap[column_type]->setText(QString::fromStdString(
-                                          dynamic_cast<ACL::CTargetStellar *>(targetAstronomy())->stellarType()));
+        returnValue = QString::fromStdString(dynamic_cast<ACL::CTargetStellar *>(targetAstronomy())->stellarType());
         break;
       };
       case ACL::CTargetAstronomy::TT_MAJORPLANET:
       {
-        columnMap[column_type]->setText("Planet");
+        returnValue = "Planet";
         break;
       };
       case ACL::CTargetAstronomy::TT_MINORPLANET:
       {
-        columnMap[column_type]->setText("Minor Planet");
+        returnValue = "Minor Planet";
         break;
       };
       case ACL::CTargetAstronomy::TT_COMET:
       {
-        columnMap[column_type]->setText("Comet");
+        returnValue = "Comet";
         break;
       };
       case ACL::CTargetAstronomy::TT_NONE:
@@ -151,22 +121,26 @@ namespace astroManager
         break;
       };
     };
+
+    return returnValue;
   }
 
   /// @brief Sets the RA value into the widget.
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnRA()
+  QString CTargetAstronomy::RA()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the DEC value into the widget.
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnDEC()
+  QString CTargetAstronomy::DEC()
   {
 
   }
@@ -175,7 +149,7 @@ namespace astroManager
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnAltitude()
+  QString CTargetAstronomy::Altitude()
   {
 
   }
@@ -184,7 +158,7 @@ namespace astroManager
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnAzimuth()
+  QString CTargetAstronomy::Azimuth()
   {
 
   }
@@ -193,7 +167,7 @@ namespace astroManager
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnAirmass()
+  QString CTargetAstronomy::Airmass()
   {
 
   }
@@ -202,7 +176,7 @@ namespace astroManager
   /// @throws None.
   /// @version 2018-09-03/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnApparentMagnitude()
+  QString CTargetAstronomy::ApparentMagnitude()
   {
 
   }
@@ -211,79 +185,54 @@ namespace astroManager
   /// @throws Exceptions from called functions.
   /// @version 2018-09-29/GGB - Function created.
 
-  void CTargetAstronomy::updateColumnConstellation()
+  QString CTargetAstronomy::Constellation()
   {
-    if (targetAstronomy()->targetType() == ACL::CTargetAstronomy::TT_STELLAR)
-    {
-      std::string constellationName;
+//    if (targetAstronomy()->targetType() == ACL::CTargetAstronomy::TT_STELLAR)
+//    {
+//      std::string constellationName;
 
-      database::databaseATID->queryConstellationByName(targetAstronomy()->objectName(), constellationName);
+//      database::databaseATID->queryConstellationByName(targetAstronomy()->objectName(), constellationName);
 
-      columnMap[column_constellation]->setText(QString::fromStdString(constellationName));
-    };
+//      columnMap[column_constellation]->setText(QString::fromStdString(constellationName));
+//    };
   }
 
-  void CTargetAstronomy::updateColumnExtinction()
-  {
-
-  }
-  void CTargetAstronomy::updateColumnHourAngle()
+  QString CTargetAstronomy::Extinction()
   {
 
   }
-  void CTargetAstronomy::updateColumnMagnitude()
+  QString CTargetAstronomy::HourAngle()
   {
 
   }
-  void CTargetAstronomy::updateColumnObservationCount()
+  QString CTargetAstronomy::Magnitude()
   {
 
   }
-  void CTargetAstronomy::updateColumnRiseTime()
+  QString CTargetAstronomy::ObservationCount()
   {
 
   }
-  void CTargetAstronomy::updateColumnSetTime()
+  QString CTargetAstronomy::RiseTime()
   {
 
   }
-  void CTargetAstronomy::updateColumnTransitTime()
+  QString CTargetAstronomy::SetTime()
   {
 
   }
-  void CTargetAstronomy::updateColumnTransitAltitude()
+  QString CTargetAstronomy::TransitTime()
   {
 
   }
-  void CTargetAstronomy::updateColumnAngularCatalogue()
+  QString CTargetAstronomy::TransitAltitude()
+  {
+
+  }
+  QString CTargetAstronomy::Catalogue()
   {
 
   }
 
-  /// @brief Update the widget text for all columns.
-  /// @throws None.
-  /// @version 2018-04-03/GGB - Function created.
-
-  void CTargetAstronomy::updateAllColumnValues()
-  {
-    updateColumnName();
-    updateColumnType();
-    updateColumnRA();
-    updateColumnDEC();
-    updateColumnAltitude();
-    updateColumnAzimuth();
-    updateColumnAirmass();
-    updateColumnApparentMagnitude();
-    updateColumnConstellation();
-    updateColumnExtinction();
-    updateColumnHourAngle();
-    updateColumnMagnitude();
-    updateColumnObservationCount();
-    updateColumnRiseTime();
-    updateColumnSetTime();
-    updateColumnTransitTime();
-    updateColumnTransitAltitude();
-    updateColumnAngularCatalogue();
-  }
 
 } // namespace astroManager
