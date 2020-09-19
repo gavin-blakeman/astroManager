@@ -43,15 +43,17 @@
 #include <memory>
 #include <vector>
 
-  // astroManager header files.
-
-#include "include/ACL/telescope.h"
-#include "include/qtExtensions/MdiSubWindow.h"
-
   // Miscellaneous library header files.
 
 #include <ACL>
 #include <QCL>
+
+  // astroManager header files.
+
+#include "include/astroManager.h"
+#include "include/ACL/telescope.h"
+#include "include/models/planningModel.h"
+#include "include/qtExtensions/MdiSubWindow.h"
 
 namespace astroManager
 {
@@ -76,15 +78,20 @@ namespace astroManager
       QPushButton *pushButtonTimeDayPlus = nullptr;
       QPushButton *pushButtonTimeDayMinus = nullptr;
       QPushButton *pushButtonRealTime = nullptr;
+      QTableView *tableViewPlanning = nullptr;
 
-      QTableWidget *tableWidgetPlanning = nullptr;
+      models::CPlanningModel *planningModel = nullptr;
 
       QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
+
+      planID_t planID = 0;
+      ACL::CAstroTime currentTime;
+      std::unique_ptr<ACL::CObservatory> observatory;
+      ACL::CWeather observationWeather;
 
       std::int_least32_t timeZoneOffset = 0;
 
       void setupUI();
-      void loadPlanData();
 
     protected:
     public:

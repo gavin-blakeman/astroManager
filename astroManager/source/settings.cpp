@@ -100,7 +100,8 @@ namespace astroManager
     /// @brief Loads any settings that need to be initialised on startup
     /// @note Any additional settings that need to be initialised on startup can go in this routine.
     /// @throws None.
-    /// @version 2017-06-25/GGB - Updatd thread handling
+    /// @version    2020-09-19/GGB - Added code to initialise CometEls and MPCORB filename.
+    /// @version 2017-06-25/GGB - Updated thread handling
     ///   @li Added automatic selection of the number of threads. (Bug #72)
     ///   @li Added call to function setThreads()
     /// @version 2015-08-08/GGB - Added SCL support (Bug 1470503)
@@ -109,9 +110,9 @@ namespace astroManager
 
     void InitialiseStartupSettings()
     {
-      QVariant vMaxThreads = settings::astroManagerSettings->value(MAX_THREADS, QVariant(std::thread::hardware_concurrency()));
-
-      setThreads(vMaxThreads.toUInt());
+      setThreads(settings::astroManagerSettings->value(MAX_THREADS, QVariant(std::thread::hardware_concurrency())).toUInt());
+      ACL::CTargetComet::setFileName(astroManagerSettings->value(FILE_COMETELS, "Data/CometEls.txt").toString().toStdString());
+      ACL::CTargetMinorPlanet::setFileName(astroManagerSettings->value(FILE_MPCORB, "Data/MPCORB.DAT").toString().toStdString());
     }
 
   }  // namespace settings

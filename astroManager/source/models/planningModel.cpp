@@ -46,6 +46,11 @@
 #include "boost/locale.hpp"
 #include <GCL>
 
+  // astroManager header files
+
+#include "include/database/databaseARID.h"
+#include "include/database/databaseATID.h"
+
 namespace astroManager
 {
   namespace models
@@ -89,9 +94,9 @@ namespace astroManager
     /// @throws     std::bad_alloc
     /// @version    2020-09-15/GGB - Function created.
 
-    CPlanningModel::CPlanningModel(QObject *parent, planID_t const &pi, database::CARID *dbARID, database::CATID *dbATID,
-                                   ACL::CAstroTime const &tm, ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
-      : QAbstractTableModel(parent), planID(pi), planTargets_(), databaseARID(dbARID), databaseATID(dbATID), currentTime_(tm),
+    CPlanningModel::CPlanningModel(QObject *parent, planID_t const &pi, ACL::CAstroTime const &tm,
+                                   ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
+      : QAbstractTableModel(parent), planID(pi), recordCache(), currentTime_(tm),
         observingSite_(gl), observationWeather_(wt)
     {
 
@@ -115,64 +120,69 @@ namespace astroManager
     {
       QVariant returnValue;
 
-      switch (role)
-      {
-        case Qt::DisplayRole:
-        {
-            // Display the data (QString).
+//      if (index.row() >= planTargets_.size())
+//      {
+//        loadData(index.row());
+//      }
 
-          switch(index.column())
-          {
-            case column_rank:
-            {
-              //returnValue = QVariant(planTargets_.at(index.row())->name());
-              break;
-            };
-            case column_name:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->name());
-              break;
-            };
-            case column_type:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->type());
-              break;
-            };
-            case column_ra:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->RA());
-              break;
-            };
-            case column_dec:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->DEC());
-              break;
-            };
-            case column_altitude:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->Altitude());
-              break;
-            };
-            case column_azimuth:
-            {
-              returnValue = QVariant(planTargets_.at(index.row())->Azimuth());
-              break;
-            };
-          };
-        };
-        case Qt::BackgroundRole:
-        {
+//      switch (role)
+//      {
+//        case Qt::DisplayRole:
+//        {
+//            // Display the data (QString).
 
-        };
-        case Qt::TextAlignmentRole:
-        {
+//          switch(index.column())
+//          {
+//            case column_rank:
+//            {
+//              //returnValue = QVariant(planTargets_.at(index.row())->name());
+//              break;
+//            };
+//            case column_name:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->name());
+//              break;
+//            };
+//            case column_type:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->type());
+//              break;
+//            };
+//            case column_ra:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->RA());
+//              break;
+//            };
+//            case column_dec:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->DEC());
+//              break;
+//            };
+//            case column_altitude:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->Altitude());
+//              break;
+//            };
+//            case column_azimuth:
+//            {
+//              returnValue = QVariant(planTargets_.at(index.row())->Azimuth());
+//              break;
+//            };
+//          };
+//        };
+//        case Qt::BackgroundRole:
+//        {
 
-        };
-        case Qt::ForegroundRole:
-        {
+//        };
+//        case Qt::TextAlignmentRole:
+//        {
 
-        };
-      };
+//        };
+//        case Qt::ForegroundRole:
+//        {
+
+//        };
+//      };
 
       return returnValue;
     }
@@ -190,7 +200,7 @@ namespace astroManager
     /// @throws
     /// @version    2020-09-16/GGB - Function created.
 
-    QVariant CPlanningModel::headerData(int section, Qt::Orientation orientation, int role) const
+    QVariant CPlanningModel::headerData(int section, Qt::Orientation /*orientation*/, int role) const
     {
       QVariant returnValue;
 
@@ -198,10 +208,7 @@ namespace astroManager
       {
         case Qt::DisplayRole:
         {
-          switch (section)
-          {
-            returnValue = QString::fromStdString(columnNames[section]);
-          };
+          returnValue = QString::fromStdString(columnNames[section]);
           break;
         };
       };
@@ -209,11 +216,71 @@ namespace astroManager
       return std::move(returnValue);
     }
 
+    /// @brief      Loads data up to an including rows beyond the specified row.
+    /// @param[in]  rowNeeded: The row of data that is required. Load data up to at least this row.
+    /// @throws
+    /// @version    2020-09-18/GGB - Function created.
+
+    void CPlanningModel::loadData(int rowNeeded)
+    {
+        // Need to load the rows between the last row and the rowNeeded.
+        // Check if we actually need to read the record.
+
+       if (rowNeeded >= (cacheStartIndex + recordCache.size()))
+       {
+           // As we want to read in fixed sized 'blocks' of records, lets determine the block to read.
+           // Note their are built in bugs here as we assume that we cannot have more than 2^64 records.
+           // This is fairly reasonable in 2020, but may not be true in the future.
+
+         std::uint64_t blockStart = (rowNeeded / cacheReadRecords) * cacheReadRecords;
+         std::uint64_t blockEnd = blockStart + cacheReadRecords;
+
+         if (blockEnd > (cacheStartIndex + cacheMaximumSize))
+         {
+             // Need to rebase the cache and discard unneeded data.
+         };
+
+           // Read the data
+
+         {
+           GCL::sqlWriter sqlWriter;
+
+           sqlWriter.
+               select({ "RANK",
+                        "TARGETTYPE_ID",
+                        "NAME_ID",
+                        "TARGET_NAME",
+                      })
+               .from("TBL_TARGETS")
+               .where("PLAN_ID", "=", planID)
+               .orderBy({std::make_pair("RANK", GCL::sqlWriter::ASC)})
+               .offset(blockStart)
+               .limit(cacheReadRecords);
+
+           QSqlQuery query(database::databaseARID->database());
+
+           if (query.exec(QString::fromStdString(sqlWriter.string())))
+           {
+             while (query.next())
+             {
+
+             }
+           }
+           else
+           {
+
+           };
+         };
+       };
+
+
+    }
+
     /// @brief      Returns the number of rows in the model. The query is only executed once. In all other cases, the stored value
     ///             is returned.
     /// @param[in]  parent: Not used.
     /// @returns    The number of rows in the model.
-    /// @throws
+    /// @throws     CRuntimeError
     /// @version    2020-09-16/GGB - Function created.
 
     int CPlanningModel::rowCount(QModelIndex const &/*parent*/) const
@@ -228,7 +295,7 @@ namespace astroManager
       {
           // Need to run the query and count the rows.
 
-        QSqlQuery sqlQuery(databaseARID->database());
+        QSqlQuery sqlQuery(database::databaseARID->database());
         GCL::sqlWriter sqlWriter;
 
         sqlWriter.resetQuery();
@@ -246,12 +313,16 @@ namespace astroManager
           {
               // Query is not valid. Pretty serious error
 
-            databaseARID->processErrorInformation(sqlQuery);
+            database::databaseARID->processErrorInformation(sqlQuery);
+            RUNTIME_ERROR(boost::locale::translate("Unable to retrieve number of rows."));
           };
         }
         else
         {
-          //processErrorInformation();
+            // Query did not execute succesfully
+
+          database::databaseARID->processErrorInformation(sqlQuery);
+          RUNTIME_ERROR(boost::locale::translate("Unable to retrieve number of rows."));
         };
       };
 

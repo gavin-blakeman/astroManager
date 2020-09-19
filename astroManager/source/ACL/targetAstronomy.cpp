@@ -52,17 +52,54 @@
 namespace astroManager
 {
 
-  /// @brief Constructor for the class. Also set the size of the vector.
-  /// @param[in] parent: The table widget associated with this target.
-  /// @param[in] newTarget: The target to assign to this instance.
+  /// @brief        Constructor for the class. Also calls the function to create and load the data for the target.
+  /// @param[in]    objectID: The ID of the target associated with the instance.
+  /// @param[in]    targetType: The type of the target.
+  /// @param[in]    ct: Reference to an instance that holds the current time.
+  /// @param[in]    gl: Reference to observatory information.
+  /// @param[in]    wt: Reference to the weather.
   /// @throws std::bad_alloc
   /// @version 2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>newTarget, ACL::CAstroTime const &ct,
+  CTargetAstronomy::CTargetAstronomy(objectID_t objectID, ACL::ETargetType targetType, ACL::CAstroTime const &ct,
                                      ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
-    : targetAstronomy_(std::move(newTarget)), currentTime_(ct), observerLocation(gl), observerWeather(wt)
+    : targetID(objectID), targetAstronomy_(), currentTime_(ct), observerLocation(gl), observerWeather(wt)
   {
+    createTarget(targetType);
+  }
 
+  /// @brief        Creates a target object for the specified type.
+  /// @param[in]    targetType: The type of target to create.
+  /// @throws       std::bad_alloc
+  /// @version      2020-09-18/GGB - Function created.
+
+  void CTargetAstronomy::createTarget(ACL::ETargetType targetType)
+  {
+    switch (targetType)
+    {
+      case ACL::TT_MAJORPLANET:
+      {
+        //targetAstronomy = std::move(ACL::CTargetMajorPlanet::create(static_cast<ACL::EPlanets>(targetID)));
+        break;
+      }
+      case ACL::TT_MINORPLANET:
+      {
+        //targetAstronomy = std::move(ACL::CTargetMinorPlanet::create(targetID));
+        break;
+      }
+      case ACL::TT_COMET:
+      {
+        //targetAstronomy = std::move(ACL::CTargetComet);
+      }
+      case ACL::TT_STELLAR:
+      {
+
+      }
+      default:
+      {
+        CODE_ERROR;
+      }
+    }
   }
 
   /// @brief Returns a pointer to the managed object
@@ -94,27 +131,27 @@ namespace astroManager
 
     switch (targetAstronomy_->targetType())
     {
-      case ACL::CTargetAstronomy::TT_STELLAR:
+      case ACL::TT_STELLAR:
       {
         returnValue = QString::fromStdString(dynamic_cast<ACL::CTargetStellar *>(targetAstronomy())->stellarType());
         break;
       };
-      case ACL::CTargetAstronomy::TT_MAJORPLANET:
+      case ACL::TT_MAJORPLANET:
       {
         returnValue = "Planet";
         break;
       };
-      case ACL::CTargetAstronomy::TT_MINORPLANET:
+      case ACL::TT_MINORPLANET:
       {
         returnValue = "Minor Planet";
         break;
       };
-      case ACL::CTargetAstronomy::TT_COMET:
+      case ACL::TT_COMET:
       {
         returnValue = "Comet";
         break;
       };
-      case ACL::CTargetAstronomy::TT_NONE:
+      case ACL::TT_NONE:
       default:
       {
         CODE_ERROR;

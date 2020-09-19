@@ -49,6 +49,7 @@
   // Miscellaneous library header files
 
 #include <ACL>
+#include "boost/locale.hpp"
 #include "boost/lexical_cast.hpp"
 #include <MCL>
 #include <SCL>
@@ -74,10 +75,11 @@
 
 /// @brief Main Windows Procedure
 /// @details Create the application window, displays the application window and manages the message loop.
+/// @version 2020-09-19/GGB - Added locale translation code.
+/// @version 2017-06-20/GGB - Updated error handling to use new GCL classes.
 /// @version 2016-05-07/GGB
 ///   @li Added support for log severity "critical"
 ///   @li Added logger shutdown calls before exiting.
-/// @version 2017-06-20/GGB - Updated error handling to use new GCL classes.
 /// @version 2015-09-12/GGB - (Bug 74) - Added check for logFile directory. If not existing will use the application directory.
 /// @version 2015-07-01/GGB - (Bug 38) SCL Error message load removed following update to SCL error class to autoload error messages.
 /// @version 2015-06-30/GGB - ACL Error message load removed following update to ACL error class to autoload error messages.
@@ -106,7 +108,8 @@ int main(int argc, char *argv[])
     // Set the log level
 
   GCL::logger::CSeverity logSeverity;
-  int logLevel = astroManager::settings::astroManagerSettings->value(astroManager::settings::SETTINGS_LOGLEVEL, QVariant(0)).toInt();
+  int logLevel = astroManager::settings::astroManagerSettings->value(astroManager::settings::SETTINGS_LOGLEVEL,
+                                                                     QVariant(0)).toInt();
   if (logLevel != 0)
   {
     logSeverity.fCritical = logLevel & astroManager::settings::LL_CRITICAL;
@@ -149,7 +152,7 @@ int main(int argc, char *argv[])
   }
   catch(...)
   {
-    std::clog << "Error while creating logfile. Does the directory exist?" << std::endl;
+    std::clog << boost::locale::translate("Error while creating logfile. Does the directory exist?") << std::endl;
   }
 
   GCL::logger::defaultLogger().addSink(fileLogger);
@@ -161,7 +164,7 @@ int main(int argc, char *argv[])
 
   astroManager::CApplication app(argc, argv);
 
-  GCL::logger::defaultLogger().logMessage(GCL::logger::notice, "Application Started.");
+  GCL::logger::defaultLogger().logMessage(GCL::logger::notice, boost::locale::translate("Application Started."));
   GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Release Number: " + astroManager::getReleaseString() + ". Release Date: " + astroManager::getReleaseDate() + ".");
   GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "int size: " + boost::lexical_cast<std::string>(sizeof(int)) + " bytes. Maximum Value: " + boost::lexical_cast<std::string>(std::numeric_limits<int>::max()) + ".");
   GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "long size: " + boost::lexical_cast<std::string>(sizeof(long)) + " bytes. Maximum Value: " + boost::lexical_cast<std::string>(std::numeric_limits<long>::max()) + ".");
@@ -181,10 +184,6 @@ int main(int argc, char *argv[])
   {
     app.setOrganizationName(astroManager::settings::ORG_NAME);
     app.setApplicationName(astroManager::settings::APPL_NAME);
-
-    GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Loading error messages...");
-    splash.showMessage(QString("Loading error messages..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
-    //astroManager::loadErrorMessages();
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Initialising settings...");
     splash.showMessage(QString("Initialising settings..."), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
@@ -360,7 +359,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x0115;
+  std::uint16_t const BUILDNUMBER = 0x0128;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

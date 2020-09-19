@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2018 Gavin Blakeman.
+//                      Copyright 2013-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -46,14 +46,15 @@
   // Standard C++ library header files
 
 #include <list>
+#include <tuple>
 
   // Miscellaneous library header files
 
-#include "boost/tuple/tuple.hpp"
+
 
 namespace astroManager
 {
-  typedef boost::tuple<int, int, QString, QWidget *> TWidgetEntry;
+  typedef std::tuple<int, int, QString, QWidget *> TWidgetEntry;
   typedef std::list<TWidgetEntry> DWidgetStore;
 
   namespace dialogs

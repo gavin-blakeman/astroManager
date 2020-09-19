@@ -71,9 +71,12 @@ namespace astroManager
 
       setupUI();
 
+      planningModel = new models::CPlanningModel(this, planID, currentTime, *observatory, observationWeather);
+      tableViewPlanning->setModel(planningModel);
+
       setWindowTitle(QString::fromStdString(boost::locale::translate("Observation Planning").str()));
 
-      loadPlanData();
+      //loadPlanData();
     }
 
     /// @brief      Responds when the observing site is changed.
@@ -103,7 +106,7 @@ namespace astroManager
 
         // Clear the current list of objects.
 
-      loadPlanData();
+      //loadPlanData();
     }
 
     /// @brief      Responds to the 1s timer when triggered to update the time in the window and any other information required.
@@ -132,29 +135,6 @@ namespace astroManager
       {
         CODE_ERROR;
       };
-    }
-
-    /// @brief      Loads and displays the data for the plan.
-    /// @throws
-    /// @version    2018-09-01/GGB - Function created.
-
-    void CWindowPlanning::loadPlanData()
-    {
-        // Clear the current data.
-
-//      targetList.clear();
-
-//        // Load the list of items from the current plan.
-
-//      database::databaseARID->readObservingPlanTargets(comboBoxPlans->currentData().toUInt(), targetList);
-
-//        // Now need to setup all the listWidgetItems for the columns.
-
-//      for (std::unique_ptr<CTargetAstronomy> const &target: targetList)
-//      {
-//        target->setColumnWidgets(tableWidgetPlanning);
-//      };
-
     }
 
     /// @brief      Responds to the Real Time push button being clicked.
@@ -241,7 +221,6 @@ namespace astroManager
     void CWindowPlanning::setupUI()
     {
       QUiLoader loader;
-      QGridLayout *gridLayout;
 
         // Create the window details from the template
 
@@ -261,7 +240,7 @@ namespace astroManager
       ASSOCIATE_CONTROL(comboBoxPlans, formWidget, "comboBoxPlans", QComboBox);
       ASSOCIATE_CONTROL(comboBoxSites, formWidget, "comboBoxSites", QComboBox);
 
-      ASSOCIATE_TABLEWIDGET(tableWidgetPlanning, formWidget, "tableWidgetPlanning");
+      ASSOCIATE_TABLEVIEW(tableViewPlanning, formWidget, "tableViewPlanning");
       ASSOCIATE_CONTROL(dateEditSelectedDate, formWidget, "dateEditSelectedDate", QDateEdit);
       ASSOCIATE_CONTROL(timeEditSelectedTime, formWidget, "timeEditSelectedTime", QTimeEdit);
       ASSOCIATE_RADIOBUTTON(radioButtonUT, formWidget, "radioButtonUT");

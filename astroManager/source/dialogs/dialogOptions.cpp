@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2018 Gavin Blakeman.
+//                      Copyright 2013-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -38,24 +38,25 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogOptions.h"
+#include "include/dialogs/dialogOptions.h"
 
   // Standard C++ library header files
 
 #include <algorithm>
 #include <thread>
-#include <tuple>
-
-  // astroManager application header files
-
-#include "../../include/error.h"
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
 
   // Miscellaneous library header files.
 
+#include <ACL>
+#include "boost/locale.hpp"
 #include <GCL>
 #include <QCL>
+
+  // astroManager application header files
+
+#include "include/error.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {
@@ -69,7 +70,7 @@ namespace astroManager
 
     SColourRecord colourArray[] =
     {
-      {Qt::white, QString(QObject::tr("White"))},
+      {Qt::white, QString::fromStdString(boost::locale::translate("White").str())},
       {Qt::black, QString(QObject::tr("Black"))},
       {Qt::red, QString(QObject::tr("Red"))},
       {Qt::darkRed, QString(QObject::tr("Dark Red"))},
@@ -227,10 +228,10 @@ namespace astroManager
       textEditARIDTestConnection->append(tr("Test Complete."));
     }
 
-    /// @brief Processes the event when a database type is chosen.
-    /// @param[in] index: The index of the currently selected option.
-    /// @throws None.
-    /// @version 2018-09-24/GGB - Function created.
+    /// @brief      Processes the event when a database type is chosen.
+    /// @param[in]  index: The index of the currently selected option.
+    /// @throws     None.
+    /// @version    2018-09-24/GGB - Function created.
 
     void CDialogOptions::eventATIDDatabaseCombo(int index)
     {
@@ -330,7 +331,7 @@ namespace astroManager
         if (testConnection.open())
         {
           textEditATIDTestConnection->setTextColor(QColor("darkGreen"));
-          textEditATIDTestConnection->append(tr("Connection succesful."));
+          textEditATIDTestConnection->append(QString::fromStdString(boost::locale::translate("Connection succesful.").str()));
 
           testConnection.close();
         }
@@ -392,9 +393,9 @@ namespace astroManager
       }
     }
 
-    /// @brief Processes the event to choose the coment elements file.
-    /// @throws None.
-    /// @version 2018-09-16/GGB - Function created.
+    /// @brief      Processes the event to choose the coment elements file.
+    /// @throws     None.
+    /// @version    2018-09-16/GGB - Function created.
 
     void CDialogOptions::eventCometEls()
     {
@@ -746,9 +747,9 @@ namespace astroManager
       }
     }
 
-    /// @brief Processes the save button.
-    /// @throws None.
-    /// @version 2013-05-31/GGB - Function created.
+    /// @brief      Processes the save button.
+    /// @throws     None.
+    /// @version    2013-05-31/GGB - Function created.
 
     void CDialogOptions::save()
     {
@@ -908,11 +909,12 @@ namespace astroManager
       saveWeatherDatabase();
     }
 
-    /// @brief Writes the general values to the settings.
-    /// @version 2018-09-16/GGB - Added support for data directory
-    /// @version 2017-06-25/GGB - Updates the number of threads used. (Bug #72)
-    /// @version 2013-06-02/GGB - Added toolbar height.
-    /// @version 2013-06-01/GGB - Function created.
+    /// @brief      Writes the general values to the settings.
+    /// @version    2020-09-19/GGB - Update the CTargetMinorPlanet and CTargetComets file names.
+    /// @version    2018-09-16/GGB - Added support for data directory
+    /// @version    2017-06-25/GGB - Updates the number of threads used. (Bug #72)
+    /// @version    2013-06-02/GGB - Added toolbar height.
+    /// @version    2013-06-01/GGB - Function created.
 
     void CDialogOptions::saveGeneral()
     {
@@ -945,7 +947,9 @@ namespace astroManager
       settings::astroManagerSettings->setValue(settings::FILE_TAIUTC, QVariant(lineEditTAIUTC->text()));
       settings::astroManagerSettings->setValue(settings::FILE_UTCUT1, QVariant(lineEditUTCUT1->text()));
       settings::astroManagerSettings->setValue(settings::FILE_MPCORB, QVariant(lineEditMPCORB->text()));
+      ACL::CTargetMinorPlanet::setFileName(lineEditMPCORB->text().toStdString());
       settings::astroManagerSettings->setValue(settings::FILE_COMETELS, QVariant(lineEditCometEls->text()));
+      ACL::CTargetComet::setFileName(lineEditCometEls->text().toStdString());
 
         // Source Extraction Data
 

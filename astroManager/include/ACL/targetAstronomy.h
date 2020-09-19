@@ -51,6 +51,7 @@
   // astroManager application header files
 
 #include "include/astroManager.h"
+#include "include/database/databaseATID.h"
 
 namespace astroManager
 {
@@ -64,6 +65,7 @@ namespace astroManager
   class CTargetAstronomy final
   {
   private:
+    objectID_t targetID;
     std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy_;
     ACL::CAstroTime const &currentTime_;            // Updated externally
     ACL::CGeographicLocation const &observerLocation;
@@ -73,8 +75,11 @@ namespace astroManager
     CTargetAstronomy() = delete;
     CTargetAstronomy(CTargetAstronomy &&) = delete;
 
+    void createTarget(ACL::ETargetType);
+    void loadTargetData();
+
   public:
-    CTargetAstronomy(std::unique_ptr<ACL::CTargetAstronomy>, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
+    CTargetAstronomy(objectID_t, ACL::ETargetType, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
     ACL::CTargetAstronomy *targetAstronomy() const;
 

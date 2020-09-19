@@ -61,22 +61,11 @@ namespace astroManager
     std::vector<std::pair<GCL::TErrorCode, std::string>> errors =
     {
       {0x0001, std::string("Resource Failed to Load.")},
-      {0x0004, std::string("ARID DATABASE: Database Driver not recognised.")},
-      {0x0005, std::string("Invalid image plane")},
-      {0x0006, std::string("Unable to open file, or file does not exist.")},
-      {0x0007, std::string("")},
-      {0x0008, std::string("")},   //
       {0x0009, std::string("DATABASE: Weather Database settings not complete.")},
       {0x000A, std::string("ARID DATABASE: Database Driver not recognised.")},
       {0x000D, std::string("Unable to open file type selected.")},
       {0x000E, std::string("Error while opening file.")},
-      {0x000F, std::string("cfitsio: cfitsioError")},
       {0x0100, std::string("ARID DATABASE: Magnitude not found.")},
-      {0x0101, std::string("KEYWORD: Unable to cast value... Out of range.")},
-      {0x0200, std::string("FITS: TIMESYS - timescale unknown or undefined.")},
-      {0x0201, std::string("")},
-      {0x0701, "SIMBAD: Invalid field name."},
-      {0x0702, "SIMBAD: Invalid region type."},
     };
 
     std::for_each(errors.begin(), errors.end(),

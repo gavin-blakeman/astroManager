@@ -1,6 +1,6 @@
 ﻿//*************************************************************************************************
 //
-// PROJECT:							AstroManager (Astronomy Observation Manager)
+// PROJECT:							astroManager (Astronomy Observation Manager)
 // FILE:			          VSOPPhotometry.cpp
 // SUBSYSTEM:           Photometry Management Windows
 // TARGET OS:	          WINDOWS, LINUX, UNIX, MAC
@@ -1152,28 +1152,21 @@ namespace astroManager
 
   bool CDialogPhotometryObservationEntry::bLT = true;		// default to local time.
 
-    // Class constructor
-    //
-    // Revision:		2.00
-    // Date:				28 May 2010
-    // By:					Gavin Blakeman
-    // Changes:			1) Changed to use Qt API.
-    //
-    // Revision:		1.00
-    // Written by:	Gavin Blakeman
-    // Date:				17 January 2010
+    /// @brief    Class constructor
+    /// @version  2010-05-28/GGB - Changed to use Qt API.
+    /// @version  2010-01-17/GGB - Function created.
 
     CDialogPhotometryObservationEntry::CDialogPhotometryObservationEntry(void)
     {
-      cbSite = cbObserver = cbTelescope = NULL;
-      leJD = NULL;
-      cbInstrument = cbFilter = cbStandardFilters = NULL;
-      dtDate = NULL;
-      rbLT = rbUTC = NULL;
-      parent = NULL;
-      targetObject = NULL;
+      cbSite = cbObserver = cbTelescope = nullptr;
+      leJD = nullptr;
+      cbInstrument = cbFilter = cbStandardFilters = nullptr;
+      dtDate = nullptr;
+      rbLT = rbUTC = nullptr;
+      parent = nullptr;
+      targetObject = nullptr;
       isDirty = false;
-    };
+    }
 
     // Constructor taking a target object.
     // Creates a new copy of the target object variant.
@@ -1192,7 +1185,7 @@ namespace astroManager
       parent = NULL;
       targetObject = new QVariant(*to);
       isDirty = false;
-    };
+    }
 
     // Ensures that any dynamically allocated memory is freed when the class is destroyed.
     //
@@ -1205,10 +1198,10 @@ namespace astroManager
       if (targetObject)
       {
         delete targetObject;
-        targetObject = NULL;
+        targetObject = nullptr;
       };
       isDirty = false;
-    };
+    }
 
     // Sets the parent of the instance.
     //
@@ -1333,14 +1326,10 @@ namespace astroManager
             leTarget->setText(*new QString(""));
           };
       };
-    };
+    }
 
-    // Handles the event from the UTC radio button to indicate that it has been
-    // checked/unchecked.
-    //
-    // Revision:		1.00
-    // Date:				29 May 2010
-    // Written by:	Gavin Blakeman
+    /// @brief Handles the event from the UTC radio button to indicate that it has been checked/unchecked.
+    /// @version 2010-05-29/GGB - Function created.
 
     void CDialogPhotometryObservationEntry::eventUTCButton(bool btnState)
     {
@@ -1348,7 +1337,7 @@ namespace astroManager
         bLT = false;
       else
         bLT = true;
-    };
+    }
 
     // Fills the passed combo box with comparison/check stars within 1 degree of the target object.
     // Comparison/Check stars are:
@@ -1357,10 +1346,7 @@ namespace astroManager
     //	3) Cousings standards
     //	4) Landolt standards
     //	5) AAVSO standards
-    //
-    // Revision:		1.00
-    // Date:
-    // Written  by:
+
 
     void CDialogPhotometryObservationEntry::PopulateStandardsCombo(QComboBox *combo)
     {
@@ -1410,26 +1396,20 @@ namespace astroManager
           combo->addItem(*new QString(query.value(0).toString()), *new QVariant(query.value(1)));
       };
 
-    };
+    }
 
     // Handles the event for the "Save Data" button being clicked.
     // Calls the SaveData() function.
-    //
-    // Revision:		1.00
-    // Date:				5 June 2010
-    // Written by:	Gavin Blakeman
+    /// @version 2010-06-05/GGB - Function created.
 
     void CDialogPhotometryObservationEntry::eventSaveClicked(void)
     {
       SaveData();
-    };
+    }
 
     // Called when the dialog is to be closed.
     // Checks if the dialog is dirty and asks the user if necessary if the data should be saved
-    //
-    // Revision:		1.00
-    // Date:				5 June 2010
-    // Written by:	Gavin Blakeman
+    /// @version 2010-06-05/GGB - Function created.
 
     void CDialogPhotometryObservationEntry::eventCloseClicked(void)
     {
@@ -1483,12 +1463,12 @@ namespace astroManager
 
     CPhotometryObjectDialog::CPhotometryObjectDialog() : CDialog("forms/dialogPhotometryObject.ui")
     {
-    };
+    }
 
     CPhotometryObjectDialog::~CPhotometryObjectDialog(void)
     {
-    };
+    }
 
-  };	// namespace photometry
+  }	// namespace photometry
 
-};  // namespace AstroManager
+}  // namespace AstroManager

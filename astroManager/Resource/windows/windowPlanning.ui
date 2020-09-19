@@ -107,7 +107,7 @@
          <string>Local Siderial Time</string>
         </property>
         <property name="text">
-         <string>LST</string>
+         <string>LS&amp;T</string>
         </property>
        </widget>
       </item>
@@ -326,7 +326,7 @@
     </widget>
    </item>
    <item row="2" column="0" colspan="4">
-    <widget class="QTableWidget" name="tableWidgetPlanning">
+    <widget class="QTableView" name="tableViewPlanning">
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>

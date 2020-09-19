@@ -40,8 +40,8 @@
 
   // C++ library header files.
 
+#include <map>
 #include <memory>
-#include <vector>
 
   // Miscellaneous library header files
 
@@ -51,8 +51,6 @@
 
 #include "include/astroManager.h"
 #include "include/ACL/targetAstronomy.h"
-#include "include/database/databaseARID.h"
-#include "include/database/databaseATID.h"
 
 namespace astroManager
 {
@@ -69,27 +67,30 @@ namespace astroManager
       using targetsVector_t = std::vector<std::unique_ptr<CTargetAstronomy>>;
 
       planID_t const &planID;
-      targetsVector_t planTargets_;
+      mutable std::map<std::uint64_t, std::unique_ptr<CTargetAstronomy>> recordCache; ///< Use a map as it can be sparse rather than full.
+      mutable std::uint64_t cacheStartIndex;
+      std::uint64_t cacheMaximumSize = 16384;       ///< Limit to around 10MB of data.
+      std::uint64_t cacheReadRecords = 1024;        ///< Number of records to read at a time.
+      std::uint64_t recordCount;                    ///< Number of records in the current recordSet.
+
       mutable int rowCount_ = 0;
       mutable bool rowCountValid_ = false;
-      database::CARID *databaseARID;
-      database::CATID *databaseATID;
       ACL::CAstroTime const &currentTime_;
       ACL::CGeographicLocation const &observingSite_;
       ACL::CWeather const &observationWeather_;
-
 
       CPlanningModel() = delete;
       CPlanningModel(CPlanningModel const &) = delete;
       CPlanningModel(CPlanningModel &&) = delete;
       CPlanningModel &operator=(CPlanningModel const &) = delete;
 
+      void loadData(int);
+
     protected:
 
 
     public:
-      CPlanningModel(QObject *, planID_t const &, database::CARID *, database::CATID *, ACL::CAstroTime const &,
-                     ACL::CGeographicLocation const &, ACL::CWeather const &);
+      CPlanningModel(QObject *, planID_t const &, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
       int rowCount(QModelIndex const &parent = QModelIndex()) const override;
       int columnCount(QModelIndex const &parent = QModelIndex()) const override;
