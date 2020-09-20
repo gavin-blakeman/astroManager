@@ -45,19 +45,22 @@
 #ifndef FILEBATCHCONVERT_H
 #define FILEBATCHCONVERT_H
 
+  // Miscellaneous library header files
+
+#include <QCL>
+
+
   // astroManager include files
 
 #include "dialogs/dialogs.h"
 
-  // Qt Library
 
-#include <Qt>
 
 namespace astroManager
 {
   namespace file
   {
-    class CFileBatchConvertDialog : public dialogs::CDialog
+    class CFileBatchConvertDialog : public QCL::CDialog
     {
       Q_OBJECT
 

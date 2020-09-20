@@ -74,7 +74,7 @@ namespace astroManager
     /// @throws None.
     /// @version 2011-12-31/GGB - Function created.
 
-    CEnterDATDialog::CEnterDATDialog() : dialogs::CDialog(":/forms/dialogEnterdAT.ui")
+    CEnterDATDialog::CEnterDATDialog() : QCL::CDialog(":/forms/dialogEnterdAT.ui")
     {
       setupUI();
     }

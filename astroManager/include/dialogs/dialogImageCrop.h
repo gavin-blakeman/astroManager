@@ -46,7 +46,9 @@
 #ifndef ASTROMANAGER_DIALOGIMAGECROP_H
 #define ASTROMANAGER_DIALOGIMAGECROP_H
 
-#include "dialogs.h"
+// Miscellanous library header files
+
+#include <QCL>
 
 #include <ACL>
 #include <MCL>
@@ -55,7 +57,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogImageCrop : public dialogs::CDialog
+    class CDialogImageCrop : public QCL::CDialog
     {
       Q_OBJECT
 

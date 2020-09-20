@@ -247,7 +247,7 @@ namespace astroManager
         nRow++;
       };
     };
-  };
+  }
 
     //*****************************************************************************************************************************
     //
@@ -259,7 +259,7 @@ namespace astroManager
     /// @throws None.
     /// @version 2012-01-01/GGB - Function created.
 
-    CHelpAboutAstroManager::CHelpAboutAstroManager() : dialogs::CDialog(":/forms/dialogAboutAIP.ui")
+    CHelpAboutAstroManager::CHelpAboutAstroManager() : QCL::CDialog(":/forms/dialogAboutAIP.ui")
     {
       setupUI();
     }

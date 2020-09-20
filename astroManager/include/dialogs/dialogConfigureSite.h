@@ -39,15 +39,19 @@
 #ifndef DIALOGCONFIGURESITE
 #define DIALOGCONFIGURESITE
 
+  // Miscellaneous library header files
+
+#include <QCL>
+
 #include "include/ACL/observatoryInformation.h"
-#include "dialogs.h"
+
 
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogConfigureSite : public CDialog
+    class CDialogConfigureSite : public QCL::CDialog
     {
       Q_OBJECT
 

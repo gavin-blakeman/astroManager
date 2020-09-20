@@ -39,18 +39,19 @@
 #ifndef DIALOGSELECTIMAGEVERSION
 #define DIALOGSELECTIMAGEVERSION
 
-#include "dialogs.h"
+  // Miscellanous library header files
+
+#include <QCL>
 
 #include "../qtExtensions/selectImageVersionQueryModel.h"
 #include "../astroManager.h"
 
-#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogSelectImageVersion : public CDialog
+    class CDialogSelectImageVersion : public QCL::CDialog
     {
       Q_OBJECT
 

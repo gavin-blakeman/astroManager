@@ -54,7 +54,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogSelectImages : public CDialog
+    class CDialogSelectImages : public QCL::CDialog
     {
       Q_OBJECT
 

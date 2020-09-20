@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -46,13 +46,15 @@
 #ifndef DIALOGSELECTOBSERVER_H
 #define DIALOGSELECTOBSERVER_H
 
-#include "dialogs.h"
+  // Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CSelectObserverDialog : public CDialog
+    class CSelectObserverDialog : public QCL::CDialog
     {
       Q_OBJECT
     private:
@@ -66,9 +68,10 @@ namespace astroManager
 
     private slots:
       void btnOk(bool);
-      void btnCancel(bool) { dlg->reject(); };
+      void btnCancel(bool) { dlg->reject(); }
     };
-  };
-};  // namespace AstroManager
+
+  } // namespace dialogs
+}  // namespace AstroManager
 
 #endif // DIALOGSELECTOBSERVER_H

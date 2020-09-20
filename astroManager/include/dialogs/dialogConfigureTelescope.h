@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -35,19 +35,21 @@
 // HISTORY:             2017-08-05 GGB - Class moved into seperate file from configure.h(cpp)
 //
 //*********************************************************************************************************************************
-
 #ifndef DIALOGCONFIGURETELESCOPE
 #define DIALOGCONFIGURETELESCOPE
 
+  // Miscellaneous library header files
+
+#include <QCL>
+
 #include "../ACL/telescope.h"
-#include "dialogs.h"
 
 namespace astroManager
 {
   namespace dialogs
   {
 
-    class CDialogConfigureTelescope : public CDialog
+    class CDialogConfigureTelescope : public QCL::CDialog
     {
       Q_OBJECT
     private:

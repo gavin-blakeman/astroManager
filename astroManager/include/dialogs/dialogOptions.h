@@ -41,8 +41,6 @@
 #ifndef DIALOGOPTIONS_H
 #define DIALOGOPTIONS_H
 
-#include "dialogs.h"
-
   // Standard C++ library header files
 
 #include <list>
@@ -50,7 +48,7 @@
 
   // Miscellaneous library header files
 
-
+#include <QCL>
 
 namespace astroManager
 {
@@ -59,7 +57,7 @@ namespace astroManager
 
   namespace dialogs
   {
-    class CDialogOptions : public CDialog
+    class CDialogOptions : public QCL::CDialog
     {
       Q_OBJECT
 

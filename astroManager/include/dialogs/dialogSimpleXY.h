@@ -34,7 +34,9 @@
 #ifndef DIALOGSIMPLEXY_H
 #define DIALOGSIMPLEXY_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 #include <include/simplexy.h>
 
@@ -42,7 +44,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogSimpleXY : public CDialog
+    class CDialogSimpleXY : public QCL::CDialog
     {
       Q_OBJECT
 

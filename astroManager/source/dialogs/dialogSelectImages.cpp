@@ -37,9 +37,9 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogSelectImages.h"
+#include "include/dialogs/dialogSelectImages.h"
 
-#include "../../include/database/databaseARID.h"
+#include "include/database/databaseARID.h"
 
 namespace astroManager
 {
@@ -51,7 +51,7 @@ namespace astroManager
     /// @version 2017-08-19/GGB - Function created.
 
     CDialogSelectImages::CDialogSelectImages(QObject *parent, std::vector<imageID_t> &imageList)
-      : CDialog(":/dialogs/dialogSelectImages.ui", parent), imageList_(imageList), queryModel()
+      : QCL::CDialog(":/dialogs/dialogSelectImages.ui", parent), imageList_(imageList), queryModel()
     {
       setupUI();
     }

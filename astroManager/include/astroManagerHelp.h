@@ -55,7 +55,7 @@ namespace astroManager
 {
   namespace help
   {
-    class CHelpAboutAstroManager : public dialogs::CDialog
+    class CHelpAboutAstroManager : public QCL::CDialog
     {
     private:
       void setupUI();

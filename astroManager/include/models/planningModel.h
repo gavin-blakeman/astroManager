@@ -84,7 +84,7 @@ namespace astroManager
       CPlanningModel(CPlanningModel &&) = delete;
       CPlanningModel &operator=(CPlanningModel const &) = delete;
 
-      void loadData(int);
+      void loadData(int) const;
 
     protected:
 

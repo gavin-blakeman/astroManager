@@ -120,10 +120,10 @@ namespace astroManager
     {
       QVariant returnValue;
 
-//      if (index.row() >= planTargets_.size())
-//      {
-//        loadData(index.row());
-//      }
+      if (index.row() >= recordCache.size())
+      {
+        loadData(index.row());
+      }
 
 //      switch (role)
 //      {
@@ -221,7 +221,7 @@ namespace astroManager
     /// @throws
     /// @version    2020-09-18/GGB - Function created.
 
-    void CPlanningModel::loadData(int rowNeeded)
+    void CPlanningModel::loadData(int rowNeeded) const
     {
         // Need to load the rows between the last row and the rowNeeded.
         // Check if we actually need to read the record.

@@ -51,15 +51,15 @@
 #ifndef DIALOG_SELECTOBJECT_H
 #define DIALOG_SELECTOBJECT_H
 
-  // astroManager files
+  // Miscellaneous library header files
 
-#include "dialogs.h"
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CSelectObjectDialog : public dialogs::CDialog
+    class CSelectObjectDialog : public QCL::CDialog
     {
       Q_OBJECT
 

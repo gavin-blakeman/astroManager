@@ -275,9 +275,9 @@ namespace astroManager
     };
   }
 
-  /// @brief Activities to perform after the file has been opened.
-  /// @throws None.
-  /// @version 2017-08-12/GGB - Function created.
+  /// @brief        Activities to perform after the file has been opened.
+  /// @throws       None.
+  /// @version      2017-08-12/GGB - Function created.
 
   void CAstroFile::postLoadActions()
   {

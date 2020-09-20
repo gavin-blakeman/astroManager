@@ -96,7 +96,7 @@ namespace astroManager
     //
     //***********************************************************************************************
 
-    class CPhotometryObjectEditDialog : public dialogs::CDialog
+    class CPhotometryObjectEditDialog : public QCL::CDialog
     {
       Q_OBJECT
 
@@ -131,7 +131,7 @@ namespace astroManager
       void eventFilterSelected(QListWidgetItem *);
     };
 
-    class CPhotometryObjectDialog : public dialogs::CDialog
+    class CPhotometryObjectDialog : public QCL::CDialog
     {
     private:
       //_variant_t *vtRankAfter;

@@ -47,13 +47,15 @@
 #ifndef DIALOGBINPIXELS_H
 #define DIALOGBINPIXELS_H
 
-#include "../dialogs/dialogs.h"
+  // Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CBinPixelsDialog : public dialogs::CDialog
+    class CBinPixelsDialog : public QCL::CDialog
     {
       Q_OBJECT
 

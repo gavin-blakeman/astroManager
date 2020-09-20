@@ -45,13 +45,15 @@
 #ifndef DIALOGSELECTTELESCOPE_H
 #define DIALOGSELECTTELESCOPE_H
 
-#include "dialogs.h"
+  // Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CSelectTelescopeDialog : public CDialog
+    class CSelectTelescopeDialog : public QCL::CDialog
     {
       Q_OBJECT
 

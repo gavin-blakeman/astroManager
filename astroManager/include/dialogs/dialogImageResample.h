@@ -45,7 +45,9 @@
 #ifndef DIALOGIMAGERESAMPLE_H
 #define DIALOGIMAGERESAMPLE_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 #include <ACL>
 
@@ -53,7 +55,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CImageResampleDialog : public CDialog
+    class CImageResampleDialog : public QCL::CDialog
     {
       Q_OBJECT
 

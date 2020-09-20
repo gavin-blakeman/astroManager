@@ -54,7 +54,7 @@ namespace astroManager
 {
   namespace utilities
   {
-    class CEnterDATDialog : public dialogs::CDialog
+    class CEnterDATDialog : public QCL::CDialog
     {
     Q_OBJECT
 

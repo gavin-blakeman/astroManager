@@ -34,7 +34,9 @@
 #ifndef DIALOGFINDSTARS_H
 #define DIALOGFINDSTARS_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 #include <ACL>
 
@@ -50,7 +52,7 @@ namespace astroManager
       ACL::AXIS_t minBorder;
     };
 
-    class CDialogFindStars : public CDialog
+    class CDialogFindStars : public QCL::CDialog
     {
       Q_OBJECT
 

@@ -229,8 +229,8 @@ namespace astroManager
 
         sqlWriter.resetQuery();
         sqlWriter.select({"IMAGE_DATA"}).from({"TBL_IMAGESTORAGE"})
-            .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), imageVersion)});
+            .where({ { "IMAGE_ID", "=", imageID },
+                     { "IMAGE_VERSION", "=", imageVersion }});
         if (query.exec(QString::fromStdString(sqlWriter.string())))
         {
           query.first();
@@ -1076,11 +1076,9 @@ namespace astroManager
           // Start by checking if there is already an image with version 0 entered into the image storage table.
 
         sqlWriter.resetQuery();
-        std::string sqlString = sqlWriter.select({"ID"}).from({"TBL_IMAGESTORAGE"}).
-            where({
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID),
-                    GCL::sqlWriter::parameterTriple(std::string("IMAGE_VERSION"), std::string("="), 0),
-                  }).string();
+        std::string sqlString = sqlWriter.select({"ID"}).from({"TBL_IMAGESTORAGE"})
+                                .where({ { "IMAGE_ID", "=", imageID },
+                                         { "IMAGE_VERSION", "=", 0}}).string();
 
         if (sqlQuery->exec(QString::fromStdString(sqlString)))
         {
@@ -1226,15 +1224,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Populates a list widget with a list of imager names.
-    /// @param[in] listWidget: Pointer to the list widget to populate.
-    /// @param[in] includeDeleted: Include deleted sites.
-    /// @throws GCL::CRuntimeError
-    /// @version 2018-02-02/GGB - Function created.
+    /// @brief      Populates a list widget with a list of imager names.
+    /// @param[in]  listWidget: Pointer to the list widget to populate.
+    /// @param[in]  includeDeleted: Include deleted sites.
+    /// @throws     GCL::CRuntimeError
+    /// @throws     GCL::CRuntimeAssert
+    /// @version    2018-02-02/GGB - Function created.
 
     void CARID::populateListInstrumentNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, boost::locale::translate("parameter listWidget cannot be nullptr."));
 
       if (!ARIDdisabled_)
       {
@@ -1266,15 +1265,16 @@ namespace astroManager
       };
     }
 
-    /// @brief Populates a list widget with a list of site names.
-    /// @param[in] listWidget: Pointer to the list widget to populate.
-    /// @param[in] includeDeleted: Include deleted sites.
-    /// @throws GCL::CRuntimeError
-    /// @version 2018-02-02/GGB - Function created.
+    /// @brief      Populates a list widget with a list of site names.
+    /// @param[in]  listWidget: Pointer to the list widget to populate.
+    /// @param[in]  includeDeleted: Include deleted sites.
+    /// @throws     GCL::CRuntimeError
+    /// @throws     GCL::CRuntimeAssert
+    /// @version    2018-02-02/GGB - Function created.
 
     void CARID::populateListSiteNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, boost::locale::translate("parameter listWidget cannot be nullptr."));
 
       if (!ARIDdisabled_)
       {
@@ -1284,7 +1284,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where("RETIRED", "=", false);
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1306,14 +1306,14 @@ namespace astroManager
       };
     }
 
-    /// @brief Populates a list widget with a list of telescope names.
-    /// @param[in] listWidget: Pointer to the list widget to populate.
-    /// @throws GCL::CRuntimeError
-    /// @version 2018-02-03/GGB - Function created.
+    /// @brief      Populates a list widget with a list of telescope names.
+    /// @param[in]  listWidget: Pointer to the list widget to populate.
+    /// @throws     GCL::CRuntimeError
+    /// @version    2018-02-03/GGB - Function created.
 
     void CARID::populateListTelescopeNames(QListWidget *listWidget, bool includeDeleted)
     {
-      RUNTIME_ASSERT(listWidget != nullptr, "parameter listWidget cannot be nullptr.");
+      RUNTIME_ASSERT(listWidget != nullptr, boost::locale::translate("parameter listWidget cannot be nullptr."));
 
       if (!ARIDdisabled_)
       {
@@ -1323,7 +1323,7 @@ namespace astroManager
 
         if (!includeDeleted)
         {
-          sqlWriter.where({GCL::sqlWriter::parameterTriple(std::string("RETIRED"), std::string("="), false)});
+          sqlWriter.where("RETIRED", "=", false);
         };
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
@@ -1345,15 +1345,15 @@ namespace astroManager
       };
     }
 
-    /// @brief Fills a comboBox with available observing plans.
-    /// @param[in] comboBox: The comboBox to populate.
-    /// @param[in] selectDefault: Select the default (last selected plan)
-    /// @throws None.
-    /// @version 2018-02-06/GGB - Function created.
+    /// @brief      Fills a comboBox with available observing plans.
+    /// @param[in]  comboBox: The comboBox to populate.
+    /// @param[in]  selectDefault: Select the default (last selected plan)
+    /// @throws     None.
+    /// @version    2018-02-06/GGB - Function created.
 
     void CARID::populateComboObservingPlans(QComboBox *comboBox, bool selectDefault)
     {
-      RUNTIME_ASSERT(comboBox != nullptr, "parameter comboBox cannot be nullptr.");
+      RUNTIME_ASSERT(comboBox != nullptr, boost::locale::translate("parameter comboBox cannot be nullptr."));
 
       if (!ARIDdisabled_)
       {
@@ -1998,9 +1998,9 @@ namespace astroManager
 
     void CARID::uploadImage(QString const &fileName, imageID_t imageID, imageVersion_t imageVersion, QString const &comment)
     {
-      RUNTIME_ASSERT(fileName.size() != 0, "Parameter filename must have length > 0");
-      RUNTIME_ASSERT(imageID != 0, "Parameter imageID cannot be zero.");
-      RUNTIME_ASSERT(comment.size() != 0, "Parameter comment cannot have zero length.");
+      RUNTIME_ASSERT(fileName.size() != 0, boost::locale::translate("Parameter 'filename' must have length > 0"));
+      RUNTIME_ASSERT(imageID != 0, boost::locale::translate("Parameter 'imageID' cannot be zero."));
+      RUNTIME_ASSERT(comment.size() != 0, boost::locale::translate("Parameter 'comment' cannot have zero length."));
 
       ACL::TJD JD;
 

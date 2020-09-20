@@ -40,13 +40,15 @@
 #ifndef DIALOGIMAGEALIGNED_H
 #define DIALOGIMAGEALIGNED_H
 
-#include "dialogs.h"
+  // Miscellanous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogSaveAligned : public dialogs::CDialog
+    class CDialogSaveAligned : public QCL::CDialog
     {
       Q_OBJECT
 

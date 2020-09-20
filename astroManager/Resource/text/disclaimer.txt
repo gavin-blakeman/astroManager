@@ -1,4 +1,4 @@
-Copyright 2010-2018 Gavin Blakeman.
+﻿Copyright 2010-2020 Gavin Blakeman.
 
 Astronomy Manager (AstroManager)
 

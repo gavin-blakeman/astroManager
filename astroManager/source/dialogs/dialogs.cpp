@@ -74,65 +74,7 @@ namespace astroManager
   namespace dialogs
   {
 
-    //*****************************************************************************************************************************
-    //
-    // CDialog
-    //
-    //*****************************************************************************************************************************
 
-    /// Constructor taking no argument. The calling function/derived dialog must load the dialog template.
-    //
-    // 2013-05-10/GGB - Function created.
-
-    CDialog::CDialog(QObject *parent) : QObject(parent)
-    {
-    }
-
-    /// @brief Constructor for the CDialog class.
-    /// @param[in] szDialog - String value representing the dialog resource name.
-    /// @param[in] parent - The parent object
-    /// @throws CError(astroManager, 0x0001)
-    /// @throws CRuntimeAssert
-    /// @version 2014-02-10/GGB - Added check and exception after opening the file and loading the dialog.
-    /// @version 2010-06-21/GGB - Function created.
-
-    CDialog::CDialog(QString szDialog, QObject *parent) : QObject(parent)
-    {
-      QUiLoader loader;
-
-      QFile file(szDialog);
-
-      if (!QFile::exists(szDialog))
-      {
-        RUNTIME_ERROR(boost::locale::translate("Resource does not exist: ").str() + szDialog.toStdString());
-      }
-
-      if (!file.open(QFile::ReadOnly))
-      {
-        RUNTIME_ERROR(boost::locale::translate("Could not open the resource: ").str() + szDialog.toStdString());
-      };
-
-      dlg = static_cast<QDialog *>(loader.load(&file));
-
-      RUNTIME_ASSERT(dlg != nullptr, boost::locale::translate("The dialog template could not be loaded."));
-
-      file.close();
-    }
-
-    /// @brief Default destructor for the class.
-    /// @version 2010-06-21/GGB - Function created.
-
-    CDialog::~CDialog()
-    {
-    }
-
-    /// @brief Exec function
-    /// @version 2010-06-21/GGB - Function created.
-
-    int CDialog::exec()
-    {
-      return ( dlg->exec() );
-    }
 
   //************************************************************************************************
   //

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2018 Gavin Blakeman.
+//                      Copyright 2018-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,46 +42,48 @@
 #ifndef DIALOGEDITRESOURCES_H
 #define DIALOGEDITRESOURCES_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogEditResources : public CDialog
+    class CDialogEditResources : public QCL::CDialog
     {
       Q_OBJECT
 
     private:
-      QListWidget *listWidgetSiteNames;
-      QLineEdit *lineEditSiteName;
-      QSpinBox *spinBoxLatitudeDegrees;
-      QSpinBox *spinBoxLatitudeMinutes;
-      QDoubleSpinBox *doubleSpinBoxLatitudeSeconds;
-      QComboBox *comboBoxNS;
-      QSpinBox *spinBoxLongitudeDegrees;
-      QSpinBox *spinBoxLongitudeMinutes;
-      QDoubleSpinBox *doubleSpinBoxLongitudeSeconds;
-      QComboBox *comboBoxEW;
-      QSpinBox *spinBoxAltitude;
-      QDoubleSpinBox *doubleSpinBoxTimeOffset;
-      QComboBox *comboBoxDaylightSaving;
-      QLineEdit *lineEditIAUCode;
-      QCheckBox *checkBoxDontDisplay;
-      QPushButton *pushButtonFilterDeletedSites;
-      QPushButton *pushButtonSiteSaveChanges;
-      QPushButton *pushButtonSiteRevertChanges;
+      QListWidget *listWidgetSiteNames = nullptr;
+      QLineEdit *lineEditSiteName = nullptr;
+      QSpinBox *spinBoxLatitudeDegrees = nullptr;
+      QSpinBox *spinBoxLatitudeMinutes = nullptr;
+      QDoubleSpinBox *doubleSpinBoxLatitudeSeconds = nullptr;
+      QComboBox *comboBoxNS = nullptr;
+      QSpinBox *spinBoxLongitudeDegrees = nullptr;
+      QSpinBox *spinBoxLongitudeMinutes = nullptr;
+      QDoubleSpinBox *doubleSpinBoxLongitudeSeconds = nullptr;
+      QComboBox *comboBoxEW = nullptr;
+      QSpinBox *spinBoxAltitude = nullptr;
+      QDoubleSpinBox *doubleSpinBoxTimeOffset = nullptr;
+      QComboBox *comboBoxDaylightSaving = nullptr;
+      QLineEdit *lineEditIAUCode = nullptr;
+      QCheckBox *checkBoxDontDisplay = nullptr;
+      QPushButton *pushButtonFilterDeletedSites = nullptr;
+      QPushButton *pushButtonSiteSaveChanges = nullptr;
+      QPushButton *pushButtonSiteRevertChanges = nullptr;
       bool bSitesDirty = false;
 
-      QListWidget *listWidgetTelescopes;
-      QLineEdit *lineEditTelescopeName;
+      QListWidget *listWidgetTelescopes = nullptr;
+      QLineEdit *lineEditTelescopeName = nullptr;
 
-      QLineEdit *lineEditObserverName;
-      QLineEdit *lineEditObserverEMail;
-      QLineEdit *lineEditObserverAAVSO;
+      QLineEdit *lineEditObserverName = nullptr;
+      QLineEdit *lineEditObserverEMail = nullptr;
+      QLineEdit *lineEditObserverAAVSO = nullptr;
 
-      QListWidget *listWidgetInstruments;
-      QPushButton *pushButtonFilterDeletedInstruments;
+      QListWidget *listWidgetInstruments = nullptr;
+      QPushButton *pushButtonFilterDeletedInstruments = nullptr;
 
       void setupUI();
         void setupSite();

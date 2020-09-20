@@ -39,7 +39,11 @@
 #ifndef DIALOGIMAGEDETAILS
 #define DIALOGIMAGEDETAILS
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
+
+
 #include "../database/databaseARID.h"
 #include "../qtExtensions/selectImageVersionQueryModel.h"
 #include "../astroManager.h"
@@ -48,7 +52,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogImageDetails : public CDialog
+    class CDialogImageDetails : public QCL::CDialog
     {
       Q_OBJECT
     private:

@@ -63,112 +63,83 @@ namespace astroManager
   namespace dialogs
   {
 
-  class CDialog : public QObject
-  {
-    Q_OBJECT
-
-  private:
-  protected:
-    QDialog *dlg;
-
-    template<typename T>
-    T findChild(const QString &childName)
+    enum ESSODOptions
     {
-      T returnValue = dlg->findChild<T>(childName);
-      RUNTIME_ASSERT(returnValue != nullptr, "Control " + childName.toStdString() + " not found." );
+      SSOD_NONE = 0x00,
+      SSOD_LIST = 0x01,						// From list tab
+      SSOD_PHOTOMETRY = 0x02,			// From Photometry Programs tab
+      SSOD_RECENT = 0x04					// From recently selected tab
+    };
 
-      return returnValue;
-    }
+    class CSearchSelectObjectDialog : public QCL::CDialog
+    {
+      Q_OBJECT
 
-  public:
-    CDialog(QObject * = nullptr);
-    CDialog(QString, QObject * = nullptr);
-    ~CDialog();
+    private:
+      int dialogOptions;
+      QVariant &vNameID;
 
-    virtual int exec();
-
-//  public slots:
-//    virtual void accepted() {}
-//    virtual void rejected() { std::cout << "CDialog::rejected called" << std::endl; }
-  };
-
-  enum ESSODOptions
-  {
-    SSOD_NONE = 0x00,
-    SSOD_LIST = 0x01,						// From list tab
-    SSOD_PHOTOMETRY = 0x02,			// From Photometry Programs tab
-    SSOD_RECENT = 0x04					// From recently selected tab
-  };
-
-  class CSearchSelectObjectDialog : public CDialog
-  {
-    Q_OBJECT
-
-  private:
-    int dialogOptions;
-    QVariant &vNameID;
-
-    QTabWidget *tabWidget;
+      QTabWidget *tabWidget;
       QWidget *fromList;
-        QCheckBox *checkObjectType;
-        QComboBox *comboObjectType;
-        QCheckBox *checkSpectralClass;
-        QComboBox *comboSpectralClass;
-        QCheckBox *checkConstellation;
-        QComboBox *comboConstellation;
-        QCheckBox *checkCatalog;
-        QComboBox *comboCatalog;
-        QCheckBox *checkMultiple;
-        QCheckBox *checkExoPlanets;
-        QLineEdit *editObjectName;
-        QGroupBox *groupStarType;
-          QRadioButton *radioPrimary;
-          QRadioButton *radioJohnson;
-          QRadioButton *radioCousins;
-          QRadioButton *radioLandolt;
-          QRadioButton *radioAAVSO;
-          QRadioButton *radioVariable;
-        QTableWidget *tableObjects;
-        QPushButton *btnSearch;
+      QCheckBox *checkObjectType;
+      QComboBox *comboObjectType;
+      QCheckBox *checkSpectralClass;
+      QComboBox *comboSpectralClass;
+      QCheckBox *checkConstellation;
+      QComboBox *comboConstellation;
+      QCheckBox *checkCatalog;
+      QComboBox *comboCatalog;
+      QCheckBox *checkMultiple;
+      QCheckBox *checkExoPlanets;
+      QLineEdit *editObjectName;
+      QGroupBox *groupStarType;
+      QRadioButton *radioPrimary;
+      QRadioButton *radioJohnson;
+      QRadioButton *radioCousins;
+      QRadioButton *radioLandolt;
+      QRadioButton *radioAAVSO;
+      QRadioButton *radioVariable;
+      QTableWidget *tableObjects;
+      QPushButton *btnSearch;
       QWidget *fromPhotometry;
-        QComboBox *comboPhotometry;
-        QTableWidget *tablePhotometryObjects;
+      QComboBox *comboPhotometry;
+      QTableWidget *tablePhotometryObjects;
       QWidget *fromRecent;
-        QTableWidget *tableRecentObjects;
-    QPushButton *buttonSelect;
-    QPushButton *buttonCancel;
-    QPushButton *buttonHelp;
+      QTableWidget *tableRecentObjects;
+      QPushButton *buttonSelect;
+      QPushButton *buttonCancel;
+      QPushButton *buttonHelp;
 
-    void PopulateRecentObjects(void);
+      void PopulateRecentObjects(void);
 
-  protected:
-  public:
-    static int startTab;
+    protected:
+    public:
+      static int startTab;
 
-    CSearchSelectObjectDialog(QVariant &, int);
+      CSearchSelectObjectDialog(QVariant &, int);
 
-  private slots:
-    void eventBtnSearchClicked(bool);
+    private slots:
+      void eventBtnSearchClicked(bool);
 
-    void eventCheckObjectTypeChanged(int);
-    void eventCheckSpectralClassChanged(int);
-    void eventCheckConstellationChanged(int);
-    void eventCheckCatalogChanged(int);
+      void eventCheckObjectTypeChanged(int);
+      void eventCheckSpectralClassChanged(int);
+      void eventCheckConstellationChanged(int);
+      void eventCheckCatalogChanged(int);
 
-    void eventButtonHelpClicked(bool);
-    void eventButtonCancelClicked(bool);
-    void eventButtonSelectClicked(bool);
+      void eventButtonHelpClicked(bool);
+      void eventButtonCancelClicked(bool);
+      void eventButtonSelectClicked(bool);
 
-    void eventTableObjectsCellClicked(int, int);
+      void eventTableObjectsCellClicked(int, int);
 
-    void eventComboPhotometryCurrenINDEX_tChanged(int);
-    void eventTablePhotometryCellClicked(int, int);
+      void eventComboPhotometryCurrenINDEX_tChanged(int);
+      void eventTablePhotometryCellClicked(int, int);
 
-    void eventTableRecentCellClicked(int, int);
+      void eventTableRecentCellClicked(int, int);
 
-  };
+    };
 
-    class CRotateImageDialog : public CDialog
+    class CRotateImageDialog : public QCL::CDialog
     {
       Q_OBJECT
 
@@ -182,9 +153,9 @@ namespace astroManager
     private slots:
       void btnOk(void);
       void btnCancel(void) { dlg->reject(); }
-   };
+    };
 
-    class CSelectSiteDialog : public dialogs::CDialog
+    class CSelectSiteDialog : public QCL::CDialog
     {
       Q_OBJECT
     private:

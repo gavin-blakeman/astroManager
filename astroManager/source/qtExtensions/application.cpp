@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2018 Gavin Blakeman.
+//                      Copyright 2013-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -40,16 +40,22 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/qtExtensions/application.h"
-#include "../../include/error.h"
+#include "include/qtExtensions/application.h"
 
-#include <iostream>
+  // Standard C++ library header files
+
 #include <fstream>
+#include <iostream>
 
-#include "boost/lexical_cast.hpp"
+  // Miscellaneous library header files
 
-#include <GCL>
 #include <ACL>
+#include "boost/lexical_cast.hpp"
+#include <GCL>
+
+  // astroManager header files
+
+#include "include/error.h"
 
 namespace astroManager
 {
@@ -60,14 +66,14 @@ namespace astroManager
   //
   //*******************************************************************************************************************************
 
-  /// @brief Event handler to ensure that unhandled exceptions are caught and handled.
-  /// @throws None.
-  /// @version 2020-08-31/GGB - Remove code that logged to std::clog. This would repeat the message logging.
-  /// @version 2017-07-10/GGB - Fixed Bug #38 - Use of GCL rather than library name.
-  /// @version 2017-06-20/GGB - Updating to use GCL error handling. (Bug #70)
-  /// @version 2017-06-18/GGB - Removed dead code (Bug #38)
-  /// @version 2016-04-07/GGB - Added catch() for cfitsio errors.
-  /// @version 2013-08-11/GGB - Function created.
+  /// @brief        Event handler to ensure that unhandled exceptions are caught and handled.
+  /// @throws       None.
+  /// @version      2020-08-31/GGB - Remove code that logged to std::clog. This would repeat the message logging.
+  /// @version      2017-07-10/GGB - Fixed Bug #38 - Use of GCL rather than library name.
+  /// @version      2017-06-20/GGB - Updating to use GCL error handling. (Bug #70)
+  /// @version      2017-06-18/GGB - Removed dead code (Bug #38)
+  /// @version      2016-04-07/GGB - Added catch() for cfitsio errors.
+  /// @version      2013-08-11/GGB - Function created.
 
   bool CApplication::notify(QObject *receiver, QEvent *event)
   {
@@ -89,12 +95,15 @@ namespace astroManager
 
       exit(-1);
     }
-    catch (GCL::CError &error)
+    catch (GCL::CRuntimeError &error)
     {
-      std::clog << error.library() << " unhandled exception: " << error.errorCode() << std::endl;
-      std::clog << error.errorMessage() << std::endl;
+      QMessageBox msgBox;
 
-      exit(error.errorCode());
+      msgBox.setText(QString::fromStdString("Runtime Error"));
+      msgBox.setStandardButtons(QMessageBox::Abort);
+      msgBox.setDefaultButton(QMessageBox::Abort);
+      msgBox.setIcon(QMessageBox::Critical);
+      msgBox.setInformativeText(QString::fromStdString(error.what()));
     }
     catch (GCL::CRuntimeAssert &error)
     {
@@ -102,7 +111,6 @@ namespace astroManager
 
       exit(-1);
     }
-
     catch(...)
     {
       std::clog << "Unhandled exception, unknown error." << std::endl;

@@ -144,5 +144,6 @@ namespace astroManager
       connect(findChild<QPushButton *>("pushButtonContinue"), SIGNAL(clicked(bool)), this, SLOT(eventButtonContinue(bool)));
       connect(findChild<QPushButton *>("pushButtonCancel"), SIGNAL(clicked(bool)), this, SLOT(eventButtonCancel(bool)));
     }
+
   } // namespace dialogs
 } // namespace AstroManager

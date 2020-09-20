@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -45,10 +45,12 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dialogs/dialogSelectObserver.h"
+#include "include/dialogs/dialogSelectObserver.h"
 
-#include "../../include/database/databaseATID.h"
-#include "../../include/settings.h"
+  // astroManager header files
+
+#include "include/database/databaseATID.h"
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -69,7 +71,7 @@ namespace astroManager
     CSelectObserverDialog::CSelectObserverDialog() : CDialog(":/forms/dialogSelectObserver.ui")
     {
       setupUI();
-    };
+    }
 
     // Handles the select and close button
     //
@@ -86,7 +88,7 @@ namespace astroManager
         settings::astroManagerSettings->setValue(settings::SETTINGS_OBSERVER, vObserverID);
         dlg->accept();
       };
-    };
+    }
 
     // Sets up the user interface
     /// @version 2017-06-14/GGB - Update to Qt5
@@ -123,6 +125,7 @@ namespace astroManager
 
         nRow++;
       };
-    };
-  };  // namespace dialogs
-};  // namespace AstroManager
+    }
+
+  }  // namespace dialogs
+}  // namespace AstroManager

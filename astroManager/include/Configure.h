@@ -225,7 +225,7 @@ namespace astroManager
       void eventCreateTelescope(bool);
     };
 
-    class CConfigureInstrumentDialog : public dialogs::CDialog
+    class CConfigureInstrumentDialog : public QCL::CDialog
     {
       Q_OBJECT
     private:
@@ -252,7 +252,7 @@ namespace astroManager
       void btnCancel(bool) { dlg->reject(); }
     };
 
-    class CConfigureObserverDialog : public dialogs::CDialog
+    class CConfigureObserverDialog : public QCL::CDialog
     {
       Q_OBJECT
 

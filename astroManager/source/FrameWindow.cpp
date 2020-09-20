@@ -117,18 +117,18 @@ namespace astroManager
     //
     //*****************************************************************************************************************************
 
-    /// @brief Constructor for the CFrameWindow Class
-    /// @details Calls the CMDIFrameWindow class for the default constructor.
-    /// @throws None.
-    /// @version 2018-02-03/GGB - Changed application name to AstroManager.
-    /// @version 2017-07-03/GGB - Added class member currentWindowClass.
-    /// @version 2013-05-30/GGB - Removed some unused data members.
-    /// @version 2013-01-22/GGB - Added support for the recent file actions.
-    /// @version 2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
-    /// @version 2010-05-05/GGB - Converted for use with the Qt API.
-    /// @version 2009-09-20/GGB - Created the CVSOPRegistryClass and moved all code dealing with the registry into the class.
-    /// @version 2009-09-04/GGB - Added code to exit if the ADODB DLL did not initialise.
-    /// @version 2005-07-06/GGB - Function created
+    /// @brief      Constructor for the CFrameWindow Class
+    /// @details    Calls the CMDIFrameWindow class for the default constructor.
+    /// @throws     None.
+    /// @version    2018-02-03/GGB - Changed application name to AstroManager.
+    /// @version    2017-07-03/GGB - Added class member currentWindowClass.
+    /// @version    2013-05-30/GGB - Removed some unused data members.
+    /// @version    2013-01-22/GGB - Added support for the recent file actions.
+    /// @version    2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
+    /// @version    2010-05-05/GGB - Converted for use with the Qt API.
+    /// @version    2009-09-20/GGB - Created the CVSOPRegistryClass and moved all code dealing with the registry into the class.
+    /// @version    2009-09-04/GGB - Added code to exit if the ADODB DLL did not initialise.
+    /// @version    2005-07-06/GGB - Function created
 
     CFrameWindow::CFrameWindow() : currentWindowClass(CMdiSubWindow::WC_NULL), dockWidgets(), menuActions(), toolBars(),
       uniqueWindows(), subMenus(), recentFileActions(), lastOpened()
@@ -157,7 +157,7 @@ namespace astroManager
 
       readSettings();
 
-      setWindowTitle(tr("AstroManager - Astronomy Manager"));
+      setWindowTitle(QString::fromStdString(boost::locale::translate("AstroManager - Astronomy Manager")));
       setUnifiedTitleAndToolBarOnMac(true);
 
       setWindowIcon(QIcon(":/icons/iconApplication.png"));
@@ -169,14 +169,14 @@ namespace astroManager
       timer1s->start(1000);
     }
 
-    /// @brief    Destructor for the CFrameWindow class.
-    /// @details  Destroys all windows created elements (Timers etc). Destroys all dynamically created elements.
-    /// @throws   None.
-    /// @version  2017-07-14/GGB - Set menuBar to nullptr before exit. All menuBars deleted as unique_ptr.
-    /// @version  2013-01-22/GGB - Added support for recent files.
-    /// @version  2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
-    /// @version  2010-05-27/GGB - Modified to use Qt API.
-    /// @version  2009-09-04/GGB - Function created.
+    /// @brief      Destructor for the CFrameWindow class.
+    /// @details    Destroys all windows created elements (Timers etc). Destroys all dynamically created elements.
+    /// @throws     None.
+    /// @version    2017-07-14/GGB - Set menuBar to nullptr before exit. All menuBars deleted as unique_ptr.
+    /// @version    2013-01-22/GGB - Added support for recent files.
+    /// @version    2011-05-28/GGB - Added support for the menuActions array and the dockWidgets array.
+    /// @version    2010-05-27/GGB - Modified to use Qt API.
+    /// @version    2009-09-04/GGB - Function created.
 
     CFrameWindow::~CFrameWindow()
     {
@@ -205,9 +205,9 @@ namespace astroManager
       };
     }
 
-    /// @brief    Sets up the menu when a Image window is activated.
-    /// @throws   None.
-    /// @version  2017-07-16/GGB - Function created.
+    /// @brief      Sets up the menu when a Image window is activated.
+    /// @throws     None.
+    /// @version    2017-07-16/GGB - Function created.
 
     void CFrameWindow::activateWindowClassImage()
     {
@@ -226,10 +226,10 @@ namespace astroManager
       menuBar()->addMenu(&*subMenus[IDSM_HELP]);
     }
 
-    /// @brief    Sets up the menu when a Null window is activated.
-    /// @throws   None.
-    /// @version  2017-07-21/GGB - Added calibration menu (Bug #93)
-    /// @version  2017-07-16/GGB - Function created.
+    /// @brief      Sets up the menu when a Null window is activated.
+    /// @throws     None.
+    /// @version    2017-07-21/GGB - Added calibration menu (Bug #93)
+    /// @version    2017-07-16/GGB - Function created.
 
     void CFrameWindow::activateWindowClassNull()
     {
@@ -243,10 +243,10 @@ namespace astroManager
       menuBar()->addMenu(&*subMenus[IDSM_HELP]);
     }
 
-    /// @brief    Function called when a child window associated with weather is activated.
-    /// @details  Displays the toolbars and menus for weather.
-    /// @version  2017-07-21/GGB - Added calibration menu (Bug #93)
-    /// @version  2017-07-13/GGB - Function created.
+    /// @brief      Function called when a child window associated with weather is activated.
+    /// @details    Displays the toolbars and menus for weather.
+    /// @version    2017-07-21/GGB - Added calibration menu (Bug #93)
+    /// @version    2017-07-13/GGB - Function created.
 
     void CFrameWindow::activateWindowClassWeather()
     {
@@ -278,28 +278,28 @@ namespace astroManager
       }
     }
 
-    /// @brief Creates the actions for the application
-    /// @throws std::bad_alloc
-    /// @version 2018-02-03/GGB - Added Planning Window support. Removed some dead code. (Commented out)
-    /// @version 2017-07-28/GGB - Added action for File | Search
-    /// @version 2017-07-03/GGB - Added the action for the weather scale dock widget.
-    /// @version 2017-06-20/GGB - Added action for IDA_UTILITIES_WEATHER_HISTORY
-    /// @version 2016-04-25/GGB - Added action for IDA_ANALYSIS_LOADOBJECTS
-    /// @version 2015-08-03/GGB - Added action IDA_FILE_INSPECT
-    /// @version 2013-08-19/GGB - Removed the instrument dock widget.
-    /// @version 2016-04-02/GGB - Removed code for configuring the database connection.
-    /// @version 2013-08-18/GGB - Added function to load photometry target list.
-    /// @version 2013-05-30/GGB - Removed the information mode action.
-    /// @version 2013-05-24/GGB - Added the View | Navigator action.
-    /// @version 2013-05-19/GGB - Added the View | Magnify action.
-    /// @version 2013-05-10/GGB - Added action for export as CSV.
-    /// @version 2013-03-29/GGB - Added/updated actions for printing, added code to update the action states when no window is open.
-    /// @version 2013-03-15/GGB - Added option to view Astrometry,photometry indicators and annotations.
-    /// @version 2013-02-03/GGB - set the enabled on some actions to false.
-    /// @version 2013-02-02/GGB - Added the View | Histogram Action.
-    /// @version 2013-01-26/GGB - Removed importIERS and add DAT functionality.
-    /// @version 2012-01-04/GGB - Added File export functionality
-    /// @version 2010-07-23/GGB - Function created.
+    /// @brief      Creates the actions for the application
+    /// @throws     std::bad_alloc
+    /// @version    2018-02-03/GGB - Added Planning Window support. Removed some dead code. (Commented out)
+    /// @version    2017-07-28/GGB - Added action for File | Search
+    /// @version    2017-07-03/GGB - Added the action for the weather scale dock widget.
+    /// @version    2017-06-20/GGB - Added action for IDA_UTILITIES_WEATHER_HISTORY
+    /// @version    2016-04-25/GGB - Added action for IDA_ANALYSIS_LOADOBJECTS
+    /// @version    2015-08-03/GGB - Added action IDA_FILE_INSPECT
+    /// @version    2013-08-19/GGB - Removed the instrument dock widget.
+    /// @version    2016-04-02/GGB - Removed code for configuring the database connection.
+    /// @version    2013-08-18/GGB - Added function to load photometry target list.
+    /// @version    2013-05-30/GGB - Removed the information mode action.
+    /// @version    2013-05-24/GGB - Added the View | Navigator action.
+    /// @version    2013-05-19/GGB - Added the View | Magnify action.
+    /// @version    2013-05-10/GGB - Added action for export as CSV.
+    /// @version    2013-03-29/GGB - Added/updated actions for printing, added code to update the action states when no window is open.
+    /// @version    2013-03-15/GGB - Added option to view Astrometry,photometry indicators and annotations.
+    /// @version    2013-02-03/GGB - set the enabled on some actions to false.
+    /// @version    2013-02-02/GGB - Added the View | Histogram Action.
+    /// @version    2013-01-26/GGB - Removed importIERS and add DAT functionality.
+    /// @version    2012-01-04/GGB - Added File export functionality
+    /// @version    2010-07-23/GGB - Function created.
 
     void CFrameWindow::createActions()
     {
@@ -413,8 +413,8 @@ namespace astroManager
       connect(&*menuActions[IDA_EDIT_OPTIONS], SIGNAL(triggered()), this, SLOT(eventEditOptions()));
 
       menuActions.emplace(IDA_EDIT_RESOURCES, std::make_unique<QAction>(tr("Add/Edit Resources"), this));
-      menuActions[IDA_EDIT_RESOURCES]->setStatusTip(tr("Add/Edit Resources (Sites, Telescopes, Observers, Imagers"));
-      menuActions[IDA_EDIT_RESOURCES]->setToolTip(tr("Add/Edit Resources (Sites, Telescopes, Observers, Imagers"));
+      menuActions[IDA_EDIT_RESOURCES]->setStatusTip(QString::fromStdString(boost::locale::translate("Add/Edit Resources (Sites, Telescopes, Observers, Imagers")));
+      menuActions[IDA_EDIT_RESOURCES]->setToolTip(QString::fromStdString(boost::locale::translate("Add/Edit Resources (Sites, Telescopes, Observers, Imagers")));
       connect(&*menuActions[IDA_EDIT_RESOURCES], SIGNAL(triggered()), this, SLOT(eventEditResources()));
 
         // Image Calibration Actions
@@ -1439,9 +1439,9 @@ namespace astroManager
       dialog.exec();
     }
 
-    /// @brief Function to handle the Edit | Resources menu item.
-    /// @throws None.
-    /// @version 2018-02-01/GGB - Function created.
+    /// @brief      Function to handle the Edit | Resources menu item.
+    /// @throws     None.
+    /// @version    2018-02-01/GGB - Function created.
 
     void CFrameWindow::eventEditResources()
     {

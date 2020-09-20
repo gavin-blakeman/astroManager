@@ -36,7 +36,9 @@
 #ifndef DIALOGEXPORTASJPEG_H
 #define DIALOGEXPORTASJPEG_H
 
-#include "dialogs.h"
+// Miscellanous library header files
+
+#include <QCL>
 
 #include <ACL>
 
@@ -44,7 +46,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogExportAsJPEG : public CDialog
+    class CDialogExportAsJPEG : public QCL::CDialog
     {
       Q_OBJECT
 

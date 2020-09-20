@@ -42,7 +42,9 @@
 #ifndef DIALOGWEATHEREDIT_H
 #define DIALOGWEATHEREDIT_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 #include <ACL>
 
@@ -50,7 +52,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogWeatherEdit : public CDialog
+    class CDialogWeatherEdit : public QCL::CDialog
     {
       Q_OBJECT
 

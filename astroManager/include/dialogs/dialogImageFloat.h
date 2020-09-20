@@ -46,7 +46,9 @@
 #ifndef DIALOGIMAGEFLOAT_H
 #define DIALOGIMAGEFLOAT_H
 
-#include "dialogs.h"
+// Miscellaneous library header files
+
+#include <QCL>
 
 #include <ACL>
 
@@ -54,7 +56,7 @@ namespace astroManager
 {
   namespace dialogs
   {
-    class CDialogImageFloat : public dialogs::CDialog
+    class CDialogImageFloat : public QCL::CDialog
     {
       Q_OBJECT
 
