@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,28 +42,28 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowImage/windowImageStacking.h"
+#include "include/windowImage/windowImageStacking.h"
 
-  // astroManager header files
+  // Standard libraries
 
-#include "../../include/ACL/astroFile.h"
-#include "../../include/AstroGraphicsView.h"
-#include "../../include/database/databaseARID.h"
-#include "../../include/dialogs/dialogSelectImages.h"
-#include "../../include/dockWidgets/dockWidgetHistogram.h"
-#include "../../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../../include/dockWidgets/dockWidgetMagnify.h"
-#include "../../include/dockWidgets/dockWidgetNavigator.h"
-#include "../../include/FrameWindow.h"
-#include "../../include/settings.h"
+#include <memory>
 
   // Qxt Library
 
 #include <QxtGui/QxtConfirmationMessage>
 
-  // Standard libraries
+  // astroManager header files
 
-#include <memory>
+#include "include/ACL/astroFile.h"
+#include "include/AstroGraphicsView.h"
+#include "include/database/databaseARID.h"
+#include "include/dialogs/dialogSelectImages.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/FrameWindow.h"
+#include "include/settings.h"
 
 namespace astroManager
 {

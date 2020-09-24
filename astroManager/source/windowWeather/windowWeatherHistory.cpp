@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2016-2018 Gavin Blakeman.
+//                      Copyright 2016-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -37,9 +37,11 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowWeather/windowWeatherHistory.h"
+#include "include/windowWeather/windowWeatherHistory.h"
 
-#include "../../include/database/databaseWeather.h"
+  // astroManager header files
+
+#include "include/database/databaseWeather.h"
 
 // QWT Library
 

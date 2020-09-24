@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman.
 // LICENSE:             GPLv2
 //
-//                      Copyright 2011-2018 Gavin Blakeman.
+//                      Copyright 2011-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -42,8 +42,15 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/qtExtensions/MdiSubWindow.h"
-#include "../../include/FrameWindow.h"
+#include "include/qtExtensions/MdiSubWindow.h"
+
+  // Miscellaneous library header files
+
+#include "boost/locale.hpp"
+
+  // astroManager header files
+
+#include "include/FrameWindow.h"
 
 namespace astroManager
 {
@@ -53,20 +60,20 @@ namespace astroManager
   //
   //*****************************************************************************************************************************
 
-  /// @brief Class constructor
-  /// @param[in] parent: The owner of this widget.
-  /// @throws None.
-  /// @version 2013-07-27/GGB - Removed connecting the aboutToActivate() signal to the windowActivating() slot.
-  /// @version 2011-05-29/GGB - Function created.
+  /// @brief      Class constructor
+  /// @param[in]  parent: The owner of this widget.
+  /// @throws     None.
+  /// @version    2013-07-27/GGB - Removed connecting the aboutToActivate() signal to the windowActivating() slot.
+  /// @version    2011-05-29/GGB - Function created.
 
   CMdiSubWindow::CMdiSubWindow(QWidget *parent) : QMdiSubWindow(parent)
   {
   }
 
-  /// @brief Ensures that the window name is removed from the list of windows in the frame.
-  /// @param[in] event: The event that is associated with the closeEvent.
-  /// @throws None.
-  /// @version 2011-05-15/GGB - Function created.
+  /// @brief      Ensures that the window name is removed from the list of windows in the frame.
+  /// @param[in]  event: The event that is associated with the closeEvent.
+  /// @throws     None.
+  /// @version    2011-05-15/GGB - Function created.
 
   void CMdiSubWindow::closeEvent(QCloseEvent *event)
   {
@@ -74,18 +81,18 @@ namespace astroManager
     QMdiSubWindow::closeEvent(event);		// Close the sub window.
   }
 
-  /// @brief Function called when a mdi child window is activated.
-  /// @details This function calls all the dockWidget windowActivating functions.
-  /// @throws None.
-  /// @note 1. The subwindow function is called from CFrameWindow. This function must be called by all inheriting classes, unless
-  ///          they specifically replicate the functionality in this function.
-  /// @note 2. This function calls the windowActivating function for all the dockwidgets.
-  /// @version 2018-10-21/GGB - Function created.
+  /// @brief      Function called when a mdi child window is activated.
+  /// @details    This function calls all the dockWidget windowActivating functions.
+  /// @throws     None.
+  /// @note       1. The subwindow function is called from CFrameWindow. This function must be called by all inheriting classes,
+  ///               unless they specifically replicate the functionality in this function.
+  /// @note       2. This function calls the windowActivating function for all the dockwidgets.
+  /// @version    2018-10-21/GGB - Function created.
 
   void CMdiSubWindow::windowActivating()
   {
     mdiframe::CFrameWindow *frameWindow = dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget());
-    RUNTIME_ASSERT(frameWindow != nullptr,  "Parent widget cannot be nullptr.");
+    RUNTIME_ASSERT(frameWindow != nullptr,  boost::locale::translate("Parent widget cannot be nullptr."));
 
     if (frameWindow)
     {

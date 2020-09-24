@@ -53,6 +53,12 @@
 #include <limits>
 #include <tuple>
 
+  // Miscellaneous library header files
+
+#include "boost/algorithm/string.hpp"
+#include <QCL>
+#include <qwt_symbol.h>
+
   // astroManager application header files.
 
 #include "include/database/databaseATID.h"
@@ -61,12 +67,6 @@
 #include "include/windowImage/windowImageDisplay.h"
 #include "include/settings.h"
 #include "include/astroManager.h"
-
-  // Miscellaneous library header files
-
-#include "boost/algorithm/string.hpp"
-#include <QCL>
-#include <qwt_symbol.h>
 
 namespace astroManager
 {
@@ -81,16 +81,16 @@ namespace astroManager
     //
     //*****************************************************************************************************************************
 
-    /// @brief Class constructor.
-    /// @param[in] parent: The parent object
-    /// @param[in] action: The action object.
-    /// @throws None.
-    /// @version 2017-07-01/GGB - Changed order of parameters and updated hierarchy.
-    /// @version 2013-07-27/GGB - Added objectName to support restoreState.
-    /// @version 2013-05-10/GGB - Removed support for the objectStore.
-    /// @version 2013-03-28/GGB - Added the objectStore.
-    /// @version 2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
-    /// @version 2011-06-04/GGB - Function created.
+    /// @brief      Class constructor.
+    /// @param[in]  parent: The parent object
+    /// @param[in]  action: The action object.
+    /// @throws     None.
+    /// @version    2017-07-01/GGB - Changed order of parameters and updated hierarchy.
+    /// @version    2013-07-27/GGB - Added objectName to support restoreState.
+    /// @version    2013-05-10/GGB - Removed support for the objectStore.
+    /// @version    2013-03-28/GGB - Added the objectStore.
+    /// @version    2013-03-17/GGB - Function flow cleaned up with introduction of CDockWidget.
+    /// @version    2011-06-04/GGB - Function created.
 
     CPhotometryDockWidget::CPhotometryDockWidget(QWidget *parent, QAction *action)
       : CDockWidgetImage(DW_PHOTOMETRY_NAME, parent, action, settings::DW_IMAGE_PHOTOMETRY_VISIBLE)

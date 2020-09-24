@@ -111,16 +111,16 @@ namespace astroManager
       }
     }
 
-    /// @brief Friend function to output the object as comma delimited text.
-    /// @param[in] os: The output stream.
-    /// @param[in] po: The photometry observation.
-    /// @returns The output stream.
-    /// @throws None.
-    /// @version 2017-09-23/GGB - Updated to use CAngle
-    /// @version 2015-01-04/GGB - Removed assertion of (po != nullptr) ... Not needed with a reference.
-    /// @version 2013-08-22/GGB - Added degrees output to the function.
-    /// @version 2013-08-18/GGB - Added the RA/Dec if available to the output.
-    /// @version 2012-11-16/GGB - Function created.
+    /// @brief      Friend function to output the object as comma delimited text.
+    /// @param[in]  os: The output stream.
+    /// @param[in]  po: The photometry observation.
+    /// @returns    The output stream.
+    /// @throws     None.
+    /// @version    2017-09-23/GGB - Updated to use CAngle
+    /// @version    2015-01-04/GGB - Removed assertion of (po != nullptr) ... Not needed with a reference.
+    /// @version    2013-08-22/GGB - Added degrees output to the function.
+    /// @version    2013-08-18/GGB - Added the RA/Dec if available to the output.
+    /// @version    2012-11-16/GGB - Function created.
 
     std::ostream &operator << (std::ostream &os, CPhotometryObservation &po)
     {

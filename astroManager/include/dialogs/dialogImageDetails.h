@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -39,14 +39,15 @@
 #ifndef DIALOGIMAGEDETAILS
 #define DIALOGIMAGEDETAILS
 
-// Miscellaneous library header files
+  // Miscellaneous library header files
 
 #include <QCL>
 
+  // astroManager header files
 
-#include "../database/databaseARID.h"
-#include "../qtExtensions/selectImageVersionQueryModel.h"
-#include "../astroManager.h"
+#include "include/database/databaseARID.h"
+#include "include/models/selectImageVersionQueryModel.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {

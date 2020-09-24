@@ -1,4 +1,4 @@
-﻿#include "../../include/windowCalibration/windowCalibration.h"
+﻿#include "include/windowCalibration/windowCalibration.h"
 
 
 namespace astroManager

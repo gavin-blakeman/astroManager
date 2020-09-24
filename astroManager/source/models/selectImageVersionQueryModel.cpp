@@ -36,7 +36,9 @@
 //
 //*********************************************************************************************************************************
 
-#include "include/qtExtensions/selectImageVersionQueryModel.h"
+#include "include/models/selectImageVersionQueryModel.h"
+
+  // astroManager header files
 
 #include "include/error.h"
 #include "include/database/databaseARID.h"

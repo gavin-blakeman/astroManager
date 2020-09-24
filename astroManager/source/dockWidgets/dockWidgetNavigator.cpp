@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2013-2018 Gavin Blakeman.
+//                      Copyright 2013-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -23,7 +23,6 @@
 //
 //                      You should have received a copy of the GNU General Public License along with astroManager.  If not,
 //                      see <http://www.gnu.org/licenses/>.
-//
 //
 // OVERVIEW:            Provides a dock widget showing a magnified view of the current cursor position.
 //
@@ -43,18 +42,17 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dockWidgets/dockWidgetNavigator.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
 
   // astroManager header files
 
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {
   namespace dockwidgets
   {
-
     const int MARGIN_X  = 5;
     const int MARGIN_Y  = 5;
 

@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2017-2018 Gavin Blakeman.
+//                      Copyright 2017-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -37,12 +37,12 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/dockWidgets/dockWidgetWeatherParameters.h"
+#include "include/dockWidgets/dockWidgetWeatherParameters.h"
 
   // astroManager include files
 
-#include "../../include/settings.h"
-#include "../../include/astroManager.h"
+#include "include/settings.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {

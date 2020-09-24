@@ -10,7 +10,7 @@
 // AUTHOR:							Gavin Blakeman. (GGB)
 // LICENSE:             GPLv2
 //
-//                      Copyright 2010-2018 Gavin Blakeman.
+//                      Copyright 2010-2020 Gavin Blakeman.
 //                      This file is part of the Astronomy Manager software (astroManager)
 //
 //                      astroManager is free software: you can redistribute it and/or modify it under the terms of the GNU General
@@ -44,18 +44,18 @@
 //
 //*********************************************************************************************************************************
 
-#include "../../include/windowImage/windowImage.h"
+#include "include/windowImage/windowImage.h"
 
   // astroManager include files
 
-#include "../../include/settings.h"
-#include "../../include/database/databaseARID.h"
-#include "../../include/dockWidgets/dockWidgetAstrometry.h"
-#include "../../include/dockWidgets/dockWidgetHistogram.h"
-#include "../../include/dockWidgets/dockWidgetImageInformation.h"
-#include "../../include/dockWidgets/dockWidgetMagnify.h"
-#include "../../include/dockWidgets/dockWidgetNavigator.h"
-#include "../../include/dockWidgets/dockWidgetPhotometry.h"
+#include "include/settings.h"
+#include "include/database/databaseARID.h"
+#include "include/dockWidgets/dockWidgetAstrometry.h"
+#include "include/dockWidgets/dockWidgetHistogram.h"
+#include "include/dockWidgets/dockWidgetImageInformation.h"
+#include "include/dockWidgets/dockWidgetMagnify.h"
+#include "include/dockWidgets/dockWidgetNavigator.h"
+#include "include/dockWidgets/dockWidgetPhotometry.h"
 
 namespace astroManager
 {

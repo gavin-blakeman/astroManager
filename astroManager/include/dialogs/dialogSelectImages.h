@@ -39,16 +39,20 @@
 #ifndef DIALOGSELECTIMAGES
 #define DIALOGSELECTIMAGES
 
-#include "dialogs.h"
-#include "../qtExtensions/selectImageQueryModel.h"
-#include "../astroManager.h"
-
   // Standard C++ headers
 
 #include <cstdint>
 #include <vector>
 
+  // Miscellaneous library header files
+
 #include <QCL>
+
+  // astroManager header files
+
+#include "dialogs.h"
+#include "include/models/selectImageQueryModel.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {

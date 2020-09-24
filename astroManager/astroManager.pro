@@ -135,12 +135,9 @@ SOURCES += \
     source/qtExtensions/application.cpp \
     source/qtExtensions/TextEditSink.cpp \
     source/qtExtensions/MdiSubWindow.cpp \
-    source/qtExtensions/sqlQueryModel.cpp \
-    source/qtExtensions/selectImageQueryModel.cpp \
     source/dialogs/dialogConfigureSite.cpp \
     source/dialogs/dialogConfigureTelescope.cpp \
     source/dialogs/dialogSelectImageVersion.cpp \
-    source/qtExtensions/selectImageVersionQueryModel.cpp \
     source/ACL/FITSMemoryFileArray.cpp \
     source/dialogs/dialogImageDetails.cpp \
     source/dialogs/dialogSelectImages.cpp \
@@ -157,7 +154,10 @@ SOURCES += \
     source/ACL/targetAstronomy.cpp \
     source/error.cpp \
     source/settings.cpp \
-    source/models/planningModel.cpp
+    source/models/planningModel.cpp \
+    source/models/selectImageQueryModel.cpp \
+    source/models/selectImageVersionQueryModel.cpp \
+    source/models/sqlQueryModel.cpp
 
 HEADERS  += \
     include/FrameWindow.h \
@@ -220,13 +220,10 @@ HEADERS  += \
     include/qtExtensions/application.h \
     include/qtExtensions/TextEditSink.h \
     include/qtExtensions/MdiSubWindow.h \
-    include/qtExtensions/sqlQueryModel.h \
-    include/qtExtensions/selectImageQueryModel.h \
     include/dialogs/dialogConfigureSite.h \
     include/dialogs/dialogConfigureTelescope.h \
     include/ACL/telescope.h \
     include/dialogs/dialogSelectImageVersion.h \
-    include/qtExtensions/selectImageVersionQueryModel.h \
     include/ACL/FITSMemoryFileArray.h \
     include/dialogs/dialogImageDetails.h \
     include/dialogs/dialogSelectImages.h \
@@ -246,7 +243,10 @@ HEADERS  += \
     include/ACL/targetAstronomy.h \
     include/error.h \
     include/settings.h \
-    include/models/planningModel.h
+    include/models/planningModel.h \
+    include/models/selectImageQueryModel.h \
+    include/models/selectImageVersionQueryModel.h \
+    include/models/sqlQueryModel.h
 
 
 RESOURCES += \
