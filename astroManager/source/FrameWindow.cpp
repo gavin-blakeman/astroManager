@@ -1289,7 +1289,7 @@ namespace astroManager
       };
     }
 
-    /// @brief Convert a colour image into seperate R, G, B images.
+    /// @brief      Convert a colour image into seperate R, G, B images.
     /// @throws CCodeError(astroManager)
     /// @details As the image can have multiple colour layers, the image needs to be reduced to a colour image before they colour
     /// layers are extracted.
@@ -2136,20 +2136,20 @@ namespace astroManager
       };
     }
 
-    /// @brief Notifies the parent window whether the Photometry should be displayed or not.
-    /// @param None.
-    /// @returns None.
-    /// @throws GCL::CCodeError(astroManager)
-    /// @throws GCL::CRuntimeAssert(astroManager)
-    /// @version 2017-07-02/GGB - Changed the underlying storage to a std::map with std::unique_ptr
-    /// @version 2013-05-10/GGB - Updates the settings to reflect the latest state.
-    /// @version 2013-03-16/GGB - Function Created.
+    /// @brief      Notifies the parent window whether the Photometry should be displayed or not.
+    /// @param      None.
+    /// @returns    None.
+    /// @throws     GCL::CCodeError(astroManager)
+    /// @throws     GCL::CRuntimeAssert(astroManager)
+    /// @version    2017-07-02/GGB - Changed the underlying storage to a std::map with std::unique_ptr
+    /// @version    2013-05-10/GGB - Updates the settings to reflect the latest state.
+    /// @version    2013-03-16/GGB - Function Created.
 
     void CFrameWindow::eventViewPhotometry()
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, boost::locale::translate("No active child window."));
 
       settings::astroManagerSettings->setValue(settings::PHOTOMETRY_DISPLAYINDICATORS, QVariant(menuActions[IDA_VIEW_PHOTOMETRY]->isChecked()));
 
@@ -2900,13 +2900,13 @@ namespace astroManager
       labelJD->setText(QString(szUTC));
     }
 
-    /// @brief Open an image from file.
-    /// @details User must choose file to open from dialog box. Create an CImageWindow and set the filename up
-    /// @throws None.
-    /// @version 2018-12-14/GGB - Updated to allow opening multiple files. (Bug #33)
-    /// @version 2013-03-02/GGB - Included the global settings::fileExtensions for the files extensions.
-    /// @version 2013-01-21/GGB - Moved code into loadImage()
-    /// @version 2011-10-05/GGB - Function created
+    /// @brief      Open an image from file.
+    /// @details    User must choose file to open from dialog box. Create an CImageWindow and set the filename up
+    /// @throws     None.
+    /// @version    2018-12-14/GGB - Updated to allow opening multiple files. (Bug #33)
+    /// @version    2013-03-02/GGB - Included the global settings::fileExtensions for the files extensions.
+    /// @version    2013-01-21/GGB - Moved code into loadImage()
+    /// @version    2011-10-05/GGB - Function created
 
     void CFrameWindow::eventImageOpen()
     {
@@ -2995,10 +2995,10 @@ namespace astroManager
       };
     }
 
-    /// @brief Opens an image stacking window.
-    /// @throws None.
-    /// @version 2017-08-19/GGB - Added check for showMaximised.
-    /// @version 2011-02-13/GGB - Function created
+    /// @brief      Opens an image stacking window.
+    /// @throws     None.
+    /// @version    2017-08-19/GGB - Added check for showMaximised.
+    /// @version    2011-02-13/GGB - Function created
 
     void CFrameWindow::eventImagingStackImages()
     {
@@ -3025,7 +3025,7 @@ namespace astroManager
     {
       CMdiSubWindow *activeChild = activeMdiChild();
 
-      RUNTIME_ASSERT(activeChild != nullptr, "No active child window.");
+      RUNTIME_ASSERT(activeChild != nullptr, boost::locale::translate("No active child window."));
 
       switch (activeChild->getWindowType())
       {
@@ -3155,12 +3155,12 @@ namespace astroManager
       };
     }
 
-    /// @brief Takes ownership of the astroFile and opens a sub window to display the astro file.
-    /// @param[in] astroFile - The astrofile to open a window for.
-    /// @note The astrofile should already be loaded.
-    /// @throws None.
-    /// @version 2018-09-22/GGB - Converted to std::shared_ptr.
-    /// @version 2013-02-10/GGB - Function created.
+    /// @brief      Takes ownership of the astroFile and opens a sub window to display the astro file.
+    /// @param[in]  astroFile: The astrofile to open a window for.
+    /// @note       The astrofile should already be loaded.
+    /// @throws     None.
+    /// @version    2018-09-22/GGB - Converted to std::shared_ptr.
+    /// @version    2013-02-10/GGB - Function created.
 
     void CFrameWindow::imageCreateWindow(std::shared_ptr<CAstroFile> astroFile)
     {
@@ -3174,10 +3174,10 @@ namespace astroManager
       imageWindow = nullptr;
     }
 
-    /// @brief Opens an image from the ARID database.
-    /// @param[in] imageID - The ID value of the image to open.
+    /// @brief      Opens an image from the ARID database.
+    /// @param[in]  imageID: The ID value of the image to open.
     /// @throws
-    /// @version 2017-08-11/GGB - Function created.
+    /// @version    2017-08-11/GGB - Function created.
 
     void CFrameWindow::imageOpenFromDatabase(imageID_t imageID)
     {
@@ -3188,24 +3188,24 @@ namespace astroManager
       {
           // Open the latest version of the image.
 
-        DEBUGMESSAGE("ImageOpenFromDatabase: Open latest version");
+        DEBUGMESSAGE(boost::locale::translate("ImageOpenFromDatabase: Open latest version"));
 
         if (database::databaseARID->versionLatest(imageID, imageVersion ))
         {
           versionValid = true;
-          DEBUGMESSAGE("Latest version: " + std::to_string(imageVersion));
+          DEBUGMESSAGE(boost::locale::translate("Latest version: ").str() + std::to_string(imageVersion));
         };
       }
       else if (database::databaseARID->versionCount(imageID) == 1)
       {
           // Check if there is only 1 version that exists. If so, open it.
 
-        DEBUGMESSAGE("ImageOpenFromDatabase: Only 1 version");
+        DEBUGMESSAGE(boost::locale::translate("ImageOpenFromDatabase: Only 1 version"));
 
         if (database::databaseARID->versionLatest(imageID, imageVersion))
         {
           versionValid = true;
-          DEBUGMESSAGE("Latest version: " + std::to_string(imageVersion));
+          DEBUGMESSAGE(boost::locale::translate("Latest version: ").str() + std::to_string(imageVersion));
         };
       }
       else if (database::databaseARID->versionCount(imageID) == 0)
@@ -3216,8 +3216,8 @@ namespace astroManager
 
         QMessageBox msgBox;
 
-        msgBox.setText(tr("No Image Stored in Database."));
-        msgBox.setInformativeText(tr("There is no image stored in the database that corresponds to this image record."));
+        msgBox.setText(QString::fromStdString(boost::locale::translate("No Image Stored in Database.").str()));
+        msgBox.setInformativeText(QString::fromStdString(boost::locale::translate("There is no image stored in the database that corresponds to this image record.").str()));
         msgBox.setIcon(QMessageBox::Information);
         msgBox.setStandardButtons(QMessageBox::Ok);
         msgBox.setDefaultButton(QMessageBox::Ok);
