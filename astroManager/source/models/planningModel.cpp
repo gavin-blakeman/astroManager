@@ -120,69 +120,69 @@ namespace astroManager
     {
       QVariant returnValue;
 
-      if (index.row() >= recordCache.size())
+      if (static_cast<targetsVector_t::size_type>(index.row()) >= recordCache.size())
       {
         loadData(index.row());
       }
 
-//      switch (role)
-//      {
-//        case Qt::DisplayRole:
-//        {
-//            // Display the data (QString).
+      switch (role)
+      {
+        case Qt::DisplayRole:
+        {
+            // Display the data (QString).
 
-//          switch(index.column())
-//          {
-//            case column_rank:
-//            {
-//              //returnValue = QVariant(planTargets_.at(index.row())->name());
-//              break;
-//            };
-//            case column_name:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->name());
-//              break;
-//            };
-//            case column_type:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->type());
-//              break;
-//            };
-//            case column_ra:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->RA());
-//              break;
-//            };
-//            case column_dec:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->DEC());
-//              break;
-//            };
-//            case column_altitude:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->Altitude());
-//              break;
-//            };
-//            case column_azimuth:
-//            {
-//              returnValue = QVariant(planTargets_.at(index.row())->Azimuth());
-//              break;
-//            };
-//          };
-//        };
-//        case Qt::BackgroundRole:
-//        {
+          switch(index.column())
+          {
+            case column_rank:
+            {
+              returnValue = QVariant(index.row());
+              break;
+            };
+            case column_name:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->name());
+              break;
+            };
+            case column_type:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->type());
+              break;
+            };
+            case column_ra:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->RA());
+              break;
+            };
+            case column_dec:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->DEC());
+              break;
+            };
+            case column_altitude:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->Altitude());
+              break;
+            };
+            case column_azimuth:
+            {
+              returnValue = QVariant(recordCache.at(index.row())->Azimuth());
+              break;
+            };
+          };
+        };
+        case Qt::BackgroundRole:
+        {
 
-//        };
-//        case Qt::TextAlignmentRole:
-//        {
+        };
+        case Qt::TextAlignmentRole:
+        {
 
-//        };
-//        case Qt::ForegroundRole:
-//        {
+        };
+        case Qt::ForegroundRole:
+        {
 
-//        };
-//      };
+        };
+      };
 
       return returnValue;
     }
@@ -242,38 +242,41 @@ namespace astroManager
 
            // Read the data
 
+         GCL::sqlWriter sqlWriter;
+
+         sqlWriter.
+             select({ "RANK",
+                      "TARGETTYPE_ID",
+                      "NAME_ID",
+                      "TARGET_NAME",
+                    })
+             .from("TBL_TARGETS")
+             .where("PLAN_ID", "=", planID)
+             .orderBy({std::make_pair("RANK", GCL::sqlWriter::ASC)})
+             .offset(blockStart)
+             .limit(cacheReadRecords);
+
+         QSqlQuery query(database::databaseARID->database());
+
+         if (query.exec(QString::fromStdString(sqlWriter.string())))
          {
-           GCL::sqlWriter sqlWriter;
-
-           sqlWriter.
-               select({ "RANK",
-                        "TARGETTYPE_ID",
-                        "NAME_ID",
-                        "TARGET_NAME",
-                      })
-               .from("TBL_TARGETS")
-               .where("PLAN_ID", "=", planID)
-               .orderBy({std::make_pair("RANK", GCL::sqlWriter::ASC)})
-               .offset(blockStart)
-               .limit(cacheReadRecords);
-
-           QSqlQuery query(database::databaseARID->database());
-
-           if (query.exec(QString::fromStdString(sqlWriter.string())))
+           while (query.next())
            {
-             while (query.next())
-             {
+                // Create the correct type of target.
 
-             }
+              std::make_unique<CTargetAstronomy>(query.value(2).toULongLong(),
+                                                                     query.value(3).toString().toStdString(),
+                                                                     query.value(1).toUInt(),
+                                                                     currentTime_,
+                                                                     observingSite_,
+                                                                     observationWeather_);
            }
-           else
-           {
-
-           };
+         }
+         else
+         {
+           // Error while processing query
          };
        };
-
-
     }
 
     /// @brief      Returns the number of rows in the model. The query is only executed once. In all other cases, the stored value

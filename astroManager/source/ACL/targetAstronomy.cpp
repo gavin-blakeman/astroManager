@@ -54,46 +54,49 @@ namespace astroManager
 
   /// @brief        Constructor for the class. Also calls the function to create and load the data for the target.
   /// @param[in]    objectID: The ID of the target associated with the instance.
+  /// @param[in]    targetName: The name of the target.
   /// @param[in]    targetType: The type of the target.
   /// @param[in]    ct: Reference to an instance that holds the current time.
   /// @param[in]    gl: Reference to observatory information.
   /// @param[in]    wt: Reference to the weather.
-  /// @throws std::bad_alloc
-  /// @version 2018-08-31/GGB - Function created
+  /// @throws       std::bad_alloc
+  /// @version      2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(objectID_t objectID, ACL::ETargetType targetType, ACL::CAstroTime const &ct,
-                                     ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
+  CTargetAstronomy::CTargetAstronomy(objectID_t objectID, std::string const &targetName, std::uint_least16_t targetType,
+                                     ACL::CAstroTime const &ct, ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
     : targetID(objectID), targetAstronomy_(), currentTime_(ct), observerLocation(gl), observerWeather(wt)
   {
-    createTarget(targetType);
+    createTarget(targetType, targetName);
   }
 
   /// @brief        Creates a target object for the specified type.
   /// @param[in]    targetType: The type of target to create.
+  /// @param[in]    targetName: The name of the target to create.
   /// @throws       std::bad_alloc
   /// @version      2020-09-18/GGB - Function created.
 
-  void CTargetAstronomy::createTarget(ACL::ETargetType targetType)
+  void CTargetAstronomy::createTarget(std::uint_least16_t targetType, std::string const &targetName)
   {
     switch (targetType)
     {
       case ACL::TT_MAJORPLANET:
       {
-        //targetAstronomy = std::move(ACL::CTargetMajorPlanet::create(static_cast<ACL::EPlanets>(targetID)));
+        targetAstronomy_ = std::move(std::make_unique<ACL::CTargetMajorPlanet>(targetName));
         break;
       }
       case ACL::TT_MINORPLANET:
       {
-        //targetAstronomy = std::move(ACL::CTargetMinorPlanet::create(targetID));
+        //targetAstronomy_ = std::move(ACL::CTargetMinorPlanet::create(targetID));
         break;
       }
       case ACL::TT_COMET:
       {
-        //targetAstronomy = std::move(ACL::CTargetComet);
+        //targetAstronomy_ = std::move(ACL::CTargetComet);
+        break;
       }
       case ACL::TT_STELLAR:
       {
-
+        break;
       }
       default:
       {

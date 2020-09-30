@@ -41,6 +41,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 #include <vector>
 
 // Miscellaneous library header files
@@ -75,11 +76,11 @@ namespace astroManager
     CTargetAstronomy() = delete;
     CTargetAstronomy(CTargetAstronomy &&) = delete;
 
-    void createTarget(ACL::ETargetType);
+    void createTarget(std::uint_least16_t, std::string const &);
     void loadTargetData();
 
   public:
-    CTargetAstronomy(objectID_t, ACL::ETargetType, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
+    CTargetAstronomy(objectID_t, std::string const &, std::uint_least16_t, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
     ACL::CTargetAstronomy *targetAstronomy() const;
 
