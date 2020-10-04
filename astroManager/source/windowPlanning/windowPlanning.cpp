@@ -71,12 +71,12 @@ namespace astroManager
 
       setupUI();
 
-      planningModel = new models::CPlanningModel(this, planID, currentTime, *observatory, observationWeather);
+      planningModel = new models::CPlanningModel(this, currentTime, *observatory, observationWeather);
       tableViewPlanning->setModel(planningModel);
 
-      setWindowTitle(QString::fromStdString(boost::locale::translate("Observation Planning").str()));
+      planningModel->planIDChanged(comboBoxPlans->currentData().toUInt());
 
-      //loadPlanData();
+      setWindowTitle(QString::fromStdString(boost::locale::translate("Observation Planning").str()));
     }
 
     /// @brief      Responds when the observing site is changed.
@@ -104,9 +104,7 @@ namespace astroManager
 
       settings::astroManagerSettings->setValue(settings::WINDOWPLANNING_LASTPLAN, comboBoxPlans->currentData());
 
-        // Clear the current list of objects.
-
-      //loadPlanData();
+      planningModel->planIDChanged(comboBoxPlans->currentData().toUInt());
     }
 
     /// @brief      Responds to the 1s timer when triggered to update the time in the window and any other information required.
@@ -253,15 +251,33 @@ namespace astroManager
       ASSOCIATE_PUSHBUTTON(pushButtonTimeDayPlus, formWidget, "pushButtonTimeDayPlus");
       ASSOCIATE_PUSHBUTTON(pushButtonTimeDayMinus, formWidget, "pushButtonTimeDayMinus");
       ASSOCIATE_PUSHBUTTON(pushButtonRealTime, formWidget, "pushButtonRealTime");
+      ASSOCIATE_TOOLBUTTON(toolButtonAddTarget, formWidget, "toolButtonAddTarget");
 
-      //tableWidgetPlanning->setColumnCount(CTargetAstronomy::column_end);
-      //tableWidgetPlanning->setSortingEnabled(true);
-      //tableWidgetPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+      //tableViewPlanning->setColumnCount(CTargetAstronomy::column_end);
+      //tableViewPlanning->setSortingEnabled(true);
+      //tableViewPlanning->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+      actionSelectMinorPlanet = new QAction(QIcon(":/icons/folders/folder_add.png"),
+                                            QString::fromStdString(boost::locale::translate("Minor Planet")));
+      //connect(actionSelectMinorPlanet, SIGNAL(triggered(bool)), this, SLOT(eventButtonAddImagesFromFolder(bool)));
+
+      actionSelectStellarObject = new QAction(QIcon(":/icons/folders/folder_add.png"),
+                                              QString::fromStdString(boost::locale::translate("Stellar Object")));
+
+      actionSelectComet = new QAction(QIcon(":/icons/folders/folder_add.png"),
+                                      QString::fromStdString(boost::locale::translate("Comet")));
+
+      addTargetsMenu = new QMenu;
+      addTargetsMenu->addAction(actionSelectMinorPlanet);
+      addTargetsMenu->addAction(actionSelectStellarObject);
+      addTargetsMenu->addAction(actionSelectComet);
+
+      toolButtonAddTarget->setMenu(addTargetsMenu);
 
         // Populate combo boxes and select the last values selected.
 
       database::databaseARID->populateComboSite(comboBoxSites, true);
-      database::databaseARID->populateComboObservingPlans(comboBoxPlans, true);
+      database::databaseARID->populateComboObservingPlans(comboBoxPlans, true); // User data = plan selected.
 
         // Get the time zone offset.
 
@@ -325,7 +341,6 @@ namespace astroManager
         // Create signal/slot connections
 
       connect(comboBoxPlans, SIGNAL(currentIndexChanged(int)), this, SLOT(currentIndexChangedPlans(int)));
-
       connect(comboBoxSites, SIGNAL(currentIndexChanged(int)), this, SLOT(comboBoxSiteCurrentIndexChanged(int)));
 
       connect(radioButtonLT, SIGNAL(clicked(bool)), this, SLOT(radioButtonLTClicked(bool)));

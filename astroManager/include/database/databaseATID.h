@@ -53,8 +53,8 @@
 
   // astroManager application header files.
 
-#include "../ACL/targetAstronomy.h"
-#include "../astroManager.h"
+#include "include/ACL/targetAstronomy.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {
@@ -119,7 +119,6 @@ namespace astroManager
       void PopulateConstellationsCombo(QComboBox *);
       void PopulateCatalogCombo(QComboBox *);
       void PopulatePhotometryProgramCombo(QComboBox *);
-      bool populateStellarObject(QVariant const &, std::shared_ptr<ACL::CTargetStellar>);
 
         // Queries
 

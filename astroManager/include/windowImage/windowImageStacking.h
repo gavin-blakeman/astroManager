@@ -74,7 +74,7 @@ namespace astroManager
       Q_OBJECT
 
     private:
-      std::vector<imageID_t> imageIDList;
+      std::vector<database::imageID_t> imageIDList;
       QStringList imageList;
       std::string darkFrameFilename;
       std::string flatFrameFilename;

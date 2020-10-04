@@ -946,9 +946,9 @@ namespace astroManager
 
       settings::astroManagerSettings->setValue(settings::FILE_TAIUTC, QVariant(lineEditTAIUTC->text()));
       settings::astroManagerSettings->setValue(settings::FILE_UTCUT1, QVariant(lineEditUTCUT1->text()));
-      settings::astroManagerSettings->setValue(settings::FILE_MPCORB, QVariant(lineEditMPCORB->text()));
+      settings::astroManagerSettings->setValue(settings::FILE_MPCORB_LOCATION, QVariant(lineEditMPCORB->text()));
       ACL::CTargetMinorPlanet::setFileName(lineEditMPCORB->text().toStdString());
-      settings::astroManagerSettings->setValue(settings::FILE_COMETELS, QVariant(lineEditCometEls->text()));
+      settings::astroManagerSettings->setValue(settings::FILE_COMETELS_LOCATION, QVariant(lineEditCometEls->text()));
       ACL::CTargetComet::setFileName(lineEditCometEls->text().toStdString());
 
         // Source Extraction Data
@@ -1413,8 +1413,8 @@ namespace astroManager
 
       lineEditTAIUTC->setText(settings::astroManagerSettings->value(settings::FILE_TAIUTC, QVariant("TAI-UTC.csv")).toString());
       lineEditUTCUT1->setText(settings::astroManagerSettings->value(settings::FILE_UTCUT1, QVariant("finals2000A.data.csv")).toString());
-      lineEditMPCORB->setText(settings::astroManagerSettings->value(settings::FILE_MPCORB, QVariant("MPCORB.DAT")).toString());
-      lineEditCometEls->setText(settings::astroManagerSettings->value(settings::FILE_COMETELS, QVariant("CometEls.txt")).toString());
+      lineEditMPCORB->setText(settings::astroManagerSettings->value(settings::FILE_MPCORB_LOCATION, QVariant("MPCORB.DAT")).toString());
+      lineEditCometEls->setText(settings::astroManagerSettings->value(settings::FILE_COMETELS_LOCATION, QVariant("CometEls.txt")).toString());
 
         // Source Extraction tab
 

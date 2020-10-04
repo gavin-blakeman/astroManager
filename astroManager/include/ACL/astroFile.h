@@ -66,8 +66,8 @@ namespace astroManager
     boost::filesystem::path fileName_;
     bool fileNameValid_;
 
-    imageID_t imageID_;
-    imageVersion_t imageVersion_;
+    database::imageID_t imageID_;
+    database::imageVersion_t imageVersion_;
     bool imageIDValid_;
 
     bool syntheticImage_ = false;
@@ -92,7 +92,7 @@ namespace astroManager
 
   public:
     CAstroFile(QWidget *, boost::filesystem::path const &);
-    CAstroFile(QWidget *, imageID_t, imageVersion_t);
+    CAstroFile(QWidget *, database::imageID_t, database::imageVersion_t);
     CAstroFile(QWidget *, ACL::CAstroFile const &);
     CAstroFile(CAstroFile const &);
 
@@ -104,12 +104,12 @@ namespace astroManager
     void fileNameValid(bool valid) { fileNameValid_ = valid; }
     bool fileNameValid() const { return fileNameValid_; }
 
-    imageID_t imageID() const noexcept { return imageID_; }
-    imageID_t &imageID() { return imageID_; }
-    void imageID(imageID_t);
+    database::imageID_t imageID() const noexcept { return imageID_; }
+    database::imageID_t &imageID() { return imageID_; }
+    void imageID(database::imageID_t);
     void imageIDValid(bool valid) { imageIDValid_ = valid; }
 
-    void imageVersion(imageVersion_t imageVersion) { imageVersion_ = imageVersion; }
+    void imageVersion(database::imageVersion_t imageVersion) { imageVersion_ = imageVersion; }
 
     boost::filesystem::path getFileName() const;
 

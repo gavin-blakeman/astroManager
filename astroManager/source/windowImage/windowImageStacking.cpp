@@ -1079,8 +1079,8 @@ namespace astroManager
           };
           case OF_DATABASE:
           {
-            imageID_t imageID = selectedItem->data(ROLE_IMAGEID).toUInt();
-            imageVersion_t imageVersion;
+            database::imageID_t imageID = selectedItem->data(ROLE_IMAGEID).toUInt();
+            database::imageVersion_t imageVersion;
             database::databaseARID->versionLatest(imageID, imageVersion);
             controlImage = new imaging::SControlImage(this, std::make_shared<CAstroFile>(this, imageID, imageVersion));
             break;

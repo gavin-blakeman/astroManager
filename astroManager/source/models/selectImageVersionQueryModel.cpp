@@ -56,34 +56,35 @@ namespace astroManager
 {
   namespace QTE
   {
-    /// @brief Class constructor. Sets the query and header values.
-    /// @param[in] parent - The parent instance
-    /// @throws std::bad_alloc
-    /// @version 2017-08-16/GGB - Function created.
+    /// @brief      Class constructor. Sets the query and header values.
+    /// @param[in]  parent: The parent instance
+    /// @throws     std::bad_alloc
+    /// @version    2017-08-16/GGB - Function created.
 
-    CSelectImageVersionQueryModel::CSelectImageVersionQueryModel(imageID_t imageID, QObject *parent) : CSQLQueryModel(parent),
-      imageID_(imageID)
+    CSelectImageVersionQueryModel::CSelectImageVersionQueryModel(database::imageID_t imageID, QObject *parent)
+      : CSQLQueryModel(parent), imageID_(imageID)
     {
       GCL::sqlWriter sqlWriter;
 
-      sqlWriter.select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
-          .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID)})
-          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
+      sqlWriter
+          .select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
+          .where(std::string("IMAGE_ID"), "=", imageID)
+          .orderBy({{"IMAGE_VERSION", GCL::sqlWriter::DESC}});
 
       setQuery(QString::fromStdString(sqlWriter.string()), database::databaseARID->database());
 
       int columnIndex = 0;
-      setHeaderData(columnIndex++, Qt::Horizontal, QObject::tr("Version"));
-      setHeaderData(columnIndex++, Qt::Horizontal, QObject::tr("Date/Time"));
-      setHeaderData(columnIndex++, Qt::Horizontal, QObject::tr("Comments"));
+      setHeaderData(columnIndex++, Qt::Horizontal, QString::fromStdString(boost::locale::translate("Version")));
+      setHeaderData(columnIndex++, Qt::Horizontal, QString::fromStdString(boost::locale::translate("Date/Time")));
+      setHeaderData(columnIndex++, Qt::Horizontal, QString::fromStdString(boost::locale::translate("Comments")));
     }
 
-    /// @brief Function to ensure that the data is formatted correctly before being displayed in the tableModel.
-    /// @param[in] item - Index of the item that needs to be displayed.
-    /// @param[in] role - The role being queried.
-    /// @returns QVariant with the data or information needed.
-    /// @throws None.
-    /// @version 2017-08-01/GGB - Function created.
+    /// @brief      Function to ensure that the data is formatted correctly before being displayed in the tableModel.
+    /// @param[in]  item: Index of the item that needs to be displayed.
+    /// @param[in]  role: The role being queried.
+    /// @returns    QVariant with the data or information needed.
+    /// @throws     None.
+    /// @version    2017-08-01/GGB - Function created.
 
     QVariant CSelectImageVersionQueryModel::data(QModelIndex const &item, int role) const
     {
@@ -152,9 +153,10 @@ namespace astroManager
     {
       GCL::sqlWriter sqlWriter;
 
-      sqlWriter.select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
-          .where({GCL::sqlWriter::parameterTriple(std::string("IMAGE_ID"), std::string("="), imageID_)})
-          .orderBy({std::make_pair("IMAGE_VERSION", GCL::sqlWriter::DESC)});
+      sqlWriter
+          .select({"IMAGE_VERSION", "DATETIME", "COMMENT"}).from({"TBL_IMAGESTORAGE"})
+          .where("IMAGE_ID", "=", imageID_)
+          .orderBy({{"IMAGE_VERSION", GCL::sqlWriter::DESC}});
 
       setQuery(QString::fromStdString(sqlWriter.string()), database::databaseARID->database());
 

@@ -65,6 +65,8 @@
 #include "include/database/databaseWeather.h"
 #include "include/error.h"
 #include "include/FrameWindow.h"
+#include "include/network/cometElements.h"
+#include "include/network/minorPlanets.h"
 #include "include/settings.h"
 
   // These do not need to be defined in C++
@@ -259,6 +261,8 @@ int main(int argc, char *argv[])
     ACL::CAstroTime::load_dAT(ifn);
     ifn = astroManager::settings::astroManagerSettings->value(astroManager::settings::FILE_TAIUTC, QVariant("data/finals2000A.data.csv")).toString().toStdString();
     ACL::CAstroTime::load_dUT1(ifn);
+    astroManager::network::CMinorPlanets::downloadMinorPlanets(); // Check if the download of minor planet data is required.
+    astroManager::network::CCometElements::downloadCometElements();   // Check if the comet elements need to be downloaded.
 
     GCL::logger::defaultLogger().logMessage(GCL::logger::debug, "Creating main window...");
     splash.showMessage(QString("Creating main window"), Qt::AlignTop | Qt::AlignHCenter, Qt::white);
@@ -359,7 +363,7 @@ namespace astroManager
 
   int const MAJORVERSION	= 2018;       // Major version (year)
   int const MINORVERSION	= 9;          // Minor version (month)
-  std::uint16_t const BUILDNUMBER = 0x0184;
+  std::uint16_t const BUILDNUMBER = 0x01C3;
   std::string const BUILDDATE(__DATE__);
 
   std::vector<std::pair<int, std::string>> SEAlgorithms = { {1, std::string("Find Stars") },

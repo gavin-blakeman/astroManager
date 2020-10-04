@@ -56,6 +56,7 @@ namespace astroManager
       CSIMBAD(CSIMBAD const &) = delete;
 
     protected:
+
     public:
       CSIMBAD();
       virtual ~CSIMBAD();

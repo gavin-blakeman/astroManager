@@ -94,10 +94,9 @@ namespace astroManager
     /// @throws     std::bad_alloc
     /// @version    2020-09-15/GGB - Function created.
 
-    CPlanningModel::CPlanningModel(QObject *parent, planID_t const &pi, ACL::CAstroTime const &tm,
+    CPlanningModel::CPlanningModel(QObject *parent, ACL::CAstroTime const &tm,
                                    ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
-      : QAbstractTableModel(parent), planID(pi), recordCache(), currentTime_(tm),
-        observingSite_(gl), observationWeather_(wt)
+      : QAbstractTableModel(parent), recordCache(), currentTime_(tm), observingSite_(gl), observationWeather_(wt)
     {
 
     }
@@ -168,6 +167,24 @@ namespace astroManager
               returnValue = QVariant(recordCache.at(index.row())->Azimuth());
               break;
             };
+            case column_airmass:
+            case column_appMag:
+            case column_constellation:
+            case column_extinction:
+            case column_hourAngle:
+            case column_magnitude:
+            case column_observationCount:
+            case column_opposition:
+            case column_riseTime:
+            case column_setTime:
+            case column_transitTime:
+            case column_transitAltitude:
+            case column_angularSize:
+            case column_catalogue:
+            default:
+            {
+              CODE_ERROR;
+            };
           };
         };
         case Qt::BackgroundRole:
@@ -200,15 +217,22 @@ namespace astroManager
     /// @throws
     /// @version    2020-09-16/GGB - Function created.
 
-    QVariant CPlanningModel::headerData(int section, Qt::Orientation /*orientation*/, int role) const
+    QVariant CPlanningModel::headerData(int section, Qt::Orientation orientation, int role) const
     {
       QVariant returnValue;
 
-      switch (role)
+      switch (orientation)
       {
-        case Qt::DisplayRole:
+        case Qt::Horizontal:
         {
-          returnValue = QString::fromStdString(columnNames[section]);
+          switch (role)
+          {
+            case Qt::DisplayRole:
+            {
+              returnValue = QString::fromStdString(columnNames[section]);
+              break;
+            };
+          };
           break;
         };
       };
@@ -247,7 +271,7 @@ namespace astroManager
          sqlWriter.
              select({ "RANK",
                       "TARGETTYPE_ID",
-                      "NAME_ID",
+                      "OBJECT_ID",
                       "TARGET_NAME",
                     })
              .from("TBL_TARGETS")
@@ -264,12 +288,13 @@ namespace astroManager
            {
                 // Create the correct type of target.
 
-              std::make_unique<CTargetAstronomy>(query.value(2).toULongLong(),
+              recordCache.emplace(query.value(2).toULongLong(),
+                                  std::make_unique<CTargetAstronomy>(query.value(2).toULongLong(),
                                                                      query.value(3).toString().toStdString(),
                                                                      query.value(1).toUInt(),
                                                                      currentTime_,
                                                                      observingSite_,
-                                                                     observationWeather_);
+                                                                     observationWeather_));
            }
          }
          else
@@ -277,6 +302,24 @@ namespace astroManager
            // Error while processing query
          };
        };
+    }
+
+    /// @brief      Function called when the planID is changed.
+    /// @param[in]  newPlan: The new plan ID to use.
+    /// @throws     None
+    /// @version    2020-10-01/GGB - Function created.
+
+    void CPlanningModel::planIDChanged(database::planID_t newPlan)
+    {
+      beginResetModel();
+
+      recordCache.clear();
+      cacheStartIndex = 0;
+      recordCount.reset();
+
+      planID = newPlan;
+
+      endResetModel();
     }
 
     /// @brief      Returns the number of rows in the model. The query is only executed once. In all other cases, the stored value
@@ -290,9 +333,9 @@ namespace astroManager
     {
       int returnValue = 0;
 
-      if (rowCountValid_)
+      if (recordCount)
       {
-        returnValue = rowCount_;
+        returnValue = *recordCount;
       }
       else
       {
@@ -309,13 +352,13 @@ namespace astroManager
           sqlQuery.first();
           if (sqlQuery.isValid())
           {
-            returnValue = rowCount_ = sqlQuery.value(0).toInt();
-            rowCountValid_ = true;
+            recordCount = returnValue = sqlQuery.value(0).toInt();
           }
           else
           {
               // Query is not valid. Pretty serious error
 
+            recordCount.reset();
             database::databaseARID->processErrorInformation(sqlQuery);
             RUNTIME_ERROR(boost::locale::translate("Unable to retrieve number of rows."));
           };

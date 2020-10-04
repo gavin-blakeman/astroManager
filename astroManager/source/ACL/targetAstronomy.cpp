@@ -43,6 +43,7 @@
   // Miscellaneous library header files
 
 #include "boost/algorithm/string.hpp"
+#include "boost/locale.hpp"
 
   // astroManager application header files
 
@@ -62,11 +63,11 @@ namespace astroManager
   /// @throws       std::bad_alloc
   /// @version      2018-08-31/GGB - Function created
 
-  CTargetAstronomy::CTargetAstronomy(objectID_t objectID, std::string const &targetName, std::uint_least16_t targetType,
+  CTargetAstronomy::CTargetAstronomy(database::objectID_t tid, std::string const &targetName, std::uint_least16_t targetType,
                                      ACL::CAstroTime const &ct, ACL::CGeographicLocation const &gl, ACL::CWeather const &wt)
-    : targetID(objectID), targetAstronomy_(), currentTime_(ct), observerLocation(gl), observerWeather(wt)
+    : targetID(tid), targetAstronomy_(), currentTime_(ct), observerLocation(gl), observerWeather(wt)
   {
-    createTarget(targetType, targetName);
+    createTarget(targetType, targetName, tid);
   }
 
   /// @brief        Creates a target object for the specified type.
@@ -75,7 +76,7 @@ namespace astroManager
   /// @throws       std::bad_alloc
   /// @version      2020-09-18/GGB - Function created.
 
-  void CTargetAstronomy::createTarget(std::uint_least16_t targetType, std::string const &targetName)
+  void CTargetAstronomy::createTarget(std::uint_least16_t targetType, std::string const &targetName, database::objectID_t objectID)
   {
     switch (targetType)
     {
@@ -86,16 +87,18 @@ namespace astroManager
       }
       case ACL::TT_MINORPLANET:
       {
-        //targetAstronomy_ = std::move(ACL::CTargetMinorPlanet::create(targetID));
+        targetAstronomy_ = std::move(std::make_unique<ACL::CTargetMinorPlanet>(targetName));
         break;
       }
       case ACL::TT_COMET:
       {
-        //targetAstronomy_ = std::move(ACL::CTargetComet);
+        targetAstronomy_ = std::move(std::make_unique<ACL::CTargetComet>(targetName));
         break;
       }
       case ACL::TT_STELLAR:
       {
+        targetAstronomy_ = std::move(std::make_unique<ACL::CTargetStellar>());
+        database::databaseATID->readStellarObjectInformation(objectID, dynamic_cast<ACL::CTargetStellar *>(targetAstronomy_.get()));
         break;
       }
       default:
@@ -113,13 +116,15 @@ namespace astroManager
     return targetAstronomy_.get();
   }
 
-  /// @brief Updates the widget with the object name.
-  /// @throws None.
+  /// @brief        Updates the widget with the object name.
+  /// @throws       None.
   /// @version      2020-09-16/GGB - Changed return type to QString().
-  /// @version 2018-09-03/GGB - Function created.
+  /// @version      2018-09-03/GGB - Function created.
 
   QString CTargetAstronomy::name()
   {
+    RUNTIME_ASSERT(targetAstronomy_, boost::locale::translate("targetAstronomy_ pointer is null."));
+
     return QString::fromStdString(targetAstronomy_->objectName());
   }
 
@@ -130,6 +135,8 @@ namespace astroManager
 
   QString CTargetAstronomy::type()
   {
+    RUNTIME_ASSERT(targetAstronomy_, boost::locale::translate("targetAstronomy_ pointer is null."));
+
     QString returnValue;
 
     switch (targetAstronomy_->targetType())
@@ -182,7 +189,9 @@ namespace astroManager
 
   QString CTargetAstronomy::DEC()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the Altitude value into the widget.
@@ -191,7 +200,9 @@ namespace astroManager
 
   QString CTargetAstronomy::Altitude()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the Azimuth value into the widget.
@@ -200,7 +211,9 @@ namespace astroManager
 
   QString CTargetAstronomy::Azimuth()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the Airmass value into the widget.
@@ -209,7 +222,9 @@ namespace astroManager
 
   QString CTargetAstronomy::Airmass()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the Apparent Magnitude value into the widget.
@@ -218,7 +233,9 @@ namespace astroManager
 
   QString CTargetAstronomy::ApparentMagnitude()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
   /// @brief Sets the Constellation value into the widget.
@@ -239,39 +256,57 @@ namespace astroManager
 
   QString CTargetAstronomy::Extinction()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::HourAngle()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::Magnitude()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::ObservationCount()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::RiseTime()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::SetTime()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::TransitTime()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::TransitAltitude()
   {
+    QString returnValue;
 
+    return returnValue;
   }
   QString CTargetAstronomy::Catalogue()
   {
+    QString returnValue;
 
+    return returnValue;
   }
 
 

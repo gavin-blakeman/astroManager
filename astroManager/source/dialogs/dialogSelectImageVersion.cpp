@@ -56,7 +56,8 @@ namespace astroManager
     /// @throws std::bad_alloc
     /// @version 2017-08-12/GGB - Function created.
 
-    CDialogSelectImageVersion::CDialogSelectImageVersion(imageID_t imageID, imageVersion_t &imageVersion, QObject *parent) :
+    CDialogSelectImageVersion::CDialogSelectImageVersion(database::imageID_t imageID, database::imageVersion_t &imageVersion,
+                                                         QObject *parent) :
       CDialog(":/dialogs/dialogSelectImageVersion.ui", parent), imageVersion_(imageVersion), queryModel(imageID)
     {
       setupUI();

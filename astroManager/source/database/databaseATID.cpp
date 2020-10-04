@@ -440,57 +440,6 @@ namespace astroManager
       };
     }
 
-    /// @brief      Function to read stellar object information from the database and write/copy it into the stellar object
-    /// @param[in]  vNameID: The name of the object to read.
-    /// @param[in]  stellarObject: The stellar object to populate.
-    /// @returns    true - object found
-    /// @returns    false - object not found.
-    /// @throws     None.
-    /// @version    2011-07-10/GGB - Function created.
-
-    bool CATID::populateStellarObject(QVariant const &vNameID,
-                                      std::shared_ptr<ACL::CTargetStellar> stellarObject)
-    {
-      QString szSQL;
-      bool returnValue = false;
-
-      szSQL = QString( \
-        "SELECT n.NAME, o.RA, o.DEC, o.pmRA, o.pmDEC, o.RADIALVELOCITY, o.PARALLAX, e.JULIANDAY, o.FK4, o.FK5, o.ICRS "
-        "FROM TBL_NAMES n INNER JOIN (TBL_STELLAROBJECTS o INNER JOIN TBL_EPOCH e ON o.EPOCH_ID = e.EPOCH_ID) ON n.STELLAROBJECT_ID = o.OBJECT_ID "
-        "WHERE n.NAME_ID = %1").arg(vNameID.toString());
-
-      sqlQuery->exec(szSQL);
-
-      QSqlError lastError = sqlQuery->lastError();
-
-      if (sqlQuery->first())
-      {
-        szSQL = sqlQuery->value(0).toString();
-
-        stellarObject->objectName(szSQL.toStdString());
-
-        stellarObject->catalogueCoordinates(ACL::CAstronomicalCoordinates(MCL::CAngle(sqlQuery->value(1).toDouble(), MCL::AF_HMSs),
-                                                                          MCL::CAngle(sqlQuery->value(2).toDouble(), MCL::AF_DMSs)));
-
-        //if (query.value(8).toBool())
-//          stellarObject->setReferenceSystem(ACL::CStellarObject::RS_FK4);
-  //      else if (query.value(9).toBool())
-    //      stellarObject->setReferenceSystem(ACL::CStellarObject::RS_FK5);
-      //  else if (query.value(10).toBool())
-        //  stellarObject->setReferenceSystem(ACL::CStellarObject::RS_ICRS);
-//        else
-  //        ARPAA_ERROR(0x2000);    // Reference system not specified for object.
-
-//        stellarObject->setPM(query.value(3).toDouble(), query.value(4).toDouble());
-  //      stellarObject->setRadialVelocity(query.value(5).toDouble());
-    //    stellarObject->setParallax(query.value(6).toDouble());
-      //  stellarObject->setEpoch(query.value(7).toDouble());
-        returnValue = true;
-      };
-
-      return returnValue;
-    }
-
     // Gets an object name from the ATID database.
     // The function first checks if the object has a preferred name defined and returns the
     // preferred name if one is defined. Otherwise it looks at the user preferred name order list and
@@ -1104,16 +1053,17 @@ namespace astroManager
 
       if (queryNamesFromATID(objectID, objectNames))
       {
+
+        GCL::sqlWriter sqlWriter;
+
         target->objectName(objectNames);
 
-        sqlWriter.resetQuery();
-        sqlWriter.select({"TBL_STELLAROBJECTS.RA", "TBL_STELLAROBJECTS.DEC", "TBL_STELLAROBJECTS.EPOCH", "TBL_STELLAROBJECTS.pmRA",
-                          "TBL_STELLAROBJECTS.pmDEC", "TBL_STELLAROBJECTS.RadialVelocity", "TBL_STELLAROBJECTS.Parallax",
-                          "TBL_OBJECTTYPES.OBJECTTYPE"})
-                 .from({"TBL_STELLAROBJECTS"})
-                 .join({std::make_tuple("TBL_STELLAROBJECTS", "OBJECTTYPE_ID",
-                        GCL::sqlWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID")})
-                 .where("OBJECT_ID", "=", objectID);
+        sqlWriter
+            .select("TBL_STELLAROBJECTS", {"RA", "DEC", "EPOCH", "pmRA", "pmDEC", "RadialVelocity", "Parallax"})
+            .select("TBL_OBJECTTYPES", {"OBJECTTYPE"})
+            .from("TBL_STELLAROBJECTS")
+            .join({{"TBL_STELLAROBJECTS", "OBJECTTYPE_ID", GCL::sqlWriter::JOIN_LEFT, "TBL_OBJECTTYPES", "OBJECTTYPE_ID"}})
+            .where("OBJECT_ID", "=", objectID);
 
         if (sqlQuery.exec(QString::fromStdString(sqlWriter.string())))
         {
@@ -1128,7 +1078,7 @@ namespace astroManager
                                                                        sqlQuery.value(1).toDouble()));
             if (!sqlQuery.value(2).isNull())
             {
-              target->setEpoch(sqlQuery.value(2).toString().toStdString());
+              target->epoch(sqlQuery.value(2).toString().toStdString());
             };
             if (!sqlQuery.value(3).isNull())
             {

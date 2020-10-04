@@ -89,8 +89,9 @@ namespace astroManager
   /// @throws std::bad_alloc
   /// @version 2017-08-12/GGB - Function created.
 
-  CAstroFile::CAstroFile(QWidget *parent, imageID_t imageID, imageVersion_t imageVersion) : ACL::CAstroFile(), parent_(parent),
-    fileNameValid_(false), fileName_(), imageIDValid_(true), imageID_(imageID), imageVersion_(imageVersion)
+  CAstroFile::CAstroFile(QWidget *parent, database::imageID_t imageID, database::imageVersion_t imageVersion)
+    : ACL::CAstroFile(), parent_(parent), fileNameValid_(false), fileName_(), imageIDValid_(true), imageID_(imageID),
+      imageVersion_(imageVersion)
   {
       // First change the object stored by the astroFile into a AstroManager::CObservatory type.
       // and the telescope into an astroManagerCTelescope() type.
@@ -217,7 +218,7 @@ namespace astroManager
   /// @throws None.
   /// @version 2017-09-01/GGB - Function created.
 
-  void CAstroFile::imageID(imageID_t imageID)
+  void CAstroFile::imageID(database::imageID_t imageID)
   {
     imageID_ = imageID;
 

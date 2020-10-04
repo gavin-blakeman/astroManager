@@ -46,17 +46,17 @@
 
 #include <memory>
 
-  // astroManager application header files.
-
-#include "../ACL/astroFile.h"
-#include "../ACL/observatoryInformation.h"
-#include "../ACL/targetAstronomy.h"
-#include "../ACL/telescope.h"
-#include "../astroManager.h"
-
-  // Miscellaneous library header files
+// Miscellaneous library header files
 
 #include <QCL>
+
+  // astroManager application header files.
+
+#include "include/ACL/astroFile.h"
+#include "include/ACL/observatoryInformation.h"
+#include "include/ACL/targetAstronomy.h"
+#include "include/ACL/telescope.h"
+#include "include/astroManager.h"
 
 namespace astroManager
 {

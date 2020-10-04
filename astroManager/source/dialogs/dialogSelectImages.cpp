@@ -50,7 +50,7 @@ namespace astroManager
     /// @throws std::bad_alloc
     /// @version 2017-08-19/GGB - Function created.
 
-    CDialogSelectImages::CDialogSelectImages(QObject *parent, std::vector<imageID_t> &imageList)
+    CDialogSelectImages::CDialogSelectImages(QObject *parent, std::vector<database::imageID_t> &imageList)
       : QCL::CDialog(":/dialogs/dialogSelectImages.ui", parent), imageList_(imageList), queryModel()
     {
       setupUI();

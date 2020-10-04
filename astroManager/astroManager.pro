@@ -157,7 +157,10 @@ SOURCES += \
     source/models/planningModel.cpp \
     source/models/selectImageQueryModel.cpp \
     source/models/selectImageVersionQueryModel.cpp \
-    source/models/sqlQueryModel.cpp
+    source/models/sqlQueryModel.cpp \
+    source/network/minorPlanets.cpp \
+    source/network/network.cpp \
+    source/network/cometElements.cpp
 
 HEADERS  += \
     include/FrameWindow.h \
@@ -246,7 +249,10 @@ HEADERS  += \
     include/models/planningModel.h \
     include/models/selectImageQueryModel.h \
     include/models/selectImageVersionQueryModel.h \
-    include/models/sqlQueryModel.h
+    include/models/sqlQueryModel.h \
+    include/network/minorPlanets.h \
+    include/network/network.h \
+    include/network/cometElements.h
 
 
 RESOURCES += \
@@ -279,8 +285,8 @@ else:win32:CONFIG(debug, debug|release) {
 }
 else:unix:CONFIG(debug, debug|release) {
   LIBS += -L../ACL -lACL
-  LIBS += -L../../Library/Library -lSBIG
-  LIBS += -L../../Library/Library/unix/debug -lcfitsio
+  LIBS += -L../SBIG -lSBIG
+  LIBS += -L../cfitsio -lcfitsio
   LIBS += -L../GCL -lGCL
   LIBS += -L../MCL -lMCL
   LIBS += -L../NOVAS -lNOVAS
@@ -288,16 +294,17 @@ else:unix:CONFIG(debug, debug|release) {
   LIBS += -L../qwt-6.1.3/lib -lqwt
   #LIBS += -L../../Library/Library -lRaw
   LIBS += -L../SCL -lSCL
-  LIBS += -L../../Library/Library -lWCS
+  LIBS += -L../libWCS -lWCS
   LIBS += -L../QCL -lQCL
   LIBS += -L../WCL -lWCL
-  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/filesystem/build/gcc-7/release/link-static/threading-multi" -lboost_filesystem
-  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/system/build/gcc-7/release/link-static/threading-multi" -lboost_system
-  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/thread/build/gcc-7/release/link-static/threading-multi" -lboost_thread
-  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/chrono/build/gcc-7/release/link-static/threading-multi" -lboost_chrono
-  LIBS += -L"../../../Library/Boost/boost 1.62/bin.v2/libs/chrono/build/gcc-7/release/link-static/threading-multi" -lboost_locale
+  LIBS += -L/usr/local/lib -lboost_date_time
+  LIBS += -L/usr/local/lib -lboost_filesystem
+  LIBS += -L/usr/local/lib -lboost_system
+  LIBS += -L/usr/local/lib -lboost_thread
+  LIBS += -L/usr/local/lib -lboost_chrono
+  LIBS += -L/usr/local/lib -lboost_locale
   LIBS += -L../SOFA -lSOFA
-  LIBS += -L../../Library/Library -lQxt
+  LIBS += -L../Qxt -lQxt
   LIBS += -L../GeographicLib-1.48 -lGeographicLib
 }
 else:unix:CONFIG(release, debug|release) {
@@ -329,6 +336,4 @@ OTHER_FILES += \
     README
 
 DISTFILES +=
-
-
 

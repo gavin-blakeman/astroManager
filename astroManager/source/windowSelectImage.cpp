@@ -74,7 +74,7 @@ namespace astroManager
     QModelIndex indexCopy = tableViewImages->currentIndex().sibling(tableViewImages->currentIndex().row(),
                                                                     QTE::CSelectImageQueryModel::imageID_c);
 
-    imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
+    database::imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
 
     dialogs::CDialogImageDetails dialogImageDetails(this, imageID);
 
@@ -102,7 +102,7 @@ namespace astroManager
     QModelIndex indexCopy = tableViewImages->currentIndex().sibling(tableViewImages->currentIndex().row(),
                                                                     QTE::CSelectImageQueryModel::imageID_c);
 
-    imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
+    database::imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
 
     msgBox.setIcon(QMessageBox::Critical);
     msgBox.setText(tr("Are you sure you want to delete."));
@@ -161,7 +161,7 @@ namespace astroManager
   {
     QModelIndex indexCopy = index.sibling(index.row(), QTE::CSelectImageQueryModel::imageID_c);
 
-    imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
+    database::imageID_t imageID = queryModel.data(indexCopy, Qt::DisplayRole).toUInt();
 
     dynamic_cast<mdiframe::CFrameWindow *>(nativeParentWidget())->imageOpenFromDatabase(imageID);
   }

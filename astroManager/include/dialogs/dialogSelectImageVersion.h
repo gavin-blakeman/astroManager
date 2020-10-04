@@ -57,7 +57,7 @@ namespace astroManager
       Q_OBJECT
 
     private:
-      imageVersion_t &imageVersion_;
+      database::imageVersion_t &imageVersion_;
       QTableView *tableViewVersions;
       QCheckBox *checkBoxMostRecent;
       QPushButton *pushButtonOpenImage_;
@@ -68,7 +68,7 @@ namespace astroManager
       void setupUI();
 
     public:
-      CDialogSelectImageVersion(imageID_t, imageVersion_t &, QObject *);
+      CDialogSelectImageVersion(database::imageID_t, database::imageVersion_t &, QObject *);
       ~CDialogSelectImageVersion() {}
 
     private slots:

@@ -42,6 +42,7 @@
 
 #include <map>
 #include <memory>
+#include <optional>
 
   // Miscellaneous library header files
 
@@ -60,21 +61,19 @@ namespace astroManager
     ///         the database as required. A mechanism is included to do a lookahead for data retrieval.
     /// @todo   Implement a threaded data retrieval model to fetch the data in a thread while the main thread returns.
 
-    class CPlanningModel : public QAbstractTableModel
+    class CPlanningModel final : public QAbstractTableModel
     {
     private:
 
       using targetsVector_t = std::vector<std::unique_ptr<CTargetAstronomy>>;
 
-      planID_t const &planID;
+      database::planID_t planID = 0;
       mutable std::map<std::uint64_t, std::unique_ptr<CTargetAstronomy>> recordCache; ///< Use a map as it can be sparse rather than full.
       mutable std::uint64_t cacheStartIndex;
       std::uint64_t cacheMaximumSize = 16384;       ///< Limit to around 10MB of data.
       std::uint64_t cacheReadRecords = 1024;        ///< Number of records to read at a time.
-      std::uint64_t recordCount;                    ///< Number of records in the current recordSet.
+      mutable std::optional<int> recordCount;       ///< Number of records in the current recordSet.
 
-      mutable int rowCount_ = 0;
-      mutable bool rowCountValid_ = false;
       ACL::CAstroTime const &currentTime_;
       ACL::CGeographicLocation const &observingSite_;
       ACL::CWeather const &observationWeather_;
@@ -90,13 +89,15 @@ namespace astroManager
 
 
     public:
-      CPlanningModel(QObject *, planID_t const &, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
+      CPlanningModel(QObject *, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
       int rowCount(QModelIndex const &parent = QModelIndex()) const override;
       int columnCount(QModelIndex const &parent = QModelIndex()) const override;
       QVariant data(QModelIndex const &index, int role = Qt::DisplayRole) const override;
       QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
       Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+      void planIDChanged(database::planID_t);
     };
   }   // namespace models
 }   // namespace astroManager

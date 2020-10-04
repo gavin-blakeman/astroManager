@@ -64,7 +64,7 @@ namespace astroManager
 
     private:
       bool selectMultiple;
-      std::vector<imageID_t> &imageList_;
+      std::vector<database::imageID_t> &imageList_;
 
       QTableView *tableViewImages;
       QGroupBox *groupBoxTarget;
@@ -98,7 +98,7 @@ namespace astroManager
       void setupUI();
 
     public:
-      CDialogSelectImages(QObject *, std::vector<imageID_t> &);
+      CDialogSelectImages(QObject *, std::vector<database::imageID_t> &);
       virtual ~CDialogSelectImages() {}
 
     public slots:

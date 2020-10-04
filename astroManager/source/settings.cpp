@@ -111,8 +111,8 @@ namespace astroManager
     void InitialiseStartupSettings()
     {
       setThreads(settings::astroManagerSettings->value(MAX_THREADS, QVariant(std::thread::hardware_concurrency())).toUInt());
-      ACL::CTargetComet::setFileName(astroManagerSettings->value(FILE_COMETELS, "Data/CometEls.txt").toString().toStdString());
-      ACL::CTargetMinorPlanet::setFileName(astroManagerSettings->value(FILE_MPCORB, "Data/MPCORB.DAT").toString().toStdString());
+      ACL::CTargetComet::setFileName(astroManagerSettings->value(FILE_COMETELS_LOCATION, "Data/CometEls.txt").toString().toStdString());
+      ACL::CTargetMinorPlanet::setFileName(astroManagerSettings->value(FILE_MPCORB_LOCATION, "Data/MPCORB.DAT").toString().toStdString());
     }
 
   }  // namespace settings

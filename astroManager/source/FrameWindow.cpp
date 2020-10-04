@@ -3179,9 +3179,9 @@ namespace astroManager
     /// @throws
     /// @version    2017-08-11/GGB - Function created.
 
-    void CFrameWindow::imageOpenFromDatabase(imageID_t imageID)
+    void CFrameWindow::imageOpenFromDatabase(database::imageID_t imageID)
     {
-      imageVersion_t imageVersion;
+      database::imageVersion_t imageVersion;
       bool versionValid = false;
 
       if (settings::astroManagerSettings->value(settings::CM_DATABASE_OPENFILE_LASTVERSION, QVariant(false)).toBool())

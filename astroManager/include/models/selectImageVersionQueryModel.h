@@ -51,14 +51,14 @@ namespace astroManager
       Q_OBJECT
 
     private:
-      imageID_t imageID_;
+      database::imageID_t imageID_;
 
 
       CSelectImageVersionQueryModel(CSelectImageVersionQueryModel const &) = delete;
 
     protected:
     public:
-      CSelectImageVersionQueryModel(imageID_t, QObject * = nullptr);
+      CSelectImageVersionQueryModel(database::imageID_t, QObject * = nullptr);
       virtual ~CSelectImageVersionQueryModel() {}
 
       virtual QVariant data(QModelIndex const &item, int role = Qt::DisplayRole) const;

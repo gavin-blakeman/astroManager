@@ -57,7 +57,7 @@ namespace astroManager
     {
       Q_OBJECT
     private:
-      imageID_t imageID_;
+      database::imageID_t imageID_;
 
       QLabel *labelImageID;
       QLabel *labelImageUUID;
@@ -87,7 +87,7 @@ namespace astroManager
       void setupUI();
 
     public:
-      CDialogImageDetails(QObject *, imageID_t);
+      CDialogImageDetails(QObject *, database::imageID_t);
       virtual ~CDialogImageDetails() {}
 
     public slots:

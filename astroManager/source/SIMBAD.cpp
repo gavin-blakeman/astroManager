@@ -61,12 +61,12 @@ namespace astroManager
     }
 
 
-    /// @brief Queries SIMBAD for information on an object.
-    /// @param[in] objectID - The ID (or name) of the object to query.
-    /// @returns true - Object found on SIMBAD
-    /// @returns false - Object not found.
-    /// @throws None.
-    /// @version 2015-09-25/GGB - Function created.
+    /// @brief      Queries SIMBAD for information on an object.
+    /// @param[in]  objectID: The ID (or name) of the object to query.
+    /// @returns    true - Object found on SIMBAD
+    /// @returns    false - Object not found.
+    /// @throws     None.
+    /// @version    2015-09-25/GGB - Function created.
 
     bool CSIMBAD::queryObject(std::string const &objectID)
     {

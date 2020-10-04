@@ -66,7 +66,7 @@ namespace astroManager
   class CTargetAstronomy final
   {
   private:
-    objectID_t targetID;
+    database::objectID_t targetID;
     std::unique_ptr<ACL::CTargetAstronomy> targetAstronomy_;
     ACL::CAstroTime const &currentTime_;            // Updated externally
     ACL::CGeographicLocation const &observerLocation;
@@ -76,11 +76,11 @@ namespace astroManager
     CTargetAstronomy() = delete;
     CTargetAstronomy(CTargetAstronomy &&) = delete;
 
-    void createTarget(std::uint_least16_t, std::string const &);
+    void createTarget(std::uint_least16_t, std::string const &, database::objectID_t);
     void loadTargetData();
 
   public:
-    CTargetAstronomy(objectID_t, std::string const &, std::uint_least16_t, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
+    CTargetAstronomy(database::objectID_t, std::string const &, std::uint_least16_t, ACL::CAstroTime const &, ACL::CGeographicLocation const &, ACL::CWeather const &);
 
     ACL::CTargetAstronomy *targetAstronomy() const;
 

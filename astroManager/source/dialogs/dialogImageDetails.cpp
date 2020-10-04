@@ -59,7 +59,7 @@ namespace astroManager
     /// @throws std::bad_alloc
     /// @version 2017-08-15/GGB - Function created.
 
-    CDialogImageDetails::CDialogImageDetails(QObject *parent, imageID_t imageID) :
+    CDialogImageDetails::CDialogImageDetails(QObject *parent, database::imageID_t imageID) :
       CDialog(":/dialogs/dialogImageDetails.ui", parent), imageID_(imageID), queryModelVersion(imageID, parent)
     {
       setupUI();

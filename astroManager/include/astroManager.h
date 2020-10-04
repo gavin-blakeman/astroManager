@@ -81,12 +81,16 @@ namespace astroManager
 
   typedef ACL::FP_t FP_t;
   typedef ACL::AXIS_t AXIS_t;
-  typedef std::uint32_t imageID_t;                                      ///< The imageID type. 32 bit == 4 billion images.
-  typedef std::uint16_t imageVersion_t;                                 ///< The type to use with image versions = 65536 versions.
-  typedef std::uint32_t planID_t;                                       ///< The planID. Base type for observing plans.
-  typedef std::uint32_t objectID_t;                                     ///< The type to use with object types.
-  typedef std::uint32_t nameID_t;                                       ///< The type for name IDs.
-  using indexDatabase_t = std::uint32_t;                                ///< Type to use for database index types
+
+  namespace database
+  {
+    typedef std::uint32_t imageID_t;                              ///< The imageID type. 32 bit == 4 billion images.
+    typedef std::uint16_t imageVersion_t;                         ///< The type to use with image versions = 65536 versions.
+    typedef std::uint32_t planID_t;                               ///< The planID. Base type for observing plans.
+    typedef std::uint32_t objectID_t;                             ///< The type to use with object types.
+    typedef std::uint32_t nameID_t;                               ///< The type for name IDs.
+    using index_t = std::uint32_t;                                ///< Type to use for database index types
+  }
 
   QString const EXTENSION_CSV                 ("Comma Delimited (*.csv)");
 

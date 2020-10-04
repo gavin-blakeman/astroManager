@@ -79,12 +79,18 @@ namespace astroManager
       QPushButton *pushButtonTimeDayMinus = nullptr;
       QPushButton *pushButtonRealTime = nullptr;
       QTableView *tableViewPlanning = nullptr;
+      QToolButton *toolButtonAddTarget = nullptr;
+
+      QAction *actionSelectMinorPlanet;
+      QAction *actionSelectStellarObject;
+      QAction *actionSelectComet;
+
+      QMenu *addTargetsMenu;
 
       models::CPlanningModel *planningModel = nullptr;
 
       QTimer *timer1s = nullptr;        ///< 1s Timer used for updating the time as required.
 
-      planID_t planID = 0;
       ACL::CAstroTime currentTime;
       std::unique_ptr<ACL::CObservatory> observatory;
       ACL::CWeather observationWeather;

@@ -1359,8 +1359,10 @@ namespace astroManager
       {
         sqlWriter.resetQuery();
 
-        sqlWriter.select({"SHORTTEXT", "PLAN_ID"}).from({"TBL_PLANS"}).
-            where("COMPLETE", "<>", true);
+        sqlWriter
+            .select({"SHORTTEXT", "PLAN_ID"})
+            .from({"TBL_PLANS"})
+            .where("COMPLETE", "<>", true);
 
         if (sqlQuery->exec(QString::fromStdString(sqlWriter.string())))
         {

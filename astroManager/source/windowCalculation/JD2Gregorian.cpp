@@ -39,13 +39,14 @@
 
 #include "include/windowCalculation/JD2Gregorian.h"
 
-  // astroManager include files
-
-#include "include/settings.h"
-
   // Miscellaneous include files.
 
 #include <ACL>
+#include "boost/locale.hpp"
+
+  // astroManager include files
+
+#include "include/settings.h"
 
 namespace astroManager
 {
@@ -77,13 +78,13 @@ namespace astroManager
 
       if (radioButtonJD->isChecked())
       {
-        labelDescription->setText(tr("Modified Julian Day (MJD)"));
+        labelDescription->setText(QString::fromStdString(boost::locale::translate("Modified Julian Day (MJD)")));
         labelMJD->setText(QString("%1").arg(static_cast<double>(JD) - ACL::MJD0));
       }
       else if (radioButtonMJD->isChecked())
       {
         JD += ACL::MJD0;
-        labelDescription->setText(tr("Julian Day (JD)"));
+        labelDescription->setText(QString::fromStdString(boost::locale::translate("Julian Day (JD)")));
         labelMJD->setText(QString("%1").arg(static_cast<double>(JD)));
       }
       else
